@@ -6,7 +6,7 @@ export default {
   },
   plugins: [],
   output: {
-    dir: 'public',
+    dir: 'public/images',
   },
 }
 
