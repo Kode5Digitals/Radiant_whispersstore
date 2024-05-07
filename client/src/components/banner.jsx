@@ -6,7 +6,7 @@ const Banner = () => {
     <>
     <Navbar/>
     <main>
-       <div className="bg-cover bg-center flex justify-center items-center" style={{ backgroundImage: 'url("./public/images/cream3.jpeg")', backgroundColor: 'rgb(25, 34, 39)', height: '500px', color: 'white' }}>
+       <div className="bg-cover bg-center flex justify-center items-center" style={{ backgroundImage: 'url("cream3.jpeg")', backgroundColor: 'rgb(25, 34, 39)', height: '500px', color: 'white' }}>
 
          <div  className=" homeIntroductionDiv mx-auto w-full bg-black bg-opacity-50 flex items-center gap-12">
              <div className="w-1/3 ml-20 mt-24">
