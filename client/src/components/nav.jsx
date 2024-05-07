@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 import { MdKeyboardArrowDown } from "react-icons/md";
+
 const Navbar = () => {
   const [hovereddivItem, setHovereddivItem] = useState(null);
-
   const handledivItemHover = (itemName) => {
     setHovereddivItem(itemName);
   };
@@ -17,15 +17,15 @@ const Navbar = () => {
   return (
     <div
       className="bg-[#fd00cd] opacity-8 text-white
-      font-bold text-sm   p-2  flex mt-20  items-center justify-around "
+      font-bold text-sm     flex mt-[80px]  items-center justify-around "
     >
-      <div className="flex gap-10 items-center py-2">
+      <div className="flex gap-10 items-center ">
         <div
           className="group relative  px-4 py-2  hover:bg-[#f3a7a7] hover:text-black"
           onMouseEnter={() => handledivItemHover("Item 1") }
           onMouseLeave={handleMouseLeave}
         >
-          <div className="flex items-end cursor-pointer p-2 ">
+          <div className="flex items-end cursor-pointer  ">
             <h4>Products</h4>
             <span>
               <MdKeyboardArrowDown />
@@ -48,11 +48,11 @@ const Navbar = () => {
           )}
         </div>
 
-        <div className="flex items-end cursor-pointer p-2">
+        <div className="flex items-end cursor-pointer ">
           <h4>About Us</h4>
         </div>
 
-        <div className="flex items-end cursor-pointer p-2">
+        <div className="flex items-end cursor-pointer ">
           <h4>Contact Us</h4>
         </div>
       </div>

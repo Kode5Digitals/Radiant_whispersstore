@@ -4,8 +4,8 @@ import Footer from "./components/footer"
 import MainNavbar from "./components/mainNav"
 import Products from "./components/products"
 import "./index.css"
-
 function Home() {
+
     return (
       <main>
           <MainNavbar/>
@@ -16,4 +16,5 @@ function Home() {
       </main>
     )
 }
+
 export default Home

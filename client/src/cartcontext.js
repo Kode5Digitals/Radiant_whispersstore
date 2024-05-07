@@ -4,17 +4,26 @@ import { createContext } from "react";
 //this is an object instance i.e a prototype
 const Cartcontext = createContext({
     // cart: [],
-    // getnumber: () => { },
     // theme: {},
     // settheme: {},
     // setcart: {},
-    // setcartnumber: {},
+    cartNumber: () => { },
+    setcartNumber: {},
     // Total: {},
     // setTotal: {},
     // overallTotal: "",
     // setoverallTotal: ""
     LikeColor:[],
-    setLikeColor:[]
+    setLikeColor:[],
+    openLogin:Boolean,
+    setOpenLogin:Boolean,
+      openRegister:Boolean,
+    setOpenRegister:Boolean,
+    handleLogin:()=>{},
+    handleRegister:()=>{},
 })
 
 export default Cartcontext
+
+
+    

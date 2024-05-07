@@ -5,11 +5,19 @@ const Cartprovider = ({children}) => {
     const storedLikes = localStorage.getItem("Likes");
     const initialLikes = !storedLikes ? [] : JSON.parse(storedLikes)  ;
     const [LikeColor, setLikeColor] = useState(initialLikes)
-
-
+    const [openLogin,setOpenLogin]=useState(false)
+const[ openRegister,setOpenRegister]=useState(false)
+    const handleLogin=()=>{
+        console.log(false)
+setOpenLogin(prevState => !prevState)
+        
+    }
+    const handleRegister=()=>{
+        console.log(false)
+setOpenRegister(prevState => !prevState)}
     // const [myproduct, setmyproduct] = useState(JSON.parse(localStorage.getItem("product")))
-    // const [cart, setcart] = useState(localStorage.getItem("cartItem") ? JSON.parse(localStorage.getItem("cartItem")) :
-    //     [])
+    const [cartNumber,   setcartNumber] = useState(localStorage.getItem("cartNo") ? JSON.parse(localStorage.getItem("cartNo")) :
+        [])
     // const [theme, settheme] = useState({ backgroundcolor: "white", textcolor: "black" })
 
     // const getnumber = (item) => {
@@ -20,8 +28,7 @@ const Cartprovider = ({children}) => {
     //     else {
     //         let NewCart = [...cart, { ...item, quantity: 1, Total: item.price }]
     //         setcart(NewCart)
-    //         localStorage.setItem('cartItem', JSON.stringify(NewCart))
-
+    //         localStorage.setItem('cartItem', JSON.stringify(NewCart)s
     //     }
     // }
     const Cartcont = {
@@ -32,9 +39,16 @@ const Cartprovider = ({children}) => {
         // theme: theme,
         // settheme: settheme,
         // setcart: setcart,
+        cartNumber:cartNumber,
+        setcartNumber:setcartNumber,
         LikeColor:LikeColor,
-        setLikeColor:setLikeColor
-
+        setLikeColor:setLikeColor,
+        openLogin:openLogin,
+        setOpenLogin:setOpenLogin,
+        handleLogin: handleLogin,
+        openRegister:openRegister,
+        setOpenRegister:setOpenRegister,
+        handleRegister:handleRegister
     }
 
 
