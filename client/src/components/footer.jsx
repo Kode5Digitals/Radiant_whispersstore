@@ -50,7 +50,7 @@ const Footer = () => {
     <ul className="text-sm">
       <li className="text-lg font-bold mb-2">About Us</li>
       <li className=" text-[11px]">Radiant_whispersstore is a leading provider of co-working space bokings and CRM software, design specifically for nigerian markert. Our mission is to empower co-working space ownwer and users with intuitive tools and personalize support to optimize thier workspace experience</li>
-      <li  className="flex gap-5 mt-10">
+      <li  className="hidden gap-5 mt-10  xl:flex">
         <div className="socials"><TiSocialFacebook /></div>
         <div className="socials"> <FaInstagram /></div>
         <div className="socials"><IoLogoWhatsapp /></div>
