@@ -86,7 +86,7 @@ New Arrivals
        <div className="mb-10">
 <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative ">
             <img
-              src="../public/images/cream3.jpeg"
+              src="/cream3.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -124,7 +124,7 @@ New Arrivals
           <div className="mb-10">
 <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative ">
             <img
-              src="../public/images/cream1.jpeg"
+              src="/cream1.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -164,7 +164,7 @@ New Arrivals
           <div className="mb-10">
 <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative ">
             <img
-              src="../public/images/cream4.jpeg"
+              src="/cream4.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -202,7 +202,7 @@ New Arrivals
           <div className="mb-10">
 <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative ">
             <img
-              src="../public/images/cream6.jpeg"
+              src="/cream6.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -239,7 +239,7 @@ New Arrivals
           <div className="mb-10">
 <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative ">
             <img
-              src="../public/images/cream5.jpeg"
+              src="/cream5.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -276,7 +276,7 @@ New Arrivals
           <div className="mb-10">
 <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative ">
             <img
-              src="../public/images/cream4.jpeg"
+              src="/cream4.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -313,7 +313,7 @@ New Arrivals
           <div className="mb-10">
 <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative ">
             <img
-              src="../public/images/cream3.jpeg"
+              src="/cream3.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -350,7 +350,7 @@ New Arrivals
           <div className="mb-10">
 <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative ">
             <img
-              src="../public/images/cream2.jpeg"
+              src="/cream2.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -387,7 +387,7 @@ New Arrivals
           <div className="mb-10">
 <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative ">
             <img
-              src="../public/images/cream1.jpeg"
+              src="/cream1.jpeg"
               className="w-full h-full"
               alt=""
             />

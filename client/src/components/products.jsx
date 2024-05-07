@@ -80,7 +80,7 @@ function Products() {
 <div className="mb-10">
 <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative ">
             <img
-              src="cream1.jpeg"
+              src="/cream1.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -122,7 +122,7 @@ function Products() {
 <div className="mb-10">
           <div className="w-52 shadow-lg h-52 border-2 rounded-lg mb-3 relative">
             <img
-              src="../public/images/cream3.jpeg"
+              src="/cream3.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -164,7 +164,7 @@ function Products() {
 <div className="mb-10">
           <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative">
             <img
-              src="../public/images/cream1.jpeg"
+              src="/cream1.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -204,7 +204,7 @@ function Products() {
           <div className="mb-10">
           <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-10 relative">
             <img
-              src="../public/images/cream2.jpeg"
+              src="/cream2.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -246,7 +246,7 @@ function Products() {
 
           <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative">
             <img
-              src="../public/images/cream3.jpeg"
+              src="/cream3.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -286,7 +286,7 @@ function Products() {
 
         <div className="mb-10">
           <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative">
-            <img src="../public/images/cream2.jpeg" alt="" />
+            <img src="/cream2.jpeg" alt="" />
             {!LikeColor.includes(6) ? (
               <CiHeart
                 size={22}
@@ -324,7 +324,7 @@ function Products() {
         <div className="mb-10">
           <div className="w-52 h-52 shadow-lg   border-2 rounded-lg mb-3 relative ">
             <img
-              src="../public/images/cream1.jpeg"
+              src="/cream1.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -367,7 +367,7 @@ function Products() {
 
           <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative">
             <img
-              src="../public/images/cream1.jpeg"
+              src="/cream1.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -406,7 +406,7 @@ function Products() {
 
           <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative">
             <img
-              src="../public/images/cream2.jpeg"
+              src="/cream2.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -446,7 +446,7 @@ function Products() {
         <div className="mb-10">
           <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative">
             <img
-              src="../public/images/cream1.jpeg"
+              src="/cream1.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -488,7 +488,7 @@ function Products() {
 
           <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative">
             <img
-              src="../public/images/cream3.jpeg"
+              src="/cream3.jpeg"
               className="w-full h-full"
               alt=""
             />
