@@ -3,21 +3,21 @@ import "../App.css"
 
 const Banner = () => {
   return (
-    <>
+    <div className="relative">
     <Navbar/>
     <main>
-       <div className="bg-cover bg-center flex justify-center items-center" style={{ backgroundImage: 'url("cream3.jpeg")', backgroundColor: 'rgb(25, 34, 39)', height: '500px', color: 'white' }}>
+       <div className="bg-cover bg-center flex justify-center items-center w-full" style={{ backgroundImage: 'url("cream3.jpeg")', backgroundColor: 'rgb(25, 34, 39)',  height: '530px', color: 'white' }}>
 
          <div  className=" homeIntroductionDiv mx-auto w-full bg-black bg-opacity-50 flex items-center gap-12">
-             <div className="w-1/3 ml-20 mt-24">
-                 <h2 className="text-6xl">
+             <div className="xl:w-1/3 w-full xl:ml-20 xl:mt-24 mt-12 text-center xl:text-start p-6 ">
+                 <h2 className="text-5xl xl:text-5xl">
                  We care about your skin
                  </h2>
-                 <p className="text-sm mt-12 pr-16 text-[#ede4ec]">
+                 <p className="text-sm mt-12   text-[#ede4ec]">
                  Envelop yourself in the luxurious embrace of nature purity, where the essence of cream whispers tales of indulgence and revitalization
                  </p>
                </div>
-              <div className="flex relative">
+              <div className="hidden relative xl:flex">
               <div className="home-img1 overflow-hidden " ><img  src="cream1.jpeg"  className="w-full h-full " alt=""></img></div>
                <div className="home-img1 overflow-hidden  absolute left-72 bottom-12" ><img  src="cream2.jpeg"  className="w-full h-full " alt=""></img></div>
               </div>
@@ -25,7 +25,7 @@ const Banner = () => {
        </div> 
        </main>
 
-         </>
+         </div>
   )
 }
 

@@ -7,14 +7,14 @@ import "../App.css"
 const Footer = () => {
   return (
       <footer>
-    <div className="flex m-auto pb-10 mt-32  pl-12 pr-12 text-[#fd00cd]  bg-[#f5f5f5]  pt-10 gap-28  justify-center"  >
+    <div className="flex flex-wrap-reverse xl:flex-nowrap m-auto pb-10 mt-32 pl-4 xl:pl-12 xl:pr-12 text-[#fd00cd]  bg-[#f5f5f5]  pt-10 xl:gap-28 gap-5  xl:justify-center"  >
         <div  className=" w-3/5 ">
         <ul>
-            <li className="text-center mt-4">
+            <li className=" mt-4  hidden xl:block">
                 Radiant-whispersstore
             </li>
     
-      <li  className="mt-20 text-[12px]">
+      <li  className="xl:mt-20 mt-2 text-[12px] ">
         &copy; 2024 Radiant_whispersstore. <br></br> All right reserved
       </li>
       <li  className="flex text-[12px] gap-6 mt-6">

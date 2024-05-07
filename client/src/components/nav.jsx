@@ -17,7 +17,7 @@ const Navbar = () => {
   return (
     <div
       className="bg-[#fd00cd] opacity-8 text-white
-      font-bold text-sm     flex mt-[80px]  items-center justify-around "
+      font-bold text-sm   flex xl:mt-[80px] mt-[138px]  items-center justify-around "
     >
       <div className="flex gap-10 items-center ">
         <div
