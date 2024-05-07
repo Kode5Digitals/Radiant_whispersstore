@@ -18,8 +18,8 @@ const Banner = () => {
                  </p>
                </div>
               <div className="flex relative">
-              <div className="home-img1 overflow-hidden " ><img  src="images/cream1.jpeg"  className="w-full h-full " alt=""></img></div>
-               <div className="home-img1 overflow-hidden  absolute left-72 bottom-12" ><img  src="./public/images/cream2.jpeg"  className="w-full h-full " alt=""></img></div>
+              <div className="home-img1 overflow-hidden " ><img  src="cream1.jpeg"  className="w-full h-full " alt=""></img></div>
+               <div className="home-img1 overflow-hidden  absolute left-72 bottom-12" ><img  src="cream2.jpeg"  className="w-full h-full " alt=""></img></div>
               </div>
          </div>
        </div> 
