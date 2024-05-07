@@ -80,7 +80,7 @@ function Products() {
 <div className="mb-10">
 <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative ">
             <img
-              src="/cream1.jpeg"
+              src="cream1.jpeg"
               className="w-full h-full"
               alt=""
             />
@@ -122,7 +122,7 @@ function Products() {
 <div className="mb-10">
           <div className="w-52 shadow-lg h-52 border-2 rounded-lg mb-3 relative">
             <img
-              src="/cream3.jpeg"
+              src="cream3.jpeg"
               className="w-full h-full"
               alt=""
             />
