@@ -7,17 +7,17 @@ import "../App.css"
 const Footer = () => {
   return (
       <footer>
-    <div className="flex flex-wrap-reverse xl:flex-nowrap m-auto pb-10 mt-32 pl-4 xl:pl-12 xl:pr-12 text-[#fd00cd]  bg-[#f5f5f5]  pt-10 xl:gap-28 gap-5  xl:justify-center"  >
+    <div className="flex flex-wrap-reverse md:p-5 md:flex-nowrap xl:flex-nowrap m-auto pb-10 mt-5 pl-4 xl:pl-12 xl:pr-12 text-[#fd00cd]  bg-[#f5f5f5]  pt-10 xl:gap-28 gap-5  xl:justify-center"  >
         <div  className=" w-3/5 ">
         <ul>
-            <li className=" mt-4  hidden xl:block">
-                Radiant-whispersstore
+            <li className=" mt-2  md:block hidden xl:block">
+              <img src="logo.png" alt=""className="w-20 h-20" />
             </li>
     
-      <li  className="xl:mt-20 mt-2 text-[12px] ">
+      <li  className="xl:mt-10 mt-2 text-[12px] ">
         &copy; 2024 Radiant_whispersstore. <br></br> All right reserved
       </li>
-      <li  className="flex text-[12px] gap-6 mt-6">
+      <li  className="flex text-[12px] gap-2  xl:gap-6 mt-6 ">
        <a >Cookies policy</a> 
        <a href="">Terms and condition</a>   
       </li>
@@ -43,7 +43,7 @@ const Footer = () => {
       <li><a href="#" >Enquiry @Radiant_whispersstore.com</a></li>
       <li>(+234)90778808938 </li>
     </ul>
-     
+    
  </div>
     
    <div className="w-3/5"> 

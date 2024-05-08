@@ -33,6 +33,7 @@ body::-webkit-scrollbar {
     height: 350px;
     border-radius: 100%;
     background-color: rgb(16, 13, 13);
+    border: 0;
    
 }
 
@@ -83,5 +84,33 @@ body::-webkit-scrollbar {
 }
 
 .slick-dots li.slick-active button {
-  color: #000; /* Color of active dot */
+  color: #000; 
+}
+.menu {
+  transition: transform  0.3s ease-in-out; 
+}
+
+.translate-x-0 {
+  transform: translateX(0); 
+}
+
+.translate-x-full {
+  transform: translateX(0%); 
+}
+
+
+.search-input {
+  position: absolute;
+  top: 20;
+  right: 0;
+  width: 0;
+  padding: 4px;
+  border: 2px solid black;
+  transition: width 0.3s ease;
+  background-color: aliceblue;
+  z-index: 40000000;
+}
+
+.search-input.open {
+  width: 50px;
 }

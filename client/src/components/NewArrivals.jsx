@@ -81,7 +81,7 @@ New Arrivals
           {[...Array(12).keys()].map((index) => (
             <div key={index} className="mb-10">
               <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative">
-                <img src={`cream${(index % 3) + 1}.jpeg`} className="w-full h-full" alt="" />
+                <img src={`cream${(index % 6) + 1}.jpg`} className="w-full h-full" alt="" />
                 {!LikeColor.includes(index) ? (
                   <CiHeart
                     size={22}
@@ -96,7 +96,7 @@ New Arrivals
                   />
                 )}
               </div>
-              <h3 className="text-xl">Product Name</h3>
+              <h3 className="text-lg">Product Name</h3>
               <p className="text-sm">Product description</p>
               <h4 className="text-lg">Product price</h4>
               <div className="flex justify-between mt-2">
