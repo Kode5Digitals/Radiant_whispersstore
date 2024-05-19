@@ -14,7 +14,7 @@ console.log(productid)
 
 useEffect(()=>{
     axios({
-    url:`http://localhost:4000/api/products/getProduct/${productid}`,
+    url:`https://radiant-whispersstore.onrender.com/api/products/getProduct/${productid}`,
     method:"get"
 }).then((res)=>{
     console.log(res.data?.product)

@@ -29,7 +29,7 @@ const AddProduct = () => {
         console.log(formData);
 
         const response = await axios.post(
-            "http://localhost:4000/api/products/addProduct", 
+            "https://radiant-whispersstore.onrender.com/api/products/addProduct", 
             formData,
             {
                 headers: { "Content-Type": "multipart/form-data" },

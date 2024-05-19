@@ -20,7 +20,7 @@ const Register = ({ setOpenRegister }) => {
 console.log(formData)
     try {
       
-      const res = await httpAuth.post("api/user/register",formData,  { withCredentials: true });
+      const res = await httpAuth.post("/api/user/register",formData,  { withCredentials: true });
 
 if(res.data.created==true){
 toast.success(res.data.message);

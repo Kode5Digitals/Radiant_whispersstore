@@ -17,7 +17,7 @@ function Login({setOpenLogin}) {
             password: passwordRef.current.value
         };
 try {
-  const res = await httpAuth.post("api/user/login", formData,{withCredentials:true})
+  const res = await httpAuth.post("/api/user/login", formData,{withCredentials:true})
 
   if(res.data.created==true){
     toast.success(res.data.message);
