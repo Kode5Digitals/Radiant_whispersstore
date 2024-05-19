@@ -14,7 +14,7 @@ app.use(cookiesparser())
 
 app.use(cors(
     {
-    origin: 'http://localhost:5173',
+    origin:  'https://radiant-whispersstore-nine.vercel.app',
     credentials: true
   }
 ));
