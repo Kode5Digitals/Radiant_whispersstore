@@ -1,9 +1,35 @@
 import { useState } from "react";
-
+import { setProducts } from "../stores/features/product/productSlice";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { useDispatch} from "react-redux";
+import httpAuth from "../utils/https";
 
 const Navbar = () => {
+  const dispatch = useDispatch()
   const [hovereddivItem, setHovereddivItem] = useState(null);
+
+const fetchCategory = async (name) => {
+      try {
+        const response = await httpAuth.get(`/api/products/category/${name}`);
+        console.log(response)
+dispatch(setProducts(response.data));
+
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    
+    };
+    const handleAllProducts=async()=>{
+      try {
+        const response= await httpAuth.get(`/api/products/allProducts`);
+        dispatch(setProducts(response.data.products));
+
+        }
+        catch (error) {
+        console.log(error)
+        }
+       
+     }
   const handledivItemHover = (itemName) => {
     setHovereddivItem(itemName);
   };
@@ -17,7 +43,7 @@ const Navbar = () => {
   return (
     <div
       className="bg-[#fd00cd] opacity-8 text-white
-      font-bold text-sm   flex xl:mt-[80px] mt-[68px] sm:mt-[66px] md:mt-[70px]  items-center justify-around "
+      font-bold text-sm   flex  items-center justify-around "
     >
       <div className="flex gap-10 items-center ">
         <div
@@ -25,7 +51,7 @@ const Navbar = () => {
           onMouseEnter={() => handledivItemHover("Item 1") }
           onMouseLeave={handleMouseLeave}
         >
-          <div className="flex items-end cursor-pointer  ">
+          <div className="flex  cursor-pointer text-lg items-center ">
             <h4>Products</h4>
             <span>
               <MdKeyboardArrowDown />
@@ -33,29 +59,42 @@ const Navbar = () => {
           </div>
           {hovereddivItem === "Item 1" && (
             <div className="absolute cursor-pointer  left-0 w-full  min-w-72 bg-white  z-30 py-2">
-              <div className="px-4 py-2 text-[#403f40] hover:bg-[#f4e4f2]  hover:text-black">
-                Sub Items
+               <div onClick={()=>handleAllProducts()} className="px-4 py-2 text-[#403f40] hover:bg-[#f4e4f2]  hover:text-black">
+                All products
               </div>
 
-              <div className="px-4 py-2  text-[#403f40] hover:bg-[#f4e4f2]  hover:text-black">
-                Sub Items
-              </div>  <div className="px-4 py-2  text-[#403f40] hover:bg-[#f4e4f2] hover:text-black">
-                Sub Items
-              </div>  <div className="px-4 py-2  text-[#403f40] hover:bg-[#f4e4f2]  hover:text-black">
-                Sub Items
+              <div onClick={()=>fetchCategory("body cream")} className="px-4 py-2 text-[#403f40] hover:bg-[#f4e4f2]  hover:text-black">
+                Body Cream
+              </div>
+
+              <div  onClick={()=>fetchCategory("face cream")} className="px-4 py-2  text-[#403f40] hover:bg-[#f4e4f2]  hover:text-black">
+                Face Cream
+              </div> 
+               <div onClick={()=>fetchCategory("body oil")}  className="px-4 py-2  text-[#403f40] hover:bg-[#f4e4f2] hover:text-black">
+                Body oil
+              </div> 
+               <div  onClick={()=>fetchCategory("body Wash")} className="px-4 py-2  text-[#403f40] hover:bg-[#f4e4f2]  hover:text-black">
+                Body Wash
               </div>
             </div>
           )}
         </div>
 
-        <div className="flex items-end cursor-pointer ">
-          <h4>About Us</h4>
-        </div>
-
-        <div className="flex items-end cursor-pointer ">
-          <h4>Contact Us</h4>
-        </div>
+       
       </div>
+      
+      {/* <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+             /> */}
     </div>
   );
 };

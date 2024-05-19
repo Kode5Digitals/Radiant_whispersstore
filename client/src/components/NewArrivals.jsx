@@ -1,32 +1,43 @@
 import { PiGreaterThanLight } from "react-icons/pi";
 import { PiLessThanLight } from "react-icons/pi";
-import { useContext, useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import { CiHeart } from "react-icons/ci";
-import { FaHeart } from "react-icons/fa6";
-import Cartcontext from "../cartcontext";
+import httpAuth from "../utils/https";
+import {  addToCart } from "../stores/features/cart/cartSlice";
+import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import {Truncate} from "../utils/utils"
+import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import { TfiMore } from "react-icons/tfi";
 function NewArrivals() {
   const flexContainerRef = useRef(null);
   const [showLeftIndicator, setShowLeftIndicator] = useState(false);
-  const { LikeColor, setLikeColor } = useContext(Cartcontext);
+const {wishlistItems }= useSelector((state)=>state?.whishlist);      
 
-  const handleLikes = (index) => {
-    setLikeColor((prevState) => {
-      const isActive = prevState.includes(index);
-      const newState = isActive
-        ? prevState.filter((item) => item !== index)
-        : [...prevState, index];
-      localStorage.setItem("Likes", JSON.stringify(newState));
-      console.log(newState);
-      return newState;
-    });
-  };
+  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const fetchNewArrivals = async () => {
+      try {
+        const response = await httpAuth.get('/admin/product/new-arrivals');
+        const data = await response.data;
+        setProducts(data);
+        console.log("new arrivals :",data)
+      } catch (error) {
+        console.error('Error fetching new arrivals:', error);
+      }
+    };
+
+    fetchNewArrivals();
+  }, []);
 
 
 
   const handleScroll = () => {
     const container = flexContainerRef.current;
     const scrollPosition = container.scrollLeft;
-
     setShowLeftIndicator(scrollPosition > 0);
   };
 
@@ -37,12 +48,30 @@ function NewArrivals() {
     });
   };
 
+
   const scrollRight = () => {
     flexContainerRef.current.scrollBy({
       left: 100, 
       behavior: "smooth",
     });
   };
+
+
+  const handleAddToWishlist=(Id)=>{
+    dispatch(toggleWishlistItem(Id))
+  }
+  const isProductInWishlist = (productId) => {
+    const wish =wishlistItems.some(item => item._id === productId)
+    return wish
+  };
+  
+  
+  //add to cart
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+  };
+  
+  
 
   return ( 
     <div className="mt-24">
@@ -78,38 +107,47 @@ New Arrivals
         ref={flexContainerRef}
         onScroll={handleScroll}
       >
-          {[...Array(12).keys()].map((index) => (
+          {products?.map((item,index) => (
             <div key={index} className="mb-10">
               <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative">
-                <img src={`cream${(index % 6) + 1}.jpg`} className="w-full h-full" alt="" />
-                {!LikeColor.includes(index) ? (
+                <img src={item.image} className="w-full h-full" alt="" />
+              
+                {!isProductInWishlist(item._id)? ( 
                   <CiHeart
                     size={22}
+                    id={item._id}
                     className="m-2 absolute top-1 right-2 cursor-pointer text-[#080808]"
-                    onClick={() => handleLikes(index)}
+                    onClick={() => handleAddToWishlist(item)}
                   />
                 ) : (
                   <FaHeart
                     size={20}
+                    id={item._id}
                     className="m-2 absolute top-1 right-2 cursor-pointer text-[#fd00cd]"
-                    onClick={() => handleLikes(index)}
+                    onClick={() => handleAddToWishlist(item)}
                   />
                 )}
+
               </div>
-              <h3 className="text-lg">Product Name</h3>
-              <p className="text-sm">Product description</p>
-              <h4 className="text-lg">Product price</h4>
+              <h3 className="text-lg">{item.name}</h3>
+              <p className="text-[13px]">{Truncate(item?.description,30)}</p>
+              <h4 className="text-[13px]">#{item.price}</h4>
               <div className="flex justify-between mt-2">
-                <div className="border rounded-sm">
-                  <button className="w-6 h-6">+</button>
-                  <button className="w-6 h-6 cursor-text text-sm">2</button>
-                  <button className="w-6 h-6">-</button>
-                </div>
+               
+
+
+                <button className="text-[12px]   border  px-3 rounded-md  bg-white border-pink-500 ">
+             <Link  to={`/ProductDetails/${item?._id}`} className="flex items-end gap-2">
+             More<TfiMore />
+                </Link></button> 
                 <button
-                  className="border text-sm px-2 rounded-md bg-gray-50"
+                     id={item._id}
+                  className="border text-sm px-8 py-2 rounded-md  bg-pink-300 border-pink-600 hover:text-white hover:bg-pink-950"
+                  onClick={()=>handleAddToCart(item)}
                 >
-                  Add Cart
+                <FaShoppingCart />
                 </button>
+              
               </div>
             </div>
           ))}

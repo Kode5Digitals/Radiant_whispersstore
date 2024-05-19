@@ -1,24 +1,34 @@
-import { useState } from "react";
+import { useContext } from "react";
 import NewArrivals from "./components/NewArrivals";
 import Banner from "./components/banner";
 import Banner2 from "./components/banner2";
-import Footer from "./components/footer";
-import MainNavbar from "./components/mainNav";
 import Products from "./components/products";
 import { LiaTimesSolid } from "react-icons/lia";
 import "./index.css";
 import { CiLogin } from "react-icons/ci";
 import { FaRegRegistered } from "react-icons/fa6";
 import { CiHeart } from "react-icons/ci";
-
+import Defaultlayout from "./layout/Defaultlayout";
+import Cartcontext from "./cartcontext";
 function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-  const Back = () => {
-    setIsOpen(!isOpen);
-  };
+  const {
+    handleLogin,
+    handleRegister,
+    Back,
+    setIsOpen,
+    isOpen
+  } = useContext(Cartcontext);
+  
+
+
+
+
+
 
   return (
     <main className="">
+   < Defaultlayout setIsOpen={setIsOpen} isOpen={isOpen} Back={Back}>
+      
       <div
         className={`menu fixed z-[10000] top-0 
 
@@ -46,14 +56,15 @@ function Home() {
         </div>
         <div className="mt-10 text-[#545353]">
           <ul className="mt-20 ">
-            <li className="flex items-center gap-1 mb-4 ">
+           <li onClick={handleRegister}  className="flex items-center gap-1 mb-4 ">
               {" "}
               <span>
                 <FaRegRegistered />
               </span>
               Register
             </li>
-            <li className="flex items-center gap-1 mb-4">
+           
+            <li onClick={handleLogin}  className="flex items-center gap-1 mb-4">
               {" "}
               <span>
                 <CiLogin />
@@ -71,12 +82,11 @@ function Home() {
         </div>
       </div>
 
-      <MainNavbar setIsOpen={setIsOpen} isOpen={isOpen} />
       <Banner />
       <Products />
       <Banner2 />
       <NewArrivals />
-      <Footer />
+       </Defaultlayout >
     </main>
   );
 }

@@ -3,24 +3,39 @@ import { createContext } from "react";
 //blueprint
 //this is an object instance i.e a prototype
 const Cartcontext = createContext({
-    // cart: [],
+    cart: [],
+    setCart: {},
     // theme: {},
     // settheme: {},
-    // setcart: {},
-    cartNumber: () => { },
+    cartNumber:"",
     setcartNumber: {},
     // Total: {},
     // setTotal: {},
     // overallTotal: "",
     // setoverallTotal: ""
+    setProduct:()=>{},
+    product:[],
     LikeColor:[],
-    setLikeColor:[],
+    setLikeColor:()=>{},
     openLogin:Boolean,
-    setOpenLogin:Boolean,
-      openRegister:Boolean,
-    setOpenRegister:Boolean,
+    setOpenLogin:()=>{},
+    openRegister:Boolean,
+    setOpenRegister:()=>{},
     handleLogin:()=>{},
     handleRegister:()=>{},
+    addCart:()=>{},
+    handleWishlist:()=>{},
+    wishlistLnt:'',
+    wishlist:[],
+    removeWishItem:()=>{},
+    isOpen:Boolean,
+    setIsOpen:()=>{},
+    Back:()=>{},
+     openEdit:Boolean,
+     setOpenEdit:()=>{},
+     editObj:{},
+     setEditobj:()=>{}
+    
 })
 
 export default Cartcontext
