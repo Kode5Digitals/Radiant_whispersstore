@@ -2,15 +2,13 @@ import axios from "axios";
 const http = axios.create({
   baseURL: `https://radiant-whispersstore.onrender.com`,
 //   baseURL: `http://localhost:4000`,
-
-  headers: {
-    "Content-Type": "application/json",
-  }
+headers: { "Content-Type": "multipart/form-data" }
+ 
 });
 
 http.interceptors.request.use(
     (config) => {
-      const token = JSON.parse(localStorage.getItem("token"));
+      const token = localStorage.getItem("token")
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       }

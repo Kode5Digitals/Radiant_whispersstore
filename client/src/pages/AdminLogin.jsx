@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-import http from "../utils/adminHttp";
+import httpAuth from "../utils/https";
 function AdminLogin() {
     const emailRef = useRef('');
     const passwordRef = useRef('');
@@ -16,17 +16,21 @@ function AdminLogin() {
             password: passwordRef.current.value
         };
 try {
-  const res = await http.post("/admin/login", formData,{withCredentials:true})
+  const res = await httpAuth.post("/admin/login", formData,{withCredentials:true})
 
-  if(res.data.created==true){
+  if(res.data.created){
     localStorage.setItem('token', res.data.token)
     toast.success(res.data.message);
 navigate("/adminHome")
     }
-    else if(res.data.created==false){
-      toast.error(res.data.message);
-
-           }
+    else{
+        if(res.data.created.error_type === 0){
+            toast.error(res.data.error[0].msg);
+                 }
+                 else if (res.data.error_type === 1) {
+                    toast.error(res.data.message);
+                }
+    }
 
 }
     

@@ -4,6 +4,7 @@ import { MdInsertPhoto } from "react-icons/md";
 import "react-toastify/dist/ReactToastify.css";
 import AdminDefaultlayout from "../layout/AdminLayout";
 import axios from "axios";
+import http from "../utils/adminHttp";
 
 const AddProduct = () => {
   const nameRef = useRef("");
@@ -28,12 +29,9 @@ const AddProduct = () => {
 
         console.log(formData);
 
-        const response = await axios.post(
-            "https://radiant-whispersstore.onrender.com/api/products/addProduct", 
-            formData,
-            {
-                headers: { "Content-Type": "multipart/form-data" },
-            }
+        const response = await http.post(
+            "/api/products/addProduct", 
+            formData
         );
 
         console.log(response.data);
