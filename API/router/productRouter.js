@@ -14,7 +14,7 @@ const validationMiddlewares=[
 
 
 router.get("/allProducts",AllProduct);
-router.post("/addProduct", AddProduct);
+router.post("/addProduct",[...validationMiddlewares], AddProduct);
 router.get("/getProduct/:id",GetProduct);
 router.delete("/DeleteAll",DeleteAllProduct);
 router.get("/",searchProduct);
