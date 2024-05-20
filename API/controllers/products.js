@@ -14,10 +14,6 @@ cloudinary.config({
 })
 
 
-//     const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array(), error_type: 0, created: false });
-    // }
 
 const AddProduct=async(req,res)=>{   
 
@@ -27,6 +23,11 @@ const AddProduct=async(req,res)=>{
           if (err) {
             return res.status(500).json({ error: 'Error uploading file' });
           }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array(), error_type: 0, created: false });
+    }
+
 console.log(files)
           // const name = Array.isArray(fields.name) ? fields.name[0] : fields.name;
           //   const price = Array.isArray(fields.price) ? fields.price[0] : fields.price;
