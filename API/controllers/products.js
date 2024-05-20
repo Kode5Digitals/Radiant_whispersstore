@@ -86,16 +86,11 @@ const DeleteAllProduct=async(req,res)=>{
 
 
 const AllProduct=async(req,res)=>{
-    try { const offset = parseInt(req.query.offset) || 0;
-    const limit = parseInt(req.query.limit) || 10;
-
-    const products = await productsModel.find({}, null, { skip: offset, limit });
-
-    const totalProductsCount = await productsModel.countDocuments();
-    const hasMore = offset + products.length < totalProductsCount;
-
-    res.json({ products: products, hasMore: hasMore });
+    try {
+    const products = await productsModel.find({});
+    res.json({ products: products });
 }
+
 catch (error) {
     console.error("Error fetching products:", error);
     res.status(500).json({ error: "Internal server error" });

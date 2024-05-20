@@ -15,12 +15,13 @@ import {  addToCart } from "../stores/features/cart/cartSlice";
 import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
 import { FaHeart } from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
+import { Truncate, formatAmount } from "../utils/utils";
 function Products() {
   const dispatch = useDispatch()
 const [loading, setLoading] = useState(false);
 const [moreLoading, setMoreLoading] = useState(false);
 const products = useSelector((state) => state.products);
-const [visibleProducts, setVisibleProducts] = useState(10);
+const [visibleProducts, setVisibleProducts] = useState(15);
 const {wishlistItems }= useSelector((state)=>state?.whishlist);      
  const handleAllProducts=async()=>{
   try {
@@ -34,7 +35,6 @@ const {wishlistItems }= useSelector((state)=>state?.whishlist);
     }
     finally {
       setLoading(false);
-    setMoreLoading(false)
     }
  }
 
@@ -46,7 +46,7 @@ const {wishlistItems }= useSelector((state)=>state?.whishlist);
 
 
  const handleLoadMore = () => {
-  setVisibleProducts(prevVisibleProducts => prevVisibleProducts + 1) 
+  setVisibleProducts(prevVisibleProducts => prevVisibleProducts + 3) 
 };
 
 const handleAddToWishlist=(Id)=>{
@@ -63,16 +63,6 @@ const isProductInWishlist = (productId) => {
   const wish =wishlistItems.some(item => item._id === productId)
   return wish
 };
-
-
-
-function truncate(string, limit) {
-  let dots = "..."
-  if (string.length > limit) {
-    string = string.substring(0, limit) + dots
-  }
-  return string
-}
 
 
 
@@ -111,11 +101,11 @@ return (
                 )}
               </div>
               <div className="p-1 ">
-                <h3 className="text-sm">{truncate(prod?.name, 30)}</h3>
-                <p className="text-[12px] w-full break-words ">{truncate(prod?.description, 30)}</p>
+                <h3 className="text-sm">{Truncate(prod?.name, 30)}</h3>
+                <p className="text-[12px] w-full break-words ">{Truncate(prod?.description, 30)}</p>
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md"><span></span>{prod?.price}</h4>
+                <h4 className="text-md"><span></span>{formatAmount(prod?.price)}</h4>
 
                 </div>
                 <h4 className="text-[12px]">{prod?.category}</h4>

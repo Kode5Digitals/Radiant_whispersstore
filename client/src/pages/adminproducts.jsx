@@ -12,6 +12,7 @@ import EditProduct from "../components/editProducts";
 import Cartcontext from "../cartcontext";
 import DeleteProduct from "../components/deleteModal";
 import { Truncate } from "../utils/utils";
+import { TbCurrencyNaira } from "react-icons/tb";
 
 function AdminProducts() {
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,6 @@ function AdminProducts() {
   const [openDelete,setOpenDelete]=useState(false)
   const[ deleteName, setDeleteName]=useState({name:"",id:""}) 
   const dispatch = useDispatch();
-  // selectWishlistItems
 
   const handleAllProducts = async () => {
     try {
@@ -73,6 +73,9 @@ const openDeleteModal=(name,id)=>{
    setDeleteName({name:name,id:id})
 }
 
+
+
+
   return (
     <AdminDefaultlayout>
     {openEdit &&  <EditProduct setOpenEdit={setOpenEdit} />}
@@ -89,9 +92,11 @@ const openDeleteModal=(name,id)=>{
              
               </div>
               <div className="p-1 ">
-                <h3 className="text-sm">{Truncate(30,prod?.name)}</h3>
-            
-                <h4 className="text-md">{prod?.price}</h4>
+                <h3 className="text-[13px]">{Truncate(prod?.name,30)}</h3>
+                <div className="flex items-center">
+                <TbCurrencyNaira /> 
+                <h4 className="text-md"><span></span>{prod?.price}</h4>
+                </div>
               </div>
               <div className="flex justify-between  ">
                 <div className="justify-center flex ">
