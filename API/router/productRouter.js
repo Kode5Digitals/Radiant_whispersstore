@@ -6,7 +6,7 @@ const auth = require("../middleware/auth");
 
 const validationMiddlewares=[
   check("name", "Enter Product Name").not().isEmpty(),
-    check("price", " price").not().isEmpty(),
+    check("price", " enter price").not().isEmpty(),
     check("image", "Add Image Link").not().isEmpty(),
     check("description", "Enter Product Description").not().isEmpty(),
     check("category", "Enter Product category").not().isEmpty(),
@@ -16,7 +16,7 @@ const validationMiddlewares=[
 router.get("/allProducts",AllProduct);
 router.post("/addProduct",[
   check("name", "Enter Product Name").not().isEmpty(),
-    check("price", " price").not().isEmpty(),
+    check("price", "enter price").not().isEmpty(),
     check("image", "Add Image Link").not().isEmpty(),
     check("description", "Enter Product Description").not().isEmpty(),
     check("category", "Enter Product category").not().isEmpty(),
