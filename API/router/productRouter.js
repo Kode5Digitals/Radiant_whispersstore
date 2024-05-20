@@ -14,14 +14,9 @@ const validationMiddlewares=[
 
 
 router.get("/allProducts",AllProduct);
-router.post("/addProduct", 
- [
-  ...validationMiddlewares,auth
-  ],
-  AddProduct
-);
+router.post("/addProduct", AddProduct);
 router.get("/getProduct/:id",GetProduct);
-router.delete("/DeleteAll",[auth],DeleteAllProduct);
+router.delete("/DeleteAll",DeleteAllProduct);
 router.get("/",searchProduct);
 router.get("/category/:categoryName",category);
 

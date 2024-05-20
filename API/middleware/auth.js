@@ -8,9 +8,7 @@ const { jwtKey } = require("../config/env");
 async function auth(req, res, next) {
   let user
   try {
-
     const  authHeader = req.headers.authorization
-
     if (!authHeader) {
       return res.status(401).json({ message: " No token provided" });
     }
@@ -30,7 +28,6 @@ async function auth(req, res, next) {
     }
     next();
   } catch (error) {
-    console.log(error);
     return res.status(401).json({ message: "unautorized"});
   }
 

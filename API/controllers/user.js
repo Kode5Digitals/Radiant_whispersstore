@@ -12,7 +12,6 @@ const Signup = async (req, res, next) => {
     res.json({ error: error.array(),error_type:0,created:false});
     return;
   }
-
   const findoneUser = await userModel.findOne({ email: email });
   if (findoneUser) {
     res.json({ message: "Account already exist" ,error_type:1,created:false})
@@ -48,41 +47,69 @@ const Signup = async (req, res, next) => {
   }
 };
 
+// const Login = async (req, res, next) => {
+//   const { email, password } = req.body;
+//   const error = validationResult(req);
+//   console.log("login")
+//   try {
+//     if (!error.isEmpty()) {
+//       res.json({ error: error.array() ,error_type:0,created:false});
+//       return;
+//     }
+//     const findone = await userModel.findOne({ email: email });
+//     if (!findone) {
+//       res.json({ message: "invalid account",error_type:1,created:false });
+//       return;
+//     }
+
+//     const isValid =  await bcrypt.compare(password, findone.password, (err, isValid) => {
+//       if (isValid) {
+//         const id = findone._id;
+//         const signOptions = {
+//           algorithm: 'HS256',
+//           expiresIn: '1h'
+//         };
+        
+//         const token = jwt.sign({ id }, jwtKey, signOptions);
+//         res.status(200).json({ message: "Loggin",token,created:true });
+//       } else {
+//         res.json({ message: "Invalid Account oooo",created:false });
+//       }
+//     });
+//   } catch (error) {
+//     console.log(error)
+//   }
+// };
+
+
 const Login = async (req, res, next) => {
   const { email, password } = req.body;
-  const error = validationResult(req);
-  console.log("login")
+  const errors = validationResult(req);
+  console.log("login");
   try {
-    if (!error.isEmpty()) {
-      res.json({ error: error.array() ,error_type:0,created:false});
+    if (!errors.isEmpty()) {
+      res.json({ errors: errors.array(), error_type: 0, created: false });
       return;
     }
-    const findone = await userModel.findOne({ email: email });
-    if (!findone) {
-      res.json({ message: "invalid account",error_type:1,created:false });
+    const user = await userModel.findOne({ email: email });
+    if (!user) {
+      res.json({ message: "Invalid account", error_type: 1, created: false });
       return;
     }
-
-    await bcrypt.compare(password, findone.password, (err, isValid) => {
-      if (isValid) {
-        const id = findone._id;
-        const signOptions = {
-          algorithm: 'HS256',
-          expiresIn: '1h'
-        };
-        
-        const token = jwt.sign({ id }, jwtKey, signOptions);
-        res.cookie("jwt_token", token).status(200).json({ message: "Loggin",token,created:true });
-      } else {
-        res.json({ message: "Invalid Account oooo",created:false });
-      }
-    });
+    
+    const isValid = await bcrypt.compare(password, user.password);
+    if (isValid) {
+      const id = user._id;
+      const token = jwt.sign({ id }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' });
+      res.status(200).json({ message: "Logged in", token, created: true });
+    } else {
+      res.json({ message: "Invalid password", created: false });
+    }
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
-
-
 
 
 

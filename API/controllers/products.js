@@ -12,115 +12,61 @@ cloudinary.config({
   api_key: CloudApi_key,
   api_secret: CloudApi_secret
 })
-const AddProduct = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array(), error_type: 0, created: false });
-  }
+
+
+//     const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     return res.status(400).json({ errors: errors.array(), error_type: 0, created: false });
+    // }
+
+const AddProduct=async(req,res)=>{   
 
   const form = new formidable.IncomingForm();
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      return res.status(500).json({ error: 'Error uploading file', error_type: 0, created: false });
-    }
+  form.parse(req, async(err, fields, files) => {
+        try {
+          if (err) {
+            return res.status(500).json({ error: 'Error uploading file' });
+          }
+console.log(files)
+          // const name = Array.isArray(fields.name) ? fields.name[0] : fields.name;
+          //   const price = Array.isArray(fields.price) ? fields.price[0] : fields.price;
+          //   const description = Array.isArray(fields.description) ? fields.description[0] : fields.description;
+          const name = fields.name[0];
+          const price = fields.price[0];
+          const description = fields.description[0]
+          const category = fields.category[0]
+          const image = files.image[0].filepath;
+          console.log({ name, price, description ,category});
+          console.log(image)
+          const foldername = "Radiantwhhispersstoreimages"
+            const cloudinaryUploadResult = await cloudinary.uploader.upload(image, { folder:foldername  });
 
-    try {
-      const name = Array.isArray(fields.name) ? fields.name[0] : fields.name;
-      const price = Array.isArray(fields.price) ? fields.price[0] : fields.price;
-      const description = Array.isArray(fields.description) ? fields.description[0] : fields.description;
-      const category = Array.isArray(fields.category) ? fields.category[0] : fields.category;
-      const image = files.image[0].filepath;
+            const newProduct = new productsModel({
+                name,
+                price,
+                image: cloudinaryUploadResult.secure_url, 
+                description,
+                category
+            });
 
-      console.log({ name, price, description });
-      console.log(image);
+          // console.log("newProduct is",newProduct)
+            const findoneProduct = await productsModel.findOne({ name, price })
+            console.log(findoneProduct)
+            if (findoneProduct) {
+                return res.json({ message: "Product already exists", error_type: 1, created: false });
+            }
 
-      const foldername = "Radiantwhhispersstoreimages";
-      const cloudinaryUploadResult = await cloudinary.uploader.upload(image, { folder: foldername });
+            newProduct.save().then((prod) => {
+                const id = prod._id;
+                res.status(201).json({ prod, created: true, status: 1, message: "Product added" });
+            });
+        } catch (error) {
+            console.error('Error uploading file or saving product:', error);
+            res.status(500).json({ error: 'Error uploading file or saving product', created: false });
+        }
+  })
 
-      const newProduct = new productsModel({
-        name,
-        price,
-        image: cloudinaryUploadResult.secure_url,
-        description,
-        category
-      });
-
-      console.log("newProduct is", newProduct);
-
-      const findoneProduct = await productsModel.findOne({ name, price, description });
-      console.log(findoneProduct);
-      if (findoneProduct) {
-        return res.status(409).json({ message: "Product already exists", error_type: 1, created: false });
-      }
-
-      await newProduct.save();
-      res.status(201).json({ prod: newProduct, created: true, status: 1, message: "Product added" });
-    } catch (error) {
-      console.error('Error uploading file or saving product:', error);
-      res.status(500).json({ error: 'Error uploading file or saving product', error_type: 0, created: false });
-    }
-  });
-};
-
-
-
-
-// const AddProduct=async(req,res)=>{   
-//        const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//         return res.status(400).json({ errors: errors.array(), error_type: 0, created: false });
-//     }
-
-//   const form = new formidable.IncomingForm();
-//   form.parse(req, async(err, fields, files) => {
-
-  
-//         try {
-//           if (err) {
-//             return res.status(500).json({ error: 'Error uploading file' });
-//           }
-     
-//           // const name = Array.isArray(fields.name) ? fields.name[0] : fields.name;
-//           //   const price = Array.isArray(fields.price) ? fields.price[0] : fields.price;
-//           //   const description = Array.isArray(fields.description) ? fields.description[0] : fields.description;
-//           const name = fields.name[0];
-//           const price = fields.price[0];
-//           const description = fields.description[0]
-//           const category = fields.category[0]
-//           const image = files.image[0].filepath;
-//           console.log({ name, price, description });
-//           console.log(image)
-//           const foldername = "Radiantwhhispersstoreimages"
-//             const cloudinaryUploadResult = await cloudinary.uploader.upload(image, { folder:foldername  });
-
-//             const newProduct = new productsModel({
-//                 name,
-//                 price,
-//                 image: cloudinaryUploadResult.secure_url, 
-//                 description,
-//                 category
-//             });
-
-//           console.log("newProduct is",newProduct)
-
-
-//             const findoneProduct = await productsModel.findOne({ name, price, description })
-//             console.log(findoneProduct)
-//             if (findoneProduct) {
-//                 return res.json({ message: "Product already exists", error_type: 1, created: false });
-//             }
-
-//             newProduct.save().then((prod) => {
-//                 const id = prod._id;
-//                 res.status(201).json({ prod, created: true, status: 1, message: "Product added" });
-//             });
-//         } catch (error) {
-//             console.error('Error uploading file or saving product:', error);
-//             res.status(500).json({ error: 'Error uploading file or saving product', created: false });
-//         }
-//   })
-
-// }
+}
 
 
 
@@ -203,7 +149,6 @@ const searchProduct=async(req,res)=>{
 const category= async (req, res) => {
   try {
     const categoryName = req.params.categoryName;
-    console.log(categoryName)
     const products = await productsModel.find({ category: categoryName });
     res.json(products);
   } catch (error) {
