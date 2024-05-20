@@ -96,8 +96,8 @@ const verifyAccount = async (req, res, next) => {
 
 const GetEditProduct = async (req, res) => {
   const productId = req.params.id;
-  console.log("edit");
-  console.log(productId);
+  // console.log("edit");
+  // console.log(productId);
   const product = await productsModel.findById(productId);
   console.log(product);
   res.json({ product });

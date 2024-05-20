@@ -11,6 +11,7 @@ import AdminDefaultlayout from "../layout/AdminLayout";
 import EditProduct from "../components/editProducts";
 import Cartcontext from "../cartcontext";
 import DeleteProduct from "../components/deleteModal";
+import axios from "axios";
 
 function AdminProducts() {
   const [loading, setLoading] = useState(false);
@@ -50,12 +51,15 @@ function AdminProducts() {
 
   //edit product
  const handleEdit=async(id)=>{
-    try {
-        const response = await httpAuth.get(`/admin/product/edit/${id}`);
-        const data = await response.data.product;
-        // console.log(data)
-        setEditobj(data) 
+  console.log(id)
 
+    try {
+        const response = await axios.get(`/admin/product/edit/${id}`);
+        console.log(response.data)
+
+        const data = await response.data.product;
+        console.log(data)
+        setEditobj(data) 
    } catch (error) {
         console.log(error);
       } finally {
@@ -71,7 +75,7 @@ const openDeleteModal=(name,id)=>{
 
   return (
     <AdminDefaultlayout>
-    {openEdit &&  <EditProduct  />}
+    {openEdit &&  <EditProduct setOpenEdit={setOpenEdit} />}
      {openDelete  &&<DeleteProduct deleteName={deleteName} />}
     <main className="mb-10 ">
       {loading && <LoadingSpinner />}

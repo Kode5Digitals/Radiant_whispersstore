@@ -18,8 +18,8 @@ const loginValMiddleware=[
 ]
 
 router.post("/verifyAccount",verifyAccount);
-router.get("/edit/:id",[auth],GetEditProduct);
-router.post("/edit/:id",[auth],editProduct);
+router.get("/edit/:id",GetEditProduct);
+router.post("/edit/:id",editProduct);
 router.get('/new-arrivals',newArrivals)
 router.post("/login",
 [

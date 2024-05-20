@@ -16,11 +16,6 @@ const EditProduct = ({ setOpenEdit }) => {
   const editRef = useRef(null);
   const{editObj}=useContext(Cartcontext)
 
-
-
-
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -77,7 +72,7 @@ const EditProduct = ({ setOpenEdit }) => {
 
 
   useEffect(() => {
-    setimagesrc(editObj.image);
+    setimagesrc(editObj?.image);
   }, [editObj]);
 
 const handleEdit=async(e,id)=>{
@@ -209,8 +204,8 @@ const handleEdit=async(e,id)=>{
           />
         </div>
         <button
-        id={editObj._id}
-        onClick={(e)=>handleEdit(e,editObj._id)}
+        id={editObj?._id}
+        onClick={(e)=>handleEdit(e,editObj?._id)}
           type="submit"
           className="w-full mb-4 border-2 bg-[#f29cb3] border-pink-700 hover:text-white hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
         >
