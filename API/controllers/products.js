@@ -15,19 +15,13 @@ cloudinary.config({
 
 
 const AddProduct = async (req, res) => {
-console.log(req)
-  const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array(), error_type: 0, created: false });
-    }
+
   const form = new formidable.IncomingForm();
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
       return res.status(500).json({ error: 'Error parsing form data' });
     }
-
-
     try {
       const { name, price, description, category } = fields;
       const imageFile = files.image ? files.image[0].filepath : null;

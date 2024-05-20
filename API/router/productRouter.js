@@ -14,14 +14,7 @@ const validationMiddlewares=[
 
 
 router.get("/allProducts",AllProduct);
-router.post("/addProduct",[
-  check("name", "Enter Product Name").not().isEmpty(),
-    check("price", "enter price").not().isEmpty(),
-    check("image", "Add Image Link").not().isEmpty(),
-    check("description", "Enter Product Description").not().isEmpty(),
-    check("category", "Enter Product category").not().isEmpty(),
-]
-, AddProduct);
+router.post("/addProduct", AddProduct);
 router.get("/getProduct/:id",GetProduct);
 router.delete("/DeleteAll",DeleteAllProduct);
 router.get("/",searchProduct);
