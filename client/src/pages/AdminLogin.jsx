@@ -1,8 +1,8 @@
 import { useRef } from "react";
-import httpAuth from "../utils/https";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import http from "../utils/adminHttp";
 function AdminLogin() {
     const emailRef = useRef('');
     const passwordRef = useRef('');
@@ -16,9 +16,10 @@ function AdminLogin() {
             password: passwordRef.current.value
         };
 try {
-  const res = await httpAuth.post("/admin/login", formData,{withCredentials:true})
+  const res = await http.post("/admin/login", formData,{withCredentials:true})
 
   if(res.data.created==true){
+    localStorage.setItem('token', res.data.token)
     toast.success(res.data.message);
 navigate("/adminHome")
     }
