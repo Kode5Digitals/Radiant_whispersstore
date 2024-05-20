@@ -112,6 +112,8 @@ const AddProduct = () => {
             id="name"
             className="mt-1 p-2 block text-[12px] w-full border border-white rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter Product Name"
+            required
+
           />
         </div>
         <div>
@@ -121,18 +123,21 @@ const AddProduct = () => {
           >
             Price
           </label>
+
           <input
             ref={priceRef}
             type="text"
             id="price"
             className="mt-1 p-2 text-[12px] block w-full border border-white rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter price"
+            required
           />
+          
         </div>
 
 
         <label htmlFor="category">Category:</label>
-  <select id="category" name="category"  ref={categoryRef} className="text-sm mt-4  bg-white  border-2 p-2 ml-3 rounded-xl mb-4">
+  <select required id="category" name="category"  ref={categoryRef} className="text-sm mt-4  bg-white  border-2 p-2 ml-3 rounded-xl mb-4">
     <option value="body cream">body cream</option>
     <option value="face cream">face cream</option>
     <option value="body wash">Body wash</option>
