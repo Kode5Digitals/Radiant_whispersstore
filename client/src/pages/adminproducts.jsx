@@ -11,7 +11,7 @@ import AdminDefaultlayout from "../layout/AdminLayout";
 import EditProduct from "../components/editProducts";
 import Cartcontext from "../cartcontext";
 import DeleteProduct from "../components/deleteModal";
-import axios from "axios";
+import { Truncate } from "../utils/utils";
 
 function AdminProducts() {
   const [loading, setLoading] = useState(false);
@@ -54,8 +54,8 @@ function AdminProducts() {
   console.log(id)
 
     try {
-        const response = await axios.get(`/admin/product/edit/${id}`);
-        console.log(response.data)
+        const response = await httpAuth.get(`/admin/product/edit/${id}`);
+        console.log(response)
 
         const data = await response.data.product;
         console.log(data)
@@ -89,9 +89,8 @@ const openDeleteModal=(name,id)=>{
              
               </div>
               <div className="p-1 ">
-                <h3 className="text-sm">{prod?.name}</h3>
-              
-
+                <h3 className="text-sm">{Truncate(30,prod?.name)}</h3>
+            
                 <h4 className="text-md">{prod?.price}</h4>
               </div>
               <div className="flex justify-between  ">
