@@ -15,6 +15,7 @@ import {
   selectCart,
   removeAllFromCart,
 } from "../stores/features/cart/cartSlice";
+import { TbCurrencyNaira } from "react-icons/tb";
 
 const Cart = () => {
   const { items, totalQuantity, totalPrice } = useSelector(selectCart);
@@ -56,9 +57,13 @@ const Cart = () => {
 
         <div className="mr-40 flex items-center gap-3">
           <p>Total Price:</p>
-          <button className="py-2 px-4 text-sm bg-blue-200 text-black flex justify-center items-center rounded-md">
-            ${totalPrice.toFixed(2)}
+          <button className="py-2  px-4 text-sm bg-blue-200 text-black flex justify-center items-center rounded-md">
+          <TbCurrencyNaira /> 
+            <span className="">
+               {totalPrice.toFixed(2)}
+                </span>
           </button>
+          
         </div>
       </div>
 
@@ -66,34 +71,38 @@ const Cart = () => {
         <div>
           {items.map((val, index) => (
             <div key={index} className="  mt-5 w-3/4 mx-auto flex gap-14">
-              <div className="flex min:w-64 w-64 h-52 rounded-xl hover:w-[400px] overflow-hidden">
+              <div className="flex p-3 min:w-64 w-64 border h-52 rounded-xl hover:w-[400px] overflow-hidden">
                 <img
                   src={val?.image}
                   className="w-full h-full"
                   alt={val?.name}
                 />
               </div>
-              <div className=" bg-pink-400 w-full text-white p-3">
-                <h2 className="text-xl text-center mb-5">{val?.name}</h2>
-                <h2 className="text-lg">{val?.description}</h2>
-                <h2 className="text-lg">${val?.price}</h2>
-                <h2 className="text-lg">
-                  ${parseFloat(val.price) * val.quantity}
-                </h2>
-
-                <div className="flex justify-between mt-12">
+              <div className=" bg-white h-52 w-full border shadow-md text-black p-3">
+                <h2 className="text-md text-center mb-2">{val?.name}</h2>
+                <h2 className="text-sm">{val?.description}</h2>
+                <div className="flex items-center">
+                <TbCurrencyNaira /> 
+                <h4 className="text-md"><span></span>{val?.price}</h4>
+                </div>
+              
+                <div className="flex items-center">
+                <TbCurrencyNaira /> 
+                <h4 className="text-md"><span></span>{val?.price}</h4>
+                </div>
+                <div className="flex justify-between mt-3">
                   <div className="flex ">
                     <button
-                      className="w-9 h-9 text-sm bg-white text-black flex justify-center items-center rounded-md"
+                      className="w-9 h-9 border text-sm bg-white text-black flex justify-center items-center rounded-md"
                       onClick={() => handleIncreaseQuantity(val._id)}
                     >
                       +
                     </button>
-                    <h4 className="w-9 h-9 bg-pink-800 text-sm flex justify-center items-center rounded-md">
+                    <h4 className="w-9 h-9 text-sm flex justify-center items-center rounded-md">
                       {val?.quantity}
                     </h4>
                     <button
-                      className="w-9  bg-white  h-9 text-sm flex  text-black  justify-center items-center rounded-md"
+                      className="w-9  bg-white border  h-9 text-sm flex  text-black  justify-center items-center rounded-md"
                       onClick={() => handleDecreaseQuantity(val._id)}
                     >
                       -
@@ -126,9 +135,7 @@ const Cart = () => {
                   <li className="mb-3 flex items-center justify-between">
                     Total Price <p>2</p>
                   </li>
-                  <li className="mb-3 flex items-center justify-between">
-                    Total Price <p>4</p>
-                  </li>
+                
                 </ul>
               </div>
               <div className="flex gap-3 items-center">

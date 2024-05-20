@@ -21,7 +21,7 @@ function Products() {
 const [loading, setLoading] = useState(false);
 const [moreLoading, setMoreLoading] = useState(false);
 const products = useSelector((state) => state.products);
-const [visibleProducts, setVisibleProducts] = useState(15);
+const [visibleProducts, setVisibleProducts] = useState(10);
 const {wishlistItems }= useSelector((state)=>state?.whishlist);      
  const handleAllProducts=async()=>{
   try {

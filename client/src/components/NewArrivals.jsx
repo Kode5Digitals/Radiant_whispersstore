@@ -130,7 +130,7 @@ New Arrivals
                 )}
 
               </div>
-              <h3 className="text-sm">{item.name}</h3>
+              <h3 className="text-sm">{Truncate(item?.name,30)}</h3>
               <p className="text-[12px]">{Truncate(item?.description,30)}</p>
               <div className="flex items-center">
                 <TbCurrencyNaira /> 
