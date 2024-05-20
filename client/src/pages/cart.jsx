@@ -110,7 +110,7 @@ const Cart = () => {
                   </div>
                   <button
                     onClick={() => handleRemoveFromCart(val._id)}
-                    className="del-btn"
+                    className="del-btn  text-sm"
                   >
                     <FontAwesomeIcon color="red" icon={faTrash} />
                     Remove Item

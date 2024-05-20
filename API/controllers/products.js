@@ -99,8 +99,6 @@ catch (error) {
 }
 
 
-
-
 const GetProduct=async(req,res)=>{
 const { id } = req.params
 const product=await productsModel.findById(id)
@@ -145,6 +143,20 @@ const category= async (req, res) => {
   }
 }
 
+let cart = {
+  items: [],
+  totalPrice: 0
+};
+
+const getCart =(req, res) => {
+  res.json(cart);
+};
+
+const retrivCart= (req, res) => {
+  cart = req.body;
+  res.json(cart);
+}
+
 
 
 module.exports = {
@@ -153,6 +165,8 @@ module.exports = {
     AddProduct,
     DeleteAllProduct,
     searchProduct,
-    category
+    category,
+    getCart ,
+    retrivCart
   };
   

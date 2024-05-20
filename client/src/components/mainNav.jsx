@@ -11,17 +11,13 @@ import { BiSolidUserPin } from "react-icons/bi";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import httpAuth from "../utils/https";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart, updateCart } from '../features/cart/cartSlice';
 import { selectCartLength } from "../stores/features/cart/cartSlice";
 import HoverInfo from "./hoverInfo";
 import { TiSocialFacebook } from "react-icons/ti";
 import { FaInstagram, FaTwitter } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
-
-
-
-
-
 const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
   const {
     // handleLogin,
@@ -36,19 +32,13 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
   const [searchedProducts, setSearchedProducts] = useState([]);
   const [showProducts, setShowProducts] = useState(false); 
   const productRef = useRef(null);
-  const {wishlistItems }= useSelector((state)=>state?.whishlist);      
- 
-   //socials
-   const socials = [
-    { icon: TiSocialFacebook },
-    { icon: FaInstagram },
-    { icon: IoLogoWhatsapp },
-    { icon: FaTwitter },
-  ];
+  // const {wishlistItems }= useSelector((state)=>state?.whishlist);      
+  const dispatch = useDispatch();
+  const { items, totalPrice, status, error } = useSelector(state => state.cart)
 
 
 
-//search
+  
   const handleSearch =  useCallback(async () => {
     try {
       const response =await httpAuth.get(`/api/products/?search=${query}`);
@@ -58,6 +48,10 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
       console.error('Error fetching products:', error);
     }
   }, [query])
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
+
 
  //clear all products
  const clearProducts = useCallback( () => {
@@ -78,17 +72,6 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
   }, [query, handleSearch, clearProducts])
 
 
-  const handleChange = (e) => {
-    setQuery(e.target.value);
-  };
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-
-
-
   const handleClickOutside = (event) => {
     if (productRef.current && !productRef.current.contains(event.target)) {
       setShowProducts(false);
@@ -103,6 +86,45 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
       document.removeEventListener('click', handleClickOutside);
     };
   }, []);
+
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+
+  useEffect(() => {
+    if (status === 'succeeded') {
+      dispatch(updateCart({ items, totalPrice }));
+    }
+  }, [items, totalPrice, dispatch, status]);
+
+  
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
+
+
+   //socials
+   const socials = [
+    { icon: TiSocialFacebook },
+    { icon: FaInstagram },
+    { icon: IoLogoWhatsapp },
+    { icon: FaTwitter },
+  ];
+
+
+
+
+
+
 
   
 
@@ -141,7 +163,7 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
                 style={{ fontSize: "10px" }}
                 className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2 md:bottom-[-10px]"
               >
-                <p>{wishlistItems?.length}</p>
+                <p>{items?.length}</p>
               </div>
             </div>
             <BiSolidUserPin size={27} className="hidden md:block"  onClick={toggleMenu}/>
@@ -217,7 +239,7 @@ That&apos;s why we&apos;re dedicated to providing high-quality, natural body cre
               style={{ fontSize: "10px" }}
               className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2"
             >
-              <p>{wishlistItems?.length}</p>
+              <p>{items?.length}</p>
 
             </div>
           </div></Link>

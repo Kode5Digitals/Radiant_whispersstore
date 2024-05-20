@@ -1,13 +1,26 @@
 import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from "axios";
 
+export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
+  const response = await axios.get('https://radiant-whispersstore.onrender.com/api/products/api/cart');
+  return response.data;
+});
+
+// Async thunk for updating cart on the server
+export const updateCart = createAsyncThunk('cart/updateCart', async (cart) => {
+  const response = await axios.post('https://radiant-whispersstore.onrender.com/api/products/api/cart', cart);
+  return response.data;
+});
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    items: localStorage.getItem("cartItem")?JSON.parse(localStorage.getItem("cartItem")):[],
+    items: [],
     totalQuantity: 0,
     totalPrice: 0,
+    status: 'idle',
+    error: null
   },
   reducers: {
     addToCart: (state, action) => {
@@ -17,7 +30,7 @@ const cartSlice = createSlice({
           state.items.push({ ...newItem, quantity: 1, totalPrice: parseFloat(newItem.price) });
           state.totalQuantity++;
           state.totalPrice += parseFloat(newItem.price);
-          localStorage.setItem("cartItem",JSON.stringify(state.items))
+          // localStorage.setItem("cartItem",JSON.stringify(state.items))
           toast.success("item added")
         }else{
             toast.error("item already added ,view Cart")
@@ -36,7 +49,7 @@ const cartSlice = createSlice({
       
           state.totalQuantity -= removedItem.quantity;
           state.items.splice(existingItemIndex, 1);
-          localStorage.setItem("cartItem",JSON.stringify(state.items))
+          // localStorage.setItem("cartItem",JSON.stringify(state.items))
         }
       },
       
@@ -66,6 +79,25 @@ const cartSlice = createSlice({
         state.totalQuantity = 0; // Reset total quantity
         state.totalPrice = 0; // Reset total price
       },
+      extraReducers: (builder) => {
+        builder
+          .addCase(fetchCart.fulfilled, (state, action) => {
+            state.items = action.payload.items;
+            state.totalPrice = action.payload.totalPrice;
+            state.status = 'succeeded';
+          })
+          .addCase(fetchCart.pending, (state) => {
+            state.status = 'loading';
+          })
+          .addCase(fetchCart.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.error.message;
+          })
+          .addCase(updateCart.fulfilled, (state, action) => {
+            state.items = action.payload.items;
+            state.totalPrice = action.payload.totalPrice;
+          });
+      }
   },
 });
 
