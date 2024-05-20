@@ -14,99 +14,53 @@ cloudinary.config({
 })
 
 
-const AddProduct = async (req, res) => {
-
+const AddProduct=async(req,res)=>{   
   const form = new formidable.IncomingForm();
+  form.parse(req, async(err, fields, files) => {
+        try {
+          if (err) {
+            return res.status(500).json({ error: 'Error uploading file' });
+          }
+   
 
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      return res.status(500).json({ error: 'Error parsing form data' });
-    }
-    try {
-      const { name, price, description, category } = fields;
-      const imageFile = files.image ? files.image[0].filepath : null;
-
-      if (!name || !price || !description || !category || !imageFile) {
-        return res.status(400).json({ error: 'Missing required fields', error_type: 1, created: false });
-      }
-
-      const cloudinaryUploadResult = await cloudinary.uploader.upload(imageFile, {
-        folder: "Radiantwhhispersstoreimages"
-      });
-
-      const findoneProduct = await productsModel.findOne({ name });
-      if (findoneProduct) {
-        return res.status(400).json({ message: "Product already exists", error_type: 1, created: false });
-      }
-
-      const newProduct = new productsModel({
-        name,
-        price,
-        image: cloudinaryUploadResult.secure_url,
-        description,
-        category
-      });
-
-      const savedProduct = await newProduct.save();
-      res.status(201).json({ prod: savedProduct, created: true, status: 1, message: "Product added" });
-
-    } catch (error) {
-      console.error('Error uploading file or saving product:', error);
-      res.status(500).json({ error: 'Error uploading file or saving product', created: false });
-    }
-  });
-};
-
-// const AddProduct=async(req,res)=>{   
-//   const form = new formidable.IncomingForm();
-//   form.parse(req, async(err, fields, files) => {
-//         try {
-//           if (err) {
-//             return res.status(500).json({ error: 'Error uploading file' });
-//           }
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//         return res.status(400).json({ errors: errors.array(), error_type: 0, created: false });
-//     }
-
-// console.log(files)
+console.log(files)
         
-//           const name = fields.name[0];
-//           const price = fields.price[0];
-//           const description = fields.description[0]
-//           const category = fields.category[0]
-//           const image = files.image[0].filepath;
-//           console.log({ name, price, description ,category});
-//           console.log(image)
-//           const foldername = "Radiantwhhispersstoreimages"
-//             const cloudinaryUploadResult = await cloudinary.uploader.upload(image, { folder:foldername  });
+          const name = fields.name[0];
+          const price = fields.price[0];
+          const description = fields.description[0]
+          const category = fields.category[0]
+          const image = files.image[0].filepath;
+          console.log({ name, price, description ,category});
+          console.log(image)
+          const foldername = "Radiantwhhispersstoreimages"
+            const cloudinaryUploadResult = await cloudinary.uploader.upload(image, { folder:foldername  });
 
-//             const newProduct = new productsModel({
-//                 name,
-//                 price,
-//                 image: cloudinaryUploadResult.secure_url, 
-//                 description,
-//                 category
-//             });
+            const newProduct = new productsModel({
+                name,
+                price,
+                image: cloudinaryUploadResult.secure_url, 
+                description,
+                category
+            });
 
-//           // console.log("newProduct is",newProduct)
-//             const findoneProduct = await productsModel.findOne({ name })
-//             console.log(findoneProduct)
-//             if (findoneProduct) {
-//                 return res.json({ message: "Product already exists", error_type: 1, created: false });
-//             }
+          // console.log("newProduct is",newProduct)
+            const findoneProduct = await productsModel.findOne({ name })
+            console.log(findoneProduct)
+            if (findoneProduct) {
+                return res.json({ message: "Product already exists", error_type: 1, created: false });
+            }
 
-//             newProduct.save().then((prod) => {
-//                 const id = prod._id;
-//                 res.status(201).json({ prod, created: true, status: 1, message: "Product added" });
-//             });
-//         } catch (error) {
-//             console.error('Error uploading file or saving product:', error);
-//             res.status(500).json({ error: 'Error uploading file or saving product', created: false });
-//         }
-//   })
+            newProduct.save().then((prod) => {
+                const id = prod._id;
+                res.status(201).json({ prod, created: true, status: 1, message: "Product added" });
+            });
+        } catch (error) {
+            console.error('Error uploading file or saving product:', error);
+            res.status(500).json({ error: 'Error uploading file or saving product', created: false });
+        }
+  })
 
-// }
+}
 
 
 
