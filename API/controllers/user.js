@@ -37,7 +37,7 @@ const Signup = async (req, res, next) => {
       res
         .cookie("jwtToken", token)
         .status(201)
-        .send({ id, created: true, token,message:"sucessfilly registered" });
+        .send({ id, created: true, token ,message:"sucessfilly registered" });
     });
 
   } catch (error) {

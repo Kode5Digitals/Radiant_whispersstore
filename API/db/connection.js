@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 const {CONNECTION_URL}=require("../config/env")
 const connect =
-mongoose.connect(CONNECTION_URL,{ useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 30000,  
-  socketTimeoutMS: 45000, })
+mongoose.connect(CONNECTION_URL)
+
   .then((res) => {
     console.log("Database connected")
   })
