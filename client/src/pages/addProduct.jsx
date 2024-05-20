@@ -4,7 +4,7 @@ import { MdInsertPhoto } from "react-icons/md";
 import "react-toastify/dist/ReactToastify.css";
 import AdminDefaultlayout from "../layout/AdminLayout";
 import axios from "axios";
-
+import { BiLoaderCircle } from "react-icons/bi";
 const AddProduct = () => {
   const nameRef = useRef("");
   const priceRef = useRef("");
@@ -12,11 +12,12 @@ const AddProduct = () => {
   const descriptionRef = useRef("");
   const categoryRef = useRef('');
   const [imagesrc, setimagesrc] = useState([]);
-
+  const [loading,setLoading]=useState(false)
   //add products
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
         const formData = new FormData();
         formData.append('name', nameRef.current.value);
         formData.append('price', priceRef.current.value);
@@ -42,6 +43,8 @@ const AddProduct = () => {
         }
     } catch (error) {
         console.log(error);
+    }finally{
+      setLoading(false)
     }
 };
 
@@ -182,13 +185,18 @@ const AddProduct = () => {
         </div>
 
   
-
+{!loading &&
         <button
           type="submit"
           className="w-full mb-4  border-2  bg-[#f29cb3] border-pink-700 hover:text-white  hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
         >
           Add Product
-        </button>
+        </button>}
+     { loading &&  <button type="button" className="w-full mb-4 flex items-center justify-center border-2  bg-[#f29cb3] border-pink-700 hover:text-white  hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105" disabled>
+  
+  <BiLoaderCircle className="animate-spin" />
+  Processing...
+</button>}
       
       </form>
 

@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import {Truncate} from "../utils/utils"
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { TfiMore } from "react-icons/tfi";
+import { TbCurrencyNaira } from "react-icons/tb";
 function NewArrivals() {
   const flexContainerRef = useRef(null);
   const [showLeftIndicator, setShowLeftIndicator] = useState(false);
@@ -129,9 +130,14 @@ New Arrivals
                 )}
 
               </div>
-              <h3 className="text-lg">{item.name}</h3>
-              <p className="text-[13px]">{Truncate(item?.description,30)}</p>
-              <h4 className="text-[13px]">#{item.price}</h4>
+              <h3 className="text-sm">{item.name}</h3>
+              <p className="text-[12px]">{Truncate(item?.description,30)}</p>
+              <div className="flex items-center">
+                <TbCurrencyNaira /> 
+                <h4 className="text-md"><span></span>{item?.price}</h4>
+                </div>
+              <h3 className="text-[12px]">{item.category}</h3>
+
               <div className="flex justify-between mt-2">
                
 

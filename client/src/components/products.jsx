@@ -14,7 +14,7 @@ import { setProducts } from "../stores/features/product/productSlice";
 import {  addToCart } from "../stores/features/cart/cartSlice";
 import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
 import { FaHeart } from "react-icons/fa";
-
+import { TbCurrencyNaira } from "react-icons/tb";
 function Products() {
   const dispatch = useDispatch()
 const [loading, setLoading] = useState(false);
@@ -89,10 +89,10 @@ return (
           </Typography>
         </div>
       ) : (
-        <div className="flex w-full sm:gap-5 sm:flex-wrap justify-evenly xl:justify-center 2xl:justify-evenly ">
+        <div className="flex flex-wrap w-full sm:gap-5 sm:flex-wrap justify-evenly xl:justify-center 2xl:justify-between ">
           {products.slice(0, visibleProducts).map((prod, index) => (
-            <div key={index} className="mb-20 max-w-48 xl:w-48 h-84">
-              <div className="w-full h-52 shadow-xl overflow-hidden rounded-lg mb-3 relative">
+            <div key={index} className="mb-20 max-w-72 min-w-52 xl:w-48 h-84 ">
+              <div className="w-full h-52 shadow-xl overflow-hidden rounded-lg mb-3 bg-black border relative">
                 <img src={prod?.image} className="w-full h-full" alt="" />
                 {!isProductInWishlist(prod._id) ? (
                   <CiHeart
@@ -111,10 +111,14 @@ return (
                 )}
               </div>
               <div className="p-1 ">
-                <h3 className="text-sm">{prod?.name}</h3>
+                <h3 className="text-sm">{truncate(prod?.name, 30)}</h3>
                 <p className="text-[12px] w-full break-words ">{truncate(prod?.description, 30)}</p>
-                <h4 className="text-md">{prod?.price}</h4>
-                <h4 className="text-md">{prod?.category}</h4>
+                <div className="flex items-center">
+                <TbCurrencyNaira /> 
+                <h4 className="text-md"><span></span>{prod?.price}</h4>
+
+                </div>
+                <h4 className="text-[12px]">{prod?.category}</h4>
               </div>
               <div className="flex justify-between">
                 <div className="justify-center flex">
