@@ -66,7 +66,12 @@ const Login = async (req, res, next) => {
     await bcrypt.compare(password, findone.password, (err, isValid) => {
       if (isValid) {
         const id = findone._id;
-        const token = jwt.sign({ id }, jwtKey, { expiresIn: "7d" });
+        const signOptions = {
+          algorithm: 'HS256',
+          expiresIn: '1h'
+        };
+        
+        const token = jwt.sign({ id }, jwtKey, signOptions);
         res.cookie("jwt_token", token).status(200).json({ message: "Loggin",token,created:true });
       } else {
         res.json({ message: "Invalid Account oooo",created:false });

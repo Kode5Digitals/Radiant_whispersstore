@@ -9,16 +9,21 @@ async function auth(req, res, next) {
   let user
   try {
 
-    const token = req.headers.authorization && String(req.headers.authorization).split(" ")[1];
+    const  authHeader = req.headers.authorization
 
-    if (!token) {
-      return res.status(401).json({ message: "unauthorised 1" });
+    if (!authHeader) {
+      return res.status(401).json({ message: " No token provided" });
     }
-    const decoded = jwt.verify(token, jwtKey, { algorithms: "RS256" });
+    const token = authHeader.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized: Token not provided" });
+      }  
+    const decoded = jwt.verify(token, jwtKey, { algorithms: "HS256" });
     const id = decoded.id
     user = await UserModel.findOne({ _id: id })
+    console.log(user)
     if (!user) {
-      return res.status(401).json({ message: "unauthorised 2" });
+      return res.status(401).json({ message: "Unauthorized: User not found" });
     }
     else {
       req["user"] = user;
@@ -26,7 +31,7 @@ async function auth(req, res, next) {
     next();
   } catch (error) {
     console.log(error);
-    return res.status(401).json({ message: error.message });
+    return res.status(401).json({ message: "unautorized"});
   }
 
 

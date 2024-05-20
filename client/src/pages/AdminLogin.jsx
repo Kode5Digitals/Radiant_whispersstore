@@ -20,6 +20,7 @@ try {
 
   if(res.data.created){
     localStorage.setItem('token', res.data.token)
+    console.log(res.data.message)
     toast.success(res.data.message);
 navigate("/adminHome")
     }
@@ -36,6 +37,7 @@ navigate("/adminHome")
     
  catch (error) {
   console.log(error)
+  
 }
 
 

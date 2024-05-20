@@ -4,15 +4,14 @@ import { MdInsertPhoto } from "react-icons/md";
 import "react-toastify/dist/ReactToastify.css";
 import AdminDefaultlayout from "../layout/AdminLayout";
 import axios from "axios";
-import http from "../utils/adminHttp";
 
 const AddProduct = () => {
   const nameRef = useRef("");
   const priceRef = useRef("");
   const imageRef = useRef("");
   const descriptionRef = useRef("");
+  const categoryRef = useRef('');
   const [imagesrc, setimagesrc] = useState([]);
-  const categoryRef = useRef(null);
 
   //add products
   const handleSubmit = async (e) => {
@@ -24,18 +23,14 @@ const AddProduct = () => {
         formData.append('image', imageRef.current.files[0]);
         formData.append('description', descriptionRef.current.value);
         formData.append('category',categoryRef.current.value)
-
-     
-
-        console.log(formData);
-
-        const response = await http.post(
-            "/api/products/addProduct", 
-            formData
+        const response = await axios.post(
+            "https://radiant-whispersstore.onrender.com/api/products/addProduct", 
+            formData,
+            {
+                headers: { "Content-Type": "multipart/form-data" },
+            }
         );
-
         console.log(response.data);
-
         if (response.data.created) {
             toast.success(response.data.message);
         } else {
