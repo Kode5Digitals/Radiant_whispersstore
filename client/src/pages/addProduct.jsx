@@ -177,6 +177,7 @@ const AddProduct = () => {
             className="mt-1 mb-4 p-2 block text-[12px] w-full border h-40 border-white rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter Product Description"
             maxLength={200}
+            required
           />
         </div>
 
