@@ -15,26 +15,29 @@ const Banner2 = () => {
   };
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden ">
       <div className=" ">
         <Slider {...settings}>
           <div className="">
             <div
-              className=" h-[400px] w-full bg-cover bg-center flex justify-center items-center"
-              style={{ backgroundImage: 'url("banner3.png")' }}
-            ></div>
+              className=" w-full  bg-cover bg-center flex justify-center items-center"
+            >
+              <img src="banner3.png" alt="" className="" />
+            </div>
           </div>
           <div>
-            <div
-              className=" h-[400px] w-full bg-cover bg-center flex justify-center items-center"
-              style={{ backgroundImage: 'url("banner3.png")' }}
-            ></div>
+          <div
+              className=" w-full  bg-cover bg-center flex justify-center items-center"
+            >
+              <img src="banner3.png" alt="" />
+            </div>
           </div>
           <div>
-            <div
-              className=" h-[400px] w-full bg-cover bg-center flex justify-center items-center"
-              style={{ backgroundImage: 'url("banner3.png")' }}
-            ></div>
+          <div
+              className=" w-full  bg-cover bg-center flex justify-center items-center"
+            >
+              <img src="banner3.png" alt="" />
+            </div>
           </div>
         </Slider>
       </div>

@@ -13,3 +13,8 @@ export function Truncate(string, limit) {
 export function formatAmount  (amount) {
     return amount.toLocaleString();
   }
+  export function  formatPrice (price)  {
+    return price.toLocaleString('en-NG')
+    
+  }
+  

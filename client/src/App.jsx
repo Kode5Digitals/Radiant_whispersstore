@@ -40,7 +40,7 @@ xl:hidden md:hidden lg:hidden
       >
         <div className="mt-3 flex justify-between items-center ">
           <div className="w-[80px] h-[30px] flex justify-center items-center  md:w-[80px]">
-            <img src="logo.png" alt="" />
+            <img src="Logo2.png" alt="" />
           </div>
           <div></div>
 
@@ -55,7 +55,7 @@ xl:hidden md:hidden lg:hidden
               <span>
                 <FaRegRegistered />
               </span>
-              Register
+              About
             </li>
            
             <li onClick={handleLogin}  className="flex items-center gap-1 mb-4">
@@ -63,7 +63,7 @@ xl:hidden md:hidden lg:hidden
               <span>
                 <CiLogin />
               </span>
-              Login
+              Contact
             </li>
             <li className="flex items-center gap-1 mb-4">
               {" "}

@@ -22,7 +22,6 @@ const wishlistSlice = createSlice({
       localStorage.setItem("wishlistItems", JSON.stringify(state.wishlistItems));
         // console.log(state.wishlistItems.length)
       }
-      localStorage.setItem("wishlistItems", JSON.stringify(state.wishlistItems));
     },
 
     removeFromWishlist: (state, action) => {

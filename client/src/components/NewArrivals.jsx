@@ -7,7 +7,7 @@ import {  addToCart } from "../stores/features/cart/cartSlice";
 import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {Truncate} from "../utils/utils"
+import {Truncate, formatPrice} from "../utils/utils"
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { TfiMore } from "react-icons/tfi";
 import { TbCurrencyNaira } from "react-icons/tb";
@@ -15,7 +15,7 @@ import { BiLoaderCircle } from "react-icons/bi";
 function NewArrivals() {
   const flexContainerRef = useRef(null);
   const [showLeftIndicator, setShowLeftIndicator] = useState(false);
-const {wishlistItems }= useSelector((state)=>state?.whishlist);      
+const {wishlistItems}= useSelector((state)=>state?.whishlist);      
 const [loading,setLoading]=useState(true)
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch()
@@ -65,7 +65,7 @@ const [loading,setLoading]=useState(true)
     dispatch(toggleWishlistItem(Id))
   }
   const isProductInWishlist = (productId) => {
-    const wish =wishlistItems.some(item => item._id === productId)
+    const wish = wishlistItems.some(item => item._id === productId)
     return wish
   };
   
@@ -139,7 +139,7 @@ New Arrivals
               <p className="text-[12px]">{Truncate(item?.description,30)}</p>
               <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md"><span></span>{item?.price}</h4>
+                <h4 className="text-md"><span></span>{formatPrice(Number(item?.price))}</h4>
                 </div>
               <h3 className="text-[12px]">{item.category}</h3>
 

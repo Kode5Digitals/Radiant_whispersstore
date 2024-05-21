@@ -4,8 +4,6 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Cartprovider = ({ children }) => {
-  const [wishlist, setWishlist] = useState([]);
-  const [wishlistLnt, setWishlistLnt] = useState(0);
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const [cart, setCart] = useState([]);
@@ -43,24 +41,6 @@ const Cartprovider = ({ children }) => {
     }
   };
 
-  const removeWishItem = (item) => {
-    const updatedWishlist = wishlist.filter((product) => product !== item);
-    setWishlist(updatedWishlist);
-    setWishlistLnt(wishlist.length);
-    console.log(wishlist)
-  };
-
-  const handleWishlist = (item) => {
-    if (!wishlist.includes(item)) {
-      setWishlist([...wishlist, item]);
-      setWishlistLnt(wishlist.length);
-    console.log(wishlist)
-
-    } else {
-      removeWishItem(item);
-    }
-  };
-
   const Cartcont = {
     product: product,
     setProduct: setProduct,
@@ -71,8 +51,6 @@ const Cartprovider = ({ children }) => {
     setCart: setCart,
     cartNumber: cartNumber,
     setcartNumber: setcartNumber,
-    wishlistLnt: wishlistLnt,
-    wishlist: wishlist,
     openLogin: openLogin,
     setOpenLogin: setOpenLogin,
     handleLogin: handleLogin,
@@ -80,8 +58,6 @@ const Cartprovider = ({ children }) => {
     setOpenRegister: setOpenRegister,
     handleRegister: handleRegister,
     addCart: addCart,
-    handleWishlist: handleWishlist,
-    removeWishItem:removeWishItem,
     isOpen:isOpen,
     setIsOpen:setIsOpen,
     Back:Back,
@@ -89,7 +65,6 @@ const Cartprovider = ({ children }) => {
      setOpenEdit: setOpenEdit,
      editObj:editObj,
      setEditobj:setEditobj
-
   };
 
   return (

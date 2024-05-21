@@ -13,16 +13,17 @@ import {  useDispatch, useSelector } from 'react-redux';
 import { setProducts } from "../stores/features/product/productSlice";
 import {  addToCart } from "../stores/features/cart/cartSlice";
 import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
-import { Truncate } from "../utils/utils";
+import { Truncate, formatPrice } from "../utils/utils";
 function Products() {
   const dispatch = useDispatch()
 const [loading, setLoading] = useState(false);
 const [moreLoading, setMoreLoading] = useState(false);
 const products = useSelector((state) => state.products);
 const [visibleProducts, setVisibleProducts] = useState(10);
-const {wishlistItems }= useSelector((state)=>state?.whishlist);      
+const {wishlistItems}= useSelector((state)=>state?.whishlist); 
+
  const handleAllProducts=async()=>{
   try {
     setLoading(true);
@@ -51,7 +52,6 @@ const {wishlistItems }= useSelector((state)=>state?.whishlist);
 
 const handleAddToWishlist=(Id)=>{
   dispatch(toggleWishlistItem(Id))
- 
 }
 
 //add to cart
@@ -63,7 +63,6 @@ const isProductInWishlist = (productId) => {
   const wish =wishlistItems.some(item => item._id === productId)
   return wish
 };
-
 
 
 return (
@@ -105,7 +104,7 @@ return (
                 <p className="text-[12px] w-full ">{Truncate(prod?.description, 25)}</p>
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md"><span></span>{prod?.price.toLocaleString()}</h4>
+                <h4 className="text-md"><span></span>{formatPrice(Number(prod?.price))}</h4>
 
                 </div>
                 <h4 className="text-[12px]">{prod?.category}</h4>
@@ -120,10 +119,10 @@ return (
                 </div>
                 <button
                   id={prod._id}
-                  className="border text-sm px-2 rounded-md bg-pink-300 border-pink-600 hover:text-white hover:bg-pink-950"
+                  className="border text-sm px-5 rounded-md bg-pink-300 border-pink-600 hover:text-white hover:bg-pink-950"
                   onClick={() => handleAddToCart(prod)}
                 >
-                  Add Cart
+               <FaShoppingCart/>
                 </button>
               </div>
             </div>

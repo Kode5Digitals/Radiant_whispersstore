@@ -41,6 +41,7 @@ const router = createBrowserRouter([
 
    }
    ,
+   { path: "paystack", element: <PaystackComponent/> },
    {
     path: "/whishlist", element: < Wishlist/>,
    },

@@ -16,6 +16,7 @@ import {
   removeAllFromCart,
 } from "../stores/features/cart/cartSlice";
 import { TbCurrencyNaira } from "react-icons/tb";
+import { formatPrice } from "../utils/utils";
 
 const Cart = () => {
   const { items, totalQuantity, totalPrice } = useSelector(selectCart);
@@ -45,7 +46,7 @@ const Cart = () => {
           <FontAwesomeIcon icon={faArrowAltCircleLeft} size="2x" />
         </Link>
 
-        <div className="cursor-pointer flex  relative text-center text-lg xl:mr-6  text-pink-400">
+        <div className="cursor-pointer flex  relative text-center xl:items-center text-lg xl:mr-6  text-pink-400">
          <span className="xl:block hidden"> My Shopping Cart</span> 
          <span className="xl:hidden block">
           Cart
@@ -53,7 +54,7 @@ const Cart = () => {
          <FontAwesomeIcon icon={faCartPlus}  />
           <div
             style={{ fontSize: "10px" }}
-            className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center xl:left-40 xl:-top-2 left-12 -top-2"
+            className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center xl:left-40 xl:-top-1 left-12 -top-2"
           >
             <h6>{cartLength}</h6>
           </div>
@@ -61,10 +62,10 @@ const Cart = () => {
 
         <div className="xl:mr-40 flex items-center gap-3">
           <p>Total Price:</p>
-          <button className="py-2  px-4 text-sm bg-blue-200 text-black flex justify-center items-center rounded-md">
+          <button className="py-2 xl:px-4 px-2 text-sm bg-blue-200 text-black flex justify-center items-center rounded-md">
           <TbCurrencyNaira /> 
             <span className="">
-               {totalPrice.toFixed(2)}
+               {totalPrice}
                 </span>
           </button>
           
@@ -75,7 +76,7 @@ const Cart = () => {
         <div>
           {items.map((val, index) => (
             <div key={index} className="  mt-5 xl:w-3/4 mx-auto p-6 flex xl:gap-14 gap-3">
-              <div className="flex p-3 w-32  h-32 border xl:h-52 rounded-xl hover:w-[400px] overflow-hidden">
+              <div className="flex p-3 w-32  h-32 xl:w-72  xl:h-52 rounded-xl hover:w-[400px] overflow-hidden">
                 <img
                   src={val?.image}
                   className="w-full h-full"
@@ -87,7 +88,7 @@ const Cart = () => {
                 <h2 className="text-sm">{val?.description}</h2>
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md"><span></span>{val?.price}</h4>
+                <h4 className="text-md">{formatPrice(Number(val?.price))}</h4>
                 </div>
               
                 <div className="flex items-center">

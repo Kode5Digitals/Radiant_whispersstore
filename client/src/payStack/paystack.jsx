@@ -3,7 +3,8 @@ import { PaystackButton } from "react-paystack";
 import { toast } from "react-toastify";
 import { selectCart } from "../stores/features/cart/cartSlice";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { IoIosArrowDropleft } from "react-icons/io";
 const PaystackComponent = () => {
   const [email, setEmail] = useState("");
   const {  totalPrice } = useSelector(selectCart)
@@ -26,14 +27,18 @@ navigate("/home")
   };
 
   return (
-    <div className="flex justify-center mt-12">
-      <div className=" flex w-3/4 mt-30 ">
-        <div className="  w-1/2 h-[500px] ">
+    <div className="mt-12 ">
+      <div className="ml-3">
+      <Link to={"/cart"}>
+      <IoIosArrowDropleft size={30}/> </Link>
+      </div>
+      <div className="flex  xl:w-3/4 mt-30 w-full p-1 mt-6  xl:mt-0 m-auto justify-center">
+        <div className=" xl:w-1/2 h-[500px] w-full  hidden xl:block">
           <img src="bg6.jpeg" alt="" className="w-full h-full" />
         </div>
-        <div className=" h-[500px] w-1/2 flex p-4 justify-center  bg-pink-400">
-          <div className=" bg-white p-2">
-            <div className="w-[400px] ">
+        <div className=" h-[500px] xl:w-1/2 flex xl:p-4 justify-center  w-full p-2   bg-pink-400">
+          <div className=" bg-white xl:p-2  w-full p-1">
+            <div className="xl:w-[400px] w-full ">
               <label htmlFor="email">Email</label>
               <br />
               <input
@@ -61,7 +66,7 @@ navigate("/home")
               />
              
             </div>
-          <div className="flex justify-end mt-56 ">
+          <div className="flex xl:justify-end justify-center mt-32  xl:mt-56 ">
           <PaystackButton
               {...config}
               onSuccess={handlePaymentSuccess}
