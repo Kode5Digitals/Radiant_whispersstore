@@ -21,13 +21,16 @@ const Footer = ({logoSrc}) => {
               <img src={logoSrc}  alt=""className="" />
             </li> 
     </ul>
-      
+    <div  className="flex  xl:hidden gap-5 mt-10 ">
+        <div className="socials hover:bg-pink-400 hover:text-white"><TiSocialFacebook /></div>
+        <div className="socials  hover:bg-pink-400 hover:text-white"> <FaInstagram /></div>
+        <div className="socials  hover:bg-pink-400 hover:text-white"><IoLogoWhatsapp /></div>
+        <div className="socials  hover:bg-pink-400 hover:text-white"><FaTwitter /></div>
+      </div>
     
  </div>
  <div  className=" w-3/5 ">
         <ul>
-         
-    
       <li  className=" mt-2 text-[12px] ">
         &copy; 2024 Radiant_whispersstore. <br></br> All right reserved
       </li>

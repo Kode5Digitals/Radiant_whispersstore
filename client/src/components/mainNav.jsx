@@ -144,7 +144,6 @@ const MainNavbar = ({  logoSrc }) => {
               onClick={toggleMenu}
             />
           </div>
-
           <div className="hidden xl:block md:block">
             <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex  w-[500px]  p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
               <TfiSearch />

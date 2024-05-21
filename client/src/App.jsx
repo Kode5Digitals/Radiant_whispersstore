@@ -11,6 +11,8 @@ import { CiHeart } from "react-icons/ci";
 import Defaultlayout from "./layout/Defaultlayout";
 import Cartcontext from "./cartcontext";
 import { Link } from "react-router-dom";
+import { MdContactPage } from "react-icons/md";
+import { RiProfileLine } from "react-icons/ri";
 function Home() {
   const {
     handleLogin,
@@ -55,7 +57,7 @@ xl:hidden md:hidden lg:hidden
               <span>
                 <FaRegRegistered />
               </span>
-              About
+             Register
             </li>
            
             <li onClick={handleLogin}  className="flex items-center gap-1 mb-4">
@@ -63,9 +65,9 @@ xl:hidden md:hidden lg:hidden
               <span>
                 <CiLogin />
               </span>
-              Contact
+              Login
             </li>
-            <li className="flex items-center gap-1 mb-4">
+            {/* <li className="flex items-center gap-1 mb-4">
               {" "}
               <span>
                 <CiHeart size={22} />
@@ -73,6 +75,28 @@ xl:hidden md:hidden lg:hidden
             <Link to={"/whishlist"}>
          <span>
          Whislist
+         </span>
+            </Link>
+            </li> */}
+            <li className="flex items-center gap-1 mb-4">
+              {" "}
+              <span>
+              <MdContactPage />
+              </span>
+            <Link to={"/"}>
+         <span>
+         Contact
+         </span>
+            </Link>
+            </li>
+            <li className="flex items-center gap-1 mb-4">
+              {" "}
+              <span>
+              <RiProfileLine />
+              </span>
+            <Link to={"/"}>
+         <span>
+         About
          </span>
             </Link>
             </li>

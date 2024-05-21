@@ -71,7 +71,7 @@ return (
 
     {loading && <LoadingSpinner />}
     <div className="xl:w-4/5 w-full mt-12 mx-auto ">
-      {products.length === 0 && !loading ? (
+      {!loading  && products.length === 0? (
         <div className="flex flex-col items-center justify-center h-screen">
           <Typography variant="h6" className='text-pink-700 text-xl'>
             No products available
