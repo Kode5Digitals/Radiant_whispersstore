@@ -32,7 +32,7 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
   const [showProducts, setShowProducts] = useState(false); 
   const productRef = useRef(null);
   const {wishlistItems }= useSelector((state)=>state?.whishlist);      
- 
+ console.log(wishlistItems.length)
    //socials
    const socials = [
     { icon: TiSocialFacebook },
@@ -104,7 +104,7 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
     <div className="relative">
       <nav
         className="text-[#fd00cd]  bg-[#ffffff] 
-      font-bold text-sm  p-6 md:p-4   xl:p-6 flex-wrap  flex fixed w-full  z-50 border-b items-center top-0 xl:justify-around justify-between"
+      font-bold text-sm       flex-wrap  flex fixed w-full  z-50 border-b items-center top-0 xl:justify-around justify-between"
       >
 
         <RxHamburgerMenu
@@ -113,7 +113,7 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
           onClick={toggleMenu}
         />
 <Link to={"/"}>
-<div className="w-[100px] h-[20px] flex justify-center items-center  md:w-[80px]">
+<div className="w-[100px] mt-5 ml-16  flex justify-center items-center  md:w-[80px]">
           <img src={logoSrc} alt="Radiantwhispersstore Logo"  />
         </div>
 </Link>
@@ -142,7 +142,7 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
           </div>
 
       <div className="hidden xl:block md:block">
-      <div className="border  md:items-center md:mr-20 md:mt-0 xl:mr-20 flex  w-[500px]  p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
+      <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-32 flex  w-[500px]  p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
       <TfiSearch />
            
             <input
@@ -154,7 +154,7 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
               className="w-full"
             />
           </div>
-       {showProducts &&  searchedProducts.length > 0  &&  <div ref={productRef}   className="absolute  top-16 bg-white min-w-[300px] w-[300px] max-h-[300px]  overflow-y-auto p-2">
+       {showProducts &&  searchedProducts.length > 0  &&  <div ref={productRef}    className="absolute searchcase top-20 bg-white  w-[500px]  max-h-[300px]  overflow-y-auto p-2">
 <h4 className="text-center">Radiantwhispersstore</h4>
           {searchedProducts.map((product,index) => (
             <Link  to={`/ProductDetails/${product?._id}`}  key={index}>
@@ -178,7 +178,7 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
       </div>
         </div>
 
-        <div className="xl:flex gap-5 items-center hidden ">
+        <div className="xl:flex gap-3 items-center hidden pr-10">
 
 <div className="relative group">
 <button className="border-2 p-2   rounded-lg border-pink-400 hover:bg-pink-400 hover:text-white">
@@ -190,7 +190,7 @@ That&apos;s why we&apos;re dedicated to providing high-quality, natural body cre
 
 </div>
 <div className="relative group">
-<button className="border-2 p-2 rounded-lg hover:border-pink-400 bg-pink-400 text-white shadow-lg hover:bg-white hover:text-pink-700">
+<button className="border-2 p-2 rounded-lg border-pink-400 bg-pink-400 text-white shadow-lg hover:bg-white hover:text-pink-700">
   Contact us
 </button>
 <HoverInfo name=" Contact us" right="0px" info="Contact Us" socials={socials}/>

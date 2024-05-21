@@ -3,7 +3,7 @@ import { setProducts } from "../stores/features/product/productSlice";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useDispatch} from "react-redux";
 import httpAuth from "../utils/https";
-
+import { BiSolidCategoryAlt } from "react-icons/bi";
 const Navbar = () => {
   const dispatch = useDispatch()
   const [hovereddivItem, setHovereddivItem] = useState(null);
@@ -47,12 +47,12 @@ dispatch(setProducts(response.data));
     >
       <div className="flex gap-10 items-center ">
         <div
-          className="group relative  px-4 py-2  hover:bg-[#f3a7a7] hover:text-black"
+          className="group relative  px-4 py-2  hover:bg-white hover:text-black"
           onMouseEnter={() => handledivItemHover("Item 1") }
           onMouseLeave={handleMouseLeave}
         >
           <div className="flex  cursor-pointer text-lg items-center ">
-            <h4>Products</h4>
+          <BiSolidCategoryAlt /><h4>Products</h4>
             <span>
               <MdKeyboardArrowDown />
             </span>

@@ -11,22 +11,26 @@ import {Truncate} from "../utils/utils"
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { TfiMore } from "react-icons/tfi";
 import { TbCurrencyNaira } from "react-icons/tb";
+import { BiLoaderCircle } from "react-icons/bi";
 function NewArrivals() {
   const flexContainerRef = useRef(null);
   const [showLeftIndicator, setShowLeftIndicator] = useState(false);
 const {wishlistItems }= useSelector((state)=>state?.whishlist);      
-
+const [loading,setLoading]=useState(true)
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchNewArrivals = async () => {
       try {
+        setLoading(true)
         const response = await httpAuth.get('/admin/product/new-arrivals');
         const data = await response.data;
         setProducts(data);
       } catch (error) {
         console.error('Error fetching new arrivals:', error);
+      }finally{
+        setLoading(false)
       }
     };
 
@@ -107,8 +111,10 @@ New Arrivals
         ref={flexContainerRef}
         onScroll={handleScroll}
       >
-          {products?.map((item,index) => (
-            <div key={index} className="mb-10">
+        
+        
+      {!loading &&products?.map((item,index) => (
+            <div key={index} className="mb-10 newAriival ">
               <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative">
                 <img src={item.image} className="w-full h-full" alt="" />
               
@@ -155,8 +161,14 @@ New Arrivals
               
               </div>
             </div>
-          ))}
+          ))}  
+          
             </div>
+            {loading && <div className=" mb-32 text-2xl  flex items-center justify-center transition duration-300 ease-in-out transform ">
+  
+  <BiLoaderCircle className="animate-spin" />
+  Loading...
+            </div>}
   
     </div>
   )

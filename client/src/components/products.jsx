@@ -79,7 +79,7 @@ return (
           </Typography>
         </div>
       ) : (
-        <div className="flex flex-wrap w-full sm:gap-5 sm:flex-wrap justify-evenly xl:justify-center 2xl:justify-between ">
+        <div className="flex productscale flex-wrap w-full sm:gap-5 sm:flex-wrap justify-evenly xl:justify-center 2xl:justify-between ">
           {products.slice(0, visibleProducts).map((prod, index) => (
             <div key={index} className="mb-20 max-w-72 min-w-52 xl:w-48 h-84 ">
               <div className="w-full h-52 shadow-xl overflow-hidden rounded-lg mb-3 bg-black border relative">
@@ -101,7 +101,7 @@ return (
                 )}
               </div>
               <div className="p-1 ">
-                <h3 className="text-sm">{Truncate(prod?.name, 30)}</h3>
+                <h3 className="text-sm">{Truncate(prod?.name, 25)}</h3>
                 <p className="text-[12px] w-full ">{Truncate(prod?.description, 25)}</p>
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
