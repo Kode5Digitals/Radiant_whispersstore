@@ -67,12 +67,10 @@ const MainNavbar = ({  logoSrc }) => {
     setIsOpen(!isOpen);
   };
 
-  // const handleClickOutside = (event) => {
-  //   if (productRef.current && !productRef.current.contains(event.target)) {
-  //     setShowProducts(false);
-  //     setQuery("")
-  //   }
-  // };
+  const handleClickBack = () => {
+      setShowProducts(false);
+      setQuery("")
+  };
 
   // useEffect(() => {
   //   document.addEventListener('click', handleClickOutside);
@@ -162,9 +160,10 @@ const MainNavbar = ({  logoSrc }) => {
             {showProducts && searchedProducts.length > 0 && (
               <div
                 ref={productRef}
-                className="absolute  searchcase xl:top-20 bg-white  xl:w-[500px]  xl:max-h-[300px]  h-96 border-b-black right-0 top-[140px]   overflow-y-auto p-2"
+                className="absolute  searchcase xl:top-20 bg-white  xl:w-[500px]  xl:max-h-[300px]   h-screen pb-10 border-b-black border-3 right-0 top-[140px]   overflow-y-auto p-2"
               >
                 <h4 className="text-center">Radiantwhispersstore</h4>
+                <p onClick={handleClickBack}>back</p>
                 {searchedProducts.map((product, index) => (
                   <Link to={`/ProductDetails/${product?._id}`} key={index}>
                     <div className=" flex  xl:gap-8 mt-8 text-black hover:bg-[#e8e8e8]">

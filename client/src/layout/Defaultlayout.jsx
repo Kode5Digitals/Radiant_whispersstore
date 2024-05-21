@@ -8,7 +8,7 @@ const Defaultlayout = ({ setIsOpen, isOpen, Back, children}) => {
 
     return (
         <>
-            <MainNavbar logoSrc="Logo2.png"  setIsOpen={setIsOpen} isOpen={isOpen}  Back={Back}/>
+            <MainNavbar logoSrc="/Logo2.png"  setIsOpen={setIsOpen} isOpen={isOpen}  Back={Back}/>
             {children}
             <Footer  logoSrc="Logo4.png"/>
 
