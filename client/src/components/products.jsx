@@ -102,10 +102,10 @@ return (
               </div>
               <div className="p-1 ">
                 <h3 className="text-sm">{Truncate(prod?.name, 30)}</h3>
-                <p className="text-[12px] w-full break-words ">{Truncate(prod?.description, 30)}</p>
+                <p className="text-[12px] w-full ">{Truncate(prod?.description, 25)}</p>
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md"><span></span>{formatAmount(prod?.price)}</h4>
+                <h4 className="text-md"><span></span>{prod?.price.toLocaleString()}</h4>
 
                 </div>
                 <h4 className="text-[12px]">{prod?.category}</h4>

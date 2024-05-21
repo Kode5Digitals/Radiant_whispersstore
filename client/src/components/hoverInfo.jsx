@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const HoverInfo = ({  name, right = "0px", info, socials = [] }) => {
-    console.log("socials:", socials)
     
     
   return (

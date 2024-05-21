@@ -25,7 +25,6 @@ const {wishlistItems }= useSelector((state)=>state?.whishlist);
         const response = await httpAuth.get('/admin/product/new-arrivals');
         const data = await response.data;
         setProducts(data);
-        console.log("new arrivals :",data)
       } catch (error) {
         console.error('Error fetching new arrivals:', error);
       }
@@ -86,7 +85,7 @@ New Arrivals
 
 </div>
 
-     <div className="flex  justify-between ">
+     <div className="flex  justify-between p-3">
      {showLeftIndicator && (
         <div className="  w-12 h-12 flex justify-center bg-[#ebadd2]  items-center rounded-full cursor-pointer "  onClick={scrollLeft}>
           <button className="scroll-left bg-red">
@@ -104,7 +103,7 @@ New Arrivals
      </div>
       
       <div
-        className="flex  justify-between xl:gap-12 gap-2 p-3 scroll "
+        className="flex  justify-between xl:gap-24 gap-2 p-3 scroll "
         ref={flexContainerRef}
         onScroll={handleScroll}
       >

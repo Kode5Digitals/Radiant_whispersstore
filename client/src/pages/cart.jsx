@@ -88,7 +88,7 @@ const Cart = () => {
               
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md"><span></span>{val?.price}</h4>
+                <h4 className="text-md"><span></span>{val?.price*val.quantity}</h4>
                 </div>
                 <div className="flex justify-between mt-3">
                   <div className="flex ">

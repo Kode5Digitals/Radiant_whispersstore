@@ -11,8 +11,7 @@ import { BiSolidUserPin } from "react-icons/bi";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import httpAuth from "../utils/https";
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart, updateCart } from '../features/cart/cartSlice';
+import { useSelector } from 'react-redux';
 import { selectCartLength } from "../stores/features/cart/cartSlice";
 import HoverInfo from "./hoverInfo";
 import { TiSocialFacebook } from "react-icons/ti";
@@ -32,13 +31,19 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
   const [searchedProducts, setSearchedProducts] = useState([]);
   const [showProducts, setShowProducts] = useState(false); 
   const productRef = useRef(null);
-  // const {wishlistItems }= useSelector((state)=>state?.whishlist);      
-  const dispatch = useDispatch();
-  const { items, totalPrice, status, error } = useSelector(state => state.cart)
+  const {wishlistItems }= useSelector((state)=>state?.whishlist);      
+ 
+   //socials
+   const socials = [
+    { icon: TiSocialFacebook },
+    { icon: FaInstagram },
+    { icon: IoLogoWhatsapp },
+    { icon: FaTwitter },
+  ];
 
 
 
-  
+//search
   const handleSearch =  useCallback(async () => {
     try {
       const response =await httpAuth.get(`/api/products/?search=${query}`);
@@ -48,10 +53,6 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
       console.error('Error fetching products:', error);
     }
   }, [query])
-  useEffect(() => {
-    dispatch(fetchCart());
-  }, [dispatch]);
-
 
  //clear all products
  const clearProducts = useCallback( () => {
@@ -72,21 +73,6 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
   }, [query, handleSearch, clearProducts])
 
 
-  const handleClickOutside = (event) => {
-    if (productRef.current && !productRef.current.contains(event.target)) {
-      setShowProducts(false);
-      setQuery("")
-    }
-  };
-
-  console.log('MainNavbar socials:', socials);
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
-
   const handleChange = (e) => {
     setQuery(e.target.value);
   };
@@ -96,35 +82,21 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
   };
 
 
-  useEffect(() => {
-    if (status === 'succeeded') {
-      dispatch(updateCart({ items, totalPrice }));
+
+
+  const handleClickOutside = (event) => {
+    if (productRef.current && !productRef.current.contains(event.target)) {
+      setShowProducts(false);
+      setQuery("")
     }
-  }, [items, totalPrice, dispatch, status]);
+  };
 
-  
-  if (status === 'loading') {
-    return <div>Loading...</div>;
-  }
-
-  if (status === 'failed') {
-    return <div>Error: {error}</div>;
-  }
-
-
-   //socials
-   const socials = [
-    { icon: TiSocialFacebook },
-    { icon: FaInstagram },
-    { icon: IoLogoWhatsapp },
-    { icon: FaTwitter },
-  ];
-
-
-
-
-
-
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   
 
@@ -163,7 +135,7 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
                 style={{ fontSize: "10px" }}
                 className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2 md:bottom-[-10px]"
               >
-                <p>{items?.length}</p>
+                <p>{wishlistItems?.length}</p>
               </div>
             </div>
             <BiSolidUserPin size={27} className="hidden md:block"  onClick={toggleMenu}/>
@@ -182,7 +154,7 @@ const MainNavbar = ({ setIsOpen, isOpen ,logoSrc}) => {
               className="w-full"
             />
           </div>
-       {showProducts &&  searchedProducts.length > 0  &&  <div ref={productRef}   className="absolute  top-16 bg-white min-w-[500px] max-h-[300px]  overflow-y-auto p-2">
+       {showProducts &&  searchedProducts.length > 0  &&  <div ref={productRef}   className="absolute  top-16 bg-white min-w-[300px] w-[300px] max-h-[300px]  overflow-y-auto p-2">
 <h4 className="text-center">Radiantwhispersstore</h4>
           {searchedProducts.map((product,index) => (
             <Link  to={`/ProductDetails/${product?._id}`}  key={index}>
@@ -239,7 +211,7 @@ That&apos;s why we&apos;re dedicated to providing high-quality, natural body cre
               style={{ fontSize: "10px" }}
               className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2"
             >
-              <p>{items?.length}</p>
+              <p>{wishlistItems?.length}</p>
 
             </div>
           </div></Link>
