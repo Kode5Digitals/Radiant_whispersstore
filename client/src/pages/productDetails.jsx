@@ -40,7 +40,7 @@ const handleAddToWishlist=(Id)=>{
 
   return (
    < Defaultlayout>
-    <div className="mt-32 xl:flex xl:w-3/4  m-auto mb-16 justify-center xl:mr-32 xl:gap-10  ">
+    <div className="mt-40 p-3 xl:p-0 xl:flex xl:w-3/4  m-auto mb-16 justify-center xl:mr-32 xl:gap-10  ">
 <div className="xl:w-96 xl:h-96 rounded-2xl border overflow-hidden shadow-lg  ">
     <img src={productDetail?.image} className="w-full h-full" alt="" /></div>
 

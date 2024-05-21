@@ -93,7 +93,7 @@ const Cart = () => {
               
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md"><span></span>{val?.price*val.quantity}</h4>
+                <h4 className="text-md"><span></span>{formatPrice(Number(val?.price)*val.quantity)}</h4>
                 </div>
                 <div className="flex justify-between mt-3">
                   <div className="flex ">
@@ -132,13 +132,18 @@ const Cart = () => {
               <div className="mt-3">
                 <ul>
                   <li className="mb-3 flex items-center justify-between">
-                    No of item <p>{totalQuantity}</p>
+                    No of item <p>
+                      {totalQuantity}</p>
                   </li>
                   <li className="mb-3 flex items-center justify-between">
-                    Total Price <p>{totalPrice}</p>
+                    Total Price <p className="flex items-center"> 
+                <TbCurrencyNaira /> 
+                      {totalPrice}</p>
                   </li>
-                  <li className="mb-3 flex items-center justify-between">
-                    Total Price <p>2</p>
+                  <li className="mb-3  flex items-center justify-between">
+                    Total Price <p className="flex items-center">
+                <TbCurrencyNaira /> 
+                      {totalPrice}</p>
                   </li>
                 
                 </ul>

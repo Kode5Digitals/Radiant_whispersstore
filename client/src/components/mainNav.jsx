@@ -14,6 +14,7 @@ import httpAuth from "../utils/https";
 import { useSelector } from "react-redux";
 import { selectCartLength } from "../stores/features/cart/cartSlice";
 import HoverInfo from "./hoverInfo";
+import { MdArrowBackIos } from "react-icons/md";
 
 const MainNavbar = ({  logoSrc }) => {
   const {
@@ -163,12 +164,12 @@ const MainNavbar = ({  logoSrc }) => {
                 className="absolute  searchcase xl:top-20 bg-white  xl:w-[500px]  xl:max-h-[300px]   h-screen pb-10 border-b-black border-3 right-0 top-[140px]   overflow-y-auto p-2"
               >
                 <h4 className="text-center">Radiantwhispersstore</h4>
-                <p onClick={handleClickBack}>back</p>
+                <MdArrowBackIos onClick={handleClickBack} size={30}/>
                 {searchedProducts.map((product, index) => (
                   <Link to={`/ProductDetails/${product?._id}`} key={index}>
                     <div className=" flex  xl:gap-8 mt-8 text-black hover:bg-[#e8e8e8]">
                       <div className="w-1/2">
-                        <img src={product.image} className="w-12 h-12" alt="" />
+                        <img src={product.image} className="xl:w-12 xl:h-12" alt="" />
                       </div>
                       <div>
                         <p>{product.name}</p>
