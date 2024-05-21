@@ -112,7 +112,7 @@ const MainNavbar = ({  logoSrc }) => {
                 className="w-4 text-sm  bg-black text-white h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2    md:bottom-[-10px]"
               >
                 <h6>{wishlistItems?.length}</h6>
-              
+  
               </div>
            </div>
             </div>
@@ -144,8 +144,9 @@ const MainNavbar = ({  logoSrc }) => {
               onClick={toggleMenu}
             />
           </div>
-          <div className="hidden xl:block md:block">
-            <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex  w-[500px]  p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
+          <div className="">
+           <div className=" hidden xl:block md:block ">
+           <div className=" border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex  w-[500px]  p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
               <TfiSearch />
 
               <input
@@ -157,16 +158,17 @@ const MainNavbar = ({  logoSrc }) => {
                 className="w-full"
               />
             </div>
+           </div>
             {showProducts && searchedProducts.length > 0 && (
               <div
                 ref={productRef}
-                className="absolute searchcase top-20 bg-white  w-[500px]  max-h-[300px]  overflow-y-auto p-2"
+                className="absolute  searchcase xl:top-20 bg-white  xl:w-[500px]  xl:max-h-[300px]  h-96 border-b-black right-0 top-[140px]   overflow-y-auto p-2"
               >
                 <h4 className="text-center">Radiantwhispersstore</h4>
                 {searchedProducts.map((product, index) => (
                   <Link to={`/ProductDetails/${product?._id}`} key={index}>
-                    <div className=" flex gap-8 mt-8 text-black hover:bg-[#e8e8e8]">
-                      <div>
+                    <div className=" flex  xl:gap-8 mt-8 text-black hover:bg-[#e8e8e8]">
+                      <div className="w-1/2">
                         <img src={product.image} className="w-12 h-12" alt="" />
                       </div>
                       <div>
@@ -182,6 +184,21 @@ const MainNavbar = ({  logoSrc }) => {
             )}
           </div>
         </div>
+
+
+        <div className=" xl:hidden ">
+            <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex w-[390px]  p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
+              <TfiSearch />
+              <input
+                type="text"
+                value={query}
+                onChange={handleChange}
+                placeholder="Search"
+                style={{ background: 0, outline: "0" }}
+                className="w-full"
+              />
+            </div>
+            </div>
 
         <div className="xl:flex gap-3  items-center hidden pr-10">
           <div className="relative group ">

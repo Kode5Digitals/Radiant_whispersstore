@@ -1,13 +1,13 @@
-import { TfiSearch } from "react-icons/tfi"
+// import { TfiSearch } from "react-icons/tfi"
 import "../App.css"
 
 const Banner = () => {
   return (
-    <div className="relative xl:mt-20 mt-20">
+    <div className="relative xl:mt-20 mt-32">
 
 
 
-<div className=" xl:block md:block p-2 ">
+{/* <div className=" xl:block md:block p-2 ">
             <div className="flex items-center gap-2 border-black border p-2 rounded-xl">
               <TfiSearch />
 
@@ -20,7 +20,7 @@ const Banner = () => {
                 className="w-full"
               />
             </div>
-            </div>
+            </div> */}
 
 
       
