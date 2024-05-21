@@ -131,9 +131,11 @@ animation: myAnim 0.5s ease 0s 1 normal forwards;
 	}
 }
 .newAriival{
-  animation: myAnim 2s ease 0s 1 normal forwards;
+  animation: myA 2s ease 0s 1 normal forwards;
 }
-@keyframes myAnim {
+
+
+@keyframes myA {
 	0% {
 		opacity: 0;
 		transform: translateX(250px);
@@ -144,6 +146,8 @@ animation: myAnim 0.5s ease 0s 1 normal forwards;
 		transform: translateX(0);
 	}
 }
+
+
 .productscale{
   animation: myAnim 2s ease 0s 1 normal forwards;
 }

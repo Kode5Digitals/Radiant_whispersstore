@@ -1,8 +1,7 @@
 
-import React from 'react';
 import PropTypes from 'prop-types';
 
-const HoverInfo = ({  name, right = "0px", info, socials = [] }) => {
+const HoverInfo = ({  name, right = "0px", info}) => {
     
     
   return (
@@ -13,15 +12,7 @@ const HoverInfo = ({  name, right = "0px", info, socials = [] }) => {
 <h3> {name}</h3>
 
       <p className='text-[12px]'>{info}</p>
-      {name === "Contact us" && (
-        <ul className="flex gap-5 mt-2">
-          {socials.map((social, index) => (
-            <li key={index} className="socials hover:bg-pink-400 hover:text-white">
-              {React.createElement(social.icon)}
-            </li>
-          ))}
-        </ul>
-      )}
+    
     </div>
   );
 };
@@ -30,11 +21,6 @@ HoverInfo.propTypes = {
   name: PropTypes.string.isRequired,
   right: PropTypes.string,
   info: PropTypes.string.isRequired,
-  socials: PropTypes.arrayOf(
-    PropTypes.shape({
-      icon: PropTypes.elementType.isRequired,
-    })
-  ),
 };
 
 

@@ -58,22 +58,22 @@ dispatch(setProducts(response.data));
             </span>
           </div>
           {hovereddivItem === "Item 1" && (
-            <div className="absolute cursor-pointer  left-0 w-full  min-w-72 bg-white  z-30 py-2">
-               <div onClick={()=>handleAllProducts()} className="px-4 py-2 text-[#403f40] hover:bg-[#f4e4f2]  hover:text-black">
+            <div className="absolute cursor-pointer  left-0  w-36  text-white bg-pink-400 max-w-72 xl:bg-white  z-30 py-2">
+               <div onClick={()=>handleAllProducts()} className="px-4 py-2  hover:bg-[#f4e4f2]  hover:text-black">
                 All products
               </div>
 
-              <div onClick={()=>fetchCategory("body cream")} className="px-4 py-2 text-[#403f40] hover:bg-[#f4e4f2]  hover:text-black">
+              <div onClick={()=>fetchCategory("body cream")} className="px-4 py-2  hover:bg-[#f4e4f2]  hover:text-black">
                 Body Cream
               </div>
 
-              <div  onClick={()=>fetchCategory("face cream")} className="px-4 py-2  text-[#403f40] hover:bg-[#f4e4f2]  hover:text-black">
+              <div  onClick={()=>fetchCategory("face cream")} className="px-4 py-2   hover:bg-[#f4e4f2]  hover:text-black">
                 Face Cream
               </div> 
-               <div onClick={()=>fetchCategory("body oil")}  className="px-4 py-2  text-[#403f40] hover:bg-[#f4e4f2] hover:text-black">
+               <div onClick={()=>fetchCategory("body oil")}  className="px-4 py-2   hover:bg-[#f4e4f2] hover:text-black">
                 Body oil
               </div> 
-               <div  onClick={()=>fetchCategory("body Wash")} className="px-4 py-2  text-[#403f40] hover:bg-[#f4e4f2]  hover:text-black">
+               <div  onClick={()=>fetchCategory("body Wash")} className="px-4 py-2  hover:bg-[#f4e4f2]  hover:text-black">
                 Body Wash
               </div>
             </div>

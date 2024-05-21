@@ -15,7 +15,7 @@ import {  addToCart } from "../stores/features/cart/cartSlice";
 import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
 import { FaHeart } from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
-import { Truncate, formatAmount } from "../utils/utils";
+import { Truncate } from "../utils/utils";
 function Products() {
   const dispatch = useDispatch()
 const [loading, setLoading] = useState(false);
@@ -79,9 +79,9 @@ return (
           </Typography>
         </div>
       ) : (
-        <div className="flex productscale flex-wrap w-full sm:gap-5 sm:flex-wrap justify-evenly xl:justify-center 2xl:justify-between ">
+        <div className="flex p-2 xl:p-0 gap-3 flex-shrink-0 productscale flex-wrap w-full sm:gap-5 sm:flex-wrap justify-evenly xl:justify-center 2xl:justify-between ">
           {products.slice(0, visibleProducts).map((prod, index) => (
-            <div key={index} className="mb-20 max-w-72 min-w-52 xl:w-48 h-84 ">
+            <div key={index} className="mb-20  w-48 xl:w-48 h-84 ">
               <div className="w-full h-52 shadow-xl overflow-hidden rounded-lg mb-3 bg-black border relative">
                 <img src={prod?.image} className="w-full h-full" alt="" />
                 {!isProductInWishlist(prod._id) ? (

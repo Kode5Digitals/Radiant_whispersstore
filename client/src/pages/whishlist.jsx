@@ -6,10 +6,11 @@ import { clearWishlist  } from "../stores/features/whishlist/wishlistSlice";
 import { ToastContainer } from 'react-toastify';
 import {Capitalize} from '../utils/utils';
 import HoverDescription from '../components/HoverDescription';
+import { useState } from 'react';
 function Wishlist() {
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
   const {wishlistItems }= useSelector((state)=>state?.whishlist);      
-  
 const handleRemoveFromWishlist = (itemId) => {
     dispatch(removeFromWishlist(itemId));
   };
@@ -24,10 +25,12 @@ const handleAddToCart = (product) => {
     dispatch(clearWishlist());
 
   }
-  
+  const handleBack = () => {
+    setIsOpen(!isOpen)
+  };
   
   return (
-   <Defaultlayout>
+   <Defaultlayout  setIsOpen={setIsOpen} isOpen={isOpen} Back={handleBack}>
      <div className='mt-[85px] min-h-[350px]'>
       <h2 className='text-center text-xl w-full z-30 fixed bg-slate-100 p-2'>
       {wishlistItems.length <=0 &&

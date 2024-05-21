@@ -10,6 +10,7 @@ import { FaRegRegistered } from "react-icons/fa6";
 import { CiHeart } from "react-icons/ci";
 import Defaultlayout from "./layout/Defaultlayout";
 import Cartcontext from "./cartcontext";
+import { Link } from "react-router-dom";
 function Home() {
   const {
     handleLogin,
@@ -18,20 +19,14 @@ function Home() {
     setIsOpen,
     isOpen
   } = useContext(Cartcontext);
-  
-
-
-
-
-
-
+  console.log(isOpen)
   return (
     <main className="">
    < Defaultlayout setIsOpen={setIsOpen} isOpen={isOpen} Back={Back}>
       
       <div
         className={`menu fixed z-[10000] top-0 
-
+xl:hidden md:hidden lg:hidden
 
     bg-white p-2 w-1/3 h-full overflow-hidden transition-all duration-300
  
@@ -41,7 +36,6 @@ function Home() {
           ? "translate-x-0"
           : "-translate-x-full"
       }
-      
   `}
       >
         <div className="mt-3 flex justify-between items-center ">
@@ -76,7 +70,11 @@ function Home() {
               <span>
                 <CiHeart size={22} />
               </span>
-              Whislist
+            <Link to={"/whishlist"}>
+         <span>
+         Whislist
+         </span>
+            </Link>
             </li>
           </ul>
         </div>

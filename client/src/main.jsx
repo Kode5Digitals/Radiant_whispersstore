@@ -14,8 +14,10 @@ import Wishlist from './pages/whishlist.jsx'
 import AdminLogin from './pages/AdminLogin.jsx'
 import PaystackComponent from '../src/payStack/paystack.jsx'
 import AdminProducts from './pages/adminproducts.jsx'
+import NotFound from './pages/NotFound.jsx'
 
 const router = createBrowserRouter([
+  { path: "*", element: <NotFound /> },
    { path: "/", element: <App /> },
  
    {
@@ -36,11 +38,6 @@ const router = createBrowserRouter([
     children: [
           { path: "paystack", element: <PaystackComponent/> },
         ]
-
-   }
-   ,
-     {
-    path: "/paystack", element: < PaystackComponent/>,
 
    }
    ,
@@ -77,7 +74,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Cartprovider>
 
       <Provider store={store}>
-      <RouterProvider router={router} />
+      <RouterProvider router={router}  />
     </Provider>
     </Cartprovider>
 

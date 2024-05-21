@@ -12,8 +12,8 @@ const AdminNav = () => {
   return (
    <div className="flex items-center p-2 justify-between">
 <Link to={"/adminHome"}>
-<div className="w-12 h-12 overflow-hidden bg-black">
-  <img src="/logo.png" alt="" className="w-12 h-12"/>
+<div className=" overflow-hidden bg-black">
+  <img src="logo.png" alt="" className=""/>
 </div>
 
 </Link>

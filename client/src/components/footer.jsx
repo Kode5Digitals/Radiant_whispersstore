@@ -17,8 +17,8 @@ const Footer = ({logoSrc}) => {
       <li  className="text-lg font-bold mb-5">Contact Us</li>
       <li><a href="#" >Enquiry @Radiant_whispersstore.com</a></li>
       <li>(+234)90778808938 </li>
-      <li className=" mt-2  md:block hidden xl:block">
-              <img src={logoSrc}  alt=""className="w-20 h-20" />
+      <li className=" mt-2 w-[150px] md:block hidden xl:block">
+              <img src={logoSrc}  alt=""className="" />
             </li> 
     </ul>
       

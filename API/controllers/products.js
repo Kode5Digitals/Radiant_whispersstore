@@ -149,11 +149,11 @@ let cart = {
 };
 
 const getCart =(req, res) => {
-  res.json(cart);
+  res.json(cart.items.length);
 };
 
 const retrivCart= (req, res) => {
-  cart = req.body;
+ const cart = req.body;
   res.json(cart);
 }
 

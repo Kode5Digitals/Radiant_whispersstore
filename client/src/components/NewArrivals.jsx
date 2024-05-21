@@ -78,9 +78,9 @@ const [loading,setLoading]=useState(true)
   
 
   return ( 
-    <div className="mt-24">
+    <div className="xl:mt-24 ">
 
-<div className={`font-bold text-3xl   justify-center xl:mt-10 mt-12 xl:mb-0 mb-7 xl:gap-12 gap-6  items-center border-0 flex `}>
+<div className={`font-bold text-3xl justify-center xl:mt-10 mt-6 xl:mb-0 mb-7 xl:gap-12 gap-6  items-center border-0 flex `}>
     <hr  className="text-black  xl:w-1/3  w-3/12"/>
 <h4 className="xl:text-2xl text-lg ">
 New Arrivals
@@ -89,7 +89,7 @@ New Arrivals
 
 </div>
 
-     <div className="flex  justify-between p-3">
+     <div className="flex  justify-between xl:px-3 px-3">
      {showLeftIndicator && (
         <div className="  w-12 h-12 flex justify-center bg-[#ebadd2]  items-center rounded-full cursor-pointer "  onClick={scrollLeft}>
           <button className="scroll-left bg-red">
@@ -98,7 +98,7 @@ New Arrivals
         </div>
       )}
 
-        <div className=" cursor-pointer  w-12 h-12 flex justify-center bg-[#ebadd2]  items-center rounded-full  " onClick={scrollRight}>
+        <div className="cursor-pointer w-12 h-12 flex justify-center bg-[#ebadd2]  items-center rounded-full  " onClick={scrollRight}>
           <button className="scroll-right" >
             <PiGreaterThanLight />
           </button>
