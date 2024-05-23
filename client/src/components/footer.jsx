@@ -5,7 +5,6 @@ import { FaTwitter } from "react-icons/fa";
 import "../App.css"
 import PropTypes from "prop-types";
 import environment from "../config/env";
-
 import { FacebookShareButton,   WhatsappShareButton } from "react-share"
 
 const Footer = ({logoSrc}) => {
@@ -64,13 +63,13 @@ That&apos;s why we&apos;re dedicated to providing high-quality, natural body cre
                 </li>
       <li  className="hidden gap-5 mt-10  xl:flex">
         <div className="socials hover:bg-pink-400 hover:text-white">   
-         <FacebookShareButton url={import.meta.env.VITE_APP_Facebook_URL}>
+         <FacebookShareButton url={environment.FACEBOOK_URL}>
           <TiSocialFacebook />
           </FacebookShareButton>
           </div>
         <div className="socials  hover:bg-pink-400 hover:text-white"> <FaInstagram /></div>
         <div className="socials  hover:bg-pink-400 hover:text-white">
-           <WhatsappShareButton url={import.meta.env.VITE_APP_Whatsapp_url}>
+           <WhatsappShareButton url={environment.WHATSAPP_URL}>
           <IoLogoWhatsapp  />
           </WhatsappShareButton>
 </div>

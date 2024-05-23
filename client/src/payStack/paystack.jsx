@@ -5,6 +5,7 @@ import { selectCart } from "../stores/features/cart/cartSlice";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowDropleft } from "react-icons/io";
+import environment from "../config/env";
 
 const PaystackComponent = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +16,6 @@ const navigate=useNavigate()
   };
 
   const handlePaymentClose = () => {
-    toast.success("Payment modal closed");
 navigate("/home")
   };
 
@@ -23,7 +23,7 @@ navigate("/home")
     reference: new Date().getTime().toString(),
     email: email,
     amount: totalPrice * 100,
-    publicKey:import.meta.env.VITE__PAYSTACK_PUBLIC_KEY
+    publicKey:environment.PAYSTACK_PUBLIC_KEY
 ,
   };
 
