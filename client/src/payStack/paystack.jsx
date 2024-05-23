@@ -8,16 +8,16 @@ import httpAuth from "../utils/https";
 const PaystackComponent = () => {
   const [email, setEmail] = useState("");
   const { totalPrice } = useSelector(selectCart)
-const navigate=useNavigate()
+// const navigate=useNavigate()
 const [response, setResponse] = useState(null);
 const [loading, setLoading] = useState(false);
 
 const handlePayment = async () => {
+  console.log("pystack")
   setLoading(true);
  try{
-  const res = await httpAuth.post(`/api/paystack`, {
-    body: JSON.stringify({ amount: totalPrice * 100,email:email })
-  });
+  const res = await httpAuth.post("/api/paystack/payment", { amount: totalPrice * 100,email:email }
+  );
 
   const data = await res.json();
   setResponse(data);

@@ -12,6 +12,8 @@ import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { TfiMore } from "react-icons/tfi";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { BiLoaderCircle } from "react-icons/bi";
+import cors from "cors"
+cors()
 function NewArrivals() {
   const flexContainerRef = useRef(null);
   const [showLeftIndicator, setShowLeftIndicator] = useState(false);
@@ -24,7 +26,7 @@ const [loading,setLoading]=useState(true)
     const fetchNewArrivals = async () => {
       try {
         setLoading(true)
-        const response = await httpAuth.get('/admin/product/new-arrivals');
+        const response = await httpAuth.get('/api/products/new-arrivals');
         const data = await response.data;
         setProducts(data);
       } catch (error) {

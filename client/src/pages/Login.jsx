@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import httpAuth from "../utils/https";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from "react-router-dom";
 function Login({setOpenLogin}) {
     const emailRef = useRef('');
     const passwordRef = useRef('');
-     const navigate=useNavigate()
 
     
     const handleSubmit = async (e) => {
@@ -17,24 +15,19 @@ function Login({setOpenLogin}) {
             password: passwordRef.current.value
         };
 try {
-  const res = await httpAuth.post("/api/user/login", formData,{withCredentials:true})
+  const res = await httpAuth.post("/user/login", formData,{withCredentials:true})
 
   if(res.data.created==true){
     toast.success(res.data.message);
-navigate("/addproduct")
     }
     else if(res.data.created==false){
       toast.error(res.data.message);
-
            }
 
 }
-    
  catch (error) {
   console.log(error)
 }
-
-
     };
 
     const handleBack = () => {
