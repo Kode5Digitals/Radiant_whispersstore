@@ -16,15 +16,32 @@ function handler(req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", '*')
     res.setHeader("Access-Control-Allow-Headers", "Origin,X-Request,Content-Type,Accept,Authorization")
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,OPTIONS,DELETE")
+    next()
 }
 app.use(handler)
-app.use(cors(
-    {
-    origin:  ['https://radiant-whispersstore-nine.vercel.app','http://localhost:5173'],
-    credentials: true
-  }
-));
 
+const corsOptions = {
+    origin: [
+      'https://radiant-whispersstore-nine.vercel.app',
+      'http://localhost:5173'
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  };
+
+
+
+app.use(cors(corsOptions));
+
+
+
+
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+  });
+  
 app.use("/api/user",userRouter)
 app.use("/api/products",productRouter)
 app.use("/admin",adminRouter)
