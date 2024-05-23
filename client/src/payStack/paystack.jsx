@@ -5,19 +5,17 @@ import { selectCart } from "../stores/features/cart/cartSlice";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowDropleft } from "react-icons/io";
-import.meta.env.Facebook_URL
 
 const PaystackComponent = () => {
   const [email, setEmail] = useState("");
   const { totalPrice } = useSelector(selectCart)
 const navigate=useNavigate()
-  const handlePaymentSuccess = (response) => {
-    console.log(response);
+  const handlePaymentSuccess = () => {
     toast.success("Payment successful!");
   };
 
   const handlePaymentClose = () => {
-    console.log("Payment modal closed");
+    toast.success("Payment modal closed");
 navigate("/home")
   };
 
