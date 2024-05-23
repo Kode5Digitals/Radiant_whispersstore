@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import httpAuth from "../utils/https";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from "react-router-dom";
 function Login({setOpenLogin}) {
     const emailRef = useRef('');
     const passwordRef = useRef('');
@@ -14,15 +15,23 @@ function Login({setOpenLogin}) {
             email: emailRef.current.value,
             password: passwordRef.current.value
         };
+        console.log(formData)
 try {
   const res = await httpAuth.post("/user/login", formData,{withCredentials:true})
 
-  if(res.data.created==true){
+  if(res.data.created){
+    localStorage.setItem('token', res.data.token)
+    console.log(res.data.message)
     toast.success(res.data.message);
     }
-    else if(res.data.created==false){
-      toast.error(res.data.message);
-           }
+    else{
+        if(res.data.created.error_type === 0){
+            toast.error(res.data.error[0].msg);
+                 }
+                 else if (res.data.error_type === 1) {
+                    toast.error(res.data.message);
+                }
+    }
 
 }
  catch (error) {
@@ -68,10 +77,12 @@ try {
                 />
 
                 <div className="flex justify-between mt-3">
-                    <button className="border mb-3 text-[12px] p-1 rounded-lg w-1/3" type="submit">Login</button>
-                    <button className="border mb-3 text-[12px] p-1 rounded-lg w-1/3">Signup</button>
+                    <button className="border mb-3 text-[12px] p-1 rounded-lg w-1/3" >
+                     <Link to={"/register"}>
+                     Signup</Link></button>
+                    <button className="border mb-3 text-[12px] p-1 rounded-lg w-1/3" onClick={handleBack}>Back</button>
                 </div>
-                <button className="mb-3 text-[12px] p-2 rounded-lg w-full mt-3 bg-[#fd00cd] leading-tight shadow text-white transition duration-300 ease-in-out transform hover:scale-105" onClick={handleBack}>Back</button>
+                <button className="mb-3 text-[12px] p-2 rounded-lg w-full mt-3 bg-[#fd00cd] leading-tight shadow text-white transition duration-300 ease-in-out transform hover:scale-105" type="submit">Login</button>
             </form>
         </div>
     );

@@ -65,7 +65,7 @@ const Cart = () => {
           <button className="py-2 xl:px-4 px-2 text-sm bg-blue-200 text-black flex justify-center items-center rounded-md">
           <TbCurrencyNaira /> 
             <span className="">
-               {totalPrice}
+               {formatPrice(Number(totalPrice))}
                 </span>
           </button>
           

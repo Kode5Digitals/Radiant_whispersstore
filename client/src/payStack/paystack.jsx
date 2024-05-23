@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { selectCart } from "../stores/features/cart/cartSlice";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { IoIosArrowDropleft } from "react-icons/io";
 import httpAuth from "../utils/https";
 

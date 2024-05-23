@@ -21,14 +21,20 @@ console.log(formData)
     try {
       
       const res = await httpAuth.post("/api/user/register",formData,  { withCredentials: true });
+      if(res.data.created){
+        console.log(res.data.message)
+        toast.success(res.data.message);
+        }
+        else{
+            if(res.data.created.error_type === 0){
+                toast.error(res.data.error[0].msg);
+                     }
+                     else if (res.data.error_type === 1) {
+                        toast.error(res.data.message);
+                    }
+        }
+    
 
-if(res.data.created==true){
-toast.success(res.data.message);
-
-}
-else{
-  toast.error(res.data.message);
-  console.log("error")}
 
     } 
     catch (error) {

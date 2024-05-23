@@ -16,6 +16,8 @@ import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { Truncate, formatPrice } from "../utils/utils";
+import cors from "cors"
+cors()
 function Products() {
   const dispatch = useDispatch()
 const [loading, setLoading] = useState(false);
