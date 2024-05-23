@@ -5,7 +5,7 @@ const { validationResult } = require('express-validator');
 const fs = require('fs');
 const path = require('path');
 const { CloudApi_key, CloudApi_secret, Cloud_name } = require("../config/env");
-
+const { editProduct } = require("./api");
 
 cloudinary.config({
   cloud_name: Cloud_name,
@@ -21,10 +21,7 @@ const AddProduct=async(req,res)=>{
           if (err) {
             return res.status(500).json({ error: 'Error uploading file' });
           }
-   
-
 console.log(files)
-        
           const name = fields.name[0];
           const price = fields.price[0];
           const description = fields.description[0]
@@ -76,14 +73,6 @@ const DeleteAllProduct=async(req,res)=>{
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
-
-
-
-
-
-
-
-
 
 const AllProduct=async(req,res)=>{
     try {
@@ -143,10 +132,22 @@ const category= async (req, res) => {
   }
 }
 
+
+
+const newArrivals=async (req, res) => {
+  try {
+    const newProducts = await  productsModel.find().sort({ createdAt: -1 }).limit(10); 
+    res.json(newProducts);
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
 let cart = {
   items: [],
   totalPrice: 0
 };
+
 
 const getCart =(req, res) => {
   res.json(cart.items.length);
@@ -167,6 +168,7 @@ module.exports = {
     searchProduct,
     category,
     getCart ,
-    retrivCart
+    retrivCart,
+    newArrivals,  
   };
   

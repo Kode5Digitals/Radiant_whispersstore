@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check} = require("express-validator");
-const { Signup, Login, verifyAccount, editProduct, GetEditProduct, newArrivals } = require("../controllers/admin");
+const { Signup, Login} = require("../controllers/admin");
 const auth = require("../middleware/auth");
 
 
@@ -17,10 +17,8 @@ const loginValMiddleware=[
   check("password", "Enter password").not().isEmpty().isLength({ min: 5 }),
 ]
 
-router.post("/verifyAccount",verifyAccount);
-router.get("/edit/:id",GetEditProduct);
-router.post("/edit/:id",editProduct);
-router.get('/new-arrivals',newArrivals)
+// router.post("/verifyAccount",verifyAccount);
+
 router.post("/login",
 [
  ...loginValMiddleware

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check} = require("express-validator");
-const { Signup, Login, verifyAccount } = require("../controllers/user");
+const { Signup, Login, verifyAccount } = require("../controllers/users");
 
 const registerValMiddleware=[
   check("fullname", "Enter fullname").not().isEmpty(),

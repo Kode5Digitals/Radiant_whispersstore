@@ -1,5 +1,5 @@
 const express = require("express");
 const router = express.Router();
 const PaystackHandler = require("../controllers/paystack");
-router.post("/paystack",PaystackHandler)
+router.post("/payment",PaystackHandler)
 module.exports =router
