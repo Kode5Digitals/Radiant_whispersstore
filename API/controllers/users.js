@@ -118,8 +118,21 @@ const verifyAccount = async (req, res, next) => {
   res.status(200).json({ message: "verifyacct" });
 };
 
+
+
+const deleteAllUser=async(req,res)=>{
+    try {
+        await userModel.deleteMany({})
+        res.status(200).json({ message: 'All users deleted successfully.' });
+    } catch (error) {
+        console.error('Error deleting documents:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 module.exports = {
   Signup,
   Login,
   verifyAccount,
+  deleteAllUser
 };

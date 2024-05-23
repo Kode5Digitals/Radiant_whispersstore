@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check} = require("express-validator");
-const { Signup, Login, verifyAccount } = require("../controllers/users");
+const { Signup, Login, verifyAccount, deleteAllUser } = require("../controllers/users");
 
 const registerValMiddleware=[
   check("fullname", "Enter fullname").not().isEmpty(),
@@ -11,12 +11,7 @@ const registerValMiddleware=[
 ]
 
 router.post("/verifyAccount",verifyAccount);
-router.post("/login",
-[
-  check("email", "Enter email").not().isEmpty(),
-  check("password", "Enter password").not().isEmpty().isLength({ min: 5 }),
-]
-,Login)
+router.post("/login",Login)
 
 router.post(
   "/register",
@@ -25,5 +20,5 @@ router.post(
   ],
   Signup
 );
-
+router.delete("/deleteusers",deleteAllUser)
 module.exports = router;

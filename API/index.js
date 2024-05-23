@@ -23,6 +23,7 @@ app.use(handler)
 const corsOptions = {
     origin: [
       'https://radiant-whispersstore-nine.vercel.app',
+      "https://api.paystack.co/transaction/initialize",
       'http://localhost:5173'
     ],
     credentials: true,
