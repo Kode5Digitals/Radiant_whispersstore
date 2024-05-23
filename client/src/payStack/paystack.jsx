@@ -15,12 +15,8 @@ const [loading, setLoading] = useState(false);
 const handlePayment = async () => {
   setLoading(true);
  try{
-  const res = await httpAuth(`/api/paystack`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ amount: totalPrice * 100,email })
+  const res = await httpAuth.post(`/api/paystack`, {
+    body: JSON.stringify({ amount: totalPrice * 100,email:email })
   });
 
   const data = await res.json();

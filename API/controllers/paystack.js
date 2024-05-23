@@ -3,14 +3,11 @@ const   PAYSTACK_PUBLIC_KEY = require("../config/env");
 
 
 const PaystackHandler=async(req, res) =>{ 
-    
+    console.log(req.body)
     if (!PAYSTACK_SECRET_KEY) {
         return res.status(500).json({ error: 'Paystack secret key is not configured' });
       }
-    
       const { amount, email } = req.body;
-
-
     const response = await fetch('https://api.paystack.co/transaction/initialize', {
       method: 'POST',
       headers: {
