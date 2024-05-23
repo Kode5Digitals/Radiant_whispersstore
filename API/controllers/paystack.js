@@ -1,8 +1,17 @@
 const   PAYSTACK_PUBLIC_KEY = require("../config/env");
-
+const fetch = require('node-fetch');
 
 
 const PaystackHandler=async(req, res) =>{ 
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Handle preflight OPTIONS request
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
     console.log(req.body)
     if (!PAYSTACK_SECRET_KEY) {
         return res.status(500).json({ error: 'Paystack secret key is not configured' });
