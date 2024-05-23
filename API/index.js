@@ -4,6 +4,7 @@ const cookiesparser=require("cookie-parser")
 const userRouter=require("./router/userRouter")
 const productRouter=require("./router/productRouter")
 const adminRouter=require("./router/adminRouter")
+const paystackRouter=require("./router/paymentRoute")
 const {PORT}=require("./config/env")
 const cors=require("cors")
 const connect=require("./db/connection")
@@ -24,6 +25,7 @@ app.use("/api/user",userRouter)
 app.use("/api/products",productRouter)
 app.use("/admin",adminRouter)
 app.use("/admin/product",adminRouter)
+app.use("/api",paystackRouter)
 
 
 connect.then((res)=>{

@@ -1,31 +1,62 @@
 import { useState } from "react";
-import { PaystackButton } from "react-paystack";
-import { toast } from "react-toastify";
 import { selectCart } from "../stores/features/cart/cartSlice";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowDropleft } from "react-icons/io";
-import environment from "../config/env";
+import httpAuth from "../utils/https";
 
 const PaystackComponent = () => {
   const [email, setEmail] = useState("");
   const { totalPrice } = useSelector(selectCart)
 const navigate=useNavigate()
-  const handlePaymentSuccess = () => {
-    toast.success("Payment successful!");
-  };
+const [response, setResponse] = useState(null);
+const [loading, setLoading] = useState(false);
 
-  const handlePaymentClose = () => {
-navigate("/home")
-  };
+const handlePayment = async () => {
+  setLoading(true);
+ try{
+  const res = await httpAuth('/api/paystack', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ amount: totalPrice * 100,email })
+  });
 
-  const config = {
-    reference: new Date().getTime().toString(),
-    email: email,
-    amount: totalPrice * 100,
-    publicKey:environment.PAYSTACK_PUBLIC_KEY
-,
-  };
+  const data = await res.json();
+  setResponse(data);
+  setLoading(false);
+
+  if (data.status && data.data) {
+    window.location.href = data.data.authorization_url;
+  } else {
+    console.error(data.error);
+  }
+ }catch(err){
+console.log(err)
+ }
+
+};
+
+
+
+
+
+  // const handlePaymentSuccess = () => {
+  //   toast.success("Payment successful!");
+  // };
+
+//   const handlePaymentClose = () => {
+// navigate("/home")
+//   };
+
+//   const config = {
+//     reference: new Date().getTime().toString(),
+//     email: email,
+//     amount: totalPrice * 100,
+//     publicKey:environment.PAYSTACK_PUBLIC_KEY
+// ,
+//   };
 
   return (
     <div className="mt-12 ">
@@ -68,13 +99,19 @@ navigate("/home")
              
             </div>
           <div className="flex xl:justify-end justify-center mt-32  xl:mt-56 ">
-          <PaystackButton
+          <button onClick={handlePayment} disabled={loading} 
+              className=" rounded-sm  p-3 hover:border-pink-300 border-2 mb-4 hover:text-sm hover:px-10 bg-lime-300 "
+              >
+        {loading ? 'Processing...' : 'Pay Now'}
+      </button>
+      {response && <pre>{JSON.stringify(response, null, 2)}</pre>}
+          {/* <PaystackButton
               {...config}
               onSuccess={handlePaymentSuccess}
               onClose={handlePaymentClose}
               text="Pay Now"
               className=" rounded-sm  p-3 hover:border-pink-300 border-2 mb-4 hover:text-sm hover:px-10 bg-lime-300 "
-            />
+            /> */}
           </div>
           </div>
         </div>
