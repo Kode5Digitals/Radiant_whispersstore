@@ -4,8 +4,6 @@ import { IoLogoWhatsapp } from "react-icons/io5";
 import { FaTwitter } from "react-icons/fa";
 import "../App.css"
 import PropTypes from "prop-types";
-import.meta.env.Whatsapp_url
-import.meta.env.Facebook_URL
 import { FacebookShareButton,   WhatsappShareButton } from "react-share"
 
 const Footer = ({logoSrc}) => {
@@ -27,14 +25,14 @@ const Footer = ({logoSrc}) => {
     </ul>
     <div  className="flex  xl:hidden gap-5 mt-10 ">
         <div className="socials hover:bg-pink-400 hover:text-white">
-          <FacebookShareButton url={import.meta.env.Facebook_URL}>
+          <FacebookShareButton url={import.meta.env.VITE_APP_Facebook_URL}>
           <TiSocialFacebook />
           </FacebookShareButton>
          </div>
         <div className="socials  hover:bg-pink-400 hover:text-white">
            <FaInstagram /></div>
         <div className="socials  hover:bg-pink-400 hover:text-white">
-          <WhatsappShareButton url={import.meta.env.Whatsapp_url}>
+          <WhatsappShareButton url={import.meta.env.VITE_APP_Whatsapp_url}>
           <IoLogoWhatsapp  />
           </WhatsappShareButton>
           </div>

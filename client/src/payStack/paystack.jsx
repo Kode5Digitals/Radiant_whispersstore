@@ -25,7 +25,7 @@ navigate("/home")
     reference: new Date().getTime().toString(),
     email: email,
     amount: totalPrice * 100,
-    publicKey:import.meta.env.Facebook_URL
+    publicKey:import.meta.env.VITE__PAYSTACK_PUBLIC_KEY
 ,
   };
 
