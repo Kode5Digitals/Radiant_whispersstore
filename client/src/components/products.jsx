@@ -81,7 +81,7 @@ return (
         <div className="flex p-2 xl:p-0 gap-3 flex-shrink-0 productscale flex-wrap w-full sm:gap-5 sm:flex-wrap justify-evenly xl:justify-center 2xl:justify-between ">
           {products.slice(0, visibleProducts).map((prod, index) => (
             <div key={index} className="mb-20  w-48 xl:w-48 h-84 ">
-              <div className="w-full h-52 shadow-xl overflow-hidden rounded-lg mb-3 bg-black border relative">
+              <div className="w-full h-52 shadow-xl overflow-hidden rounded-lg mb-3  border relative">
                 <img src={prod?.image} className="w-full h-full" alt="" />
                 {!isProductInWishlist(prod._id) ? (
                   <CiHeart

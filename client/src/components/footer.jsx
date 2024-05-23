@@ -61,9 +61,17 @@ const Footer = ({logoSrc}) => {
 That&apos;s why we&apos;re dedicated to providing high-quality, natural body creams that moisturize, soothe, and protect your skin.
                 </li>
       <li  className="hidden gap-5 mt-10  xl:flex">
-        <div className="socials hover:bg-pink-400 hover:text-white"><TiSocialFacebook /></div>
+        <div className="socials hover:bg-pink-400 hover:text-white">   
+         <FacebookShareButton url={import.meta.env.VITE_APP_Facebook_URL}>
+          <TiSocialFacebook />
+          </FacebookShareButton>
+          </div>
         <div className="socials  hover:bg-pink-400 hover:text-white"> <FaInstagram /></div>
-        <div className="socials  hover:bg-pink-400 hover:text-white"><IoLogoWhatsapp /></div>
+        <div className="socials  hover:bg-pink-400 hover:text-white">
+        <WhatsappShareButton url={import.meta.env.VITE_APP_Whatsapp_url}>
+          <IoLogoWhatsapp  />
+          </WhatsappShareButton>
+        </div>
         <div className="socials  hover:bg-pink-400 hover:text-white"><FaTwitter /></div>
       </li>
     </ul></div>
