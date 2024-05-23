@@ -1,13 +1,13 @@
 const   PAYSTACK_PUBLIC_KEY = require("../config/env");
-const fetch = require('node-fetch');
 
 
 const PaystackHandler=async(req, res) =>{ 
+  console.log("oiytrg")
+  const fetch = await import('node-fetch').then(module => module.default)
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  // Handle preflight OPTIONS request
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;

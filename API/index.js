@@ -28,11 +28,6 @@ function handler(req, res, next) {
 app.use(handler)
 
 
-
-
-
-
-
 app.use("/api/user",userRouter)
 app.use("/api/products",productRouter)
 app.use("/admin",adminRouter)
