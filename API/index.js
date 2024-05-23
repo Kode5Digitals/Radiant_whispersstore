@@ -20,6 +20,19 @@ app.use(cors(
   }
 ));
 
+function handler(req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", '*')
+    res.setHeader("Access-Control-Allow-Headers", "Origin,X-Request,Content-Type,Accept, Authorization")
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,OPTIONS,DELETE")
+    next()
+}
+app.use(handler)
+
+
+
+
+
+
 
 app.use("/api/user",userRouter)
 app.use("/api/products",productRouter)
