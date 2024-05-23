@@ -15,6 +15,7 @@ import AdminLogin from './pages/AdminLogin.jsx'
 import PaystackComponent from '../src/payStack/paystack.jsx'
 import AdminProducts from './pages/adminproducts.jsx'
 import NotFound from './pages/NotFound.jsx'
+import Policy from './pages/policy.jsx'
 
 const router = createBrowserRouter([
   { path: "*", element: <NotFound /> },
@@ -55,7 +56,14 @@ const router = createBrowserRouter([
 
    {
     path: "/edit-product/:id", element: < AdminProducts/>,
+   },
+   {
+    path: "/return-policy", element: <Policy/>,
    }
+
+
+
+
   // { path: "/:pid", element: <Showmore /> },
   // { path: "/Login", element: <Login /> },
   // { path: "/Signup", element: <Signup /> },

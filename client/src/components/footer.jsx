@@ -6,6 +6,7 @@ import "../App.css"
 import PropTypes from "prop-types";
 import environment from "../config/env";
 import { FacebookShareButton,   WhatsappShareButton } from "react-share"
+import { Link } from "react-router-dom";
 
 const Footer = ({logoSrc}) => {
   return (
@@ -47,7 +48,9 @@ const Footer = ({logoSrc}) => {
         &copy; 2024 Radiant_whispersstore. <br></br> All right reserved
       </li>
       <li  className="flex text-[12px] gap-2  xl:gap-6 mt-6 ">
-       <a >Cookies policy</a> 
+        <Link to={"/return-policy"}>
+        Return Policy
+        </Link>
        <a href="">Terms and condition</a>   
       </li>
     </ul>
