@@ -1,14 +1,19 @@
+import { useContext } from "react";
+import Cartcontext from "../cartcontext";
 import Footer from "../components/footer";
 import MainNavbar from "../components/mainNav"
 import PropTypes from 'prop-types';
+import SideMenu from "../components/menu";
 
-const Defaultlayout = ({ setIsOpen, isOpen, Back, children}) => {
+const Defaultlayout = ({children}) => {
 
-
+    const { isOpen, setIsOpen, Back } = useContext(Cartcontext);
 
     return (
         <>
-            <MainNavbar logoSrc="/Logo2.png"  setIsOpen={setIsOpen} isOpen={isOpen}  Back={Back}/>
+            <MainNavbar logoSrc="/Logo2.png" setIsOpen={setIsOpen} isOpen={isOpen} Back={Back}/>
+             <SideMenu />
+            
             {children}
             <Footer  logoSrc="Logo4.png"/>
 
@@ -18,9 +23,6 @@ const Defaultlayout = ({ setIsOpen, isOpen, Back, children}) => {
 
 Defaultlayout.propTypes =  {
     children: PropTypes.node.isRequired,
-    setIsOpen: PropTypes.func.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    Back: PropTypes.func.isRequired,
 }
   
 

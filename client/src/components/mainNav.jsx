@@ -16,6 +16,7 @@ import { selectCartLength } from "../stores/features/cart/cartSlice";
 import HoverInfo from "./hoverInfo";
 import { MdArrowBackIos } from "react-icons/md";
 
+
 const MainNavbar = ({  logoSrc }) => {
   const {
     isOpen,

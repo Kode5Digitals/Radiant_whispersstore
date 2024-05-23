@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import {Capitalize} from '../utils/utils';
 import HoverDescription from '../components/HoverDescription';
 import { useState } from 'react';
+import { TbCurrencyNaira } from 'react-icons/tb';
 function Wishlist() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -45,12 +46,17 @@ const handleAddToCart = (product) => {
 <div className='flex justify-center gap-16 overflow-auto '>
 
 {wishlistItems?.map((item) => (
-  <div key={item._id} className=' mt-20 w-72 p-3 text-white hover:border-pink-600  border-2 rounded-lg relative group bg-[#a82f73] '>
+  <div key={item._id} className=' mt-20 w-72 p-3  hover:border-pink-600  border-2 rounded-lg relative group bg-white shadow-lg '>
     <span className='text-xl'>{Capitalize (item.name)}</span>
     <div className='min-w-32 mb-2 '>
     <img src={item.image} alt="" />
     </div>
-    <p  className='p-1 rounded-sm text-[13px] mb-2 ' ># {item.price}</p>
+    <div className="flex items-center mb-2">
+
+                <TbCurrencyNaira /> 
+    <span  className='p-1 rounded-sm text-[13px]  ' >{item.price}</span>
+
+                  </div>
    <div className='flex justify-between'>
    <button   id={item._id} className='p-1 rounded-sm text-[13px] text-black    bg-pink-300' onClick={()=>handleAddToCart(item)}>Add to cart</button>
     <button id={item._id}  className='p-1 text-[13px]  rounded-sm w-19  bg-red-400' onClick={() => handleRemoveFromWishlist(item._id)}>Remove from whishlist</button>

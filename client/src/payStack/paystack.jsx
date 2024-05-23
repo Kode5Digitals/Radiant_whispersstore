@@ -5,9 +5,11 @@ import { selectCart } from "../stores/features/cart/cartSlice";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowDropleft } from "react-icons/io";
+import.meta.env.Facebook_URL
+
 const PaystackComponent = () => {
   const [email, setEmail] = useState("");
-  const {  totalPrice } = useSelector(selectCart)
+  const { totalPrice } = useSelector(selectCart)
 const navigate=useNavigate()
   const handlePaymentSuccess = (response) => {
     console.log(response);
@@ -23,7 +25,8 @@ navigate("/home")
     reference: new Date().getTime().toString(),
     email: email,
     amount: totalPrice * 100,
-    publicKey: "pk_test_07070da6a9afaa698f923376dc24bbbe12df1d94",
+    publicKey:import.meta.env.Facebook_URL
+,
   };
 
   return (
