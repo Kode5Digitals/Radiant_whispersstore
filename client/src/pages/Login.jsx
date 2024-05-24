@@ -38,7 +38,6 @@ try {
     console.log("admin:",isadmin)
     toast.success(res.data.message);
     setOpenLogin(false)
-    // location.reload("/")
     }
     else{
         if(res.data.created.error_type === 0){

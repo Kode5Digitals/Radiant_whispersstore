@@ -251,7 +251,7 @@ setOpenContact (false)
 
         <div className="xl:flex gap-3  items-center hidden pr-10">
           <div className="relative group ">
-            <button className="border-2 p-2  xl:w-20  rounded-lg border-pink-400 hover:bg-pink-400 hover:text-white">
+            <button className="border-2 p-2  xl:w-20   text-[12px]    rounded-lg border-pink-400 hover:bg-pink-400 hover:text-white">
               About us
             </button>
             <HoverInfo
@@ -263,7 +263,7 @@ That's why we're dedicated to providing high-quality, natural body creams that m
             />
           </div>
           <div className="relative group">
-            <button onClick={ToggleContact} className="border-2 p-2  xl:w-24     rounded-lg border-pink-400 bg-pink-400 text-white shadow-lg hover:bg-white hover:text-pink-700">
+            <button onClick={ToggleContact} className="border-2 p-2  xl:w-24 text-[12px]    rounded-lg border-pink-400 bg-pink-400 text-white shadow-lg hover:bg-white hover:text-pink-700">
               Contact us
             </button>
           </div>
@@ -357,7 +357,10 @@ That's why we're dedicated to providing high-quality, natural body creams that m
         <hr />
          <ul>
          <li className="mt-3 flex gap-1 items-center cursor-pointer hover:bg-slate-400 hover:p-2 hover:text-white rounded-lg">
+         
+         <a href="https://wa.me/23408169773783">
          <IoLogoWhatsapp />Whatsapp
+         </a>
           </li>
         <li  className="mt-3 flex gap-1 items-center cursor-pointer  hover:bg-slate-400 hover:p-2 hover:text-white rounded-lg">
         <FaInstagramSquare />  Instagram
