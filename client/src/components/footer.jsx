@@ -12,9 +12,7 @@ const Footer = ({logoSrc}) => {
   return (
       <footer >
     <div className="flex flex-wrap-reverse md:p-5 md:flex-nowrap xl:flex-nowrap m-auto pb-10 mt-5 pl-4 xl:pl-32 xl:pr-32 text-[#fd00cd]  bg-[#f5f5f5]  pt-10 xl:gap-28 gap-5  xl:justify-center"  >
-       
-
-    
+      
  <div className=" w-3/5">
        
  <ul  className="list text-[13px]"  >
@@ -25,7 +23,7 @@ const Footer = ({logoSrc}) => {
               <img src={logoSrc}  alt=""className="" />
             </li> 
     </ul>
-    <div  className="flex  xl:hidden gap-5 mt-10 ">
+    <div  className="flex lg:hidden  xl:hidden gap-5 mt-10 md:hidden ">
         <div className="socials hover:bg-pink-400 hover:text-white">
           <FacebookShareButton url={environment.FACEBOOK_URL}>
           <TiSocialFacebook />
@@ -64,7 +62,7 @@ const Footer = ({logoSrc}) => {
 
 That&apos;s why we&apos;re dedicated to providing high-quality, natural body creams that moisturize, soothe, and protect your skin.
                 </li>
-      <li  className="hidden gap-5 mt-10  xl:flex">
+      <li  className="hidden lg:flex gap-5 mt-10  xl:flex md:flex">
         <div className="socials hover:bg-pink-400 hover:text-white">   
          <FacebookShareButton url={environment.FACEBOOK_URL}>
           <TiSocialFacebook />

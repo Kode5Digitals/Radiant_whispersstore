@@ -1,15 +1,25 @@
-import { useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import PropTypes from 'prop-types';
 import httpAuth from "../utils/https";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
+import Cartcontext from "../cartcontext";
+import { FaSpinner } from "react-icons/fa";
 function Login({setOpenLogin}) {
     const emailRef = useRef('');
     const passwordRef = useRef('');
+ 
+    const[loading,setLoading]=useState(false)
+    const{setOpenRegister,setLogin,setisadmin}=useContext(Cartcontext)
+    const handleOpenRegister =()=>{
+        setOpenRegister(true)
+        setOpenLogin(false)
+        }
 
-    
+
     const handleSubmit = async (e) => {
+        setLoading(true)
         e.preventDefault();
         const formData = {
             email: emailRef.current.value,
@@ -18,11 +28,14 @@ function Login({setOpenLogin}) {
         console.log(formData)
 try {
   const res = await httpAuth.post("/user/login", formData,{withCredentials:true})
-
   if(res.data.created){
     localStorage.setItem('token', res.data.token)
-    console.log(res.data.message)
+    console.log(res.data)
+    setLogin(res.data.isLoggedIn)
+    setisadmin(res.data.isAdmin)
     toast.success(res.data.message);
+    setOpenLogin(false)
+    location.reload()
     }
     else{
         if(res.data.created.error_type === 0){
@@ -36,6 +49,9 @@ try {
 }
  catch (error) {
   console.log(error)
+}
+finally{
+    setLoading(false)
 }
     };
 
@@ -57,7 +73,7 @@ try {
             pauseOnHover
             theme="light"
              />
-            <form onSubmit={handleSubmit} className="forgot-password w-full xl:w-1/4  md:w-1/4  lg:w-1/4   2xl:w-1/4  p-3 rounded-lg shadow-md bg-white transition duration-500 ease-in-out border-2 border-transparent hover:border-purple-500">
+            <form onSubmit={handleSubmit} className="forgot-password xl:w-1/3 lg:w-1/2 sm:w-1/2 md:w-1/2  w-3/4   2xl:w-1/4  p-3 rounded-lg shadow-md bg-white transition duration-500 ease-in-out border-2 border-transparent hover:border-purple-500">
                 <h2 className="text-center mt-4 mb-4 text-2xl">Login</h2>
                 <label htmlFor="email" className="text-[12px]">Email</label>
                 <input
@@ -77,12 +93,14 @@ try {
                 />
 
                 <div className="flex justify-between mt-3">
-                    <button className="border mb-3 text-[12px] p-1 rounded-lg w-1/3" >
-                     <Link to={"/register"}>
-                     Signup</Link></button>
+                    <button className="border mb-3 text-[12px] p-1 rounded-lg w-1/3 bg-pink-200" >
+                     <Link onClick={handleOpenRegister}>
+                     Signup</Link> </button>
                     <button className="border mb-3 text-[12px] p-1 rounded-lg w-1/3" onClick={handleBack}>Back</button>
                 </div>
-                <button className="mb-3 text-[12px] p-2 rounded-lg w-full mt-3 bg-[#fd00cd] leading-tight shadow text-white transition duration-300 ease-in-out transform hover:scale-105" type="submit">Login</button>
+                <button className="mb-3 text-[12px] p-2 rounded-lg w-full mt-3 bg-[#fd00cd] leading-tight shadow text-white transition duration-300 ease-in-out transform hover:scale-105  flex items-center gap-3 justify-center" type="submit" >Login
+                {loading && <FaSpinner  className="animate-spin"/>}
+                </button>
             </form>
         </div>
     );

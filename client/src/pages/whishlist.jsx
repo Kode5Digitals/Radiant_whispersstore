@@ -4,7 +4,7 @@ import Defaultlayout from '../layout/Defaultlayout';
 import {  addToCart } from "../stores/features/cart/cartSlice";
 import { clearWishlist  } from "../stores/features/whishlist/wishlistSlice";
 import { ToastContainer } from 'react-toastify';
-import {Capitalize} from '../utils/utils';
+import {Capitalize, formatAmount} from '../utils/utils';
 import HoverDescription from '../components/HoverDescription';
 import { useState } from 'react';
 import { TbCurrencyNaira } from 'react-icons/tb';
@@ -37,24 +37,24 @@ const handleAddToCart = (product) => {
       {wishlistItems.length <=0 &&
       <span >No </span>
     }
-        wishlist</h2>
+       {wishlistItems.length ==1? "wishlist":"wishlists"}</h2>
       
 
      {wishlistItems.length >=1 &&
 
-<>
-<div className='flex justify-center gap-16 overflow-auto '>
+<div>
+<div className='flex flex-wrap justify-center gap-10 xl:w-3/4 w-full md:px-12 sm:p-4 m-auto mb-9 pt-2'>
 
 {wishlistItems?.map((item) => (
-  <div key={item._id} className=' mt-20 w-72 p-3  hover:border-pink-600  border-2 rounded-lg relative group bg-white shadow-lg '>
-    <span className='text-xl'>{Capitalize (item.name)}</span>
-    <div className='min-w-32 mb-2 '>
-    <img src={item.image} alt="" />
+  <div key={item._id} className='  mt-20 xl:w-60  max-w-60 p-3 h-84   hover:border-pink-600  border-2 rounded-lg relative group bg-whit shadow-lg '>
+    <span className='text-sm'>{(Capitalize(item.name))}</span>
+    <div className='xl:min-w-32  h-42  mb-2 '>
+    <img src={item.image} alt="" className='w-full h-full' />
     </div>
     <div className="flex items-center mb-2">
 
                 <TbCurrencyNaira /> 
-    <span  className='p-1 rounded-sm text-[13px]  ' >{item.price}</span>
+    <span  className='p-1 rounded-sm text-[13px]'>{formatAmount(Number(item.price))}</span>
 
                   </div>
    <div className='flex justify-between'>
@@ -69,7 +69,8 @@ const handleAddToCart = (product) => {
       
 <div className='flex justify-end mt-12 p-3'>
 <button onClick={HandleEmptyAllwishlist} className='bg-black text-white text-[13px] rounded-sm p-2'>Empty all whishlist</button>
-  </div></>
+  </div>
+  </div>
 
      }
    

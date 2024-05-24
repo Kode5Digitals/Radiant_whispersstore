@@ -1,15 +1,19 @@
-import { useRef } from "react";
-import PropTypes from "prop-types";
+import { useContext, useRef, useState } from "react";
 import httpAuth from "../utils/https";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const Register = ({ setOpenRegister }) => {
+import Cartcontext from "../cartcontext";
+import { FaSpinner } from "react-icons/fa";
+const Register = () => {
   const fullnameRef = useRef('');
   const emailRef = useRef('');
   const passwordRef = useRef('');
   const confirmPasswordRef = useRef('');
+const{setOpenRegister}=useContext(Cartcontext)
+const[loading,setLoading]=useState  (false)
 
   const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
     const formData = {
       fullname: fullnameRef.current.value,
@@ -33,12 +37,11 @@ console.log(formData)
                         toast.error(res.data.message);
                     }
         }
-    
-
-
     } 
     catch (error) {
       console.log(error)
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -63,7 +66,7 @@ console.log(formData)
 
       <form
         onSubmit={handleSubmit}
-        className="forgot-password xl:w-1/4 w-full  p-3   rounded-lg shadow-md bg-white  transition duration-500 ease-in-out border-2 border-transparent "
+        className="forgot-password xl:w-1/3 lg:w-1/2 sm:w-1/2 md:w-1/2  w-3/4  p-3   rounded-lg shadow-md bg-white  transition duration-500 ease-in-out border-2 border-transparent "
       >
         <h2 className="text-center text-2xl mt-3 mb-3">Register</h2>
 
@@ -132,9 +135,11 @@ console.log(formData)
         </div>
         <button
           type="submit"
-          className="w-full mb-4  border border-gray-300 hover:text-white  hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+          className="flex items-center gap-3 justify-center w-full mb-4  border border-gray-300 hover:text-white  hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
         >
           Register
+          {loading && <FaSpinner  className="animate-spin"/>}
+
         </button>
         <button
           onClick={handleBack}
@@ -147,8 +152,6 @@ console.log(formData)
   );
 };
 
-Register.propTypes = {
-  setOpenRegister: PropTypes.func.isRequired,
-};
+
 
 export default Register;

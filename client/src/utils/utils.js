@@ -10,7 +10,7 @@ export function Truncate(string, limit) {
     }
     return string;
 }
-export function formatAmount  (amount) {
+export function formatAmount(amount) {
     return amount.toLocaleString();
   }
   export function  formatPrice (price)  {

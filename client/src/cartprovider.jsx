@@ -12,7 +12,8 @@ const Cartprovider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false); 
    const [ openEdit,   setOpenEdit] = useState(false);
     const [ editObj, setEditobj]=useState({})
-
+     const[login,setLogin]= useState(false);
+     const[isadmin,setisadmin]=useState(false)
 
   const Back = () => {
     setIsOpen(!isOpen);
@@ -64,7 +65,12 @@ const Cartprovider = ({ children }) => {
     openEdit:openEdit,
      setOpenEdit: setOpenEdit,
      editObj:editObj,
-     setEditobj:setEditobj
+     setEditobj:setEditobj,
+     login:login,
+     setLogin:setLogin,
+    isadmin:isadmin,
+    setisadmin:setisadmin
+
   };
 
   return (

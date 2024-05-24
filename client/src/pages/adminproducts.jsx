@@ -86,7 +86,7 @@ const openDeleteModal=(name,id)=>{
         <div className=" flex  w-full sm:gap-5  sm:flex-wrap justify-evenly   xl:justify-center  2xl:justify-evenly ">
           {products.slice(0, visibleProducts).map((prod, index) => (
             <div key={index} className=" mb-20 max-w-48 xl:w-48  h-84  ">
-              <div className="  w-full h-52 shadow-xl  overflow-hidden rounded-lg mb-3 relative">
+              <div className="  w-full h-52 shadow-xl  overflow-hidden  border-2 rounded-lg mb-3 relative">
                 <img src={prod?.image} className="w-full h-full" alt="" />
 
              

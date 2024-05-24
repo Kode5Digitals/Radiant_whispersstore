@@ -12,8 +12,8 @@ const AdminNav = () => {
   return (
    <div className="flex items-center p-2 justify-between">
 <Link to={"/adminHome"}>
-<div className=" overflow-hidden bg-black">
-  <img src="logo.png" alt="" className=""/>
+<div className=" w-32 overflow-hidden bg-blac">
+  <img src="/Logo2.png" alt="" className=""/>
 </div>
 
 </Link>
@@ -23,6 +23,10 @@ const AdminNav = () => {
  <Link to={"/AddProduct"}>
  <button className="p-1 border-black border rounded-sm">
             Add products
+          </button> </Link>
+          <Link to={"/"}>
+ <button className="p-1 border-black border rounded-sm">
+          Switch to User
           </button> </Link>
 <button onClick={handleLogin} className="flex items-center">
             <span>

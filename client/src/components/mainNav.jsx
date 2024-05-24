@@ -7,26 +7,31 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 // import { AiOutlineLogin } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { BiSolidUserPin } from "react-icons/bi";
+import { BiSolidRegistered, BiSolidUserPin } from "react-icons/bi";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import httpAuth from "../utils/https";
 import { useSelector } from "react-redux";
 import { selectCartLength } from "../stores/features/cart/cartSlice";
 import HoverInfo from "./hoverInfo";
-import { MdArrowBackIos } from "react-icons/md";
+import { MdAccountCircle, MdArrowBackIos, MdOutlineCancel } from "react-icons/md";
+import { IoLogoWhatsapp, IoMdLogIn } from "react-icons/io";
+import { IoMail } from "react-icons/io5";
+import { FaFacebook, FaInstagramSquare } from "react-icons/fa";
+import { AiOutlineLogout } from "react-icons/ai";
+import { RiAdminFill } from "react-icons/ri";
 
 
 const MainNavbar = ({  logoSrc }) => {
   const {
     isOpen,
     setIsOpen,
-    // handleLogin,
     openLogin,
     setOpenLogin, 
     setOpenRegister,
     openRegister,
-    // handleRegister,
+    login,
+    isadmin
   } = useContext(Cartcontext);
   const cartLength = useSelector(selectCartLength);
   const [query, setQuery] = useState("");
@@ -34,7 +39,8 @@ const MainNavbar = ({  logoSrc }) => {
   const [showProducts, setShowProducts] = useState(false);
   const productRef = useRef(null);
   const { wishlistItems } = useSelector((state) => state?.whishlist);
-
+   const[openNavMenu,setOpenNavMenu]=useState(false)
+   const[openContact,setOpenContact]=useState(false)
   //search
   const handleSearch = useCallback(async () => {
     try {
@@ -74,6 +80,33 @@ const MainNavbar = ({  logoSrc }) => {
       setQuery("")
   };
 
+  const HandleOpenNavMenu=()=>{
+    setOpenNavMenu(!openNavMenu)
+   setOpenContact (false)
+
+  }
+  const ToggleContact=()=>{
+   setOpenContact (!openContact)
+   setOpenNavMenu(false)
+
+  }
+  const cancelContact=()=>{
+    setOpenContact (false) 
+  }
+  const cancelNavMenu=()=>{
+    setOpenNavMenu(false)
+  }
+
+  const handleOpenRegister=()=>{
+setOpenRegister(true)
+setOpenContact (false) 
+  }
+
+  const handleOpenLogin =()=>{
+    setOpenLogin(true)
+    setOpenNavMenu(false)
+      }
+    
   // useEffect(() => {
   //   document.addEventListener('click', handleClickOutside);
   //   return () => {
@@ -83,17 +116,20 @@ const MainNavbar = ({  logoSrc }) => {
 
   return (
     <div className="relative">
+     
       <nav
         className="text-[#fd00cd]  
-      font-bold text-sm   p-3   flex-wrap xl:flex-nowrap  bg-white border-b shadow-md flex fixed w-full  z-50  items-end top-0 xl:justify-around justify-between"
+      font-bold text-sm   p-3 sm:px-5  flex-wrap xl:flex-nowrap  bg-white border-b shadow-md flex fixed w-full  z-50  items-end top-0 xl:justify-around justify-between"
       >
+
+
         <RxHamburgerMenu
           className="xl:hidden block md:hidden"
           size={20}
           onClick={toggleMenu}
         />
         <Link to={"/"}>
-          <div className="xl:ml-4 w-52     ">
+          <div className="xl:ml-4 w-52 ">
             <img src={logoSrc} alt="Radiantwhispersstore Logo" className="" />
           </div>
         </Link>
@@ -114,8 +150,11 @@ const MainNavbar = ({  logoSrc }) => {
                 <h6>{wishlistItems?.length}</h6>
   
               </div>
+              
            </div>
+           
             </div>
+            
             <div className="cursor-pointer relative xl:hidden block ">
               <Link to={"/cart"}>
                 {" "}
@@ -128,8 +167,8 @@ const MainNavbar = ({  logoSrc }) => {
                 <h6>{cartLength}</h6>
               
               </div>
-            </div>
-            <div className="cursor-pointer relative md:block hidden">
+            </div>          
+            <div className="cursor-pointer relative  hidden ">
               <CiHeart size={22} />
               <div
                 style={{ fontSize: "10px" }}
@@ -140,13 +179,13 @@ const MainNavbar = ({  logoSrc }) => {
             </div>
             <BiSolidUserPin
               size={27}
-              className="hidden md:block"
-              onClick={toggleMenu}
+              className="hidden md:block "
+              onClick={HandleOpenNavMenu} 
             />
           </div>
           <div className="">
-           <div className=" hidden xl:block md:block ">
-           <div className=" border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex  w-[500px]  p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
+           <div className=" hidden xl:block md:block lg:block  ">
+           <div className=" border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex  w-[500px] md:w-[400px]  p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
               <TfiSearch />
 
               <input
@@ -158,6 +197,7 @@ const MainNavbar = ({  logoSrc }) => {
                 className="w-full"
               />
             </div>
+            
            </div>
             {showProducts && searchedProducts.length > 0 && (
               <div
@@ -187,8 +227,8 @@ const MainNavbar = ({  logoSrc }) => {
         </div>
 
 
-        <div className=" xl:hidden ">
-            <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex w-[390px]  p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
+        <div className=" xl:hidden md:hidden ">
+            <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex w-[390px] sm:ml-32 p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
               <TfiSearch />
               <input
                 type="text"
@@ -215,20 +255,13 @@ That's why we're dedicated to providing high-quality, natural body creams that m
             />
           </div>
           <div className="relative group">
-            <button className="border-2 p-2  xl:w-24    rounded-lg border-pink-400 bg-pink-400 text-white shadow-lg hover:bg-white hover:text-pink-700">
+            <button onClick={ToggleContact} className="border-2 p-2  xl:w-24     rounded-lg border-pink-400 bg-pink-400 text-white shadow-lg hover:bg-white hover:text-pink-700">
               Contact us
             </button>
-            <HoverInfo name=" Contact us" right="0px" info="Contact Us" />
           </div>
 
-          {/* <button onClick={handleLogin} className="flex items-center">
-            <span>
-              <AiOutlineLogin />
-            </span>
-            Login
-          </button>
-          <button onClick={handleRegister}>Register</button> */}
-          <Link to={"/whishlist"}>
+        <div className="flex gap-4 ml-12 border border-pink-300 p-2 rounded-md">
+        <Link to={"/whishlist"}>
             <div className="cursor-pointer relative md:block">
               <CiHeart size={22} />
 
@@ -252,6 +285,86 @@ That's why we're dedicated to providing high-quality, natural body creams that m
               </div>
             </div>
           </Link>
+          <BiSolidUserPin
+              size={27}
+              className="hidden md:block cursor-pointer"
+              onClick={HandleOpenNavMenu}
+            />
+          
+           {openNavMenu && <div className="w-40 md:block lg:block   bg-white border absolute top-[86px] p-3 pb-4 rounded-lg">
+           <span className="text-black cursor-pointer flex justify-end" onClick={cancelNavMenu}>
+        <MdOutlineCancel />
+        </span>
+      {!login &&
+           <ul>
+           <li  className="mt-3 flex items-center gap-1 " onClick={handleOpenLogin}>
+           <IoMdLogIn />
+           <Link>
+               Login
+               </Link>
+           </li>
+             <li className="mt-3 flex items-center gap-1" onClick={handleOpenRegister}>
+             <BiSolidRegistered />
+             <Link > 
+               Signup
+               </Link>
+             </li> </ul>
+      }
+          { login &&
+          
+            <ul>
+
+{isadmin  &&  <li className="mt-3 flex items-center gap-1">
+<RiAdminFill />
+            <Link to={"/adminHome"}>
+              Switch to Admin
+              </Link>
+            </li>}
+               <li className="mt-3 flex items-center gap-1">
+            <MdAccountCircle />
+            <Link >
+              My Account
+              </Link>
+            </li>
+            <li className="mt-3 flex items-center gap-1">
+            <AiOutlineLogout />
+            <Link >
+              Logout
+              </Link>
+            </li>
+            </ul>
+          }
+        
+      </div>}
+
+      {openContact && <div className="w-40   bg-white border absolute top-[86px] right-44 p-3 pb-4 rounded-lg">
+       <div className="flex items-center justify-between ">
+       <p >Conatct-Us</p>
+        <span className="text-black cursor-pointer" onClick={cancelContact}>
+        <MdOutlineCancel />
+        </span> 
+       </div>
+        <hr />
+         <ul>
+         <li className="mt-3 flex gap-1 items-center cursor-pointer hover:bg-slate-400 hover:p-2 hover:text-white rounded-lg">
+         <IoLogoWhatsapp />Whatsapp
+          </li>
+        <li  className="mt-3 flex gap-1 items-center cursor-pointer  hover:bg-slate-400 hover:p-2 hover:text-white rounded-lg">
+        <FaInstagramSquare />  Instagram
+        </li>
+          <li className="mt-3 flex gap-1 items-center cursor-pointer  hover:bg-slate-400 hover:p-2 hover:text-white rounded-lg">
+          <FaFacebook />  Facebook
+          </li>
+         
+          <li className="mt-3 flex gap-1 items-center cursor-pointer  hover:bg-slate-400 hover:p-2 hover:text-white rounded-lg">
+          <IoMail /> Email
+          </li>
+         </ul>
+      </div>}
+
+
+
+        </div>
         </div>
       </nav>
 

@@ -3,7 +3,7 @@ import "../App.css"
 
 const Banner = () => {
   return (
-    <div className="relative xl:mt-20 mt-32">
+    <div className="relative xl:mt-20 mt-32 md:mt-[86px]">
 
 
 
@@ -24,8 +24,8 @@ const Banner = () => {
 
 
       
-    <div>
-       <div className="bg-cover bg-center  h-[300px] xl:h-[530px]" style={{ backgroundImage: 'url("bg3.jpeg")', backgroundColor: 'rgb(25, 34, 39)', color: 'white' }}>
+    <div >
+       <div className="bg-cover bg-center   h-[300px] xl:h-[530px] lg:h-[400px] md:h-[380px]" style={{ backgroundImage: 'url("bg3.jpeg")', backgroundColor: 'rgb(25, 34, 39)', color: 'white' }}>
      
          <div  className=" homeIntroductionDiv mx-auto w-full bg-black bg-opacity-50 flex justify-center  items-center ">
         <div className="  p-4 ">

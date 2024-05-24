@@ -47,14 +47,14 @@ const Cart = () => {
         </Link>
 
         <div className="cursor-pointer flex  relative text-center xl:items-center text-lg xl:mr-6  text-pink-400">
-         <span className="xl:block hidden"> My Shopping Cart</span> 
-         <span className="xl:hidden block">
+         <span className="xl:block hidden lg:block md:block"> My Shopping Cart</span> 
+         <span className="xl:hidden block lg:hidden md:hidden">
           Cart
          </span>
          <FontAwesomeIcon icon={faCartPlus}  />
           <div
             style={{ fontSize: "10px" }}
-            className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center xl:left-40 xl:-top-1 left-12 -top-2"
+            className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center md:left-40 lg:left-[160px] lg:-top-2 xl:left-40 xl:-top-1 left-12 -top-2"
           >
             <h6>{cartLength}</h6>
           </div>
@@ -75,7 +75,7 @@ const Cart = () => {
       {items.length > 0 && (
         <div>
           {items.map((val, index) => (
-            <div key={index} className="  mt-5 xl:w-3/4 mx-auto p-6 flex xl:gap-14 gap-3">
+            <div key={index} className="  mt-5 xl:w-3/4 lg:w-3/4 mx-auto p-6 flex xl:gap-14 gap-3">
               <div className="flex p-3 w-32  h-32 xl:w-72  xl:h-52 rounded-xl hover:w-[400px] overflow-hidden">
                 <img
                   src={val?.image}
@@ -125,7 +125,7 @@ const Cart = () => {
             </div>
           ))}
 
-          <div className="flex  flex-wrap-reverse xl:flex-nowrap  mt-12 xl:w-3/4 p-2 mx-auto justify-between  mb-20">
+          <div className="flex  flex-wrap-reverse   lg:p-3 lg:flex-nowrap md:flex-nowrap md:p-10 xl:flex-nowrap  mt-12 xl:w-3/4 lg:w-3/4 p-2 mx-auto justify-between   md:items-end lg:items-end mb-20">
             <div className="w-[500px] h-[300px] bg-pink-white border-black border-2 rounded-md p-4">
               <h1 className="text-xl text-center">Cart Summary</h1>
               <hr className="" style={{ borderColor: "black" }} />
@@ -148,7 +148,7 @@ const Cart = () => {
                 
                 </ul>
               </div>
-              <div className="flex gap-3 items-center">
+              <div className="flex gap-3 items-center ">
                 <label className="text-lg text-red-700" >Delivery fee  excluded!!!</label>
               </div>
               <div className="text-center mt-4  ">
