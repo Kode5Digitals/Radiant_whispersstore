@@ -84,6 +84,8 @@ const Signup = async (req, res, next) => {
 
 
 const Login = async (req, res, next) => {
+  console.log("login");
+  console.log(req.body);
   const { email, password } = req.body;
   const errors = validationResult(req);
   console.log("login");
@@ -93,17 +95,20 @@ const Login = async (req, res, next) => {
       return;
     }
     const user = await userModel.findOne({ email: email });
-    if (!user) {
+    const admin = await adminModel.findOne({ email: email });
+    const isAdmin = !!admin;
+
+    if (!user || !admin) {
         return res.json({ message: "Invalid account", error_type: 1, created: false });
-   
     }
     
-    const isValid = await bcrypt.compare(password, user.password);
-    if (isValid) {
+    const isValidUser = await bcrypt.compare(password, user.password);
+    const isValidAdmin = await bcrypt.compare(password, admin.password);
+    
+
+    if (isValidUser || isValidAdmin) {
       const id = user._id;
       const token = jwt.sign({ id }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' });
-      const admin = await adminModel.findOne({ email: email });
-      const isAdmin = !!admin;
       res.status(200).json({ message: "Logged in", token, created: true ,isLoggedIn: true, isAdmin });
     } else {
       res.json({ message: "Invalid password", created: false ,isLoggedIn: false });
