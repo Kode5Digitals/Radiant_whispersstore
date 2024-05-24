@@ -75,7 +75,8 @@ const Login = async (req, res, next) => {
       if (user) {
         isValid = await bcrypt.compare(password, user.password);
         id = user._id;
-      } else if (admin) {
+      } 
+      if (admin) {
         isValid = await bcrypt.compare(password, admin.password);
         isAdmin = true;
         id = admin._id;
