@@ -1,4 +1,5 @@
 
+import { PiWhatsappLogoDuotone } from "react-icons/pi";
 import NewArrivals from "./components/NewArrivals";
 import Banner from "./components/banner";
 import Banner2 from "./components/banner2";
@@ -8,15 +9,20 @@ import Defaultlayout from "./layout/Defaultlayout";
 
 function Home() {
   return (
+    <main >
    < Defaultlayout >
-    <main className="">
+      <div className="relativ">
       <Banner />
       <Products />
       <Banner2 />
       <NewArrivals />
+      </div>
+       </Defaultlayout >
+       <div className="  "  >
+    <PiWhatsappLogoDuotone  size={80} className="fixed bottom-10  hover:p-4  text-green-700 right-5"/>
+    </div>
     </main>
 
-       </Defaultlayout >
   );
 }
 

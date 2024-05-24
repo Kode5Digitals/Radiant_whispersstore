@@ -5,10 +5,9 @@ const productSlice = createSlice({
   initialState: [],
   reducers: {
     setProducts: (state, action) => {
-
       return action.payload.map((product) => ({
         ...product,
-        quantity: 0,
+        quantity: 1,
       }));
     },
     },

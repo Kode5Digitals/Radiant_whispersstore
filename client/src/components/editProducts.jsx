@@ -87,7 +87,7 @@ const handleEdit=async(e,id)=>{
       console.log(formData);
       // console.log(imageRef.current.files[0])
       const response = await axios.post(
-            `http://localhost:4000/admin/product/edit/${id}`, 
+            `https://radiant-whispersstore.onrender.com/products/edit/${id}`, 
           formData,
           {
               headers: { "Content-Type": "multipart/form-data" },

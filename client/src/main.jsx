@@ -17,6 +17,8 @@ import AdminProducts from './pages/adminproducts.jsx'
 import NotFound from './pages/NotFound.jsx'
 import Policy from './pages/policy.jsx'
 import Register from './pages/Register.jsx'
+import Dashboad from './pages/dashboad.jsx'
+import MyAccount from './pages/myAccount.jsx'
 
 const router = createBrowserRouter([
   { path: "*", element: <NotFound /> },
@@ -64,6 +66,13 @@ const router = createBrowserRouter([
    {
     path:"/register",element:<Register/>
    }
+   ,
+   {
+     path:"/dashboard",element:<Dashboad/>
+    },
+    {
+      path:"/myaccount",element:<MyAccount/>
+     }
 
 
 

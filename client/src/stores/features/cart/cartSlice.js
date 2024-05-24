@@ -80,7 +80,8 @@ const cartSlice = createSlice({
         state.totalPrice = 0; // Reset total price
         localStorage.removeItem("cartItem")
       
-      },
+      }
+      
   },
 });
 

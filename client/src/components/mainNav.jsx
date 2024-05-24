@@ -324,8 +324,14 @@ That's why we're dedicated to providing high-quality, natural body creams that m
           <ul>
              <li className="mt-3 flex items-center gap-1">
           <MdAccountCircle />
-          <Link >
+          <Link to={"/myaccount"} >
             My Account
+            </Link>
+          </li>
+          <li className="mt-3 flex items-center gap-1" >
+          <MdAccountCircle />
+          <Link  to={"/dashboard"}>
+          Dashboard
             </Link>
           </li>
           <li className="mt-3 flex items-center gap-1" onClick={handleSetLogOut}>
@@ -342,6 +348,7 @@ That's why we're dedicated to providing high-quality, natural body creams that m
           <Link to={"/adminHome"}>
             Switch to Admin
             </Link>
+
           </button>)}
       
           </div>
