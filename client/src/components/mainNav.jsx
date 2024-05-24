@@ -31,7 +31,9 @@ const MainNavbar = ({  logoSrc }) => {
     setOpenRegister,
     openRegister,
     login,
-    isadmin
+    isadmin,
+    setisadmin,
+    setLogin
   } = useContext(Cartcontext);
   const cartLength = useSelector(selectCartLength);
   const [query, setQuery] = useState("");
@@ -106,6 +108,14 @@ setOpenContact (false)
     setOpenLogin(true)
     setOpenNavMenu(false)
       }
+      const handleSetLogOut=()=>{
+        // setisadmin(false)
+        localStorage.removeItem("Login")
+        localStorage.removeItem("Admin")
+        setisadmin(false);
+        setLogin(false)
+        location.reload("/")
+      }
     
   // useEffect(() => {
   //   document.addEventListener('click', handleClickOutside);
@@ -121,8 +131,6 @@ setOpenContact (false)
         className="text-[#fd00cd]  
       font-bold text-sm   p-3 sm:px-5  flex-wrap xl:flex-nowrap  bg-white border-b shadow-md flex fixed w-full  z-50  items-end top-0 xl:justify-around justify-between"
       >
-
-
         <RxHamburgerMenu
           className="xl:hidden block md:hidden"
           size={20}
@@ -296,7 +304,7 @@ That's why we're dedicated to providing high-quality, natural body creams that m
         <MdOutlineCancel />
         </span>
       {!login &&
-           <ul>
+           (<ul>
            <li  className="mt-3 flex items-center gap-1 " onClick={handleOpenLogin}>
            <IoMdLogIn />
            <Link>
@@ -309,32 +317,34 @@ That's why we're dedicated to providing high-quality, natural body creams that m
                Signup
                </Link>
              </li> </ul>
-      }
+      )}
+          <div>
           { login &&
-          
-            <ul>
+         ( 
+          <ul>
+             <li className="mt-3 flex items-center gap-1">
+          <MdAccountCircle />
+          <Link >
+            My Account
+            </Link>
+          </li>
+          <li className="mt-3 flex items-center gap-1" onClick={handleSetLogOut}>
+          <AiOutlineLogout />
+          <Link >
+            Logout
+            </Link>
+          </li>
+          </ul>
+        )}        
 
-{isadmin  &&  <li className="mt-3 flex items-center gap-1">
+{ login && isadmin==true && ( <button className="mt-3 flex items-center gap-1">
 <RiAdminFill />
-            <Link to={"/adminHome"}>
-              Switch to Admin
-              </Link>
-            </li>}
-               <li className="mt-3 flex items-center gap-1">
-            <MdAccountCircle />
-            <Link >
-              My Account
-              </Link>
-            </li>
-            <li className="mt-3 flex items-center gap-1">
-            <AiOutlineLogout />
-            <Link >
-              Logout
-              </Link>
-            </li>
-            </ul>
-          }
-        
+          <Link to={"/adminHome"}>
+            Switch to Admin
+            </Link>
+          </button>)}
+      
+          </div>
       </div>}
 
       {openContact && <div className="w-40   bg-white border absolute top-[86px] right-44 p-3 pb-4 rounded-lg">

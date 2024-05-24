@@ -12,8 +12,8 @@ const Cartprovider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false); 
    const [ openEdit,   setOpenEdit] = useState(false);
     const [ editObj, setEditobj]=useState({})
-     const[login,setLogin]= useState(false);
-     const[isadmin,setisadmin]=useState(null)
+     const[login,setLogin]= useState(localStorage.getItem("Login"));
+     const[isadmin,setisadmin]=useState(localStorage.getItem("Admin"))
 
   const Back = () => {
     setIsOpen(!isOpen);

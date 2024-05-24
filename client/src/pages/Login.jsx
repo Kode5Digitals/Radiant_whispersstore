@@ -10,7 +10,7 @@ function Login({setOpenLogin}) {
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const[loading,setLoading]=useState(false)
-    const{setOpenRegister,setLogin,setisadmin,isadmin}=useContext(Cartcontext)
+    const{setOpenRegister,setLogin,setisadmin,isadmin,login}=useContext(Cartcontext)
 
     const handleOpenRegister =()=>{
         setOpenRegister(true)
@@ -32,9 +32,13 @@ try {
     console.log(res.data)
     setLogin(res.data.isLoggedIn)
     setisadmin(res.data.isAdmin)
-    console.log(isadmin)
+    localStorage.setItem("Login",res.data.isLoggedIn)
+    localStorage.setItem("Admin",res.data.isAdmin)
+    console.log("login:", login)
+    console.log("admin:",isadmin)
     toast.success(res.data.message);
     setOpenLogin(false)
+    // location.reload("/")
     }
     else{
         if(res.data.created.error_type === 0){
