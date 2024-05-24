@@ -1,6 +1,7 @@
 const express = require("express");
 const { check, validationResult } = require("express-validator");
 const userModel = require("../models/userModel");
+const adminModel=require("../models/AdminModel")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { jwtKey } = require("../config/env");
@@ -93,21 +94,23 @@ const Login = async (req, res, next) => {
     }
     const user = await userModel.findOne({ email: email });
     if (!user) {
-      res.json({ message: "Invalid account", error_type: 1, created: false });
-      return;
+        return res.json({ message: "Invalid account", error_type: 1, created: false });
+   
     }
     
     const isValid = await bcrypt.compare(password, user.password);
     if (isValid) {
       const id = user._id;
       const token = jwt.sign({ id }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' });
-      res.status(200).json({ message: "Logged in", token, created: true });
+      const admin = await adminModel.findOne({ email: email });
+      const isAdmin = !!admin;
+      res.status(200).json({ message: "Logged in", token, created: true ,isLoggedIn: true, isAdmin });
     } else {
-      res.json({ message: "Invalid password", created: false });
+      res.json({ message: "Invalid password", created: false ,isLoggedIn: false });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error",isLoggedIn: false  });
   }
 };
 
