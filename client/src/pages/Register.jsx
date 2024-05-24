@@ -28,6 +28,8 @@ console.log(formData)
       if(res.data.created){
         console.log(res.data.message)
         toast.success(res.data.message);
+        setOpenRegister(false)
+
         }
         else{
             if(res.data.created.error_type === 0){

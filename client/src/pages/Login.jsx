@@ -9,14 +9,13 @@ import { FaSpinner } from "react-icons/fa";
 function Login({setOpenLogin}) {
     const emailRef = useRef('');
     const passwordRef = useRef('');
- 
     const[loading,setLoading]=useState(false)
-    const{setOpenRegister,setLogin,setisadmin}=useContext(Cartcontext)
+    const{setOpenRegister,setLogin,setisadmin,isadmin}=useContext(Cartcontext)
+
     const handleOpenRegister =()=>{
         setOpenRegister(true)
         setOpenLogin(false)
         }
-
 
     const handleSubmit = async (e) => {
         setLoading(true)
@@ -33,9 +32,9 @@ try {
     console.log(res.data)
     setLogin(res.data.isLoggedIn)
     setisadmin(res.data.isAdmin)
+    console.log(isadmin)
     toast.success(res.data.message);
     setOpenLogin(false)
-    location.reload()
     }
     else{
         if(res.data.created.error_type === 0){
@@ -45,13 +44,14 @@ try {
                     toast.error(res.data.message);
                 }
     }
-
 }
  catch (error) {
   console.log(error)
 }
 finally{
     setLoading(false)
+    console.log("jjjjjjjjjjj")
+
 }
     };
 

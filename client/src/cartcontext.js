@@ -37,7 +37,7 @@ const Cartcontext = createContext({
      setEditobj:()=>{},
      login:Boolean,
      setLogin:()=>{},
-    isadmin:Boolean,
+    isadmin:null,
     setisadmin:()=>{}
 
     
