@@ -48,76 +48,85 @@ const Signup = async (req, res, next) => {
   }
 };
 
-// const Login = async (req, res, next) => {
-//   const { email, password } = req.body;
-//   const error = validationResult(req);
-//   console.log("login")
-//   try {
-//     if (!error.isEmpty()) {
-//       res.json({ error: error.array() ,error_type:0,created:false});
-//       return;
-//     }
-//     const findone = await userModel.findOne({ email: email });
-//     if (!findone) {
-//       res.json({ message: "invalid account",error_type:1,created:false });
-//       return;
-//     }
-
-//     const isValid =  await bcrypt.compare(password, findone.password, (err, isValid) => {
-//       if (isValid) {
-//         const id = findone._id;
-//         const signOptions = {
-//           algorithm: 'HS256',
-//           expiresIn: '1h'
-//         };
-        
-//         const token = jwt.sign({ id }, jwtKey, signOptions);
-//         res.status(200).json({ message: "Loggin",token,created:true });
-//       } else {
-//         res.json({ message: "Invalid Account oooo",created:false });
-//       }
-//     });
-//   } catch (error) {
-//     console.log(error)
-//   }
-// };
 
 
 const Login = async (req, res, next) => {
-  console.log("login");
-  console.log(req.body);
-  const { email, password } = req.body;
-  const errors = validationResult(req);
-  console.log("login");
-  try {
-    if (!errors.isEmpty()) {
-      res.json({ errors: errors.array(), error_type: 0, created: false });
-      return;
+    console.log("login");
+    console.log(req.body);
+    const { email, password } = req.body;
+    const errors = validationResult(req);
+  
+    try {
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array(), error_type: 0, created: false, isLoggedIn: false });
+      }
+  
+      const user = await userModel.findOne({ email: email });
+      const admin = await adminModel.findOne({ email: email });
+  
+      if (!user && !admin) {
+        return res.status(400).json({ message: "Invalid account", error_type: 1, created: false, isLoggedIn: false });
+      }
+  
+      let isValid = false;
+      let isAdmin = false;
+      let id;
+  
+      if (user) {
+        isValid = await bcrypt.compare(password, user.password);
+        id = user._id;
+      } else if (admin) {
+        isValid = await bcrypt.compare(password, admin.password);
+        isAdmin = true;
+        id = admin._id;
+      }
+  
+      if (isValid) {
+        const token = jwt.sign({ id, isAdmin }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' });
+        return res.status(200).json({ message: "Logged in", token, created: true, isLoggedIn: true, isAdmin });
+      } else {
+        return res.status(400).json({ message: "Invalid password", created: false, isLoggedIn: false });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Internal server error", isLoggedIn: false });
     }
-    const user = await userModel.findOne({ email: email });
-    const admin = await adminModel.findOne({ email: email });
-    const isAdmin = !!admin;
+  };
+  
 
-    if (!user || !admin) {
-        return res.json({ message: "Invalid account", error_type: 1, created: false });
-    }
-    
-    const isValidUser = await bcrypt.compare(password, user.password);
-    const isValidAdmin = await bcrypt.compare(password, admin.password);
-    
+// const Login = async (req, res, next) => {
+//   console.log("login");
+//   console.log(req.body);
+//   const { email, password } = req.body;
+//   const errors = validationResult(req);
+//   console.log("login");
+//   try {
+//     if (!errors.isEmpty()) {
+//       res.json({ errors: errors.array(), error_type: 0, created: false });
+//       return;
+//     }
+//     const user = await userModel.findOne({ email: email });
+//     const admin = await adminModel.findOne({ email: email });
+//     const isAdmin = !!admin;
 
-    if (isValidUser || isValidAdmin) {
-      const id = user._id;
-      const token = jwt.sign({ id }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' });
-      res.status(200).json({ message: "Logged in", token, created: true ,isLoggedIn: true, isAdmin });
-    } else {
-      res.json({ message: "Invalid password", created: false ,isLoggedIn: false });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal server error",isLoggedIn: false  });
-  }
-};
+//     if (!user || !admin) {
+//         return res.json({ message: "Invalid account", error_type: 1, created: false });
+//     }
+    
+//     const isValidUser = await bcrypt.compare(password, user.password);
+//     const isValidAdmin = await bcrypt.compare(password, admin.password);
+//     if (isValidUser || isValidAdmin) {
+//       const id = user._id;
+//       const token = jwt.sign({ id }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' });
+//       res.status(200).json({ message: "Logged in", token, created: true ,isLoggedIn: true, isAdmin });
+//     } else {
+//       res.json({ message: "Invalid password", created: false ,isLoggedIn: false });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: "Internal server error",isLoggedIn: false  });
+//   }
+// };
 
 
 
