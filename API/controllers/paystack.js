@@ -15,8 +15,7 @@ try {
         },
     });
 
-    const { authorization_url } = response.data.data;
-    res.status(200).json({ authorization_url });
+    res.status(200).json(response.data);
 } catch (error) {
     console.error('Error creating payment:',error);
     res.status(500).json({ error: 'Error creating payment' });
@@ -24,17 +23,27 @@ try {
   
   }
 
+// Verify a transaction
+const verifyPayment = async (reference)=>{
+  try {
+    const { reference } = req.params;
+
+    const response = await axios.get(
+      `https://api.paystack.co/transaction/verify/${reference}`,
+      {
+        headers: {
+          Authorization: `Bearer ${SECRET_KEY}`,
+        },
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
 
 
-  const verifyPayment = async (reference)=> {
-    try {
-      const payment = await paystack.transaction.verify(reference);
-      return payment.data;
-    } catch (error) {
-      console.error('Error verifying payment:', error);
-      throw error;
-    }
-  };
 
   module.exports ={
     createPayment,
