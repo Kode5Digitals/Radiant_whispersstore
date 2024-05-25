@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import httpAuth from "../utils/https";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link} from "react-router-dom";
 import Cartcontext from "../cartcontext";
 import { FaSpinner } from "react-icons/fa";
 function Login({setOpenLogin}) {
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const[loading,setLoading]=useState(false)
-    const{setOpenRegister,setLogin,setisadmin,isadmin,login}=useContext(Cartcontext)
+    const{setOpenRegister,setLogin,setisadmin}=useContext(Cartcontext)
 
     const handleOpenRegister =()=>{
         setOpenRegister(true)
@@ -24,18 +23,14 @@ function Login({setOpenLogin}) {
             email: emailRef.current.value,
             password: passwordRef.current.value
         };
-        console.log(formData)
 try {
   const res = await httpAuth.post("/user/login", formData,{withCredentials:true})
   if(res.data.created){
     localStorage.setItem('token', res.data.token)
-    console.log(res.data)
     setLogin(res.data.isLoggedIn)
     setisadmin(res.data.isAdmin)
     localStorage.setItem("Login",res.data.isLoggedIn)
     localStorage.setItem("Admin",res.data.isAdmin)
-    console.log("login:", login)
-    console.log("admin:",isadmin)
     toast.success(res.data.message);
     setOpenLogin(false)
     }
@@ -53,7 +48,6 @@ try {
 }
 finally{
     setLoading(false)
-    console.log("jjjjjjjjjjj")
 
 }
     };
@@ -96,9 +90,8 @@ finally{
                 />
 
                 <div className="flex justify-between mt-3">
-                    <button className="border mb-3 text-[12px] p-1 rounded-lg w-1/3 bg-pink-200" >
-                     <Link onClick={handleOpenRegister}>
-                     Signup</Link> </button>
+                    <button className="border mb-3 text-[12px] p-1 rounded-lg w-1/3 bg-pink-200" onClick={handleOpenRegister}>
+                     Signup </button>
                     <button className="border mb-3 text-[12px] p-1 rounded-lg w-1/3" onClick={handleBack}>Back</button>
                 </div>
                 <button className="mb-3 text-[12px] p-2 rounded-lg w-full mt-3 bg-[#fd00cd] leading-tight shadow text-white transition duration-300 ease-in-out transform hover:scale-105  flex items-center gap-3 justify-center" type="submit" >Login

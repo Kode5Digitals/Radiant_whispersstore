@@ -101,12 +101,16 @@ const MainNavbar = ({  logoSrc,toggleSidebar }) => {
 
   const handleOpenRegister=()=>{
 setOpenRegister(true)
-setOpenContact (false) 
+setOpenContact (false)
+setOpenNavMenu(false)
+
   }
 
   const handleOpenLogin =()=>{
     setOpenLogin(true)
     setOpenNavMenu(false)
+setOpenContact (false)
+
       }
       const handleSetLogOut=()=>{
         // setisadmin(false)
@@ -236,7 +240,7 @@ setOpenContact (false)
 
 
         <div className=" xl:hidden md:hidden ">
-            <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex w-[390px] sm:ml-32 p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
+            <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex w-[400px] sm:ml-32 p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
               <TfiSearch />
               <input
                 type="text"
@@ -354,7 +358,7 @@ That's why we're dedicated to providing high-quality, natural body creams that m
           </div>
       </div>}
 
-      {openContact && <div className="w-40   bg-white border absolute 2xl:top-[68px] xl:top-[70px] right-44 p-3 pb-4 rounded-lg">
+      {openContact && <div className="w-40 text-[12px]  bg-white border absolute 2xl:top-[68px] xl:top-[70px] right-44 p-3 pb-4 rounded-lg">
        <div className="flex items-center justify-between ">
        <p >Conatct-Us</p>
         <span className="text-black cursor-pointer" onClick={cancelContact}>
@@ -365,8 +369,6 @@ That's why we're dedicated to providing high-quality, natural body creams that m
          <ul>
          <a href="https://wa.link/m4ypbh">
          <li className="mt-3 flex gap-1 items-center cursor-pointer hover:bg-slate-400 hover:p-2 hover:text-white rounded-lg">
-         
-      
          <IoLogoWhatsapp />
          0707789800099
           </li>

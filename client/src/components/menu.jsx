@@ -11,19 +11,11 @@ const SideMenu = () => {
   const { isOpen, Back, handleLogin, handleRegister } = useContext(Cartcontext);
 
   return (
-    <div>
+    <div className="xl:hidden  lg:hidden md:hidden block sm:block">
       <div
-        className={`menu fixed z-[10000] top-0 
-xl:hidden  lg:hidden
-
-    bg-white p-2 w-1/3 h-full overflow-hidden transition-all duration-300
- 
-    ${isOpen && window.innerWidth < 768 ? "left" : "left-0"}
-      ${
-        isOpen && window.innerWidth < 768
-          ? "translate-x-0"
-          : "-translate-x-full"
-      }
+        className={
+          `menu fixed z-[10000] top-0 bg-white p-2 w-1/3 h-full overflow-hidden left-0 transition-all duration-300
+      ${ isOpen? "translate-x-0" : "-translate-x-full"}
   `}
       >
         <div className="mt-3 flex justify-between items-center ">

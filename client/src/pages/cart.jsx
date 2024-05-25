@@ -174,7 +174,7 @@ const Cart = () => {
         </div>
       )}
 
-      <Footer logoSrc="../logo.png" />
+      <Footer logoSrc="./Logo4.png" />
     </main>
   );
 };

@@ -7,7 +7,7 @@ import { Link} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingSpinner from "./loaderSpinner";
-import { CircularProgress, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Navbar from "./nav";
 import {  useDispatch, useSelector } from 'react-redux';
 import { setProducts } from "../stores/features/product/productSlice";
@@ -17,17 +17,14 @@ import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { Truncate, formatPrice } from "../utils/utils";
 import cors from "cors"
-
 import {
   increaseQuantity,
   decreaseQuantity,
-  
 } from "../stores/features/cart/cartSlice";
 cors()
 function Products() {
   const dispatch = useDispatch()
 const [loading, setLoading] = useState(false);
-const [moreLoading, setMoreLoading] = useState(false);
 const products = useSelector((state) => state.products);
 const [visibleProducts, setVisibleProducts] = useState(15);
 const {wishlistItems}= useSelector((state)=>state?.whishlist); 
@@ -191,14 +188,7 @@ return (
           ))}
         </div>
       )}
-      {moreLoading && (
-        <div className="flex flex-col items-center justify-center h-screen">
-          <CircularProgress size={80} style={{ marginBottom: 20, color: '#F13DA6' }} />
-          <Typography variant="h6" className='text-pink-700 text-xl absolute' style={{ textAlign: 'center' }}>
-            Radiantwhispersstore products...
-          </Typography>
-        </div>
-      )}
+     
       <div className="m-auto w-44">
         {!loading && visibleProducts < products.length && (
           <button onClick={handleLoadMore} className="w-52 border p-2 rounded-xl bg-[#fd00cd] text-white font-bold">

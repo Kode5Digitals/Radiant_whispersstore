@@ -20,7 +20,7 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
     toggleSidebar()
    }
   return (
-    <div className="relative h-full">
+    <div className="relative h-full xl:hidden sm:hidden lg:block hidden md:block  2xl:hidden">
       <div
         className=
         {`fixed top-0 z-[5000000000]  md:right-0 w-64 h-full bg-white transform ${

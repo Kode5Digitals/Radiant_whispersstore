@@ -9,7 +9,7 @@ const Register = () => {
   const emailRef = useRef('');
   const passwordRef = useRef('');
   const confirmPasswordRef = useRef('');
-const{setOpenRegister}=useContext(Cartcontext)
+const{setOpenRegister,handleLogin}=useContext(Cartcontext)
 const[loading,setLoading]=useState  (false)
 
   const handleSubmit = async (e) => {
@@ -50,6 +50,11 @@ console.log(formData)
   const handleBack = () => {
     setOpenRegister(false);
   };
+  const HandleLogin=()=>{
+handleLogin()
+setOpenRegister(false);
+
+  }
 
   return (
     <div className="fixed inset-0 flex p-3 xl:p-0 items-center justify-center bg-gray-800 bg-opacity-50 z-50 ">
@@ -85,6 +90,7 @@ console.log(formData)
             id="fullName"
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter fullname"
+            required
           />
         </div>
         <div>
@@ -100,7 +106,7 @@ console.log(formData)
             id="email"
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter email"
-
+            required
           />
         </div>
         <div>
@@ -116,7 +122,7 @@ console.log(formData)
             id="password"
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter password"
-
+            required
           />
         </div>
         <div>
@@ -132,7 +138,7 @@ console.log(formData)
             id="confirmPassword"
             className="mt-1 mb-4 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter confirmPassword"
-
+required
           />
         </div>
         <button
@@ -149,6 +155,10 @@ console.log(formData)
         >
           Back
         </button>
+      <div className="flex justify-end mt-2 text-[12px] ">
+      <a onClick={HandleLogin} className="cursor-pointer">
+        Login here</a> 
+      </div>
       </form>
     </div>
   );

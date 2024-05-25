@@ -13,7 +13,6 @@ import Cartcontext from "../cartcontext";
 import DeleteProduct from "../components/deleteModal";
 import { Truncate } from "../utils/utils";
 import { TbCurrencyNaira } from "react-icons/tb";
-import { IoReload } from "react-icons/io5";
 
 function AdminProducts() {
   const [loading, setLoading] = useState(false);

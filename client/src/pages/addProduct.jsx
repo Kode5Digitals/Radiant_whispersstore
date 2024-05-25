@@ -67,15 +67,15 @@ const AddProduct = () => {
 
 
 //delete all produts in the database
-    const handleDeleteAll = async () => {
-      try {
-        const response = await axios.delete('http://localhost:4000/api/products/DeleteAll');
+    // const handleDeleteAll = async () => {
+    //   try {
+    //     const response = await axios.delete('http://localhost:4000/api/products/DeleteAll');
   
-        console.log(response.data); 
-      } catch (error) {
-        console.error('Error deleting all documents:', error);
-      }
-    }
+    //     console.log(response.data); 
+    //   } catch (error) {
+    //     console.error('Error deleting all documents:', error);
+    //   }
+    // }
   
 
   return (
