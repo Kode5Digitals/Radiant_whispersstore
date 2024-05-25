@@ -8,6 +8,8 @@ import { formatPrice } from "../utils/utils";
 import { TbCurrencyNaira } from "react-icons/tb";
 import ImageCarousel from "../components/ImageCarousel";
 import { CiFaceSmile } from "react-icons/ci";
+import { toast } from "react-toastify";
+import { PaystackButton } from 'react-paystack';
 
 const PaystackComponent = () => {
   const [email, setEmail] = useState("");
@@ -17,6 +19,10 @@ const [loading, setLoading] = useState(false);
 const { items } = useSelector(selectCart);
 const cartItemImages = items.map((item) => item.image)
 const cartItemNames= items.map((item) => item.name)
+const [key, setKey] = useState('your-paystack-public-key');
+const [reference, setReference] = useState('');
+const amount=totalPrice
+
 const handlePayment = async () => {
   setLoading(true);
  try{
@@ -24,21 +30,24 @@ const handlePayment = async () => {
   );
   const { authorization_url } = res.data;
 console.log(authorization_url)
-
-  if (authorization_url) {
-    window.open(authorization_url)
-    // window.location.href = authorization_url
-  } else {
-    console.error(res.data.error);
-  }
+const { data } = res;
+      setReference(data.data.reference);
+      setKey(data.data.authorization_url);
  }catch(err){
 console.log(err)
  }finally{setLoading(false)}
 };
 
-
-
-
+const handlePaymentSuccess = (reference) => {
+  httpAuth.get(`/api/paystack/verifyPayment/${reference}`)
+    .then(response => {
+      console.log('Payment success:', response.data);
+      toast.success('Payment successful!');
+    })
+    .catch(error => {
+      console.error('Payment verification error:', error);
+    });
+};
 
   // const handlePaymentSuccess = () => {
   //   toast.success("Payment successful!");
@@ -104,7 +113,24 @@ console.log(err)
               className=" rounded-sm  p-3 hover:border-pink-300 border-2 mb-4 hover:text-sm hover:px-6 text-[12px] bg-lime-300 "
               >
         {loading ? 'Processing...' : 'Pay Now'}
+
+
+
+
+        {reference && (
+        <PaystackButton
+          email={email}
+          amount={amount * 100}
+          publicKey={key}
+          text="Pay Now"
+          reference={reference}
+          onSuccess={(reference) => handlePaymentSuccess(reference.reference)}
+          onClose={() => alert('Payment closed')}
+        />
+      )}
       </button>
+
+      
          
           </div>
           </div>
