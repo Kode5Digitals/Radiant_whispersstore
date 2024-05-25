@@ -32,7 +32,7 @@ const Footer = ({logoSrc}) => {
         <div className="socials  hover:bg-pink-400 hover:text-white">
            <FaInstagram /></div>
         <div className="socials  hover:bg-pink-400 hover:text-white">
-          <WhatsappShareButton url={environment.WHATSAPP_URL}>
+          <WhatsappShareButton url="https://wa.link/m4ypbh">
           <IoLogoWhatsapp  />
           </WhatsappShareButton>
           </div>
@@ -64,13 +64,13 @@ That&apos;s why we&apos;re dedicated to providing high-quality, natural body cre
                 </li>
       <li  className="hidden lg:flex gap-5 mt-10  xl:flex md:flex">
         <div className="socials hover:bg-pink-400 hover:text-white">   
-         <FacebookShareButton url={environment.FACEBOOK_URL}>
+         <FacebookShareButton url="">
           <TiSocialFacebook />
           </FacebookShareButton>
           </div>
         <div className="socials  hover:bg-pink-400 hover:text-white"> <FaInstagram /></div>
         <div className="socials  hover:bg-pink-400 hover:text-white">
-           <WhatsappShareButton url={environment.WHATSAPP_URL}>
+           <WhatsappShareButton url="https://wa.link/m4ypbh">
           <IoLogoWhatsapp  />
           </WhatsappShareButton>
 </div>

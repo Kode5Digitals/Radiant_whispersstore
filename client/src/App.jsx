@@ -1,11 +1,11 @@
 
-import { PiWhatsappLogoDuotone } from "react-icons/pi";
 import NewArrivals from "./components/NewArrivals";
 import Banner from "./components/banner";
 import Banner2 from "./components/banner2";
 import Products from "./components/products";
 import "./index.css";
 import Defaultlayout from "./layout/Defaultlayout";
+import { IoLogoWhatsapp } from "react-icons/io";
 
 function Home() {
   return (
@@ -20,9 +20,9 @@ function Home() {
        </Defaultlayout >
        <div className=""  >
    <a href="https://wa.link/m4ypbh">
-   <PiWhatsappLogoDuotone 
-    size={80} 
-    className="fixed bottom-10  hover:p-4  text-green-700 right-5"
+   <IoLogoWhatsapp
+    size={60} 
+    className="fixed bottom-10  hover:p-4  text-green-700 right-10"
     />
    </a>
     </div>

@@ -3,7 +3,7 @@ import "../App.css"
 
 const Banner = () => {
   return (
-    <div className="relative xl:mt-20 mt-32 md:mt-[86px]">
+    <div className="relative xl:mt-16 mt-32 md:mt-[70px]">
 
 
 

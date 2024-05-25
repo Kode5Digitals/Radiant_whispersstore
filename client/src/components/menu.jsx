@@ -14,7 +14,7 @@ const SideMenu = () => {
     <div>
       <div
         className={`menu fixed z-[10000] top-0 
-xl:hidden md:hidden lg:hidden
+xl:hidden  lg:hidden
 
     bg-white p-2 w-1/3 h-full overflow-hidden transition-all duration-300
  

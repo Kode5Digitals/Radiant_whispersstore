@@ -7,7 +7,7 @@ const HoverInfo = ({  name, right = "0px", info}) => {
   return (
     <div
       style={{ right: right }}
-      className="absolute  bg-white  z-200 p-3 text-[13px] text-navyblue w-48 top-14 shadow-lg rounded-lg hidden group-hover:block hover:block "
+      className="absolute  bg-white  z-200 p-3 text-[13px] text-navyblue w-48 2xl:top-12 xl:top-14 shadow-lg rounded-lg hidden group-hover:block hover:block "
     >
 <h3> {name}</h3>
       <p className='text-[12px]'>{info}</p>

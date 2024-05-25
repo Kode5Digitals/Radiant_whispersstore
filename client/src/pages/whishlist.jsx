@@ -32,7 +32,7 @@ const handleAddToCart = (product) => {
   
   return (
    <Defaultlayout  setIsOpen={setIsOpen} isOpen={isOpen} Back={handleBack}>
-     <div className='mt-[85px] min-h-[350px]'>
+     <div className='xl:mt-[73px] mt-36 md:mt-16 lg:mt-16  min-h-[350px]'>
       <h2 className='text-center text-xl w-full z-30 fixed bg-slate-100 p-2'>
       {wishlistItems.length <=0 &&
       <span >No </span>

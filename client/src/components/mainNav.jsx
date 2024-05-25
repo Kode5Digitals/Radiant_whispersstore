@@ -22,7 +22,7 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { RiAdminFill } from "react-icons/ri";
 
 
-const MainNavbar = ({  logoSrc }) => {
+const MainNavbar = ({  logoSrc,toggleSidebar }) => {
   const {
     isOpen,
     setIsOpen,
@@ -137,7 +137,7 @@ setOpenContact (false)
           onClick={toggleMenu}
         />
         <Link to={"/"}>
-          <div className="xl:ml-4 w-52 ">
+          <div className="xl:ml-4 w-52  md:w-40">
             <img src={logoSrc} alt="Radiantwhispersstore Logo" className="" />
           </div>
         </Link>
@@ -188,7 +188,7 @@ setOpenContact (false)
             <BiSolidUserPin
               size={27}
               className="hidden md:block "
-              onClick={HandleOpenNavMenu} 
+              onClick={toggleSidebar} 
             />
           </div>
           <div className="">
@@ -299,7 +299,7 @@ That's why we're dedicated to providing high-quality, natural body creams that m
               onClick={HandleOpenNavMenu}
             />
           
-           {openNavMenu && <div className="w-40 md:block lg:block   bg-white border absolute top-[86px] p-3 pb-4 rounded-lg">
+           {openNavMenu && <div className="w-40 md:block lg:block   bg-white border absolute xl:top-[72px] 2xl:top-[68px] p-3 pb-4 rounded-lg">
            <span className="text-black cursor-pointer flex justify-end" onClick={cancelNavMenu}>
         <MdOutlineCancel />
         </span>
@@ -354,7 +354,7 @@ That's why we're dedicated to providing high-quality, natural body creams that m
           </div>
       </div>}
 
-      {openContact && <div className="w-40   bg-white border absolute top-[86px] right-44 p-3 pb-4 rounded-lg">
+      {openContact && <div className="w-40   bg-white border absolute 2xl:top-[68px] xl:top-[70px] right-44 p-3 pb-4 rounded-lg">
        <div className="flex items-center justify-between ">
        <p >Conatct-Us</p>
         <span className="text-black cursor-pointer" onClick={cancelContact}>
@@ -363,12 +363,15 @@ That's why we're dedicated to providing high-quality, natural body creams that m
        </div>
         <hr />
          <ul>
+         <a href="https://wa.link/m4ypbh">
          <li className="mt-3 flex gap-1 items-center cursor-pointer hover:bg-slate-400 hover:p-2 hover:text-white rounded-lg">
          
-         <a href="https://wa.me/23408169773783">
-         <IoLogoWhatsapp />Whatsapp
-         </a>
+      
+         <IoLogoWhatsapp />
+         0707789800099
           </li>
+         </a>
+
         <li  className="mt-3 flex gap-1 items-center cursor-pointer  hover:bg-slate-400 hover:p-2 hover:text-white rounded-lg">
         <FaInstagramSquare />  Instagram
         </li>
@@ -398,5 +401,6 @@ MainNavbar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   setIsOpen: PropTypes.func.isRequired,
   logoSrc: PropTypes.string.isRequired,
+toggleSidebar: PropTypes.func.isRequired,
 };
 export default MainNavbar;

@@ -8,9 +8,9 @@ import httpAuth from "../utils/https";
 const PaystackComponent = () => {
   const [email, setEmail] = useState("");
   const { totalPrice } = useSelector(selectCart)
-// const navigate=useNavigate()
 const [response, setResponse] = useState(null);
 const [loading, setLoading] = useState(false);
+
 
 const handlePayment = async () => {
   console.log("pystack")

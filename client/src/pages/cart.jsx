@@ -125,8 +125,8 @@ const Cart = () => {
             </div>
           ))}
 
-          <div className="flex  flex-wrap-reverse   lg:p-3 lg:flex-nowrap md:flex-nowrap md:p-10 xl:flex-nowrap  mt-12 xl:w-3/4 lg:w-3/4 p-2 mx-auto justify-between   md:items-end lg:items-end mb-20">
-            <div className="w-[500px] h-[300px] bg-pink-white border-black border-2 rounded-md p-4">
+          <div className="flex  flex-wrap 2xl:w-3/4 2xl:flex-wrap  sm:w-full sm:p-8 justify-end  xl:flex-nowrap  lg:p-3 lg:flex-nowrap md:flex-nowrap md:p-10   mt-12 xl:w-3/5 lg:w-3/4 p-2 mx-auto xl:justify-between   md:items-end lg:items-end mb-20">
+            <div className="w-[500px] h-[300px] sm:w-full bg-pink-white border-black  sm:mb-10 mb-9 border-2 rounded-md p-4">
               <h1 className="text-xl text-center">Cart Summary</h1>
               <hr className="" style={{ borderColor: "black" }} />
               <div className="mt-3">
@@ -159,8 +159,8 @@ const Cart = () => {
                 </Link>
               </div>
             </div>
-            <div className=" mb-10 ml-32 xl:ml-0 xl:mb-0" onClick={() => handleremoveAllFromCart()}>
-              <button className="bg-red-500 p-4 px-10 w-52 text-white rounded-xl">
+            <div className=" mb-10 ml-32 xl:ml-0 xl:mb-0 " onClick={() => handleremoveAllFromCart()}>
+              <button className="bg-red-500 text-sm  w-32 p-2 text-white rounded-lg">
                 Empty Cart
               </button>
             </div>

@@ -16,16 +16,14 @@ const Cartprovider = ({ children }) => {
      const[isadmin,setisadmin]=useState(localStorage.getItem("Admin"))
 
   const Back = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(false);
   };
 
   const handleLogin = () => {
-    setOpenLogin((prevState) => !prevState);
-    Back()
+    setOpenLogin(true);
   };
   const handleRegister = () => {
-    Back()
-    setOpenRegister((prevState) => !prevState);
+    setOpenRegister(true);
   };
 
   const addCart = (item) => {

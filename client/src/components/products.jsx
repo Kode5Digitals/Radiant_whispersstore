@@ -29,7 +29,7 @@ function Products() {
 const [loading, setLoading] = useState(false);
 const [moreLoading, setMoreLoading] = useState(false);
 const products = useSelector((state) => state.products);
-const [visibleProducts, setVisibleProducts] = useState(10);
+const [visibleProducts, setVisibleProducts] = useState(15);
 const {wishlistItems}= useSelector((state)=>state?.whishlist); 
 const cartItems = useSelector((state) => state.cart.items);
 
@@ -112,7 +112,7 @@ return (
     <Navbar />
 
     {loading && <LoadingSpinner />}
-    <div className="xl:w-4/5 lg:w-3/4 w-full mt-12 mx-auto ">
+    <div className="xl:w-4/5 lg:w-3/4  2xl:w-3/4 w-full mt-12 mx-auto ">
       {!loading  && products.length === 0? (
         <div className="flex flex-col items-center justify-center h-screen">
           <Typography variant="h6" className='text-pink-700 text-xl'>
@@ -124,8 +124,9 @@ return (
           {!loading && products.slice(0, visibleProducts).map((prod, index) => (
             <div key={index} className="mb-20  w-48 xl:w-48 h-84 ">
               <div className="w-full h-52 shadow-xl overflow-hidden rounded-lg mb-3  border relative">
-                <img src={prod?.image} className="w-full h-full" alt="" />
-                {!isProductInWishlist(prod._id) ? (
+<div className="hover:p-2 p-5">
+<img src={prod?.image} className="w-full h-full" alt="" />
+  </div>                {!isProductInWishlist(prod._id) ? (
                   <CiHeart
                     size={22}
                     id={prod._id}
