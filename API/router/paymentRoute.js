@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const PaystackHandler = require("../controllers/paystack");
-router.post("/payment",PaystackHandler)
+const {verifyPayment,createPayment} = require("../controllers/paystack");
+
+router.post("/payment",createPayment)
 module.exports =router

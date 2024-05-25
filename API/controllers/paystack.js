@@ -1,38 +1,36 @@
-const   PAYSTACK_PUBLIC_KEY = require("../config/env");
+const paystack = require('paystack')("pk_test_07070da6a9afaa698f923376dc24bbbe12df1d94");
 
+const createPayment=async(req, res) =>{ 
+const {amount,email}=req.body
 
-const PaystackHandler=async(req, res) =>{ 
-  console.log("oiytrg")
-  const fetch = await import('node-fetch').then(module => module.default)
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
-    console.log(req.body)
+  try {
     if (!PAYSTACK_SECRET_KEY) {
-        return res.status(500).json({ error: 'Paystack secret key is not configured' });
-      }
-      const { amount, email } = req.body;
-    const response = await fetch('https://api.paystack.co/transaction/initialize', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${PAYSTACK_PUBLIC_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        amount: amount * 100, 
-        email: email,
-      }),
+      return res.status(500).json({ error: 'Paystack secret key is not configured' });
+    }
+    const payment = await paystack.transaction.initialize({
+      amount: amount * 100,
+      email: email,
     });
-    const data = await response.json();
-    if (!response.ok) {
-        return res.status(response.status).json({ error: data.message });
-      }
-    
-    res.status(200).json(data);
+    return payment.data;
+  } catch (error) {
+    console.error('Error creating payment:', error);
+    throw error;
   }
-  module.exports = PaystackHandler
+  }
+
+
+
+  const verifyPayment = async (reference)=> {
+    try {
+      const payment = await paystack.transaction.verify(reference);
+      return payment.data;
+    } catch (error) {
+      console.error('Error verifying payment:', error);
+      throw error;
+    }
+  };
+
+  module.exports ={
+    createPayment,
+    verifyPayment}
+  

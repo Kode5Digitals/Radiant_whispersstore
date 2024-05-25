@@ -61,9 +61,6 @@ const GetEditProduct = async (req, res) => {
   };
   
   
-  
- 
-    
 module.exports = {
     editProduct,
     GetEditProduct
