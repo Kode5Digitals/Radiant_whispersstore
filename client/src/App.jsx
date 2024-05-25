@@ -11,15 +11,20 @@ function Home() {
   return (
     <main >
    < Defaultlayout >
-      <div className="relativ">
+      <div>
       <Banner />
       <Products />
       <Banner2 />
       <NewArrivals />
       </div>
        </Defaultlayout >
-       <div className="  "  >
-    <PiWhatsappLogoDuotone  size={80} className="fixed bottom-10  hover:p-4  text-green-700 right-5"/>
+       <div className=""  >
+   <a href="https://wa.link/m4ypbh">
+   <PiWhatsappLogoDuotone 
+    size={80} 
+    className="fixed bottom-10  hover:p-4  text-green-700 right-5"
+    />
+   </a>
     </div>
     </main>
 

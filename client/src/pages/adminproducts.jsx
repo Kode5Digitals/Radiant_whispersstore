@@ -13,6 +13,7 @@ import Cartcontext from "../cartcontext";
 import DeleteProduct from "../components/deleteModal";
 import { Truncate } from "../utils/utils";
 import { TbCurrencyNaira } from "react-icons/tb";
+import { IoReload } from "react-icons/io5";
 
 function AdminProducts() {
   const [loading, setLoading] = useState(false);
@@ -54,9 +55,8 @@ function AdminProducts() {
   console.log(id)
 
     try {
-        const response = await httpAuth.get(`/admin/product/edit/${id}`);
+        const response = await httpAuth.get(`/api/products/edit/${id}`);
         console.log(response)
-
         const data = await response.data.product;
         console.log(data)
         setEditobj(data) 
@@ -83,7 +83,7 @@ const openDeleteModal=(name,id)=>{
     <main className="mb-10 ">
       {loading && <LoadingSpinner />}
       <div className="xl:w-4/5 w-full mt-12  mx-auto ">
-        <div className=" flex  w-full sm:gap-5  sm:flex-wrap justify-evenly   xl:justify-center  2xl:justify-evenly ">
+        <div className=" flex  w-full sm:gap-5 flex-wrap  sm:flex-wrap justify-evenly   xl:justify-center  2xl:justify-evenly ">
           {products.slice(0, visibleProducts).map((prod, index) => (
             <div key={index} className=" mb-20 max-w-48 xl:w-48  h-84  ">
               <div className="  w-full h-52 shadow-xl  overflow-hidden  border-2 rounded-lg mb-3 relative">
@@ -92,7 +92,7 @@ const openDeleteModal=(name,id)=>{
              
               </div>
               <div className="p-1 ">
-                <h3 className="text-[13px]">{Truncate(prod?.name,30)}</h3>
+                <h3 className="text-[13px]">{Truncate(prod?.name,23)}</h3>
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
                 <h4 className="text-md"><span></span>{prod?.price}</h4>
@@ -109,7 +109,7 @@ const openDeleteModal=(name,id)=>{
                   className="border text-sm px-6 rounded-md   bg-pink-300 border-pink-600 hover:text-white hover:bg-pink-950"
                   onClick={() => handleEdit(prod._id)}
                 >
-                Edit
+                Edit 
                 </button>
               </div>
             </div>

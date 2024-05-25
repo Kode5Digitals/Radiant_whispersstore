@@ -203,7 +203,7 @@ const AddProduct = () => {
       <div className="w-[300px] h-[300px] border">
         <img style={{ width: "100%", height: "100% " }} src={imagesrc} alt="" />
       </div>
-      <button onClick={handleDeleteAll} className="text-white">Delete all product</button>
+      {/* <button onClick={handleDeleteAll} className="text-white">Delete all product</button> */}
     </div></AdminDefaultlayout>
   );
 };

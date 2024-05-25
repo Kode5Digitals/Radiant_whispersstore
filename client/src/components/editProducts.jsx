@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-import { MdInsertPhoto } from "react-icons/md";
+import { MdCancel, MdInsertPhoto } from "react-icons/md";
 import Cartcontext from "../cartcontext";
+import { IoReload } from "react-icons/io5";
 
 const EditProduct = ({ setOpenEdit }) => {
   const nameRef = useRef("");
@@ -15,10 +16,11 @@ const EditProduct = ({ setOpenEdit }) => {
   const categoryRef = useRef(null);
   const editRef = useRef(null);
   const{editObj}=useContext(Cartcontext)
-
+  const[loading,setLoading]=useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
       const formData = new FormData();
       formData.append('name', nameRef.current.value);
       formData.append('price', priceRef.current.value);
@@ -29,7 +31,7 @@ const EditProduct = ({ setOpenEdit }) => {
       console.log(formData);
 
       const response = await axios.post(
-        "http://localhost:4000/api/products/addProduct",
+        "https://radiant-whispersstore.onrender.com/api/products/addProduct",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -42,6 +44,8 @@ const EditProduct = ({ setOpenEdit }) => {
         } 
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -78,6 +82,7 @@ const EditProduct = ({ setOpenEdit }) => {
 const handleEdit=async(e,id)=>{
   e.preventDefault();
   try {
+    setLoading(true)
       const formData = new FormData();
       formData.append('name', nameRef.current.value);
       formData.append('price', priceRef.current.value);
@@ -87,7 +92,7 @@ const handleEdit=async(e,id)=>{
       console.log(formData);
       // console.log(imageRef.current.files[0])
       const response = await axios.post(
-            `https://radiant-whispersstore.onrender.com/products/edit/${id}`, 
+            `https://radiant-whispersstore.onrender.com/api/products/edit/${id}`, 
           formData,
           {
               headers: { "Content-Type": "multipart/form-data" },
@@ -107,9 +112,13 @@ const handleEdit=async(e,id)=>{
       }
   } catch (error) {
       console.log(error);
+  }finally{
+    setLoading(false)
   }
 }
-
+const handleBack=()=>{
+  setOpenEdit(false)
+}
 
 
   return (
@@ -129,7 +138,10 @@ const handleEdit=async(e,id)=>{
       <form
         onSubmit={handleSubmit}
         className="forgot-password xl:w-1/4 w-full p-3 lg:w-3/4 2xl:w-1/4 md:w-3/4 sm:w-3/4 rounded-lg shadow-md bg-pink-200 transition duration-500 ease-in-out border-2 border-transparent"
-      >
+      > 
+      <div className="flex justify-end cursor-pointer">
+      <MdCancel onClick={handleBack}/>
+      </div>
         <h2 className="text-center text-2xl mt-3 mb-3">Add product</h2>
         <div>
           <label
@@ -207,9 +219,10 @@ const handleEdit=async(e,id)=>{
         id={editObj?._id}
         onClick={(e)=>handleEdit(e,editObj?._id)}
           type="submit"
-          className="w-full mb-4 border-2 bg-[#f29cb3] border-pink-700 hover:text-white hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+          className="w-full mb-4 border-2 bg-[#f29cb3] flex items-center justify-center border-pink-700 hover:text-white hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
         >
-          Edit Product
+          Edit Product 
+          {loading &&<IoReload className="animate-spin" />}
         </button>
       </form>
       <div className="w-[300px] h-[300px] border bg-white">
