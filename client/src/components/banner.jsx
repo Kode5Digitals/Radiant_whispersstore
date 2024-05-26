@@ -22,29 +22,27 @@ const Banner = () => {
 
       
     <div >
-       <div className="bg-cover bg-center flex justify-end   h-[300px] xl:h-[500px] lg:h-[400px] md:h-[380px]" style={{ backgroundImage: 'url("banner4.jpeg")'}}>
-     
-         <div  className=" homeIntroductionDiv   w-1/2 ">
-        <div className="p-4 ">
-        <div className=" w-full lg:mt-20 md:mt-16 mt-12">
-        <h2 className="text-2xl lg:text-3xl md:text-4xl  xl:text-6xl   xl:pr-40 md:pr-30 sm:pr-20 pr-16">
+       <div className=" w-full relative top-0   h-[300px] xl:h-[540px] lg:h-[400px] md:h-[380px]">
+     <img src="banner4.jpeg" alt="" className="w-full h-full"/>
+<div className="absolute top-24 xl:pl-20 w-1/2 xl:left-[550px] 2xl:left-[700px] 2xl:pl-44 left-56 sm:pl-96 lg:left-96 lg:pl-20 sm:left-96 md:left-[400px] md:pl-20 ">
+<h2 className="text-2xl lg:text-3xl md:text-4xl lg:text-[40px] lg:pr-40  xl:text-6xl   xl:pr-40 md:pr-30 sm:pr-20 pr-16">
                  We care about your <span className="text-pink-500 " >skin</span>
                  </h2>
-        </div>
-                 <div className="">
-                 <p className="xl:text-lg xl:mt-12 text-[12px]  md:text-[14px] mt-5 sm:mt-10">
+                 <p className="xl:text-lg xl:mt-12 text-[12px] lg:text-[19px] md:text-[14px] mt-5 sm:mt-10">
                  Envelop yourself in the luxurious embrace of nature purity, where the essence of cream whispers tales of indulgence and revitalization.
                  </p>
-  <div  style={{width: "100px",
-transition:" width 1s ease 1s"}}>
-  <button className=" bg-gray-600 hover:w-40 p-2 text-white">Shop Now 
-  </button>
- 
-  </div>
+                 <button className="w-30 bg-blue-600 text-white px-4">Shop Now</button>
+</div>
 
+
+
+   
+
+         {/* <div  className=" homeIntroductionDiv   w-1/2 ">
+        <div className="p-4 "> text-white
+       
                  </div>
-        </div>
-       </div> 
+       </div>  */}
        </div> 
        </div>
 
