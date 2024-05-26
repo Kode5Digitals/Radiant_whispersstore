@@ -32,7 +32,7 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
     <div className="relative h-full xl:hidden sm:hidden lg:block hidden md:block  2xl:hidden">
       <div
         className=
-        {`fixed top-0 z-[5000000000]  md:right-0 w-64 h-full bg-white transform ${
+        {`fixed top-0 z-[5000000000]  md:right-0 w-64 h-full bg-white p-4 transform ${
             isSideOpen ? 'translate-x-0' : 'translate-x-full'
           } transition-transform duration-300 ease-in-out`}
       >
@@ -105,8 +105,8 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
                   <MdAccountCircle/>
                   </span>
                   <Link to={"/myaccount"}>
-                  
-                  My Account</Link>
+                  My Account
+                  </Link>
                   
                 </li>
   
@@ -117,8 +117,8 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
                    <MdAccountCircle/>
                   </span>
                   <Link to={"/dashboard"}>
-                 
-                 Dashboard</Link>
+                 Dashboard
+                 </Link>
                 </li>
                 <li
                   onClick={handleSetLogOut}

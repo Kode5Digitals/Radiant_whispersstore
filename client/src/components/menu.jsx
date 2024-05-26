@@ -135,9 +135,10 @@ const SideMenu = () => {
           {login && isadmin==true&&
 
             <ul>
-              <li className="flex items-center gap-1 mb-4">
-              <RiAdminFill />
-          <Link to={"/adminHome"}>
+              <li >
+          <Link to={"/adminHome"} className="flex items-center gap-1 mb-4">
+          <RiAdminFill />
+
             Switch to Admin
             </Link>
               </li>
