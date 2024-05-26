@@ -1,33 +1,39 @@
 const SECRET_KEY = "sk_test_49141c222ff880892dd5b51feb1c185e8e9a5b61";
 const axios = require('axios');
+const { v4: uuidv4 } = require('uuid');
 
-const createPayment=async(req, res) =>{ 
-console.log("lkjhgfd")
+const generateUniqueReference = () => {
+  return `ref_${uuidv4()}`;
+};
 
-const {amount,email, firstName, lastName }=req.body
-console.log(req.body)
-try {
-    const response = await axios.post('https://api.paystack.co/transaction/initialize', {
-        amount: amount * 100,
-        email: email,
-        metadata: {
-          firstName,
-          lastName,
-        },
-    }, {
-        headers: {
-            Authorization: `Bearer ${SECRET_KEY}`,
-            'Content-Type': 'application/json',
-        },
-    });
-
-    res.status(200).json(response.data);
-} catch (error) {
-    console.error('Error creating payment:',error);
-    res.status(500).json({ error: 'Error creating payment' });
-}
-  
-  }
+  const createPayment=async(req, res) =>{ 
+    console.log("lkjhgfd")
+    const {amount,email, firstName, lastName }=req.body
+    console.log(req.body)
+    const reference = generateUniqueReference();
+    try {
+        const response = await axios.post('https://api.paystack.co/transaction/initialize', {
+            amount: amount * 100,
+            email: email,
+            reference,
+            metadata: {
+              firstName,
+              lastName,
+            },
+        }, {
+            headers: {
+                Authorization: `Bearer ${SECRET_KEY}`,
+                'Content-Type': 'application/json',
+            },
+        });
+    
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.error('Error creating payment:',error);
+        res.status(500).json({ error: 'Error creating payment' });
+    }
+      
+      }
 
 
 
@@ -49,6 +55,7 @@ const verifyPayment = async (req, res) => {
   } catch (error) {
     console.error('Error verifying payment:', error);
     res.status(500).json({ message: 'Internal Server Error', error: error.message });
+    
   }
 };
 
