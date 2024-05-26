@@ -2,6 +2,8 @@ const SECRET_KEY = "sk_test_49141c222ff880892dd5b51feb1c185e8e9a5b61";
 const axios = require('axios');
 
 const createPayment=async(req, res) =>{ 
+console.log("lkjhgfd")
+
 const {amount,email, firstName, lastName }=req.body
 console.log(req.body)
 try {
