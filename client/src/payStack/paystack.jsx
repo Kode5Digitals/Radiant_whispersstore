@@ -28,9 +28,8 @@ const handlePayment = async () => {
  try{
   const res = await httpAuth.post("/api/paystack/payment", { amount: totalPrice,email:email }
   );
-  const { authorization_url } = res.data;
-console.log(authorization_url)
 const { data } = res;
+console.log(data)
       setReference(data.data.reference);
       setKey(data.data.authorization_url);
  }catch(err){
