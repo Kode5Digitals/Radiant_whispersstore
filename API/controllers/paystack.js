@@ -44,6 +44,7 @@ try {
 // };
 
 const verifyPayment = async (req, res) => {
+  console.log("pay")
   try {
     const { reference } = req.params; 
 
