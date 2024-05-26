@@ -41,7 +41,8 @@ const verifyPayment = async (req, res) => {
     const data = response.data;
     res.json({ data });
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error('Error verifying payment:', error);
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 };
 
