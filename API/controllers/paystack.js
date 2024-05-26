@@ -37,7 +37,7 @@ const verifyPayment = async (reference)=>{
       }
     );
 const data=response.data
-    res.json(data);
+    res.json({data});
   } catch (error) {
     res.status(500).send(error.message);
   }
