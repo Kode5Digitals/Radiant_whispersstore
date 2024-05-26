@@ -23,28 +23,10 @@ try {
   
   }
 
-// Verify a transaction
-// const verifyPayment = async (reference)=>{
-//   try {
-//     const { reference } = req.params;
 
-//     const response = await axios.get(
-//       `https://api.paystack.co/transaction/verify/${reference}`,
-//       {
-//         headers: {
-//           Authorization: `Bearer ${SECRET_KEY}`,
-//         },
-//       }
-//     );
-// const data=response.data
-//     res.json({data});
-//   } catch (error) {
-//     res.status(500).send(error.message);
-//   }
-// };
 
 const verifyPayment = async (req, res) => {
-  console.log("pay")
+  console.log(req.params)
   try {
     const { reference } = req.params; 
 
