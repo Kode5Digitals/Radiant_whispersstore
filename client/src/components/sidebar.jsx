@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import Cartcontext from '../cartcontext';
 import { Link } from 'react-router-dom';
-import { RiProfileLine } from 'react-icons/ri';
-import { MdContactPage } from 'react-icons/md';
+import { RiAdminFill, RiProfileLine } from 'react-icons/ri';
+import { MdAccountCircle, MdContactPage } from 'react-icons/md';
 import { CiLogin } from 'react-icons/ci';
 import { FaRegRegistered } from 'react-icons/fa';
+import { AiOutlineLogout } from 'react-icons/ai';
 
 const Sidebar = ({isSideOpen, toggleSidebar}) => {
-    const { handleLogin, handleRegister } = useContext(Cartcontext);
+    const { handleLogin, handleRegister,setisadmin,setLogin,login,isadmin,} = useContext(Cartcontext);
   
    const Register=()=>{
     handleRegister()
@@ -19,6 +20,14 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
     handleLogin()
     toggleSidebar()
    }
+
+   const handleSetLogOut=()=>{
+    localStorage.removeItem("Login")
+    localStorage.removeItem("Admin")
+    setisadmin(false);
+    setLogin(false)
+    location.reload("/")
+  }
   return (
     <div className="relative h-full xl:hidden sm:hidden lg:block hidden md:block  2xl:hidden">
       <div
@@ -37,7 +46,106 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
             <IoClose onClick={toggleSidebar} />
           </p>
         </div>
-        <div className="mt-10 text-[#545353]  p-2">
+
+
+        <div className="mt-10 text-[#545353]">
+          
+          <ul>
+              <li className="flex items-center gap-1 mb-4 mt-32">
+                {" "}
+                <span>
+                  <MdContactPage />
+                </span>
+                <Link to={"/"}>
+                  <span>Contact</span>
+                </Link>
+              </li>
+              <li className="flex items-center gap-1  ">
+                {" "}
+                <span>
+                  <RiProfileLine />
+                </span>
+                <Link to={"/"}>
+                  <span>About</span>
+                </Link>
+              </li>
+            </ul>
+            {!login && (
+              <ul className="mt-3 ">
+                <li
+                  onClick={Register}
+                  className="flex items-center gap-1 mb-4 "
+                >
+                  {" "}
+                  <span>
+                    <FaRegRegistered />
+                  </span>
+                  Register
+                </li>
+  
+                <li
+                  onClick={Login}
+                  className="flex items-center gap-1 mb-4"
+                >
+                  {" "}
+                  <span>
+                    <CiLogin />
+                  </span>
+                  Login
+                </li>
+              </ul>
+            )}
+  
+            {login && (
+              <ul className="mt-5 ">
+                <li
+                  className="flex items-center gap-1 mb-4 "
+                >
+                  <span>
+                  <MdAccountCircle/>
+                  </span>
+                  <Link to={"/myaccount"}>
+                  
+                  My Account</Link>
+                  
+                </li>
+  
+                <li
+                  className="flex items-center gap-1 mb-4"
+                >
+                   <span>
+                   <MdAccountCircle/>
+                  </span>
+                  <Link to={"/dashboard"}>
+                 
+                 Dashboard</Link>
+                </li>
+                <li
+                  onClick={handleSetLogOut}
+                  className="flex items-center gap-1 mb-4"
+                >
+                  {" "}
+                  <span>
+            <AiOutlineLogout />
+                    
+                  </span>
+                  Log Out
+                </li>
+              </ul>
+            )}
+    {login && isadmin==true&&
+
+<ul>
+  <li className="flex items-center gap-1 mb-4">
+  <RiAdminFill />
+<Link to={"/adminHome"}>
+Switch to Admin
+</Link>
+  </li>
+</ul>
+}
+          </div>
+        {/* <div className="mt-10 text-[#545353]  p-2">
           <ul className="mt-20 ">
             <li
               onClick={Register}
@@ -91,7 +199,7 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
             <li className="mb-2"><a href="#item4">Item 4</a></li>
           </ul>
         </div> */}
-      </div>
+      </div> 
 
       {isSideOpen && (
         <div
@@ -106,6 +214,7 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
 Sidebar.propTypes =  {
     isSideOpen: PropTypes.bool.isRequired,
     toggleSidebar: PropTypes.func.isRequired,
+
 }
   
 export default Sidebar;

@@ -5,7 +5,7 @@ const Dashboad = () => {
   <Defaultlayout>
 
    <div className="h-screen">
-   <div className="w-full p-4 bg-slate-600 mt-20 text-center text-white text-lg">
+   <div className="w-full p-4 xl:mt-16 mt-36 md:mt-[60px] lg:mt-16  bg-slate-600  text-center text-white text-lg">
         Dashboard 
     </div>
    </div>

@@ -5,7 +5,7 @@ const MyAccount = () => {
   <Defaultlayout>
 
    <div className="h-screen">
-   <div className="w-full p-4 bg-slate-600 mt-20 text-center text-white text-lg">
+   <div className="w-full  p-4 bg-slate-600 xl:mt-16 mt-36 md:mt-14 lg:mt-14  text-center text-white text-lg">
     My Account
     </div>
    </div>

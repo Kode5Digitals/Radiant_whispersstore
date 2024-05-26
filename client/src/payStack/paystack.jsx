@@ -1,68 +1,101 @@
-import {  useState } from "react";
 import { selectCart } from "../stores/features/cart/cartSlice";
 import { useSelector } from "react-redux";
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { IoIosArrowDropleft } from "react-icons/io";
 import httpAuth from "../utils/https";
-import { formatPrice } from "../utils/utils";
 import { TbCurrencyNaira } from "react-icons/tb";
 import ImageCarousel from "../components/ImageCarousel";
 import { CiFaceSmile } from "react-icons/ci";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { PaystackButton } from 'react-paystack';
+import { useRef, useState } from "react";
+import { IoAtCircle } from "react-icons/io5";
+import { FaSpinner } from "react-icons/fa";
 
 const PaystackComponent = () => {
-  const [email, setEmail] = useState("");
   const { totalPrice } = useSelector(selectCart)
-// const [response, setResponse] = useState(null);
+  const emailRef = useRef();
+  const firstNameRef = useRef();
+  const lastNameRef = useRef();
+  const amount= totalPrice
+  const navigate=useNavigate()
 const [loading, setLoading] = useState(false);
 const { items } = useSelector(selectCart);
 const cartItemImages = items.map((item) => item.image)
 const cartItemNames= items.map((item) => item.name)
-const [key, setKey] = useState('your-paystack-public-key');
+const key="pk_test_07070da6a9afaa698f923376dc24bbbe12df1d94";
 const [reference, setReference] = useState('');
-const amount=totalPrice
+const [initialized, setInitialized] = useState(false);
 
+
+const generateUniqueReference = () => {
+  return `ref_${Math.random().toString(36).substring(2, 15)}`;
+};
 const handlePayment = async () => {
   setLoading(true);
+  const newReference = generateUniqueReference();
+  setReference(newReference);
+  const formdata={
+    amount: amount,
+    email: emailRef.current.value,
+    firstName: firstNameRef.current.value,
+    lastName: lastNameRef.current.value,
+    reference: newReference
+  }
+console.log(formdata)
  try{
-  const res = await httpAuth.post("/api/paystack/payment", { amount: totalPrice,email:email }
-  );
+  const res = await httpAuth.post("/api/paystack/payment", 
+  formdata
+     );
 const { data } = res;
-console.log(data)
-      setReference(data.data.reference);
-      setKey(data.data.authorization_url);
+if (data?.data?.reference) {
+  setReference(data.data.reference);
+  setInitialized(true);
+  console.log("Reference set:", data.data.reference);
+} else {
+  throw new Error("No reference returned from the server");
+}
  }catch(err){
-console.log(err)
- }finally{setLoading(false)}
+console.log("err",err)
+ }finally{
+  setLoading(false)
+ }
 };
 
-const handlePaymentSuccess = (reference) => {
-  httpAuth.get(`/api/paystack/verifyPayment/${reference}`)
-    .then(response => {
-      console.log('Payment success:', response.data);
-      toast.success('Payment successful!');
-    })
-    .catch(error => {
-      console.error('Payment verification error:', error);
-    });
+
+const handlePaymentSuccess = async (reference) => {
+  try {
+    const response = await httpAuth.get(`/api/paystack/verifyPayment/${reference}`);
+    const  data  = response?.data.data
+    if (data.data.status === 'success') {
+      emailRef.current.value = '';
+      firstNameRef.current.value = '';
+      lastNameRef.current.value = '';
+     setInitialized(false);
+   toast.success("Payment sucessfull");
+
+    } else if (data.data.status === 'abandoned') {
+      toast.error('Payment was not completed');
+    } else {
+      toast.error('Payment verification failed');
+    }
+  } catch (error) {
+    toast.error('Error verifying payment');
+  }
 };
 
-  // const handlePaymentSuccess = () => {
-  //   toast.success("Payment successful!");
-  // };
 
-//   const handlePaymentClose = () => {
-// navigate("/home")
-//   };
 
-//   const config = {
-//     reference: new Date().getTime().toString(),
-//     email: email,
-//     amount: totalPrice * 100,
-//     publicKey:environment.PAYSTACK_PUBLIC_KEY
-// ,
-//   };
+
+
+
+
+  const handlePaymentClose = () => {
+    console.log("Payment window closed");
+navigate("/cart")
+  };
+
+
 
   return (
     <div className="h-screen p-3 md:p-2 lg:p-3 xl:p-3 sm:p-10 bg-[#fec5ec]">
@@ -79,7 +112,32 @@ const handlePaymentSuccess = (reference) => {
 
         
         <div className=" h-[400px] xl:w-1/2 flex xl:p-4 justify-center  w-full p-2   border">
-          <div className=" bg-white xl:p-2  w-full p-1">
+          <div className=" bg-white xl:p-2  w-full p-1 text-[12px]">
+
+          <div className="xl:w-full w-full ">
+              <label htmlFor="firstname">FirstName:</label>
+              <br />
+              <input
+              className="w-full  rounded-sm  p-2 border mb-4"
+              type="text"
+              placeholder="First Name"
+              ref={firstNameRef}
+                id="firstname"           
+                required
+              />
+              </div>
+              <div className="xl:w-full w-full ">
+              <label htmlFor="lastname">LastName:</label>
+              <br />
+              <input
+              className="w-full  rounded-sm  p-2 border mb-4"
+                id="lastname"
+                type="text"
+                placeholder="Last Name"
+                ref={lastNameRef}
+                required
+              />
+              </div>
             <div className="xl:w-full w-full ">
               <label htmlFor="email">Email:</label>
               <br />
@@ -88,8 +146,8 @@ const handlePaymentSuccess = (reference) => {
                 id="email"
                 type="email"
                 placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                ref={emailRef}               
+                required
               />
               </div>
 
@@ -98,39 +156,49 @@ const handlePaymentSuccess = (reference) => {
                 <input
                  className="w-full rounded-sm  p-2  mb-4 "
                 id="number"
-                type=""
-                placeholder=""
+              placeholder=""
+              type="number"
             value={
-            formatPrice(Number(totalPrice.toFixed(2)))
+    totalPrice
             }
             disabled
               />
              
             </div>
-          <div className="flex xl:justify-end justify-center mt-32  xl:mt-24 ">
-          <button onClick={handlePayment} disabled={loading} 
-              className=" rounded-sm  p-3 hover:border-pink-300 border-2 mb-4 hover:text-sm hover:px-6 text-[12px] bg-lime-300 "
+          <div className="flex xl:justify-end justify-center mt-3  xl:mt-3 ">
+   {  !initialized&&  <button onClick={handlePayment}  disabled={loading}
+              className=" cursor-pointer rounded-sm  p-3 hover:border-pink-300 border-2 mb-4 hover:text-sm hover:px-6 text-[12px] bg-lime-500 "
               >
-        {loading ? 'Processing...' : 'Pay Now'}
+        {loading  ? <p className="animate-spin"><FaSpinner/> </p> : 'Pay Now'}
+      </button>}
 
-
-
-
-        {reference && (
+ {initialized&& reference&&    
+    
         <PaystackButton
-          email={email}
-          amount={amount * 100}
+          email={emailRef.current.value}
+          amount={amount*100}
           publicKey={key}
-          text="Pay Now"
+          text="Proceed to Payment"
           reference={reference}
-          onSuccess={(reference) => handlePaymentSuccess(reference.reference)}
-          onClose={() => alert('Payment closed')}
+          className=" rounded-sm  p-2 hover:border-pink-300 border-2 mb-4 hover:text-[14px]  text-[12px] bg-blue-500 text-white "
+          onSuccess={(reference)=>{ 
+          handlePaymentSuccess(reference.reference)}}
+          onClose={handlePaymentClose}
         />
-      )}
-      </button>
+          }
+            <ToastContainer
 
-      
-         
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+             />
           </div>
           </div>
         </div>

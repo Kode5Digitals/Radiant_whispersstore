@@ -10,6 +10,7 @@ const Defaultlayout = ({children}) => {
 
     const { isOpen, setIsOpen, Back } = useContext(Cartcontext);
     const [isSideOpen, setSideOpen] = useState(false);
+    const[openNavMenu,setOpenNavMenu]=useState(false)
 
     const toggleSidebar = () => {
       setSideOpen(!isSideOpen);
@@ -17,9 +18,8 @@ const Defaultlayout = ({children}) => {
     return (
         <>
             <MainNavbar logoSrc="/Logo2.png" setIsOpen={setIsOpen} isOpen={isOpen} Back={Back} toggleSidebar={toggleSidebar} setSideOpen={setSideOpen}/>
-             <SideMenu />
-             <Sidebar isSideOpen={isSideOpen} toggleSidebar={toggleSidebar}/>
-            
+             <SideMenu  />
+             <Sidebar isSideOpen={isSideOpen} toggleSidebar={toggleSidebar} />
             {children}
             <Footer  logoSrc="Logo4.png"/>
 
