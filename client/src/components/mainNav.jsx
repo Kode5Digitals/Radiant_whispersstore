@@ -281,7 +281,7 @@ That's why we're dedicated to providing high-quality, natural body creams that m
                 style={{ fontSize: "10px" }}
                 className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2"
               >
-                <p>{wishlistItems?.length}2</p>
+                <p>{wishlistItems?.length}</p>
               </div>
             </div>
           </Link>

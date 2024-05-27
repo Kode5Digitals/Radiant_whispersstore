@@ -1,4 +1,5 @@
 // import { TfiSearch } from "react-icons/tfi"
+import { LiaShoppingBagSolid } from "react-icons/lia"
 import "../App.css"
 
 const Banner = () => {
@@ -15,7 +16,11 @@ const Banner = () => {
                  <p className="xl:text-lg xl:mt-12 text-[12px] lg:text-[19px] md:text-[14px] mt-5 sm:mt-10">
                  Envelop yourself in the luxurious embrace of nature purity, where the essence of cream whispers tales of indulgence and revitalization.
                  </p>
-                 <button className="w-30 bg-blue-600 text-white px-4">Shop Now</button>
+                
+                 <button className="w-30 bg-blue-600 flex items-center gap-2 text-white px-4">
+                 Shop Now
+              <LiaShoppingBagSolid size={20} className="text-pink-700 hover:text-white"/>
+                 </button>
 </div>
 
 

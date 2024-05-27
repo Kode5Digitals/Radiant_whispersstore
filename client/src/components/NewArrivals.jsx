@@ -13,6 +13,7 @@ import { TfiMore } from "react-icons/tfi";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { BiLoaderCircle } from "react-icons/bi";
 import cors from "cors"
+import { LiaShoppingBagSolid } from "react-icons/lia";
 cors()
 function NewArrivals() {
   const flexContainerRef = useRef(null);
@@ -158,7 +159,9 @@ New Arrivals
                   className="border text-sm px-8 py-2 rounded-md  bg-pink-300 border-pink-600 hover:text-white hover:bg-pink-950"
                   onClick={()=>handleAddToCart(item)}
                 >
-                <FaShoppingCart />
+                
+              <LiaShoppingBagSolid size={20} />
+
                 </button>
               
               </div>

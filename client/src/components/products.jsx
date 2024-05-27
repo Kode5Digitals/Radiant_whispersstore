@@ -19,6 +19,7 @@ import {
   increaseQuantity,
   decreaseQuantity,
 } from "../stores/features/cart/cartSlice";
+import { LiaShoppingBagSolid } from "react-icons/lia";
 cors();
 function Products() {
   const dispatch = useDispatch();
@@ -137,7 +138,7 @@ function Products() {
                     <h4 className="text-[12px]">{prod?.category}</h4>
                     <button className="text-[12px] border px-2 rounded-md bg-white border-pink-500">
                       <Link to={`/ProductDetails/${prod?._id}`}>
-                        Click For More
+                        More info
                       </Link>
                     </button>
                   </div>
@@ -167,7 +168,9 @@ function Products() {
                       className="border text-sm  w-14 h-7 flex justify-center items-center   rounded-md bg-pink-300 border-pink-600 hover:text-white hover:bg-pink-950"
                       onClick={() => handleAddToCart(prod)}
                     >
-                      <FaShoppingCart />
+                    
+              <LiaShoppingBagSolid size={20} />
+
                     </button>
                   </div>
                 </div>
