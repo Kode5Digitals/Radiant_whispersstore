@@ -1,12 +1,14 @@
 
 const jwt = require("jsonwebtoken")
 const UserModel = require("../models/userModel");
+const adminModel = require("../models/AdminModel");
 const { jwtKey } = require("../config/env");
 
 
 
 async function auth(req, res, next) {
   let user
+  let Admin
   try {
     const  authHeader = req.headers.authorization
     if (!authHeader) {
@@ -19,16 +21,18 @@ async function auth(req, res, next) {
     const decoded = jwt.verify(token, jwtKey, { algorithms: "HS256" });
     const id = decoded.id
     user = await UserModel.findOne({ _id: id })
+    Admin= await adminModel.findOne({_id:id})
     console.log(user)
-    if (!user) {
+    if (!user && ! Admin) {
       return res.status(401).json({ message: "Unauthorized: User not found" });
     }
     else {
-      req["user"] = user;
+      req["user"] = user
+      req["admin"]=Admin
     }
     next();
   } catch (error) {
-    return res.status(401).json({ message: "unautorized"});
+    return res.status(401).json({ message: "unauthorized"});
   }
 
 
