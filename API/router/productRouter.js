@@ -4,6 +4,7 @@ const { check} = require("express-validator");
 const { AddProduct, AllProduct, GetProduct, DeleteAllProduct, searchProduct, category, getCart, retrivCart,newArrivals} = require("../controllers/products");
 const auth = require("../middleware/auth");
 const { GetEditProduct, editProduct } = require("../controllers/api");
+const authorizeRoles = require("../utils/roleBased");
 
 const validationMiddlewares=[
   check("name", "Enter Product Name").not().isEmpty(),
@@ -15,14 +16,14 @@ const validationMiddlewares=[
 
 
 router.get("/allProducts",AllProduct);
-router.post("/addProduct", AddProduct);
+router.post("/addProduct",authorizeRoles("Admin"), AddProduct);
 router.get("/getProduct/:id",GetProduct);
-router.delete("/DeleteAll",DeleteAllProduct);
+router.delete("/DeleteAll",authorizeRoles("Admin"),DeleteAllProduct);
 router.get("/",searchProduct);
 router.get("/category/:categoryName",category);
 router.get("/api/cart",getCart)
 router.post("/api/cart",retrivCart)
 router.get('/new-arrivals',newArrivals)
-router.get("/edit/:id",GetEditProduct);
-router.post("/edit/:id",editProduct);
+router.get("/edit/:id", authorizeRoles("Admin") ,GetEditProduct);
+router.post("/edit/:id", authorizeRoles("Admin"),editProduct);
 module.exports =router

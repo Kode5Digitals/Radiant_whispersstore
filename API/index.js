@@ -3,7 +3,6 @@ const bodyparser=require("body-parser")
 const cookiesparser=require("cookie-parser")
 const userRouter=require("./router/userRouter")
 const productRouter=require("./router/productRouter")
-const adminRouter=require("./router/adminRouter")
 const paystackRouter=require("./router/paymentRoute")
 const {PORT}=require("./config/env")
 const cors=require("cors")
@@ -45,7 +44,6 @@ app.use((req, res, next) => {
   
 app.use("/api/user",userRouter)
 app.use("/api/products",productRouter)
-app.use("/admin",adminRouter)
 app.use("/user",userRouter)
 app.use("/api/paystack",paystackRouter)
 
