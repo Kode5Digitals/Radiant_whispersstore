@@ -7,6 +7,7 @@ const { jwtKey } = require("../config/env");
 
 
 async function auth(req, res, next) {
+  console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
   let user
   let Admin
   try {
