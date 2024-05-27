@@ -5,6 +5,7 @@ const { AddProduct, AllProduct, GetProduct, DeleteAllProduct, searchProduct, cat
 const auth = require("../middleware/auth");
 const { GetEditProduct, editProduct } = require("../controllers/api");
 const authorizeRoles = require("../utils/roleBased");
+const authenticateToken = require("../utils/auth");
 
 const validationMiddlewares=[
   check("name", "Enter Product Name").not().isEmpty(),
@@ -16,7 +17,7 @@ const validationMiddlewares=[
 
 
 router.get("/allProducts",AllProduct);
-router.post("/addProduct",authorizeRoles("Admin"), AddProduct);
+router.post("/addProduct",authenticateToken, authorizeRoles("Admin"), AddProduct);
 router.get("/getProduct/:id",GetProduct);
 router.delete("/DeleteAll",authorizeRoles("Admin"),DeleteAllProduct);
 router.get("/",searchProduct);
