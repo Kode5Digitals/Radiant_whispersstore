@@ -19,12 +19,15 @@ function Home() {
       </div>
        </Defaultlayout >
        <div className=""  >
-   <a href="https://wa.link/m4ypbh">
+       <a href="https://wa.link/m4ypbh">
+ <div className="bg-black w-16 flex justify-center items-center h-16 rounded-full right-10 border-2 fixed bottom-10">
    <IoLogoWhatsapp
-    size={60} 
-    className="fixed bottom-10  hover:p-4  text-green-700 right-10"
-    />
-   </a>
+   size={40}
+    className="  text-white"
+    /> 
+ </div>
+ </a>
+
     </div>
     </main>
 

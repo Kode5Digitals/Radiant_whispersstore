@@ -7,7 +7,6 @@ const productSlice = createSlice({
     setProducts: (state, action) => {
       return action.payload.map((product) => ({
         ...product,
-        quantity: 1,
       }));
     },
     },

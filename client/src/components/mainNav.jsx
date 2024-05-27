@@ -43,6 +43,7 @@ const MainNavbar = ({  logoSrc,toggleSidebar }) => {
   const { wishlistItems } = useSelector((state) => state?.whishlist);
    const[openNavMenu,setOpenNavMenu]=useState(false)
    const[openContact,setOpenContact]=useState(false)
+   const cartlnght= localStorage.getItem("wishlistLnt")
   //search
   const handleSearch = useCallback(async () => {
     try {
@@ -160,7 +161,6 @@ setOpenContact (false)
                 className="w-4 text-sm  bg-black text-white h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2    md:bottom-[-10px]"
               >
                 <h6>{wishlistItems?.length}</h6>
-  
               </div>
               
            </div>
@@ -281,7 +281,7 @@ That's why we're dedicated to providing high-quality, natural body creams that m
                 style={{ fontSize: "10px" }}
                 className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2"
               >
-                <p>{wishlistItems?.length}</p>
+                <p>{wishlistItems?.length}2</p>
               </div>
             </div>
           </Link>

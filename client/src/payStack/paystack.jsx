@@ -86,10 +86,6 @@ const handlePaymentSuccess = async (reference) => {
 
 
 
-
-
-
-
   const handlePaymentClose = () => {
     console.log("Payment window closed");
 navigate("/cart")

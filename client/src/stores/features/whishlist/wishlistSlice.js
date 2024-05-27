@@ -20,6 +20,7 @@ const wishlistSlice = createSlice({
         state.wishlistItems.push(action.payload);
         toast.success("Item added to wishlist");
       localStorage.setItem("wishlistItems", JSON.stringify(state.wishlistItems));
+      localStorage.setItem("wishlistLnt", JSON.stringify(state.wishlistItems.length));
         // console.log(state.wishlistItems.length)
       }
     },
@@ -29,10 +30,12 @@ const wishlistSlice = createSlice({
     state.wishlistItems?.splice(filteredItem,1) //another to do it
     // state.wishlistItems=filteredItem
     localStorage.setItem("whishlistItems",JSON.stringify(state.wishlistItems))
+    localStorage.setItem("whishlistLnt",JSON.stringify(state.wishlistItems.length))
     },
     clearWishlist: state => {
       state.wishlistItems= [];
       localStorage.removeItem("wishlistItems");
+      localStorage.removeItem("whishlistLnt");
       toast.info("Wishlist cleared");
     },
   },

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 const ImageCarousel = ({ image ,name}) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentImageIndex((prevIndex) => (prevIndex + 1) % image?.length);

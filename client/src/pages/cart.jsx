@@ -22,7 +22,7 @@ const Cart = () => {
   const { items, totalQuantity, totalPrice } = useSelector(selectCart);
   const cartLength = useSelector(selectCartLength);
   const dispatch = useDispatch();
-
+console.log(items)
   const handleRemoveFromCart = (item) => {
     dispatch(removeFromCart(item));
   };
