@@ -13,6 +13,7 @@ async function auth(req, res, next) {
         }
         
         const token = authHeader.split(' ')[1];
+        console.log("token:",token)
         if (!token) {
             return res.status(401).json({ message: "Unauthorized: Token not provided" });
         }
@@ -34,8 +35,13 @@ async function auth(req, res, next) {
 
         next();
     } catch (error) {
-        console.error("Auth error:", error);
-        return res.status(401).json({ message: "Unauthorized" });
+      if (error.name === 'TokenExpiredError') {
+        return res.status(401).json({ message: "Unauthorized: Token has expired" });
+      }
+      console.error("Auth error:", error);
+      return res.status(401).json({ message: "Unauthorized" });
+    
+      s
     }
 }
 
