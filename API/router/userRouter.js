@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check} = require("express-validator");
-const { Signup, Login, verifyAccount, deleteAllUser } = require("../controllers/users");
+const { Signup, Login, verifyAccount, deleteAllUser, refreshToken } = require("../controllers/users");
 
 const registerValMiddleware=[
   check("fullname", "Enter fullname").not().isEmpty(),
@@ -21,4 +21,6 @@ router.post(
   Signup
 );
 router.delete("/deleteusers",deleteAllUser)
+router.post("/refresh-token",refreshToken)
+
 module.exports = router;

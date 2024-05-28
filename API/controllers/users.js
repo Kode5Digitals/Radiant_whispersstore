@@ -5,6 +5,7 @@ const adminModel=require("../models/AdminModel")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { jwtKey } = require("../config/env");
+const{ REFRESH_TOKEN_PRIVATE_KEY_PATH,REFRESH_TOKEN_PUBLIC_KEY_PATH }=require("../config/env")
 
 const Signup = async (req, res, next) => {
   const { fullname, email, password, confirmpassword } = req.body;
@@ -46,8 +47,13 @@ const Signup = async (req, res, next) => {
       .status(500)
       .json({ error: "An error occurred during user registration" });
   }
-};
+}
 
+function generateTokens(id, isAdmin) {
+  const accessToken = jwt.sign({ id, isAdmin }, jwtKey, { algorithm: 'HS256', expiresIn: '15m' }); // Short-lived access token (15 minutes)
+  const refreshToken = jwt.sign({ id, isAdmin }, REFRESH_TOKEN_PRIVATE_KEY_PATH, { algorithm: 'HS256', expiresIn: '7d' }); // Long-lived refresh token (7 days)
+  return { accessToken, refreshToken };
+}
 
 
 const Login = async (req, res, next) => {
@@ -55,7 +61,6 @@ const Login = async (req, res, next) => {
     console.log(req.body);
     const { email, password } = req.body;
     const errors = validationResult(req);
-  
     try {
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array(), error_type: 0, created: false, isLoggedIn: false });
@@ -67,7 +72,7 @@ const Login = async (req, res, next) => {
       if (!user && !admin) {
         return res.status(400).json({ message: "Invalid account", error_type: 1, created: false, isLoggedIn: false });
       }
-  
+
       let isValid = false;
       let isAdmin = false;
       let id;
@@ -83,8 +88,8 @@ const Login = async (req, res, next) => {
       }
   
       if (isValid) {
-        const token = jwt.sign({ id, isAdmin }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' });
-        return res.status(200).json({ message: "Logged in", token, created: true, isLoggedIn: true, isAdmin });
+        const { accessToken, refreshToken } = generateTokens(id, isAdmin);
+        return res.status(200).json({ message: "Logged in", accessToken, refreshToken, created: true, isLoggedIn: true, isAdmin });
       } else {
         return res.status(400).json({ message: "Invalid password", created: false, isLoggedIn: false });
       }
@@ -94,43 +99,6 @@ const Login = async (req, res, next) => {
     }
   };
   
-
-// const Login = async (req, res, next) => {
-//   console.log("login");
-//   console.log(req.body);
-//   const { email, password } = req.body;
-//   const errors = validationResult(req);
-//   console.log("login");
-//   try {
-//     if (!errors.isEmpty()) {
-//       res.json({ errors: errors.array(), error_type: 0, created: false });
-//       return;
-//     }
-//     const user = await userModel.findOne({ email: email });
-//     const admin = await adminModel.findOne({ email: email });
-//     const isAdmin = !!admin;
-
-//     if (!user || !admin) {
-//         return res.json({ message: "Invalid account", error_type: 1, created: false });
-//     }
-    
-//     const isValidUser = await bcrypt.compare(password, user.password);
-//     const isValidAdmin = await bcrypt.compare(password, admin.password);
-//     if (isValidUser || isValidAdmin) {
-//       const id = user._id;
-//       const token = jwt.sign({ id }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' });
-//       res.status(200).json({ message: "Logged in", token, created: true ,isLoggedIn: true, isAdmin });
-//     } else {
-//       res.json({ message: "Invalid password", created: false ,isLoggedIn: false });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ message: "Internal server error",isLoggedIn: false  });
-//   }
-// };
-
-
-
 
 const verifyAccount = async (req, res, next) => {
   res.status(200).json({ message: "verifyacct" });
@@ -148,9 +116,45 @@ const deleteAllUser=async(req,res)=>{
     }
 }
 
+
+
+
+
+ const refreshToken=async (req, res) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    return res.status(401).json({ message: "Unauthorized: No refresh token provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_PUBLIC_KEY_PATH);
+    const userId = decoded.id;
+
+    let user = await userModel.findOne({ _id: userId });
+    if (!user) {
+      const admin = await adminModel.findOne({ _id: userId });
+      if (!admin) {
+        return res.status(401).json({ message: "Unauthorized: User not found" });
+      }
+      const { accessToken, refreshToken: newRefreshToken } = generateTokens(userId, decoded.isAdmin);
+      return res.json({ accessToken, refreshToken: newRefreshToken });
+    }
+
+    const { accessToken, refreshToken: newRefreshToken } = generateTokens(userId, decoded.isAdmin);
+    res.json({ accessToken, refreshToken: newRefreshToken });
+  } catch (error) {
+    console.error("Error in refresh token endpoint:", error);
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+}
+
+
+
 module.exports = {
   Signup,
   Login,
   verifyAccount,
-  deleteAllUser
+  deleteAllUser,
+  refreshToken
 };

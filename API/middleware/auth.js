@@ -4,8 +4,9 @@ const AdminModel = require('../models/AdminModel');
 require('dotenv').config();
 const {jwtKey}=require("../config/env")
 
-async function auth(req, res, next) {
+const auth=async(req, res, next)=> {
     console.log("auth testing");
+    console.log("Auth middleware invoked")
     try {
         const authHeader = req.headers.authorization;
         if (!authHeader) {
