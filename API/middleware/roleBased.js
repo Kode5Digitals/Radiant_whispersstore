@@ -12,9 +12,9 @@ const authorizeRoles = (...roles) => {
             return res.status(403).json({ message: 'Access denied: No user information available' });
         }
 
-        if (req.user.isAdmin && roles.includes('admin')) {
+        if (req.user.isAdmin==true && roles.includes('admin')) {
             return next();
-        } else if (!req.user.isAdmin && roles.includes('user')) {
+        } else if (req.user.isAdmin ==false && roles.includes('user')) {
             return next();
         } else {
             return res.status(403).json({ message: 'Access denied: Insufficient permissions' });
