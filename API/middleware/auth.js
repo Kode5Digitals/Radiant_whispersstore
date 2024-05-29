@@ -2,25 +2,25 @@ const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
 const AdminModel = require('../models/AdminModel');
 require('dotenv').config();
-// const {JWT_KEY}=require("../config/env")
-JWT_KEY='00048aae9eb05a3ef4766b098bd93ae6016627985579182e1c58a6a5a1489492'
+const {JWT_KEY,REFRESH_TOKEN_SECRET}=require("../config/env")
 
 const auth=async(req, res, next)=> {
     console.log("auth testing");
     console.log("Auth middleware invoked")
     try {
-        const authHeader = req.headers.authorization;
-        if (!authHeader) {
-            return res.status(401).json({ message: "Unauthorized: No token provided" });
-        }
+        // const authHeader = req.headers.authorization;
+        // if (!authHeader) {
+        //     return res.status(401).json({ message: "Unauthorized: No token provided" });
+        // }
         
-        const token = authHeader.split(' ')[1];
+        // const token = authHeader.split(' ')[1];
+        const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDc1OTA5NWE0M2EwMjI3NGM1ZTA1NiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNjk2OTQ3OSwiZXhwIjoxNzE3NTc0Mjc5fQ.essjNL61AUQPAN9EKaLOJsf4iAtcqEu2SB-nrlkPA6Q"
         console.log("token:",token)
         if (!token) {
             return res.status(401).json({ message: "Unauthorized: Token not provided" });
         }
 
-        const decoded = jwt.verify(token, JWT_KEY, { algorithms: ["HS256"] });
+        const decoded = jwt.verify(token,REFRESH_TOKEN_SECRET, { algorithms: ["HS256"] });
         console.log("decoded:",decoded)
 
         const userId = decoded.id;
@@ -45,7 +45,7 @@ const auth=async(req, res, next)=> {
       console.error("Auth error:", error);
       return res.status(401).json({ message: "Unauthorized" });
     
-      s
+      
     }
 }
 

@@ -363,7 +363,7 @@ const deleteAllUser=async(req,res)=>{
     if (!user) {
       const admin = await adminModel.findOne({ _id: userId });
       if (!admin) {
-        return res.status(401).json({ message: "Unauthorized: User not found" });
+        return res.status(401).json({ message: "Unauthorized: User not found refresh" });
       }
       const { accessToken, refreshToken: newRefreshToken } = generateTokens(userId, decoded.isAdmin);
       return res.json({ accessToken, refreshToken: newRefreshToken });
