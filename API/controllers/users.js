@@ -247,7 +247,7 @@ const Signup = async (req, res, next) => {
     });
     user.save().then((doc) => {
       const id = doc._id;
-      const token = jwt.sign({ id }, jwtKey, { expiresIn: "10d" });
+      const token = jwt.sign({ id }, JWT_KEY, { expiresIn: "10d" });
       res
         .cookie("jwtToken", token)
         .status(201)

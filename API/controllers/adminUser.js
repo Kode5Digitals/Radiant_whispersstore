@@ -1,18 +1,18 @@
 const express = require("express");
 const { check, validationResult } = require("express-validator");
-const userModel = require("../models/userModel");
+const AdminModel = require("../models/AdminModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { jwtKey } = require("../config/env");
+const { jwtKey, JWT_KEY } = require("../config/env");
 
-const Signup = async (req, res, next) => {
+const AdminSignup = async (req, res, next) => {
   const { fullname, email, password, confirmpassword } = req.body;
   const error = validationResult(req);
   if (!error.isEmpty()) {
     res.json({ error: error.array(),error_type:0,created:false});
     return;
   }
-  const findoneUser = await userModel.findOne({ email: email });
+  const findoneUser = await AdminModel.findOne({ email: email });
   if (findoneUser) {
     res.json({ message: "Account already exist" ,error_type:1,created:false})
     return;
@@ -25,14 +25,14 @@ const Signup = async (req, res, next) => {
   try {
     const salt = await bcrypt.genSalt(10);
     hashedpassword = await bcrypt.hash(password, salt);
-    const user = new userModel({
+    const user = new AdminModel({
       fullname,
       email,
       password: hashedpassword,
     });
     user.save().then((doc) => {
       const id = doc._id;
-      const token = jwt.sign({ id }, jwtKey, { expiresIn: "7d" });
+      const token = jwt.sign({ id }, JWT_KEY, { expiresIn: "7d" });
       res
         .cookie("jwtToken", token)
         .status(201)
@@ -82,35 +82,6 @@ const Signup = async (req, res, next) => {
 // };
 
 
-const Login = async (req, res, next) => {
-  const { email, password } = req.body;
-  const errors = validationResult(req);
-  console.log("login");
-  try {
-    if (!errors.isEmpty()) {
-      res.json({ errors: errors.array(), error_type: 0, created: false });
-      return;
-    }
-    const user = await userModel.findOne({ email: email });
-    if (!user) {
-      res.json({ message: "Invalid account", error_type: 1, created: false });
-      return;
-    }
-    
-    const isValid = await bcrypt.compare(password, user.password);
-    if (isValid) {
-      const id = user._id;
-      const token = jwt.sign({ id }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' });
-      res.status(200).json({ message: "Logged in", token, created: true });
-    } else {
-      res.json({ message: "Invalid password", created: false });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
-
 
 
 
@@ -119,7 +90,6 @@ const verifyAccount = async (req, res, next) => {
 };
 
 module.exports = {
-  Signup,
-  Login,
+  AdminSignup,
   verifyAccount,
 };

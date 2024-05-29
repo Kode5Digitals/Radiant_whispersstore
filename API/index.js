@@ -2,6 +2,7 @@ const express=require("express")
 const bodyparser=require("body-parser")
 const cookiesparser=require("cookie-parser")
 const userRouter=require("./router/userRouter")
+const adminRouter=require("./router/adminRoute")
 const productRouter=require("./router/productRouter")
 const paystackRouter=require("./router/paymentRoute")
 const {PORT}=require("./config/env")
@@ -46,6 +47,7 @@ app.use("/api/user",userRouter)
 app.use("/api/products",productRouter)
 app.use("/user",userRouter)
 app.use("/api/paystack",paystackRouter)
+app.use("/admin",adminRouter)
 
 connect.then((res)=>{
     app.listen(PORT,()=>{

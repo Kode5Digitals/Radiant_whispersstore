@@ -19,7 +19,7 @@ const auth=async(req, res, next)=> {
             return res.status(401).json({ message: "Unauthorized: Token not provided" });
         }
 
-        const decoded = jwt.verify(token,REFRESH_TOKEN_SECRET, { algorithms: ["HS256"] });
+        const decoded = jwt.verify(token,JWT_KEY, { algorithms: ["HS256"] });
         console.log("decoded:",decoded)
 
         const userId = decoded.id;

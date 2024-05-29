@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose")
 const Adminschema = new Schema(
     {
-        name: {
+        fullname: {
             type: Schema.Types.String
         },
         email: {
