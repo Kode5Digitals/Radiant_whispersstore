@@ -13,6 +13,7 @@ const auth = async(req, res, next)=> {
         }
         
         const token = authHeader.split(' ')[1];
+        console.log("token:",token)
         if (!token) {
             return res.status(401).json({ message: "Unauthorized: Token not provided" });
         }
@@ -22,18 +23,22 @@ const auth = async(req, res, next)=> {
         const userId = decoded.id;
 
         let user = await UserModel.findOne({ _id: userId });
-        let isAdmin = false;
+      
         if (!user) {
           const admin = await AdminModel.findOne({ _id: userId });
           if (!admin) {
               return res.status(401).json({ message: "Unauthorized: User not found" });
           }
-          isAdmin = true;
-            req.user = { isAdmin }
-        
+          // req.user = admin
+          req.user = admin.toObject(); // Convert admin object to plain JavaScript object
+          req.user.isAdmin = true; 
       } else {
-          req.user =  {...user.toObject(), isAdmin }
+          // req.user = user
+          req.user = user.toObject(); // Convert user object to plain JavaScript object
+          req.user.isAdmin = false;
       }
+
+        console.log("req:",req)
 
         next();
     } catch (error) {
