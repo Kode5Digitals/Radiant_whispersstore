@@ -5,7 +5,6 @@ require('dotenv').config();
 const {JWT_KEY}=require("../config/env")
 
 const auth = async(req, res, next)=> {
-    console.log("auth testing");
     console.log("Auth middleware invoked")
     try {
         const authHeader = req.headers.authorization;
@@ -20,22 +19,30 @@ const auth = async(req, res, next)=> {
         }
 
         const decoded = jwt.verify(token,JWT_KEY, { algorithms: ["HS256"] });
-        console.log("decoded:",decoded)
 
         const userId = decoded.id;
 
         let user = await UserModel.findOne({ _id: userId });
+        // if (!user) {
+        //       const admin = await AdminModel.findOne({ _id: userId });
+        //     if (!admin) {
+        //         return res.status(401).json({ message: "Unauthorized: User not foundauth" });
+        //     }
+        //     req.admin = admin; 
+        // } else {
+        //     req.user = user;
+        // }
         if (!user) {
-            // If user is not found, check if it's an admin
-            const admin = await AdminModel.findOne({ _id: userId });
-            if (!admin) {
-                return res.status(401).json({ message: "Unauthorized: User not foundauth" });
-            }
-            req.admin = admin; 
-        } else {
-            req.user = user;
-          console.log("req:",req)
-        }
+          const admin = await AdminModel.findOne({ _id: userId });
+          if (!admin) {
+              return res.status(401).json({ message: "Unauthorized: User not found" });
+          }
+          req.user = admin;  // Attach admin to req.user if user is not found
+      } else {
+          req.user = user;   // Attach user to req.user if found
+      }
+
+        console.log("req:",req)
 
         next();
     } catch (error) {
