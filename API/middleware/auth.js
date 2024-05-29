@@ -29,7 +29,7 @@ const auth = async(req, res, next)=> {
             // If user is not found, check if it's an admin
             const admin = await AdminModel.findOne({ _id: userId });
             if (!admin) {
-                return res.status(401).json({ message: "Unauthorized: User not found" });
+                return res.status(401).json({ message: "Unauthorized: User not foundauth" });
             }
             req.admin = admin; // Add admin to request object
         } else {
