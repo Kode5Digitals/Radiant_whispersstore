@@ -6,22 +6,23 @@
 //         next();
 //     };
 // };
-
-
 const authorizeRoles = (...roles) => {
     return (req, res, next) => {
         if (!req.user) {
             return res.status(403).json({ message: 'Access denied: No user information available' });
         }
 
-        const userRole = req.user ? 'admin' : 'user';
-        if (!roles.includes(userRole)) {
+        if (req.user.isAdmin && roles.includes('admin')) {
+            return next();
+        } else if (!req.user.isAdmin && roles.includes('user')) {
+            return next();
+        } else {
             return res.status(403).json({ message: 'Access denied: Insufficient permissions' });
         }
-
-        next();
     };
 };
 
 module.exports = authorizeRoles;
+
+
 
