@@ -31,9 +31,10 @@ const auth = async(req, res, next)=> {
             if (!admin) {
                 return res.status(401).json({ message: "Unauthorized: User not foundauth" });
             }
-            req.admin = admin; // Add admin to request object
+            req.admin = admin; 
         } else {
-            req.user = user; // Add user to request object
+            req.user = user;
+          console.log("req:",req)
         }
 
         next();
