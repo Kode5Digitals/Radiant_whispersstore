@@ -5,7 +5,7 @@ const adminModel=require("../models/AdminModel")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { jwtKey } = require("../config/env");
-const{ REFRESH_TOKEN_PRIVATE_KEY_PATH,REFRESH_TOKEN_PUBLIC_KEY_PATH }=require("../config/env")
+const{ REFRESH_TOKEN_PRIVATE_KEY,REFRESH_TOKEN_PUBLIC_KEY }=require("../config/env")
 
 const Signup = async (req, res, next) => {
   const { fullname, email, password, confirmpassword } = req.body;
@@ -51,7 +51,7 @@ const Signup = async (req, res, next) => {
 
 function generateTokens(id, isAdmin) {
   const accessToken = jwt.sign({ id, isAdmin }, jwtKey, { algorithm: 'HS256', expiresIn: '15m' }); // Short-lived access token (15 minutes)
-  const refreshToken = jwt.sign({ id, isAdmin }, REFRESH_TOKEN_PRIVATE_KEY_PATH, { algorithm: 'HS256', expiresIn: '7d' }); // Long-lived refresh token (7 days)
+  const refreshToken = jwt.sign({ id, isAdmin }, REFRESH_TOKEN_PRIVATE_KEY, { algorithm: 'HS256', expiresIn: '7d' }); // Long-lived refresh token (7 days)
   return { accessToken, refreshToken };
 }
 
@@ -128,7 +128,7 @@ const deleteAllUser=async(req,res)=>{
   }
 
   try {
-    const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_PUBLIC_KEY_PATH);
+    const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_PUBLIC_KEY);
     const userId = decoded.id;
 
     let user = await userModel.findOne({ _id: userId });
