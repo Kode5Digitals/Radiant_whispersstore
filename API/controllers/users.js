@@ -261,16 +261,25 @@ const Signup = async (req, res, next) => {
   }
 }
 
-
+// console.log(REFRESH_TOKEN_SECRET,JWT_KEY )
 if (!JWT_KEY || !REFRESH_TOKEN_SECRET) {
   console.error("JWT_KEY or REFRESH_TOKEN_SECRET is not set in the environment variables.");
   process.exit(1);
 }
 
 function generateTokens(id, isAdmin) {
-  const accessToken = jwt.sign({ id, isAdmin },JWT_KEY, { algorithm: 'HS256', expiresIn: '15m' }); // Short-lived access token (15 minutes)
-  const refreshToken = jwt.sign({ id, isAdmin },REFRESH_TOKEN_SECRET, { algorithm: 'HS256', expiresIn: '7d' }); // Long-lived refresh token (7 days)
-  return { accessToken, refreshToken };
+  try {
+    const accessToken = jwt.sign({ id, isAdmin }, JWT_KEY, { algorithm: 'HS256', expiresIn: '15m' });
+    const refreshToken = jwt.sign({ id, isAdmin }, REFRESH_TOKEN_SECRET, { algorithm: 'HS256', expiresIn: '7d' });
+
+    console.log("AccessToken:", accessToken);
+    console.log("RefreshToken:", refreshToken);
+
+    return { accessToken, refreshToken };
+  } catch (error) {
+    console.error("Error generating tokens:", error);
+    throw error;
+  }
 }
 
 
