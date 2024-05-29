@@ -42,7 +42,7 @@ const auth=async(req, res, next)=> {
         return res.status(401).json({ message: "Unauthorized: Token has expired" });
       }
       console.error("Auth error:", error);
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorizeddkkk" });
     
       
     }
