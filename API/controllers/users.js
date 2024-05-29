@@ -380,10 +380,34 @@ const deleteAllUser=async(req,res)=>{
 
 
 
+
+
+
+
+
+
+
+
+ const getMe= async (req, res) => {
+  try {
+      // User or admin is already attached to req object by the auth middleware
+      if (req.user) {
+          res.json(req.user);
+      } else {
+          res.status(404).json({ message: 'User not found' });
+      }
+  } catch (error) {
+      console.error('Error fetching user details', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+
 module.exports = {
   Signup,
   Login,
   verifyAccount,
   deleteAllUser,
-  refreshToken
+  refreshToken,
+  getMe
 };

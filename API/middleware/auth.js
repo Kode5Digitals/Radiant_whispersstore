@@ -2,9 +2,9 @@ const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
 const AdminModel = require('../models/AdminModel');
 require('dotenv').config();
-const {JWT_KEY,REFRESH_TOKEN_SECRET}=require("../config/env")
+const {JWT_KEY}=require("../config/env")
 
-const auth=async(req, res, next)=> {
+const auth = async(req, res, next)=> {
     console.log("auth testing");
     console.log("Auth middleware invoked")
     try {
