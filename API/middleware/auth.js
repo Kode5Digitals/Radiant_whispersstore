@@ -8,13 +8,12 @@ const auth=async(req, res, next)=> {
     console.log("auth testing");
     console.log("Auth middleware invoked")
     try {
-        // const authHeader = req.headers.authorization;
-        // if (!authHeader) {
-        //     return res.status(401).json({ message: "Unauthorized: No token provided" });
-        // }
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            return res.status(401).json({ message: "Unauthorized: No token provided" });
+        }
         
-        // const token = authHeader.split(' ')[1];
-        const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDc1OTA5NWE0M2EwMjI3NGM1ZTA1NiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNjk2OTQ3OSwiZXhwIjoxNzE3NTc0Mjc5fQ.essjNL61AUQPAN9EKaLOJsf4iAtcqEu2SB-nrlkPA6Q"
+        const token = authHeader.split(' ')[1];
         console.log("token:",token)
         if (!token) {
             return res.status(401).json({ message: "Unauthorized: Token not provided" });
