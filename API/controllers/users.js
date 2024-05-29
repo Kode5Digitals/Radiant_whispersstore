@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { jwtKey } = require("../config/env");
 const{ REFRESH_TOKEN_PRIVATE_KEY,REFRESH_TOKEN_PUBLIC_KEY }=require("../config/env")
-
+console.log(REFRESH_TOKEN_PRIVATE_KEY)
 const Signup = async (req, res, next) => {
   const { fullname, email, password, confirmpassword } = req.body;
   const error = validationResult(req);
