@@ -379,10 +379,8 @@ const deleteAllUser=async(req,res)=>{
 }
 
 
-
-
  const getMe = async (req, res) => {
-  consol.log(req.user)
+  console.log(req.user)
   try {
       if (req.user) {
           res.json(req.user);
