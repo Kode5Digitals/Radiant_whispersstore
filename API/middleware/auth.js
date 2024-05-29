@@ -22,17 +22,18 @@ const auth = async(req, res, next)=> {
         const userId = decoded.id;
 
         let user = await UserModel.findOne({ _id: userId });
-      
+        let isAdmin = false;
         if (!user) {
           const admin = await AdminModel.findOne({ _id: userId });
           if (!admin) {
               return res.status(401).json({ message: "Unauthorized: User not found" });
           }
-          req.user =  {...user.toObject(), isAdmin: true }
+          isAdmin = true;
+            req.user = { isAdmin }
+        
       } else {
-          req.user =  {...user.toObject(), isAdmin: false }
+          req.user =  {...user.toObject(), isAdmin }
       }
-
 
         next();
     } catch (error) {
