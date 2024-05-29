@@ -373,7 +373,7 @@ const deleteAllUser=async(req,res)=>{
     res.json({ accessToken, refreshToken: newRefreshToken });
   } catch (error) {
     console.error("Error in refresh token endpoint:", error);
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "auth Unauthorized" });
   }
 }
 

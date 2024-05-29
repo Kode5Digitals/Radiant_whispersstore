@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
 const AdminModel = require('../models/AdminModel');
 require('dotenv').config();
-const {jwtKey}=require("../config/env")
+// const {JWT_KEY}=require("../config/env")
+JWT_KEY='00048aae9eb05a3ef4766b098bd93ae6016627985579182e1c58a6a5a1489492'
 
 const auth=async(req, res, next)=> {
     console.log("auth testing");
@@ -19,7 +20,9 @@ const auth=async(req, res, next)=> {
             return res.status(401).json({ message: "Unauthorized: Token not provided" });
         }
 
-        const decoded = jwt.verify(token, jwtKey, { algorithms: ["HS256"] });
+        const decoded = jwt.verify(token, JWT_KEY, { algorithms: ["HS256"] });
+        console.log("decoded:",decoded)
+
         const userId = decoded.id;
 
         let user = await UserModel.findOne({ _id: userId });
