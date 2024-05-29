@@ -261,6 +261,12 @@ const Signup = async (req, res, next) => {
   }
 }
 
+
+if (!JWT_KEY || !REFRESH_TOKEN_SECRET) {
+  console.error("JWT_KEY or REFRESH_TOKEN_SECRET is not set in the environment variables.");
+  process.exit(1);
+}
+
 function generateTokens(id, isAdmin) {
   const accessToken = jwt.sign({ id, isAdmin },JWT_KEY, { algorithm: 'HS256', expiresIn: '15m' }); // Short-lived access token (15 minutes)
   const refreshToken = jwt.sign({ id, isAdmin },REFRESH_TOKEN_SECRET, { algorithm: 'HS256', expiresIn: '7d' }); // Long-lived refresh token (7 days)
