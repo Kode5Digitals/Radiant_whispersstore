@@ -14,7 +14,7 @@ const authorizeRoles = (...roles) => {
             return res.status(403).json({ message: 'Access denied: No user information available' });
         }
 
-        const userRole = req.user.isAdmin ? 'admin' : 'user';
+        const userRole = req.user ? 'admin' : 'user';
         if (!roles.includes(userRole)) {
             return res.status(403).json({ message: 'Access denied: Insufficient permissions' });
         }
@@ -25,4 +25,3 @@ const authorizeRoles = (...roles) => {
 
 module.exports = authorizeRoles;
 
-module.exports = authorizeRoles;
