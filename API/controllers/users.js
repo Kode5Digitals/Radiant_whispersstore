@@ -217,10 +217,9 @@ const userModel = require("../models/userModel");
 const adminModel=require("../models/AdminModel")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const { REFRESH_TOKEN_SECRET,JWT_KEY } = require("../config/env")
-JWT_KEY='00048aae9eb05a3ef4766b098bd93ae6016627985579182e1c58a6a5a1489492'
-REFRESH_TOKEN_SECRET="bf0679d8ee03adb725803fc84a7d8f1e94ec854c51f4dfc683850878f2f76de5"
-
+const { REFRESH_TOKEN_SECRET,JWT_KEY } = require("../config/env")
+// JWT_KEY='00048aae9eb05a3ef4766b098bd93ae6016627985579182e1c58a6a5a1489492'
+// REFRESH_TOKEN_SECRET="bf0679d8ee03adb725803fc84a7d8f1e94ec854c51f4dfc683850878f2f76de5"
 const Signup = async (req, res, next) => {
   const { fullname, email, password, confirmpassword } = req.body;
   const error = validationResult(req);
