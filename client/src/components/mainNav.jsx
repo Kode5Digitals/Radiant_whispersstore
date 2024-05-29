@@ -208,13 +208,10 @@ setOpenContact (false)
                 style={{ background: 0, outline: "0" }}
                 className="w-full"
               />
-            </div>
-            
-           </div>
-            {showProducts && searchedProducts.length > 0 && (
+                {showProducts && searchedProducts.length > 0 && (
               <div
                 ref={productRef}
-                className="absolute  searchcase xl:top-20 bg-white  xl:w-[500px]  xl:max-h-[300px]   h-screen pb-10 border-b-black border-3 right-0 top-[140px]   overflow-y-auto p-2"
+                className="absolute  searchcase xl:top-16 bg-white right-[500px]  xl:w-[418px]  xl:max-h-[300px]   h-screen pb-10 border-b-black border-3  top-[140px]   overflow-y-auto p-2"
               >
                 <h4 className="text-center">Radiantwhispersstore</h4>
                 <MdArrowBackIos onClick={handleClickBack} size={30}/>
@@ -222,7 +219,7 @@ setOpenContact (false)
                   <Link to={`/ProductDetails/${product?._id}`} key={index}>
                     <div className=" flex  xl:gap-8 mt-8 text-black hover:bg-[#e8e8e8]">
                       <div className="w-1/2">
-                        <img src={product.image} className="xl:w-12 xl:h-12" alt="" />
+                        <img src={product.image} className="xl:w-16 xl:h-16" alt="" />
                       </div>
                       <div>
                         <p>{product.name}</p>
@@ -235,6 +232,11 @@ setOpenContact (false)
                 ))}
               </div>
             )}
+            </div>
+            
+            
+           </div>
+          
           </div>
         </div>
 

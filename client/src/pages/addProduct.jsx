@@ -3,8 +3,9 @@ import { ToastContainer, toast } from "react-toastify";
 import { MdInsertPhoto } from "react-icons/md";
 import "react-toastify/dist/ReactToastify.css";
 import AdminDefaultlayout from "../layout/AdminLayout";
-import axios from "axios";
 import { BiLoaderCircle } from "react-icons/bi";
+import http from "../utils/adminHttp";
+
 const AddProduct = () => {
   const nameRef = useRef("");
   const priceRef = useRef("");
@@ -13,7 +14,7 @@ const AddProduct = () => {
   const categoryRef = useRef('');
   const [imagesrc, setimagesrc] = useState([]);
   const [loading,setLoading]=useState(false)
-  //add products
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -24,13 +25,10 @@ const AddProduct = () => {
         formData.append('image', imageRef.current.files[0]);
         formData.append('description', descriptionRef.current.value);
         formData.append('category',categoryRef.current.value)
-        const response = await axios.post(
-            "https://radiant-whispersstore.onrender.com/api/products/addProduct", 
-            formData,
-            {
-                headers: { "Content-Type": "multipart/form-data" },
-            }
-        );
+        const response = await http.post(
+            "/api/products/addProduct", 
+            formData
+        )
         console.log(response.data);
         if (response.data.created) {
             toast.success(response.data.message);
@@ -82,7 +80,7 @@ const AddProduct = () => {
     <AdminDefaultlayout>
 
     <div
-      className="flex items-start  justify-center gap-10 bg-pink-700 h-full w-full sm:p-10  p-4"
+      className="flex items-start  justify-center pb-96 p-4 xl:p-24 bg-pink-700 xl:h-full w-full h-full  "
       // style={{ height: "100vh" }}
     >
       <ToastContainer
@@ -99,9 +97,10 @@ const AddProduct = () => {
       />
       <form 
         onSubmit={handleSubmit}
-        className="forgot-password    xl:w-1/4 w-full  p-3   lg:w-3/4 2xl:w-1/4 md:w-3/4 sm:w-3/4 rounded-lg shadow-md bg-pink-200  transition duration-500 ease-in-out border-2 border-transparent "
+        className="forgot-password flex mt-32 h-full xl:mt-0 w-full sm:flex-wrap xl:flex-nowrap  flex-wrap  p-3 gap-10    lg:w-3/4 2xl:w-1/4 md:w-3/4 sm:w-3/4 rounded-lg shadow-md bg-pink-200  transition duration-500 ease-in-out border-2 border-transparent "
       >
-        <h2 className="text-center text-2xl mt-3 mb-3">Add product</h2>
+       <div className=" xl:w-1/2  w-full">
+       <h2 className="text-center text-2xl mt-3 mb-3">Add product</h2>
         <div>
           <label
             htmlFor="name"
@@ -143,7 +142,7 @@ const AddProduct = () => {
   <select required id="category" name="category"  ref={categoryRef} className="text-sm mt-4  bg-white  border-2 p-2 ml-3 rounded-xl mb-4">
     <option value="body cream">body cream</option>
     <option value="face cream">face cream</option>
-    <option value="body wash">Body wash</option>
+    <option value="body wash">body wash</option>
   </select>
 
 
@@ -167,6 +166,7 @@ const AddProduct = () => {
           </label>  
         
         </div>
+       
         <div>
           <label
             htmlFor="description"
@@ -177,9 +177,9 @@ const AddProduct = () => {
           <textarea
             ref={descriptionRef}
             id="description"
-            className="mt-1 mb-4 p-2 block text-[12px] w-full border h-40 border-white rounded-md focus:outline-none focus:border-pink-500"
+            className="mt-1 mb-4 p-2 block text-[12px] w-full border h-32 border-white rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter Product Description"
-            maxLength={200}
+            maxLength={300}
             required
           />
         </div>
@@ -197,12 +197,17 @@ const AddProduct = () => {
   <BiLoaderCircle className="animate-spin" />
   Processing...
 </button>}
+       </div>
+       
+       <div className="xl:w-1/2 w-3/4 m-auto">
+       <div className="w-full  m-auto h-[300px] border">
+        <img style={{ width: "100%", height: "100% " }} src={imagesrc} alt="" />
+      </div>
+       </div>
       
       </form>
 
-      <div className="w-[300px] h-[300px] border">
-        <img style={{ width: "100%", height: "100% " }} src={imagesrc} alt="" />
-      </div>
+      
       {/* <button onClick={handleDeleteAll} className="text-white">Delete all product</button> */}
     </div></AdminDefaultlayout>
   );

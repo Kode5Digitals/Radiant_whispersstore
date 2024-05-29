@@ -14,5 +14,11 @@ export default defineConfig(({ mode }) => {
       'process.env.VITE_APP_FACEBOOK_URL': JSON.stringify(env.VITE_APP_FACEBOOK_URL),
     },
     plugins: [react()],
+    optimizeDeps:{
+      include: ['jwt-decode'],
+    }
   }
+
+ 
+ 
 })

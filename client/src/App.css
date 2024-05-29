@@ -116,7 +116,7 @@ body::-webkit-scrollbar {
 }
 
 .searchcase{
-animation: myAnim 0.5s ease 0s 1 normal forwards;
+animation: myAnim 0.9s ease 5s 1 normal forwards;
 
 }
 @keyframes myAnim {
@@ -126,7 +126,7 @@ animation: myAnim 0.5s ease 0s 1 normal forwards;
 	}
 
 	100% {
-		transform: scaleY(1);
+		transform: scaleY(2);
 		transform-origin: 100% 0%;
 	}
 }

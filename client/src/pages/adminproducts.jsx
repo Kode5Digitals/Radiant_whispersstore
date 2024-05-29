@@ -79,9 +79,9 @@ const openDeleteModal=(name,id)=>{
     <AdminDefaultlayout>
     {openEdit &&  <EditProduct setOpenEdit={setOpenEdit} />}
      {openDelete  &&<DeleteProduct deleteName={deleteName} />}
-    <main className="mb-10 ">
+    <main className="mb-10 xl:mt-40 lg:mt-44 md:mt-32 sm:mt-84 mt-40">
       {loading && <LoadingSpinner />}
-      <div className="xl:w-4/5 w-full mt-12  mx-auto ">
+      <div className="xl:w-4/5 w-full   mx-auto  lg:p-4 md:p-5">
         <div className=" flex  w-full sm:gap-5 flex-wrap  sm:flex-wrap justify-evenly   xl:justify-center  2xl:justify-evenly ">
           {products.slice(0, visibleProducts).map((prod, index) => (
             <div key={index} className=" mb-20 max-w-48 xl:w-48  h-84  ">

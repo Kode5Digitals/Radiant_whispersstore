@@ -10,7 +10,6 @@ const Defaultlayout = ({children}) => {
 
     const { isOpen, setIsOpen, Back } = useContext(Cartcontext);
     const [isSideOpen, setSideOpen] = useState(false);
-    const[openNavMenu,setOpenNavMenu]=useState(false)
 
     const toggleSidebar = () => {
       setSideOpen(!isSideOpen);

@@ -10,7 +10,7 @@ const AdminNav = () => {
 
 
   return (
-   <div className="flex items-center p-2 justify-between">
+   <div className="flex fixed top-0 bg-white border-b-2 z-50 w-full items-center p-2 justify-between">
 <Link to={"/adminHome"}>
 <div className=" w-32 overflow-hidden bg-blac">
   <img src="/Logo2.png" alt="" className=""/>

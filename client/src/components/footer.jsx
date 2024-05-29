@@ -4,8 +4,7 @@ import { IoLogoWhatsapp } from "react-icons/io5";
 import { FaTwitter } from "react-icons/fa";
 import "../App.css"
 import PropTypes from "prop-types";
-import environment from "../config/env";
-import { FacebookShareButton,   WhatsappShareButton } from "react-share"
+import { FacebookShareButton } from "react-share"
 import { Link } from "react-router-dom";
 
 const Footer = ({logoSrc}) => {
@@ -25,16 +24,16 @@ const Footer = ({logoSrc}) => {
     </ul>
     <div  className="flex lg:hidden  xl:hidden gap-5 mt-10 md:hidden ">
         <div className="socials hover:bg-pink-400 hover:text-white">
-          <FacebookShareButton url={environment.FACEBOOK_URL}>
+          <FacebookShareButton url=''>
           <TiSocialFacebook />
           </FacebookShareButton>
          </div>
         <div className="socials  hover:bg-pink-400 hover:text-white">
            <FaInstagram /></div>
         <div className="socials  hover:bg-pink-400 hover:text-white">
-          <WhatsappShareButton url="https://wa.link/m4ypbh">
+          <a href="https://wa.link/m4ypbh">
           <IoLogoWhatsapp  />
-          </WhatsappShareButton>
+          </a>
           </div>
         <div className="socials  hover:bg-pink-400 hover:text-white"><FaTwitter /></div>
       </div>
@@ -70,9 +69,10 @@ That&apos;s why we&apos;re dedicated to providing high-quality, natural body cre
           </div>
         <div className="socials  hover:bg-pink-400 hover:text-white"> <FaInstagram /></div>
         <div className="socials  hover:bg-pink-400 hover:text-white">
-           <WhatsappShareButton url="https://wa.link/m4ypbh">
-          <IoLogoWhatsapp  />
-          </WhatsappShareButton>
+         <a href="https://wa.link/m4ypbh">
+         <IoLogoWhatsapp  />
+         </a>
+       
 </div>
         <div className="socials  hover:bg-pink-400 hover:text-white"><FaTwitter /></div>
       </li>

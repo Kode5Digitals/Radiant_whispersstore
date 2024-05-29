@@ -26,11 +26,12 @@ function Login({setOpenLogin}) {
 try {
   const res = await httpAuth.post("/user/login", formData,{withCredentials:true})
   if(res.data.created){
-    localStorage.setItem('token', res.data.token)
     setLogin(res.data.isLoggedIn)
     setisadmin(res.data.isAdmin)
     localStorage.setItem("Login",res.data.isLoggedIn)
     localStorage.setItem("Admin",res.data.isAdmin)
+    localStorage.setItem('token', res.data.accessToken)
+    localStorage.setItem('refreshToken', res.data.refreshToken);
     toast.success(res.data.message);
     setOpenLogin(false)
     }

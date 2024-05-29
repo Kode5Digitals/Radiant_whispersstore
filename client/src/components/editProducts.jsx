@@ -179,7 +179,7 @@ const handleBack=()=>{
         <select id="category"   defaultValue={editObj?.category} name="category" ref={categoryRef} className="text-sm mt-4 bg-white border-2 p-2 ml-3 rounded-xl mb-4">
           <option value="body cream">body cream</option>
           <option value="face cream">face cream</option>
-          <option value="body wash">Body wash</option>
+          <option value="body wash">body wash</option>
         </select>
         <div
           className="mt-3 mb-3 flex p-2 gap-2 items-center w-full text-[12px] border-pink-700 bg-[#f29cb3] border-2 rounded-sm focus:outline-none focus:border-pink-500"
