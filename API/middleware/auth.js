@@ -13,7 +13,6 @@ const auth = async(req, res, next)=> {
         }
         
         const token = authHeader.split(' ')[1];
-        console.log("token:",token)
         if (!token) {
             return res.status(401).json({ message: "Unauthorized: Token not provided" });
         }
@@ -23,26 +22,17 @@ const auth = async(req, res, next)=> {
         const userId = decoded.id;
 
         let user = await UserModel.findOne({ _id: userId });
-        // if (!user) {
-        //       const admin = await AdminModel.findOne({ _id: userId });
-        //     if (!admin) {
-        //         return res.status(401).json({ message: "Unauthorized: User not foundauth" });
-        //     }
-        //     req.admin = admin; 
-        // } else {
-        //     req.user = user;
-        // }
+      
         if (!user) {
           const admin = await AdminModel.findOne({ _id: userId });
           if (!admin) {
               return res.status(401).json({ message: "Unauthorized: User not found" });
           }
-          req.user = admin;  // Attach admin to req.user if user is not found
+          req.user =  {...user.toObject(), isAdmin: true }
       } else {
-          req.user = user;   // Attach user to req.user if found
+          req.user =  {...user.toObject(), isAdmin: false }
       }
 
-        console.log("req:",req)
 
         next();
     } catch (error) {
