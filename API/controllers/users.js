@@ -366,6 +366,7 @@ const deleteAllUser=async(req,res)=>{
         return res.status(401).json({ message: "Unauthorized: User not found refresh" });
       }
       const { accessToken, refreshToken: newRefreshToken } = generateTokens(userId, decoded.isAdmin);
+      console.log(accessToken)
       return res.json({ accessToken, refreshToken: newRefreshToken });
     }
 
