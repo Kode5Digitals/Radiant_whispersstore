@@ -381,20 +381,13 @@ const deleteAllUser=async(req,res)=>{
 
 
 
-
-
-
-
-
-
-
- const getMe= async (req, res) => {
+ const getMe = async (req, res) => {
+  consol.log(req.user)
   try {
-      // User or admin is already attached to req object by the auth middleware
       if (req.user) {
           res.json(req.user);
       } else {
-          res.status(404).json({ message: 'User not found' });
+          res.status(404).json({ message: 'User not found 0' });
       }
   } catch (error) {
       console.error('Error fetching user details', error);
