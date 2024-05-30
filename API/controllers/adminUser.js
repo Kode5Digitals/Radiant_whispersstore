@@ -47,39 +47,6 @@ const AdminSignup = async (req, res, next) => {
   }
 };
 
-// const Login = async (req, res, next) => {
-//   const { email, password } = req.body;
-//   const error = validationResult(req);
-//   console.log("login")
-//   try {
-//     if (!error.isEmpty()) {
-//       res.json({ error: error.array() ,error_type:0,created:false});
-//       return;
-//     }
-//     const findone = await userModel.findOne({ email: email });
-//     if (!findone) {
-//       res.json({ message: "invalid account",error_type:1,created:false });
-//       return;
-//     }
-
-//     const isValid =  await bcrypt.compare(password, findone.password, (err, isValid) => {
-//       if (isValid) {
-//         const id = findone._id;
-//         const signOptions = {
-//           algorithm: 'HS256',
-//           expiresIn: '1h'
-//         };
-        
-//         const token = jwt.sign({ id }, jwtKey, signOptions);
-//         res.status(200).json({ message: "Loggin",token,created:true });
-//       } else {
-//         res.json({ message: "Invalid Account oooo",created:false });
-//       }
-//     });
-//   } catch (error) {
-//     console.log(error)
-//   }
-// };
 
 
 

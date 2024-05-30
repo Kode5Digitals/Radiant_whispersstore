@@ -21,14 +21,12 @@ const AddProduct=async(req,res)=>{
           if (err) {
             return res.status(500).json({ error: 'Error uploading file' });
           }
-console.log(files)
           const name = fields.name[0];
           const price = fields.price[0];
           const description = fields.description[0]
           const category = fields.category[0]
           const image = files.image[0].filepath;
-          console.log({ name, price, description ,category});
-          console.log(image)
+
           const foldername = "Radiantwhhispersstoreimages"
             const cloudinaryUploadResult = await cloudinary.uploader.upload(image, { folder:foldername  });
 
@@ -40,9 +38,7 @@ console.log(files)
                 category
             });
 
-          // console.log("newProduct is",newProduct)
             const findoneProduct = await productsModel.findOne({ name })
-            console.log(findoneProduct)
             if (findoneProduct) {
                 return res.json({ message: "Product already exists", error_type: 1, created: false });
             }
@@ -102,7 +98,6 @@ res.json({message:'Product  found' ,product})
 
 const searchProduct=async(req,res)=>{
     const searchQuery = req.query.search;
-    console.log(searchQuery)
   if (!searchQuery) {
     res.status(400).json({ error: 'Missing search query parameter' });
     return;

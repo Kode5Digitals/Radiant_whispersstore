@@ -15,7 +15,7 @@ const validationMiddlewares=[
 
 
 router.get("/allProducts",AllProduct);
-router.post("/addProduct",auth,authorizeRoles("Admin"), AddProduct);
+router.post("/addProduct",auth,authorizeRoles("admin"), AddProduct);
 //router.post("/addProduct",auth, authorizeRoles("Admin"), AddProduct);
 router.get("/getProduct/:id",GetProduct);
 router.delete("/DeleteAll",auth,authorizeRoles("Admin"),DeleteAllProduct);

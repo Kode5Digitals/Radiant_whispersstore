@@ -1,151 +1,151 @@
-// const express = require("express");
-// const { check, validationResult } = require("express-validator");
-// const userModel = require("../models/userModel");
+// const express = require("express")
+// const { check, validationResult } = require("express-validator")
+// const userModel = require("../models/userModel")
 // const adminModel=require("../models/AdminModel")
-// const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
-// const { jwtKey } = require("../config/env");
-// const refreshTokenKey = process.env.JWT_REFRESH_SECRET_KEY;
+// const bcrypt = require("bcrypt")
+// const jwt = require("jsonwebtoken")
+// const { jwtKey } = require("../config/env")
+// const refreshTokenKey = process.env.JWT_REFRESH_SECRET_KEY
 
 // const Signup = async (req, res, next) => {
-//   const { fullname, email, password, confirmpassword } = req.body;
-//   const error = validationResult(req);
+//   const { fullname, email, password, confirmpassword } = req.body
+//   const error = validationResult(req)
 //   if (!error.isEmpty()) {
-//     res.json({ error: error.array(),error_type:0,created:false});
-//     return;
+//     res.json({ error: error.array(),error_type:0,created:false})
+//     return
 //   }
-//   const findoneUser = await userModel.findOne({ email: email });
+//   const findoneUser = await userModel.findOne({ email: email })
 //   if (findoneUser) {
 //     res.json({ message: "Account already exist" ,error_type:1,created:false})
-//     return;
+//     return
 //   }
 //   if (password !== confirmpassword) {
-//     res.json({ message: "password do not match" ,error_type:1,created:false});
-//     return;
+//     res.json({ message: "password do not match" ,error_type:1,created:false})
+//     return
 //   }
 
 //   try {
-//     const salt = await bcrypt.genSalt(10);
-//     hashedpassword = await bcrypt.hash(password, salt);
+//     const salt = await bcrypt.genSalt(10)
+//     hashedpassword = await bcrypt.hash(password, salt)
 //     const user = new userModel({
 //       fullname,
 //       email,
 //       password: hashedpassword,
-//     });
+//     })
 //     user.save().then((doc) => {
-//       const id = doc._id;
-//       const token = jwt.sign({ id }, jwtKey, { expiresIn: "10d" });
+//       const id = doc._id
+//       const token = jwt.sign({ id }, jwtKey, { expiresIn: "10d" })
 //       res
 //         .cookie("jwtToken", token)
 //         .status(201)
-//         .send({ id, created: true, token ,message:"sucessfilly registered" });
-//     });
+//         .send({ id, created: true, token ,message:"sucessfilly registered" })
+//     })
 
 //   } catch (error) {
-//     console.error("Error during user registration:", error);
+//     console.error("Error during user registration:", error)
 //     res
 //       .status(500)
-//       .json({ error: "An error occurred during user registration" });
+//       .json({ error: "An error occurred during user registration" })
 //   }
-// };
+// }
 
 
 
 // const Login = async (req, res, next) => {
-//     console.log("login");
-//     console.log(req.body);
-//     const { email, password } = req.body;
-//     const errors = validationResult(req);
+//     console.log("login")
+//     console.log(req.body)
+//     const { email, password } = req.body
+//     const errors = validationResult(req)
   
 //     try {
 //       if (!errors.isEmpty()) {
-//         return res.status(400).json({ errors: errors.array(), error_type: 0, created: false, isLoggedIn: false });
+//         return res.status(400).json({ errors: errors.array(), error_type: 0, created: false, isLoggedIn: false })
 //       }
   
-//       const user = await userModel.findOne({ email: email });
-//       const admin = await adminModel.findOne({ email: email });
+//       const user = await userModel.findOne({ email: email })
+//       const admin = await adminModel.findOne({ email: email })
   
 //       if (!user && !admin) {
-//         return res.status(400).json({ message: "Invalid account", error_type: 1, created: false, isLoggedIn: false });
+//         return res.status(400).json({ message: "Invalid account", error_type: 1, created: false, isLoggedIn: false })
 //       }
   
-//       let isValid = false;
-//       let isAdmin = false;
-//       let id;
+//       let isValid = false
+//       let isAdmin = false
+//       let id
   
 //       if (user) {
-//         isValid = await bcrypt.compare(password, user.password);
-//         id = user._id;
+//         isValid = await bcrypt.compare(password, user.password)
+//         id = user._id
 //       } 
 //       if (admin) {
-//         isValid = await bcrypt.compare(password, admin.password);
-//         isAdmin = true;
-//         id = admin._id;
+//         isValid = await bcrypt.compare(password, admin.password)
+//         isAdmin = true
+//         id = admin._id
 //       }
   
 //       if (isValid) {
-//         const token = jwt.sign({ id, isAdmin }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' });
-//         return res.status(200).json({ message: "Logged in", token, created: true, isLoggedIn: true, isAdmin });
+//         const token = jwt.sign({ id, isAdmin }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' })
+//         return res.status(200).json({ message: "Logged in", token, created: true, isLoggedIn: true, isAdmin })
 //       } else {
-//         return res.status(400).json({ message: "Invalid password", created: false, isLoggedIn: false });
+//         return res.status(400).json({ message: "Invalid password", created: false, isLoggedIn: false })
 //       }
 //     } catch (error) {
-//       console.log(error);
-//       return res.status(500).json({ message: "Internal server error", isLoggedIn: false });
+//       console.log(error)
+//       return res.status(500).json({ message: "Internal server error", isLoggedIn: false })
 //     }
-//   };
+//   }
   
 
 // // const Login = async (req, res, next) => {
-// //   console.log("login");
-// //   console.log(req.body);
-// //   const { email, password } = req.body;
-// //   const errors = validationResult(req);
-// //   console.log("login");
+// //   console.log("login")
+// //   console.log(req.body)
+// //   const { email, password } = req.body
+// //   const errors = validationResult(req)
+// //   console.log("login")
 // //   try {
 // //     if (!errors.isEmpty()) {
-// //       res.json({ errors: errors.array(), error_type: 0, created: false });
-// //       return;
+// //       res.json({ errors: errors.array(), error_type: 0, created: false })
+// //       return
 // //     }
-// //     const user = await userModel.findOne({ email: email });
-// //     const admin = await adminModel.findOne({ email: email });
-// //     const isAdmin = !!admin;
+// //     const user = await userModel.findOne({ email: email })
+// //     const admin = await adminModel.findOne({ email: email })
+// //     const isAdmin = !!admin
 
 // //     if (!user || !admin) {
-// //         return res.json({ message: "Invalid account", error_type: 1, created: false });
+// //         return res.json({ message: "Invalid account", error_type: 1, created: false })
 // //     }
     
-// //     const isValidUser = await bcrypt.compare(password, user.password);
-// //     const isValidAdmin = await bcrypt.compare(password, admin.password);
+// //     const isValidUser = await bcrypt.compare(password, user.password)
+// //     const isValidAdmin = await bcrypt.compare(password, admin.password)
 // //     if (isValidUser || isValidAdmin) {
-// //       const id = user._id;
-// //       const token = jwt.sign({ id }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' });
-// //       res.status(200).json({ message: "Logged in", token, created: true ,isLoggedIn: true, isAdmin });
+// //       const id = user._id
+// //       const token = jwt.sign({ id }, jwtKey, { algorithm: 'HS256', expiresIn: '1h' })
+// //       res.status(200).json({ message: "Logged in", token, created: true ,isLoggedIn: true, isAdmin })
 // //     } else {
-// //       res.json({ message: "Invalid password", created: false ,isLoggedIn: false });
+// //       res.json({ message: "Invalid password", created: false ,isLoggedIn: false })
 // //     }
 // //   } catch (error) {
-// //     console.log(error);
-// //     res.status(500).json({ message: "Internal server error",isLoggedIn: false  });
+// //     console.log(error)
+// //     res.status(500).json({ message: "Internal server error",isLoggedIn: false  })
 // //   }
-// // };
+// // }
 
 
 
 
 // const verifyAccount = async (req, res, next) => {
-//   res.status(200).json({ message: "verifyacct" });
-// };
+//   res.status(200).json({ message: "verifyacct" })
+// }
 
 
 
 // const deleteAllUser=async(req,res)=>{
 //     try {
 //         await userModel.deleteMany({})
-//         res.status(200).json({ message: 'All users deleted successfully.' });
+//         res.status(200).json({ message: 'All users deleted successfully.' })
 //     } catch (error) {
-//         console.error('Error deleting documents:', error);
-//         res.status(500).json({ error: 'Internal Server Error' });
+//         console.error('Error deleting documents:', error)
+//         res.status(500).json({ error: 'Internal Server Error' })
 //     }
 // }
 
@@ -154,31 +154,31 @@
 
 
 //  const refreshToken=async (req, res) => {
-//   const { refreshToken } = req.body;
+//   const { refreshToken } = req.body
 
 //   if (!refreshToken) {
-//     return res.status(401).json({ message: "Unauthorized: No refresh token provided" });
+//     return res.status(401).json({ message: "Unauthorized: No refresh token provided" })
 //   }
 
 //   try {
-//     const decoded = jwt.verify(refreshToken, refreshTokenKey);
-//     const userId = decoded.id;
+//     const decoded = jwt.verify(refreshToken, refreshTokenKey)
+//     const userId = decoded.id
 
-//     let user = await userModel.findOne({ _id: userId });
+//     let user = await userModel.findOne({ _id: userId })
 //     if (!user) {
-//       const admin = await adminModel.findOne({ _id: userId });
+//       const admin = await adminModel.findOne({ _id: userId })
 //       if (!admin) {
-//         return res.status(401).json({ message: "Unauthorized: User not found" });
+//         return res.status(401).json({ message: "Unauthorized: User not found" })
 //       }
-//       const { accessToken, refreshToken: newRefreshToken } = generateTokens(userId, decoded.isAdmin);
-//       return res.json({ accessToken, refreshToken: newRefreshToken });
+//       const { accessToken, refreshToken: newRefreshToken } = generateTokens(userId, decoded.isAdmin)
+//       return res.json({ accessToken, refreshToken: newRefreshToken })
 //     }
 
-//     const { accessToken, refreshToken: newRefreshToken } = generateTokens(userId, decoded.isAdmin);
-//     res.json({ accessToken, refreshToken: newRefreshToken });
+//     const { accessToken, refreshToken: newRefreshToken } = generateTokens(userId, decoded.isAdmin)
+//     res.json({ accessToken, refreshToken: newRefreshToken })
 //   } catch (error) {
-//     console.error("Error in refresh token endpoint:", error);
-//     return res.status(401).json({ message: "Unauthorized" });
+//     console.error("Error in refresh token endpoint:", error)
+//     return res.status(401).json({ message: "Unauthorized" })
 //   }
 // }
 
@@ -190,7 +190,7 @@
 //   verifyAccount,
 //   deleteAllUser,
 //   refreshToken
-// };
+// }
 
 
 
@@ -211,136 +211,133 @@
 
 
 
-const express = require("express");
-const { check, validationResult } = require("express-validator");
-const userModel = require("../models/userModel");
+const express = require("express")
+const { check, validationResult } = require("express-validator")
+const userModel = require("../models/userModel")
 const adminModel=require("../models/AdminModel")
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 const { REFRESH_TOKEN_SECRET,JWT_KEY } = require("../config/env")
-// JWT_KEY='00048aae9eb05a3ef4766b098bd93ae6016627985579182e1c58a6a5a1489492'
-// REFRESH_TOKEN_SECRET="bf0679d8ee03adb725803fc84a7d8f1e94ec854c51f4dfc683850878f2f76de5"
+
 const Signup = async (req, res, next) => {
-  const { fullname, email, password, confirmpassword } = req.body;
-  const error = validationResult(req);
+  const { fullname, email, password, confirmpassword } = req.body
+  const error = validationResult(req)
   if (!error.isEmpty()) {
-    res.json({ error: error.array(),error_type:0,created:false});
-    return;
+    res.json({ error: error.array(),error_type:0,created:false})
+    return
   }
-  const findoneUser = await userModel.findOne({ email: email });
+  const findoneUser = await userModel.findOne({ email: email })
   if (findoneUser) {
     res.json({ message: "Account already exist" ,error_type:1,created:false})
-    return;
+    return
   }
   if (password !== confirmpassword) {
-    res.json({ message: "password do not match" ,error_type:1,created:false});
-    return;
+    res.json({ message: "password do not match" ,error_type:1,created:false})
+    return
   }
 
   try {
-    const salt = await bcrypt.genSalt(10);
-    hashedpassword = await bcrypt.hash(password, salt);
+    const salt = await bcrypt.genSalt(10)
+    hashedpassword = await bcrypt.hash(password, salt)
     const user = new userModel({
       fullname,
       email,
       password: hashedpassword,
-    });
+    })
     user.save().then((doc) => {
-      const id = doc._id;
-      const token = jwt.sign({ id }, JWT_KEY, { expiresIn: "10d" });
+      const id = doc._id
+      const token = jwt.sign({ id }, JWT_KEY, { expiresIn: "10d" })
       res
         .cookie("jwtToken", token)
         .status(201)
-        .send({ id, created: true, token ,message:"sucessfilly registered" });
-    });
+        .send({ id, created: true, token ,message:"sucessfilly registered" })
+    })
 
   } catch (error) {
-    console.error("Error during user registration:", error);
+    console.error("Error during user registration:", error)
     res
       .status(500)
-      .json({ error: "An error occurred during user registration" });
+      .json({ error: "An error occurred during user registration" })
   }
 }
 
 // console.log(REFRESH_TOKEN_SECRET,JWT_KEY )
 if (!JWT_KEY || !REFRESH_TOKEN_SECRET) {
-  console.error("JWT_KEY or REFRESH_TOKEN_SECRET is not set in the environment variables.");
-  process.exit(1);
+  console.error("JWT_KEY or REFRESH_TOKEN_SECRET is not set in the environment variables.")
+  process.exit(1)
 }
 
 function generateTokens(id, isAdmin) {
   try {
-    const accessToken = jwt.sign({ id, isAdmin }, JWT_KEY, { algorithm: 'HS256', expiresIn: '15m' });
-    const refreshToken = jwt.sign({ id, isAdmin }, REFRESH_TOKEN_SECRET, { algorithm: 'HS256', expiresIn: '7d' });
+    const accessToken = jwt.sign({ id, isAdmin }, JWT_KEY, { algorithm: 'HS256', expiresIn: '15m' })
+    const refreshToken = jwt.sign({ id, isAdmin }, REFRESH_TOKEN_SECRET, { algorithm: 'HS256', expiresIn: '7d' })
 
-    console.log("AccessToken:", accessToken);
-    console.log("RefreshToken:", refreshToken);
+   
 
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken }
   } catch (error) {
-    console.error("Error generating tokens:", error);
-    throw error;
+    console.error("Error generating tokens:", error)
+    throw error
   }
 }
 
 
 const Login = async (req, res, next) => {
-    console.log("login");
-    console.log(req.body);
-    const { email, password } = req.body;
-    const errors = validationResult(req);
+
+    const { email, password } = req.body
+    const errors = validationResult(req)
     try {
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array(), error_type: 0, created: false, isLoggedIn: false });
+        return res.status(400).json({ errors: errors.array(), error_type: 0, created: false, isLoggedIn: false })
       }
   
-      const user = await userModel.findOne({ email: email });
-      const admin = await adminModel.findOne({ email: email });
+      const user = await userModel.findOne({ email: email })
+      const admin = await adminModel.findOne({ email: email })
   
       if (!user && !admin) {
-        return res.status(400).json({ message: "Invalid account", error_type: 1, created: false, isLoggedIn: false });
+        return res.status(400).json({ message: "Invalid account", error_type: 1, created: false, isLoggedIn: false })
       }
 
-      let isValid = false;
-      let isAdmin = false;
-      let id;
+      let isValid = false
+      let isAdmin = false
+      let id
   
       if (user) {
-        isValid = await bcrypt.compare(password, user.password);
-        id = user._id;
+        isValid = await bcrypt.compare(password, user.password)
+        id = user._id
       } 
       if (admin) {
-        isValid = await bcrypt.compare(password, admin.password);
-        isAdmin = true;
-        id = admin._id;
+        isValid = await bcrypt.compare(password, admin.password)
+        isAdmin = true
+        id = admin._id
       }
   
       if (isValid) {
-        const { accessToken, refreshToken } = generateTokens(id, isAdmin);
-        return res.status(200).json({ message: "Logged in", accessToken, refreshToken, created: true, isLoggedIn: true, isAdmin });
+        const { accessToken, refreshToken } = generateTokens(id, isAdmin)
+        return res.status(200).json({ message: "Logged in", accessToken, refreshToken, created: true, isLoggedIn: true, isAdmin })
       } else {
-        return res.status(400).json({ message: "Invalid password", created: false, isLoggedIn: false });
+        return res.status(400).json({ message: "Invalid password", created: false, isLoggedIn: false })
       }
     } catch (error) {
-      console.log(error);
-      return res.status(500).json({ message: "Internal server error", isLoggedIn: false });
+      console.error(error)
+      return res.status(500).json({ message: "Internal server error", isLoggedIn: false })
     }
-  };
+  }
   
 
 const verifyAccount = async (req, res, next) => {
-  res.status(200).json({ message: "verifyacct" });
-};
+  res.status(200).json({ message: "verifyacct" })
+}
 
 
 
 const deleteAllUser=async(req,res)=>{
     try {
         await userModel.deleteMany({})
-        res.status(200).json({ message: 'All users deleted successfully.' });
+        res.status(200).json({ message: 'All users deleted successfully.' })
     } catch (error) {
-        console.error('Error deleting documents:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error deleting documents:', error)
+        res.status(500).json({ error: 'Internal Server Error' })
     }
 }
 
@@ -349,47 +346,46 @@ const deleteAllUser=async(req,res)=>{
 
 
  const refreshToken=async (req, res) => {
-  const { refreshToken } = req.body;
+  const { refreshToken } = req.body
 
   if (!refreshToken) {
-    return res.status(401).json({ message: "Unauthorized: No refresh token provided" });
+    return res.status(401).json({ message: "Unauthorized: No refresh token provided" })
   }
 
   try {
-    const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
-    const userId = decoded.id;
+    const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET)
+    const userId = decoded.id
 
-    let user = await userModel.findOne({ _id: userId });
+    let user = await userModel.findOne({ _id: userId })
     if (!user) {
-      const admin = await adminModel.findOne({ _id: userId });
+      const admin = await adminModel.findOne({ _id: userId })
       if (!admin) {
-        return res.status(401).json({ message: "Unauthorized: User not found refresh" });
+        return res.status(401).json({ message: "Unauthorized: User not found refresh" })
       }
-      const { accessToken, refreshToken: newRefreshToken } = generateTokens(userId, decoded.isAdmin);
+      const { accessToken, refreshToken: newRefreshToken } = generateTokens(userId, decoded.isAdmin)
       console.log(accessToken)
-      return res.json({ accessToken, refreshToken: newRefreshToken });
+      return res.json({ accessToken, refreshToken: newRefreshToken })
     }
 
-    const { accessToken, refreshToken: newRefreshToken } = generateTokens(userId, decoded.isAdmin);
-    res.json({ accessToken, refreshToken: newRefreshToken });
+    const { accessToken, refreshToken: newRefreshToken } = generateTokens(userId, decoded.isAdmin)
+    res.json({ accessToken, refreshToken: newRefreshToken })
   } catch (error) {
-    console.error("Error in refresh token endpoint:", error);
-    return res.status(401).json({ message: "auth Unauthorized" });
+    console.error("Error in refresh token endpoint:", error)
+    return res.status(401).json({ message: "auth Unauthorized" })
   }
 }
 
 
  const getMe = async (req, res) => {
-  console.log("meee",req.user)
   try {
       if (req.user) {
-          res.json(req.user);
+          res.json(req.user)
       } else {
-          res.status(404).json({ message: 'User not found 0' });
+          res.status(404).json({ message: 'User not found 0' })
       }
   } catch (error) {
-      console.error('Error fetching user details', error);
-      res.status(500).json({ message: 'Internal server error' });
+      console.error('Error fetching user details', error)
+      res.status(500).json({ message: 'Internal server error' })
   }
 }
 
@@ -401,4 +397,4 @@ module.exports = {
   deleteAllUser,
   refreshToken,
   getMe
-};
+}

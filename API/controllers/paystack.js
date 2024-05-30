@@ -7,9 +7,7 @@ const generateUniqueReference = () => {
 };
 
   const createPayment=async(req, res) =>{ 
-    console.log("lkjhgfd")
     const {amount,email, firstName, lastName }=req.body
-    console.log(req.body)
     const reference = generateUniqueReference();
     try {
         const response = await axios.post('https://api.paystack.co/transaction/initialize', {
@@ -38,7 +36,6 @@ const generateUniqueReference = () => {
 
 
 const verifyPayment = async (req, res) => {
-  console.log(req.params)
   try {
     const { reference } = req.params; 
 
