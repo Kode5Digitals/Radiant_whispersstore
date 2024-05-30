@@ -24,6 +24,6 @@ router.get("/category/:categoryName",category);
 router.get("/api/cart",getCart)
 router.post("/api/cart",retrivCart)
 router.get('/new-arrivals',newArrivals)
-router.get("/edit/:id", authorizeRoles("admin") ,GetEditProduct);
-router.post("/edit/:id", authorizeRoles("admin"),editProduct);
+router.get("/edit/:id",auth, authorizeRoles("admin") ,GetEditProduct);
+router.post("/edit/:id",auth, authorizeRoles("admin"),editProduct);
 module.exports =router
