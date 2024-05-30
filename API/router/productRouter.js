@@ -18,12 +18,12 @@ router.get("/allProducts",AllProduct);
 router.post("/addProduct",auth,authorizeRoles("admin"), AddProduct);
 //router.post("/addProduct",auth, authorizeRoles("Admin"), AddProduct);
 router.get("/getProduct/:id",GetProduct);
-router.delete("/DeleteAll",auth,authorizeRoles("Admin"),DeleteAllProduct);
+router.delete("/DeleteAll",auth,authorizeRoles("admin"),DeleteAllProduct);
 router.get("/",searchProduct);
 router.get("/category/:categoryName",category);
 router.get("/api/cart",getCart)
 router.post("/api/cart",retrivCart)
 router.get('/new-arrivals',newArrivals)
-router.get("/edit/:id", authorizeRoles("Admin") ,GetEditProduct);
-router.post("/edit/:id", authorizeRoles("Admin"),editProduct);
+router.get("/edit/:id", authorizeRoles("admin") ,GetEditProduct);
+router.post("/edit/:id", authorizeRoles("admin"),editProduct);
 module.exports =router
