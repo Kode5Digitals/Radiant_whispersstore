@@ -197,8 +197,7 @@ const id = req.params.id;
     return res.status(404).json({ error: 'User not found',error_type:1 });
   }
     if (password !== confirmpassword) {
-      return res.json({ message: "password do not match" ,error_type:1,created:false})
-    
+      return res.status(404).json({ message: "password do not match" ,error_type:1,created:false})
     }
  try{
 
@@ -216,7 +215,8 @@ const id = req.params.id;
     }
     await userModel.findByIdAndUpdate(id, updatedFields);
     return res.status(200).json({ message: 'Information updated successfully',created:true });
- }catch(error){
+ }
+ catch(error){
 console.error(error)
 return res.status(500).json({ message: 'Information not updated',error_type:1, created:false });
  }
