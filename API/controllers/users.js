@@ -397,7 +397,7 @@ const deleteAllUser=async(req,res)=>{
 }
 
  const editUser=async(req, res) => {
-  const {fullname,password,confirmpassword,phonenumber} = req.body;
+  const { fullname = '', password = '', confirmpassword = '', phonenumber = '' } = req.body;
 const id = req.params.id;
   const error = validationResult(req)
   if (!error.isEmpty()) {
@@ -426,12 +426,11 @@ const id = req.params.id;
       updatedFields.phonenumber = phonenumber;
     }
     await userModel.findByIdAndUpdate(id, updateUser);
-    return res.status(200).json({ message: 'information updated successfully',created:true });
+    return res.status(200).json({ message: 'Information updated successfully',created:true });
  }catch(error){
 console.error(error)
-return res.status(500).json({ message: 'information not updated',error_type:1, created:false });
+return res.status(500).json({ message: 'Information not updated',error_type:1, created:false });
  }
-
 }
 
 module.exports = {
