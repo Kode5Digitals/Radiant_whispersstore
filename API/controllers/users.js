@@ -379,7 +379,14 @@ const deleteAllUser=async(req,res)=>{
  const getMe = async (req, res) => {
   try {
       if (req.user) {
-          res.json(req.user)
+        const data={
+          _id:req.user._id,
+          fullname:req.user.fullname,
+          email:req.user.email,
+          isAdmin:req.user.isAdmin
+
+        }
+          res.json({data})
       } else {
           res.status(404).json({ message: 'User not found 0' })
       }
