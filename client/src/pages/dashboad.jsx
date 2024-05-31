@@ -1,16 +1,42 @@
-import Defaultlayout from "../layout/Defaultlayout"
 
-const Dashboad = () => {
+
+const Dashboard = () => {
   return (
-  <Defaultlayout>
 
-   <div className="h-screen">
-   <div className="w-full p-4 xl:mt-16 mt-36 md:mt-[60px] lg:mt-16  bg-slate-600  text-center text-white text-lg">
+   <div className="">
+   <div className="w-full p-4 bg-slate-600 h-full   text-center text-white text-lg">
         Dashboard 
     </div>
+
+
+    <div className=" bg-white shadow-xl mx-auto p-3  h-full">
+
+<table style={{ borderCollapse: 'collapse'  }} className="w-full text-[12px]">
+        <thead>
+          <tr>
+            <th className="border" >ProductName</th>
+            <th className="border">Price</th>
+            <th className="border">Quantity</th>
+            <th className="border">Date</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {/* {/* {products.map((product) => ( */}
+            <tr>
+              <td >{}</td>
+              <td >{}</td>
+              <td >{}</td>
+            </tr>
+          {/* ))} */} 
+        </tbody>
+      </table>
+
+
+
+    </div>
    </div>
-  </Defaultlayout>
   )
 }
 
-export default Dashboad
+export default Dashboard

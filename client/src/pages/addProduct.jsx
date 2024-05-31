@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import {  useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { MdInsertPhoto } from "react-icons/md";
 import "react-toastify/dist/ReactToastify.css";
 import AdminDefaultlayout from "../layout/AdminLayout";
 import { BiLoaderCircle } from "react-icons/bi";
 import http from "../utils/adminHttp";
+
 
 const AddProduct = () => {
   const nameRef = useRef("");
@@ -14,9 +15,9 @@ const AddProduct = () => {
   const categoryRef = useRef('');
   const [imagesrc, setimagesrc] = useState([]);
   const [loading,setLoading]=useState(false)
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       setLoading(true)
         const formData = new FormData();

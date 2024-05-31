@@ -1,34 +1,40 @@
-import { Link } from "@mui/material";
-import { CiLogin } from "react-icons/ci";
-import { FaRegRegistered } from "react-icons/fa6";
-import { LiaTimesSolid } from "react-icons/lia";
-import { MdAccountCircle, MdContactPage } from "react-icons/md";
-import { RiAdminFill, RiProfileLine } from "react-icons/ri";
-import Cartcontext from "../cartcontext";
-import { useContext } from "react";
-import { AiOutlineLogout } from "react-icons/ai";
+import { CiLogin } from "react-icons/ci"
+import { FaRegRegistered } from "react-icons/fa6"
+import { LiaTimesSolid } from "react-icons/lia"
+import { MdAccountCircle, MdContactPage } from "react-icons/md"
+import { RiAdminFill, RiProfileLine } from "react-icons/ri"
+import Cartcontext from "../cartcontext"
+import { useContext } from "react"
+import { AiOutlineLogout } from "react-icons/ai"
+import { Link } from "react-router-dom"
 
 const SideMenu = () => {
   const { isOpen, Back, handleLogin, handleRegister, login ,isadmin,setisadmin,setLogin} =
-    useContext(Cartcontext);
+    useContext(Cartcontext)
 
   const HandleLogin = () => {
-    handleLogin();
-    Back();
-  };
+    handleLogin()
+    Back()
+  }
   const HandleRegister = () => {
-    handleRegister();
-    Back();
-  };
+    handleRegister()
+    Back()
+  }
   
   const handleSetLogOut=()=>{
-    // setisadmin(false)
     localStorage.removeItem("Login")
     localStorage.removeItem("Admin")
-    setisadmin(false);
+    localStorage.removeItem("token")
+    localStorage.removeItem("refreshToken")
+    setisadmin(false)
     setLogin(false)
     location.reload("/")
   }
+
+  const handleNavigation = (path) => {
+    window.location.href = path; // Use window.location.href for full page reload
+  };
+
   return (
     <div className="xl:hidden  lg:hidden md:hidden block sm:block">
       <div
@@ -50,7 +56,6 @@ const SideMenu = () => {
           
         <ul>
             <li className="flex items-center gap-1 mb-4 mt-32">
-              {" "}
               <span>
                 <MdContactPage />
               </span>
@@ -59,7 +64,6 @@ const SideMenu = () => {
               </Link>
             </li>
             <li className="flex items-center gap-1  ">
-              {" "}
               <span>
                 <RiProfileLine />
               </span>
@@ -74,7 +78,6 @@ const SideMenu = () => {
                 onClick={HandleRegister}
                 className="flex items-center gap-1 mb-4 "
               >
-                {" "}
                 <span>
                   <FaRegRegistered />
                 </span>
@@ -85,7 +88,6 @@ const SideMenu = () => {
                 onClick={HandleLogin}
                 className="flex items-center gap-1 mb-4"
               >
-                {" "}
                 <span>
                   <CiLogin />
                 </span>
@@ -98,31 +100,22 @@ const SideMenu = () => {
             <ul className="mt-5 ">
               <li
                 className="flex items-center gap-1 mb-4 "
+                onClick={() => handleNavigation('/myaccount')}
               >
                 <span>
                 <MdAccountCircle/>
                 </span>
-                <Link to={"/myaccount"}>
                 
-                My Account</Link>
+                
+                My Account
                 
               </li>
 
-              <li
-                className="flex items-center gap-1 mb-4"
-              >
-                 <span>
-                 <MdAccountCircle />
-                </span>
-                <Link to={"/dashboard"}>
-               
-               Dashboard</Link>
-              </li>
+             
               <li
                 onClick={handleSetLogOut}
                 className="flex items-center gap-1 mb-4"
               >
-                {" "}
                 <span>
           <AiOutlineLogout />
                   
@@ -148,7 +141,7 @@ const SideMenu = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SideMenu;
+export default SideMenu

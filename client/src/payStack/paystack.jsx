@@ -9,7 +9,6 @@ import { CiFaceSmile } from "react-icons/ci";
 import { ToastContainer, toast } from "react-toastify";
 import { PaystackButton } from 'react-paystack';
 import { useRef, useState } from "react";
-import { IoAtCircle } from "react-icons/io5";
 import { FaSpinner } from "react-icons/fa";
 
 const PaystackComponent = () => {
@@ -42,7 +41,6 @@ const handlePayment = async () => {
     lastName: lastNameRef.current.value,
     reference: newReference
   }
-console.log(formdata)
  try{
   const res = await httpAuth.post("/api/paystack/payment", 
   formdata

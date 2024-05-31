@@ -1,6 +1,6 @@
-import {  toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { createSlice } from '@reduxjs/toolkit';
+import {  toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { createSlice } from '@reduxjs/toolkit'
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -11,11 +11,11 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-        const newItem = action.payload;
-        const existingItemIndex = state.items.findIndex((item) => item._id === newItem._id);
+        const newItem = action.payload
+        const existingItemIndex = state.items.findIndex((item) => item._id === newItem._id)
         if (existingItemIndex === -1) {
-          const updatedItems = [...state.items, { ...newItem, quantity: newItem.quantity }];
-          const updatedTotalQuantity = state.totalQuantity + newItem.quantity;
+          const updatedItems = [...state.items, { ...newItem, quantity: newItem.quantity }]
+          const updatedTotalQuantity = state.totalQuantity + newItem.quantity
           const updatedTotalPrice = state.totalPrice + (Number(newItem.price) * newItem.quantity)
           localStorage.setItem("cartItem",JSON.stringify(state.items))
           localStorage.setItem("totalPrice",JSON.stringify(state.totalPrice))
@@ -26,7 +26,7 @@ const cartSlice = createSlice({
             items: updatedItems,
             totalQuantity: updatedTotalQuantity,
             totalPrice: updatedTotalPrice
-          };
+          }
         }else{
             toast.error("item already added ,view Cart")
         }
@@ -34,44 +34,41 @@ const cartSlice = createSlice({
       },
    
     removeFromCart: (state, action) => {
-        const idToRemove = action.payload;
-        const existingItemIndex = state.items.findIndex((item) => item._id === idToRemove);
+        const idToRemove = action.payload
+        const existingItemIndex = state.items.findIndex((item) => item._id === idToRemove)
         if (existingItemIndex !== -1) {
-          const removedItem = state.items[existingItemIndex];
+          const removedItem = state.items[existingItemIndex]
           const removeditemTotalprice=Number(removedItem.price*removedItem.quantity)
-          console.log(removeditemTotalprice)
-          console.log( removedItem.totalPrice)
           state.totalPrice = (state.totalPrice) - (removeditemTotalprice)
-          state.totalQuantity -= removedItem.quantity;
-          state.items.splice(existingItemIndex, 1);
+          state.totalQuantity -= removedItem.quantity
+          state.items.splice(existingItemIndex, 1)
           localStorage.setItem("cartItem",JSON.stringify(state.items))
           localStorage.setItem("totalPrice",JSON.stringify(state.totalPrice))
           localStorage.setItem("totalQuantity",JSON.stringify(state.totalQuantity))
         }
       },
       increaseQuantity: (state, action) => {
-        const updatedProduct = action.payload;
+        const updatedProduct = action.payload
         const existingItemIndex = state.items.findIndex((item) => item._id === updatedProduct)
-        console.log(existingItemIndex);
         if (existingItemIndex >= 0) {
-          state.items[existingItemIndex].quantity++;
-          state.totalQuantity++;
-          state.totalPrice +=parseFloat( state.items[existingItemIndex].price);
-          localStorage.setItem('cartItem', JSON.stringify(state.items));
-          localStorage.setItem('totalPrice', JSON.stringify(state.totalPrice));
-          localStorage.setItem('totalQuantity', JSON.stringify(state.totalQuantity));
+          state.items[existingItemIndex].quantity++
+          state.totalQuantity++
+          state.totalPrice +=parseFloat( state.items[existingItemIndex].price)
+          localStorage.setItem('cartItem', JSON.stringify(state.items))
+          localStorage.setItem('totalPrice', JSON.stringify(state.totalPrice))
+          localStorage.setItem('totalQuantity', JSON.stringify(state.totalQuantity))
         }
       },
     
    
     decreaseQuantity: (state, action) => {
-      const idToDecrease = action.payload;
-      const existingItem = state.items.find((item) => item._id === idToDecrease);
+      const idToDecrease = action.payload
+      const existingItem = state.items.find((item) => item._id === idToDecrease)
       if (existingItem && existingItem.quantity > 1) {
-        existingItem.quantity--;
-        existingItem.totalPrice -=parseFloat(existingItem.price);
-        state.totalQuantity--;
-        state.totalPrice -= existingItem.price;
+        existingItem.quantity--
+        existingItem.totalPrice -=parseFloat(existingItem.price)
+        state.totalQuantity--
+        state.totalPrice -= existingItem.price
         localStorage.setItem("cartItem",JSON.stringify(state.items))
         localStorage.setItem("totalPrice",JSON.stringify(state.totalPrice))
         localStorage.setItem("totalQuantity",JSON.stringify(state.totalQuantity))
@@ -80,7 +77,7 @@ const cartSlice = createSlice({
       }
     },
     removeAllFromCart: (state) => {
-        state.items = [];
+        state.items = []
         state.totalQuantity = 0
         state.totalPrice = 0
         localStorage.removeItem("cartItem")
@@ -88,10 +85,10 @@ const cartSlice = createSlice({
       }
       
   },
-});
+})
 
-export const { addToCart, removeFromCart, increaseQuantity, decreaseQuantity, removeAllFromCart } = cartSlice.actions;
-export default cartSlice.reducer;
+export const { addToCart, removeFromCart, increaseQuantity, decreaseQuantity, removeAllFromCart } = cartSlice.actions
+export default cartSlice.reducer
 
-export const selectCart = (state) => state.cart;
-export const selectCartLength = (state) => state.cart.items.length;
+export const selectCart = (state) => state.cart
+export const selectCartLength = (state) => state.cart.items.length

@@ -2,11 +2,11 @@ import {
   faArrowAltCircleLeft,
   faCartPlus,
   faTrash,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import Footer from "../components/footer";
-import { useSelector, useDispatch } from "react-redux";
+} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Link } from "react-router-dom"
+import Footer from "../components/footer"
+import { useSelector, useDispatch } from "react-redux"
 import {
   removeFromCart,
   increaseQuantity,
@@ -14,39 +14,39 @@ import {
   selectCartLength,
   selectCart,
   removeAllFromCart,
-} from "../stores/features/cart/cartSlice";
-import { TbCurrencyNaira } from "react-icons/tb";
-import { formatPrice } from "../utils/utils";
+} from "../stores/features/cart/cartSlice"
+import { TbCurrencyNaira } from "react-icons/tb"
+import { formatPrice } from "../utils/utils"
 
 const Cart = () => {
-  const { items, totalQuantity, totalPrice } = useSelector(selectCart);
-  const cartLength = useSelector(selectCartLength);
-  const dispatch = useDispatch();
+  const { items, totalQuantity, totalPrice } = useSelector(selectCart)
+  const cartLength = useSelector(selectCartLength)
+  const dispatch = useDispatch()
 console.log(items)
   const handleRemoveFromCart = (item) => {
-    dispatch(removeFromCart(item));
-  };
+    dispatch(removeFromCart(item))
+  }
 
   const handleIncreaseQuantity = (item) => {
-    dispatch(increaseQuantity(item));
-  };
+    dispatch(increaseQuantity(item))
+  }
 
   const handleDecreaseQuantity = (item) => {
-    dispatch(decreaseQuantity(item));
-  };
+    dispatch(decreaseQuantity(item))
+  }
 
   const handleremoveAllFromCart = () => {
-    dispatch(removeAllFromCart());
-  };
+    dispatch(removeAllFromCart())
+  }
 
   return (
     <main>
       <div className=" flex items-end justify-between   xl:justify-between mt-5 p-3">
-        <Link to="/home" className="text-lg text-pink-400 xl:ml-10">
+        <Link to="/home" className="text-lg text-[#571283] xl:ml-10">
           <FontAwesomeIcon icon={faArrowAltCircleLeft} size="2x" />
         </Link>
 
-        <div className="cursor-pointer flex  relative text-center xl:items-center text-lg xl:mr-6  text-pink-400">
+        <div className="cursor-pointer flex  relative text-center xl:items-center text-lg xl:mr-6  text-[#571283]">
          <span className="xl:block hidden lg:block md:block"> My Shopping Cart</span> 
          <span className="xl:hidden block lg:hidden md:hidden">
           Cart
@@ -54,7 +54,7 @@ console.log(items)
          <FontAwesomeIcon icon={faCartPlus}  />
           <div
             style={{ fontSize: "10px" }}
-            className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center md:left-40 lg:left-[160px] lg:-top-2 xl:left-40 xl:-top-1 left-12 -top-2"
+            className="w-4 text-sm bg-[#571283] text-white border-2 h-4 rounded-full border-[#571283] absolute flex justify-center items-center md:left-40 lg:left-[160px] lg:-top-2 xl:left-40 xl:-top-1 left-12 -top-2"
           >
             <h6>{cartLength}</h6>
           </div>
@@ -176,7 +176,7 @@ console.log(items)
 
       <Footer logoSrc="./Logo4.png" />
     </main>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart

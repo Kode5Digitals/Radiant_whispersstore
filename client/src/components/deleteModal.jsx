@@ -1,54 +1,69 @@
-// import PropTypes from "prop-types";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import PropTypes from "prop-types";
+import {useEffect, useRef, useState } from "react";
+import { MdCancel } from 'react-icons/md';
+import { IoReload } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
-// import { useCallback, useEffect, useRef } from "react";
-import {useRef } from "react";
-
-const DeleteProduct= ({deleteName} ) => {
+const DeleteProduct=({deleteName,closeDeleteModal} ) => {
   const nameRef = useRef("");
   const deleteRef = useRef(null)
+  const[loading,setloading]=useState(false)
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const navigate=useNavigate()
 
+  useEffect(() => {
+    const handleInputChange = () => {
+      if (nameRef.current) {
+        setIsButtonEnabled(nameRef.current.value === deleteName.name);
+      }
+    };
+
+    if (nameRef.current) {
+      nameRef.current.addEventListener('input', handleInputChange);
+    }
+
+    return () => {
+      if (nameRef.current) {
+        nameRef.current.removeEventListener('input', handleInputChange);
+      }
+    };
+  }, [deleteName.name]);
 
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setloading(true)
+    const id=deleteName?.id
+    const formData = new FormData();
+    formData.append('id',id);
     try {
-      const formData = new FormData();
-      formData.append('name', nameRef.current.value);
-     
-      console.log(formData);
-
+    
       const response = await axios.post(
-        "http://localhost:4000/api/products/addProduct",
-        formData,
-     
-      );
+        `https://radiant-whispersstore.onrender.com/api/product/deleteOne/${id}`,
+      formData ,
+          {
+            headers: { "Content-Type":"application/json" },
+        }
+      )
       if (response.data.created) {
         toast.success(response.data.message);
+        navigate("/adminHome")
       } else {
           toast.error(response.data.message);
         } 
     } catch (error) {
       console.log(error);
+    }finally{
+    setloading(false)
+
     }
   };
 
-//   const handleClickOutside = useCallback((event) => {
-//     if (deleteRef.current && !deleteRef.current.contains(event.target)) {
-//       setOpenEdit(false);
-//     }
-//   },[deleteRef, setOpenEdit])
 
-//   useEffect(() => {
-//     document.addEventListener('click', handleClickOutside);
-//     return () => {
-//       document.removeEventListener('click', handleClickOutside);
-//     };
-//   }, [handleClickOutside]);
 
 
 
@@ -69,20 +84,40 @@ const DeleteProduct= ({deleteName} ) => {
       />
       <form
         onSubmit={handleSubmit}
-        className="forgot-password xl:w-1/4 w-full p-3 lg:w-3/4 2xl:w-1/4 md:w-3/4 sm:w-3/4 rounded-lg shadow-md bg-pink-200 transition duration-500 ease-in-out border-2 border-transparent"
+        className="forgot-password  xl:w-1/4 w-full p-3 lg:w-3/4 2xl:w-1/4 md:w-3/4 sm:w-3/4 rounded-lg shadow-md bg-pink-200 transition duration-500 ease-in-out border-2 border-transparent"
       >
-        <h1>
-            Type delete/{deleteName.name}
+        <div  className='flex justify-end mt-2'>
+        <button onClick={closeDeleteModal}><MdCancel /></button>
+
+        </div>
+        <h1 className='text-[13px]'>
+            Please type the product name to confirm: <span className='text-[14px] font-extrabold'> {deleteName?.name}</span>
         </h1>
-<input ref={nameRef} placeholder="type here"/>
+        <input ref={nameRef} placeholder="type here" className='w-full p-2 mt-2'/>
+        <div className='flex justify-end mt-2'>
+        <button className='border-2 w-20 h-10 px-3 rounded-md flex items-center justify-center gap-3'
+        style={{ backgroundColor: isButtonEnabled ? 'red' : '#ccc'}}
+        disabled={!isButtonEnabled}
+        onClick={handleSubmit}
+        >
+          {loading ?<IoReload className="animate-spin" />:"Delete"}
+        </button>
+
+        </div>
       </form>
    
     </div>
   );
 };
 
+
+
 DeleteProduct.propTypes = {
-  deleteName: PropTypes.object.isRequired,
+  deleteName: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+  closeDeleteModal: PropTypes.func.isRequired,
 };
 export default DeleteProduct;
 

@@ -1,25 +1,24 @@
-import { LiaShoppingBagSolid } from "react-icons/lia";
-import { TfiSearch } from "react-icons/tfi";
-import { CiHeart } from "react-icons/ci";
-import Cartcontext from "../cartcontext";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-// import { AiOutlineLogin } from "react-icons/ai";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { BiSolidRegistered, BiSolidUserPin } from "react-icons/bi";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import httpAuth from "../utils/https";
-import { useSelector } from "react-redux";
-import { selectCartLength } from "../stores/features/cart/cartSlice";
-import HoverInfo from "./hoverInfo";
-import { MdAccountCircle, MdArrowBackIos, MdOutlineCancel } from "react-icons/md";
-import { IoLogoWhatsapp, IoMdLogIn } from "react-icons/io";
-import { IoMail } from "react-icons/io5";
-import { FaFacebook, FaInstagramSquare } from "react-icons/fa";
-import { AiOutlineLogout } from "react-icons/ai";
-import { RiAdminFill } from "react-icons/ri";
+import { LiaShoppingBagSolid } from "react-icons/lia"
+import { TfiSearch } from "react-icons/tfi"
+import { CiHeart } from "react-icons/ci"
+import Cartcontext from "../cartcontext"
+import { useCallback, useContext, useEffect, useRef, useState } from "react"
+import Login from "../pages/Login"
+import Register from "../pages/Register"
+import { RxHamburgerMenu } from "react-icons/rx"
+import { BiSolidRegistered, BiSolidUserPin } from "react-icons/bi"
+import PropTypes from "prop-types"
+import { Link } from "react-router-dom"
+import httpAuth from "../utils/https"
+import { useSelector } from "react-redux"
+import { selectCartLength } from "../stores/features/cart/cartSlice"
+import HoverInfo from "./hoverInfo"
+import { MdAccountCircle, MdArrowBackIos, MdOutlineCancel } from "react-icons/md"
+import { IoLogoWhatsapp, IoMdLogIn } from "react-icons/io"
+import { IoMail } from "react-icons/io5"
+import { FaFacebook, FaInstagramSquare } from "react-icons/fa"
+import { AiOutlineLogout } from "react-icons/ai"
+import { RiAdminFill } from "react-icons/ri"
 
 
 const MainNavbar = ({  logoSrc,toggleSidebar }) => {
@@ -34,54 +33,53 @@ const MainNavbar = ({  logoSrc,toggleSidebar }) => {
     isadmin,
     setisadmin,
     setLogin
-  } = useContext(Cartcontext);
-  const cartLength = useSelector(selectCartLength);
-  const [query, setQuery] = useState("");
-  const [searchedProducts, setSearchedProducts] = useState([]);
-  const [showProducts, setShowProducts] = useState(false);
-  const productRef = useRef(null);
-  const { wishlistItems } = useSelector((state) => state?.whishlist);
+  } = useContext(Cartcontext)
+  const cartLength = useSelector(selectCartLength)
+  const [query, setQuery] = useState("")
+  const [searchedProducts, setSearchedProducts] = useState([])
+  const [showProducts, setShowProducts] = useState(false)
+  const productRef = useRef(null)
+  const { wishlistItems } = useSelector((state) => state?.whishlist)
    const[openNavMenu,setOpenNavMenu]=useState(false)
    const[openContact,setOpenContact]=useState(false)
-   const cartlnght= localStorage.getItem("wishlistLnt")
   //search
   const handleSearch = useCallback(async () => {
     try {
-      const response = await httpAuth.get(`/api/products/?search=${query}`);
-      const data = await response.data;
-      setSearchedProducts(data);
+      const response = await httpAuth.get(`/api/products/?search=${query}`)
+      const data = await response.data
+      setSearchedProducts(data)
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error fetching products:", error)
     }
-  }, [query]);
+  }, [query])
 
   //clear all products
   const clearProducts = useCallback(() => {
-    setSearchedProducts([]);
-  }, []);
+    setSearchedProducts([])
+  }, [])
 
   useEffect(() => {
-    const words = query;
+    const words = query
     if (words.length > 3) {
-      handleSearch();
-      setShowProducts(true);
+      handleSearch()
+      setShowProducts(true)
     } else {
-      clearProducts();
+      clearProducts()
     }
-  }, [query, handleSearch, clearProducts]);
+  }, [query, handleSearch, clearProducts])
 
   const handleChange = (e) => {
-    setQuery(e.target.value);
-  };
+    setQuery(e.target.value)
+  }
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
   const handleClickBack = () => {
-      setShowProducts(false);
+      setShowProducts(false)
       setQuery("")
-  };
+  }
 
   const HandleOpenNavMenu=()=>{
     setOpenNavMenu(!openNavMenu)
@@ -114,26 +112,30 @@ setOpenContact (false)
 
       }
       const handleSetLogOut=()=>{
-        // setisadmin(false)
         localStorage.removeItem("Login")
         localStorage.removeItem("Admin")
-        setisadmin(false);
+         localStorage.removeItem("token")
+        localStorage.removeItem("refreshToken")
+        setisadmin(false)
         setLogin(false)
         location.reload("/")
       }
     
   // useEffect(() => {
-  //   document.addEventListener('click', handleClickOutside);
+  //   document.addEventListener('click', handleClickOutside)
   //   return () => {
-  //     document.removeEventListener('click', handleClickOutside);
-  //   };
-  // }, []);
+  //     document.removeEventListener('click', handleClickOutside)
+  //   }
+  // }, [])
+  const handleNavigation = (path) => {
+    window.location.href = path; // Use window.location.href for full page reload
+  };
 
   return (
     <div className="relative">
      
       <nav
-        className="text-[#fd00cd]  
+        className="text-[#571283]  
       font-bold text-sm   p-3 sm:px-5  flex-wrap xl:flex-nowrap  bg-white border-b shadow-md flex fixed w-full  z-50  items-end top-0 xl:justify-around justify-between"
       >
         <RxHamburgerMenu
@@ -197,7 +199,7 @@ setOpenContact (false)
           </div>
           <div className="">
            <div className=" hidden xl:block md:block lg:block  ">
-           <div className=" border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex  w-[500px] md:w-[400px]  p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
+           <div className=" border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex  w-[500px] md:w-[400px]  p-2 rounded-lg border-[#571283]   gap-3 items-center mt-6 xl:mt-0">
               <TfiSearch />
 
               <input
@@ -213,8 +215,11 @@ setOpenContact (false)
                 ref={productRef}
                 className="absolute  searchcase xl:top-16 bg-white right-[500px]  xl:w-[418px]  xl:max-h-[300px]   h-screen pb-10 border-b-black border-3  top-[140px]   overflow-y-auto p-2"
               >
-                <h4 className="text-center">Radiantwhispersstore</h4>
-                <MdArrowBackIos onClick={handleClickBack} size={30}/>
+               <div className="flex items-center justify-around">
+               <MdArrowBackIos onClick={handleClickBack} size={20}/>
+               <h4 className="text-center">Radiantwhispersstore</h4>
+               <div></div>
+               </div>
                 {searchedProducts.map((product, index) => (
                   <Link to={`/ProductDetails/${product?._id}`} key={index}>
                     <div className=" flex  xl:gap-8 mt-8 text-black hover:bg-[#e8e8e8]">
@@ -225,7 +230,7 @@ setOpenContact (false)
                         <p>{product.name}</p>
                         <p className="text-[10px]">{product.description}</p>
 
-                        <p>${product.price}</p>
+                        <p>#{product.price}</p>
                       </div>
                     </div>{" "}
                   </Link>
@@ -242,7 +247,7 @@ setOpenContact (false)
 
 
         <div className=" xl:hidden md:hidden ">
-            <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex w-[390px] sm:ml-32 p-2 rounded-lg border-[#fd00cd]   gap-3 items-center mt-6 xl:mt-0">
+            <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex w-[390px] sm:ml-32 p-2 rounded-lg border-[#571283]   gap-3 items-center mt-6 xl:mt-0">
               <TfiSearch />
               <input
                 type="text"
@@ -257,7 +262,9 @@ setOpenContact (false)
 
         <div className="xl:flex gap-3  items-center hidden pr-10">
           <div className="relative group ">
-            <button className="border-2 p-2  xl:w-20   text-[12px]    rounded-lg border-pink-400 hover:bg-pink-400 hover:text-white">
+            <button
+             onMouseEnter={()=>setOpenContact(false)}
+             className="border-2 p-2  xl:w-20   text-[12px]    rounded-lg border-[#571283] hover:bg-[#571283] hover:text-white">
               About us
             </button>
             <HoverInfo
@@ -269,12 +276,12 @@ That's why we're dedicated to providing high-quality, natural body creams that m
             />
           </div>
           <div className="relative group">
-            <button onClick={ToggleContact} className="border-2 p-2  xl:w-24 text-[12px]    rounded-lg border-pink-400 bg-pink-400 text-white shadow-lg hover:bg-white hover:text-pink-700">
+            <button onClick={ToggleContact} className="border-2 p-2  xl:w-24 text-[12px]    rounded-lg border-[#571283] bg-[#571283] text-white shadow-lg hover:bg-white hover:text-[#571283]">
               Contact us
             </button>
           </div>
 
-        <div className="flex gap-4 ml-12 border border-pink-300 p-2 rounded-md">
+        <div className="flex gap-4 ml-12 border border-[#571283] p-2 rounded-md">
         <Link to={"/whishlist"}>
             <div className="cursor-pointer relative md:block">
               <CiHeart size={22} />
@@ -328,19 +335,14 @@ That's why we're dedicated to providing high-quality, natural body creams that m
           { login &&
          ( 
           <ul>
-             <li className="mt-3 flex items-center gap-1">
+             <li className="mt-3 flex items-center cursor-pointer gap-1"  onClick={() => handleNavigation('/myaccount')}>
           <MdAccountCircle />
-          <Link to={"/myaccount"} >
+          {/* <Link to={"/myaccount"} > */}
             My Account
-            </Link>
+            {/* </Link> */}
           </li>
-          <li className="mt-3 flex items-center gap-1" >
-          <MdAccountCircle />
-          <Link  to={"/dashboard"}>
-          Dashboard
-            </Link>
-          </li>
-          <li className="mt-3 flex items-center gap-1" onClick={handleSetLogOut}>
+          
+          <li className="mt-3 flex items-center cursor-pointer gap-1" onClick={handleSetLogOut}>
           <AiOutlineLogout />
           <Link >
             Logout
@@ -360,7 +362,7 @@ That's why we're dedicated to providing high-quality, natural body creams that m
           </div>
       </div>}
 
-      {openContact && <div className="w-40 text-[12px]  bg-white border absolute 2xl:top-[68px] xl:top-[70px] right-44 p-3 pb-4 rounded-lg">
+      {openContact && <div className="w-40 text-[12px] text-[#878787]  bg-white border absolute 2xl:top-[68px] xl:top-[70px] right-44 p-3 pb-4 rounded-lg">
        <div className="flex items-center justify-between ">
        <p >Conatct-Us</p>
         <span className="text-black cursor-pointer" onClick={cancelContact}>
@@ -398,13 +400,13 @@ That's why we're dedicated to providing high-quality, natural body creams that m
       {openLogin && <Login setOpenLogin={setOpenLogin} />}
       {openRegister && <Register setOpenRegister={setOpenRegister} />}
     </div>
-  );
-};
+  )
+}
 
 MainNavbar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   setIsOpen: PropTypes.func.isRequired,
   logoSrc: PropTypes.string.isRequired,
 toggleSidebar: PropTypes.func.isRequired,
-};
-export default MainNavbar;
+}
+export default MainNavbar

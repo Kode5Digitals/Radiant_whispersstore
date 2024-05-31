@@ -9,8 +9,10 @@ const Register = () => {
   const emailRef = useRef('');
   const passwordRef = useRef('');
   const confirmPasswordRef = useRef('');
+  const phoneNumberRef = useRef('');
+
 const{setOpenRegister,handleLogin}=useContext(Cartcontext)
-const[loading,setLoading]=useState  (false)
+const[loading,setLoading]=useState(false)
 
   const handleSubmit = async (e) => {
     setLoading(true)
@@ -18,18 +20,20 @@ const[loading,setLoading]=useState  (false)
     const formData = {
       fullname: fullnameRef.current.value,
       email: emailRef.current.value,
+      phonenumber: phoneNumberRef.current.value,
       password: passwordRef.current.value,
       confirmpassword: confirmPasswordRef.current.value,
+      
     };
 console.log(formData)
     try {
       
       const res = await httpAuth.post("/api/user/register",formData,  { withCredentials: true });
       if(res.data.created){
-        console.log(res.data.message)
-        toast.success(res.data.message);
         setOpenRegister(false)
-
+        toast.success(res.data.message);
+handleLogin()
+      
         }
         else{
             if(res.data.created.error_type === 0){
@@ -60,7 +64,7 @@ setOpenRegister(false);
     <div className="fixed inset-0 flex p-3 xl:p-0 items-center justify-center bg-gray-800 bg-opacity-50 z-50 ">
             <ToastContainer
             position="bottom-right"
-            autoClose={5000}
+            autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -73,11 +77,11 @@ setOpenRegister(false);
 
       <form
         onSubmit={handleSubmit}
-        className="forgot-password xl:w-1/3 lg:w-1/2 sm:w-1/2 md:w-1/2  w-3/4  p-3   rounded-lg shadow-md bg-white  transition duration-500 ease-in-out border-2 border-transparent "
+        className="forgot-password xl:w-1/3 lg:w-1/2 sm:w-full md:w-1/2  w-full  p-3 text-[12px]   rounded-lg shadow-md bg-white  transition duration-500 ease-in-out border-2 border-transparent "
       >
         <h2 className="text-center text-2xl mt-3 mb-3">Register</h2>
 
-        <div>
+        <div className="mb-3">
           <label
             htmlFor="fullName"
             className="block text-sm font-medium text-gray-700"
@@ -93,7 +97,7 @@ setOpenRegister(false);
             required
           />
         </div>
-        <div>
+        <div className="mb-3">
           <label
             htmlFor="email"
             className="block text-sm font-medium text-gray-700"
@@ -104,12 +108,30 @@ setOpenRegister(false);
             ref={emailRef}
             type="email"
             id="email"
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-pink-500"
+            className="mt-1 p-2 block w-full border  border-gray-300 rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter email"
             required
           />
         </div>
-        <div>
+
+
+        <div className="mb-3">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
+            PhoneNumber
+          </label>
+          <input
+            ref={phoneNumberRef}
+            type="number"
+            id="phonenumber"
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-pink-500"
+            placeholder="Enter phonenumber"
+            required
+          />
+        </div>
+        <div className="mb-3">
           <label
             htmlFor="password"
             className="block text-sm font-medium text-gray-700"
@@ -125,7 +147,7 @@ setOpenRegister(false);
             required
           />
         </div>
-        <div>
+        <div className="mb-3">
           <label
             htmlFor="confirmPassword"
             className="block text-sm font-medium text-gray-700"

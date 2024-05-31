@@ -9,16 +9,13 @@ import { Typography } from "@mui/material";
 import Navbar from "./nav";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../stores/features/product/productSlice";
-import { addToCart, selectCart } from "../stores/features/cart/cartSlice";
+import { addToCart } from "../stores/features/cart/cartSlice";
 import { toggleWishlistItem } from "../stores/features/whishlist/wishlistSlice";
-import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import { FaHeart} from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { Truncate, formatPrice } from "../utils/utils";
 import cors from "cors";
-import {
-  increaseQuantity,
-  decreaseQuantity,
-} from "../stores/features/cart/cartSlice";
+
 import { LiaShoppingBagSolid } from "react-icons/lia";
 cors();
 function Products() {
@@ -27,8 +24,6 @@ function Products() {
   const products = useSelector((state) => state.products);
   const [visibleProducts, setVisibleProducts] = useState(15);
   const { wishlistItems } = useSelector((state) => state?.whishlist);
-  const { items } = useSelector(selectCart);
-  const cartItemQty = items.map((item) => item.quantity)
   const [quantity, setQuantity] = useState({});
 
   const handleAllProducts = async () => {
@@ -94,7 +89,7 @@ function Products() {
       <div className="xl:w-4/5 lg:w-3/4  2xl:w-3/4 w-full mt-12 mx-auto ">
         {!loading && products.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-screen">
-            <Typography variant="h6" className="text-pink-700 text-xl">
+            <Typography variant="h6" className="text-[#571283] text-xl">
               No products available
             </Typography>
           </div>
@@ -118,7 +113,7 @@ function Products() {
                       <FaHeart
                         size={20}
                         id={prod._id}
-                        className="m-2 absolute top-1 right-2 cursor-pointer text-[#fd00cd]"
+                        className="m-2 absolute top-1 right-2 cursor-pointer text-[#571283n]"
                         onClick={() => handleAddToWishlist(prod)}
                       />
                     )}
@@ -136,7 +131,7 @@ function Products() {
                       </h4>
                     </div>
                     <h4 className="text-[12px]">{prod?.category}</h4>
-                    <button className="text-[12px] border px-2 rounded-md bg-white border-pink-500">
+                    <button className="text-[12px] border px-2 rounded-md bg-white border-[#571283]">
                       <Link to={`/ProductDetails/${prod?._id}`}>
                         More info
                       </Link>
@@ -165,12 +160,11 @@ function Products() {
 
                     <button
                       id={prod._id}
-                      className="border text-sm  w-14 h-7 flex justify-center items-center   rounded-md bg-pink-300 border-pink-600 hover:text-white hover:bg-pink-950"
+                      className="border text-sm  w-14 h-7 flex justify-center items-center text-white  rounded-md bg-[#C683EF]  border-pink-600 hover:text-white hover:bg-pink-950"
                       onClick={() => handleAddToCart(prod)}
                     >
                     
               <LiaShoppingBagSolid size={20} />
-
                     </button>
                   </div>
                 </div>

@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import Cartcontext from "./cartcontext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import http from "./utils/adminHttp";
 const Cartprovider = ({ children }) => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
@@ -12,8 +13,33 @@ const Cartprovider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false); 
    const [ openEdit,   setOpenEdit] = useState(false);
     const [ editObj, setEditobj]=useState({})
-     const[login,setLogin]= useState(localStorage.getItem("Login"));
-     const[isadmin,setisadmin]=useState(localStorage.getItem("Admin"))
+     const[login,setLogin]= useState(null);
+     const[isadmin,setisadmin]=useState(null)
+     const [user, setUser] = useState(null);
+
+
+
+     useEffect(() => {
+       const loadUser = async () => {
+         try {
+           const token =  localStorage.getItem('token');
+           if (token) {
+             const response = await http.get('/user/me');
+             setUser(response.data.data)
+             setisadmin(response.data.data.isAdmin)
+            console.log(response.data.data)
+           }
+         } catch (error) {
+           console.error('Failed to load user', error);
+         }
+       };
+       loadUser();
+     }, [user])
+
+     useEffect(()=>{
+  const isLoggedIn = localStorage.getItem("Login") 
+      setLogin(isLoggedIn)
+     },[])
 
   const Back = () => {
     setIsOpen(false);
@@ -67,8 +93,8 @@ const Cartprovider = ({ children }) => {
      login:login,
      setLogin:setLogin,
     isadmin:isadmin,
-    setisadmin:setisadmin
-
+    setisadmin:setisadmin,
+    user:user,
   };
 
   return (

@@ -29,11 +29,11 @@ try {
     setLogin(res.data.isLoggedIn)
     setisadmin(res.data.isAdmin)
     localStorage.setItem("Login",res.data.isLoggedIn)
-    localStorage.setItem("Admin",res.data.isAdmin)
+    // localStorage.setItem("Admin",res.data.isAdmin)
     localStorage.setItem('token', res.data.accessToken)
     localStorage.setItem('refreshToken', res.data.refreshToken);
-    toast.success(res.data.message);
     setOpenLogin(false)
+    toast.success(res.data.message)
     }
     else{
         if(res.data.created.error_type === 0){
@@ -59,26 +59,15 @@ finally{
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50  p-2 xl:p-0 ">
-               <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-             />
-            <form onSubmit={handleSubmit} className="forgot-password xl:w-1/3 lg:w-1/2 sm:w-1/2 md:w-1/2  w-3/4   2xl:w-1/4  p-3 rounded-lg shadow-md bg-white transition duration-500 ease-in-out border-2 border-transparent hover:border-purple-500">
+             
+            <form onSubmit={handleSubmit} className="forgot-password xl:w-1/3 lg:w-1/2 sm:w-full md:w-1/2  w-full   2xl:w-1/4  p-3 rounded-lg shadow-md bg-white transition duration-500 ease-in-out border-2 border-transparent hover:border-purple-500">
                 <h2 className="text-center mt-4 mb-4 text-2xl">Login</h2>
                 <label htmlFor="email" className="text-[12px]">Email</label>
                 <input
                     ref={emailRef}
                     id="email"
                     type="email"
-                    placeholder="Email email"
+                    placeholder="Enter email"
                     className="border mb-6 text-[12px] rounded-lg w-full shadow appearance-none p-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
                 <label htmlFor="email" className="text-[12px]">Password</label>
@@ -99,6 +88,18 @@ finally{
                 {loading && <FaSpinner  className="animate-spin"/>}
                 </button>
             </form>
+            <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+             />
         </div>
     );
 }

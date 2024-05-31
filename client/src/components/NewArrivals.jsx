@@ -8,7 +8,7 @@ import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {Truncate, formatPrice} from "../utils/utils"
-import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import { FaHeart} from "react-icons/fa";
 import { TfiMore } from "react-icons/tfi";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { BiLoaderCircle } from "react-icons/bi";
@@ -150,13 +150,13 @@ New Arrivals
                
 
 
-                <button className="text-[12px]   border  px-3 rounded-md  bg-white border-pink-500 ">
+                <button className="text-[12px]   border  px-3 rounded-md  bg-white border-[#571283] ">
              <Link  to={`/ProductDetails/${item?._id}`} className="flex items-end gap-2">
              More<TfiMore />
                 </Link></button> 
                 <button
                      id={item._id}
-                  className="border text-sm px-8 py-2 rounded-md  bg-pink-300 border-pink-600 hover:text-white hover:bg-pink-950"
+                  className="border text-sm px-8 py-2 rounded-md  bg-[#571283]  border-[#571283] text-white hover:bg-pink-950"
                   onClick={()=>handleAddToCart(item)}
                 >
                 

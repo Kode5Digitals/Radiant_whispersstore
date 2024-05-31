@@ -6,7 +6,6 @@ const AdminDefaultlayout = ({children}) => {
         <>
         <AdminNav/>
             {children}
-
         </>
     )
 }

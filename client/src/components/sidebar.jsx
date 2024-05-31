@@ -24,10 +24,17 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
    const handleSetLogOut=()=>{
     localStorage.removeItem("Login")
     localStorage.removeItem("Admin")
+    localStorage.removeItem("token")
+    localStorage.removeItem("refreshToken")
     setisadmin(false);
     setLogin(false)
     location.reload("/")
   }
+
+  const handleNavigation = (path) => {
+    window.location.href = path; // Use window.location.href for full page reload
+  };
+
   return (
     <div className="relative h-full xl:hidden sm:hidden lg:block hidden md:block  2xl:hidden">
       <div
@@ -52,7 +59,6 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
           
           <ul>
               <li className="flex items-center gap-1 mb-4 mt-32">
-                {" "}
                 <span>
                   <MdContactPage />
                 </span>
@@ -76,7 +82,6 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
                   onClick={Register}
                   className="flex items-center gap-1 mb-4 "
                 >
-                  {" "}
                   <span>
                     <FaRegRegistered />
                   </span>
@@ -100,26 +105,15 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
               <ul className="mt-5 ">
                 <li
                   className="flex items-center gap-1 mb-4 "
+                  onClick={() => handleNavigation('/myaccount')}
                 >
                   <span>
                   <MdAccountCircle/>
                   </span>
-                  <Link to={"/myaccount"}>
                   My Account
-                  </Link>
                   
                 </li>
   
-                <li
-                  className="flex items-center gap-1 mb-4"
-                >
-                   <span>
-                   <MdAccountCircle/>
-                  </span>
-                  <Link to={"/dashboard"}>
-                 Dashboard
-                 </Link>
-                </li>
                 <li
                   onClick={handleSetLogOut}
                   className="flex items-center gap-1 mb-4"
@@ -133,80 +127,27 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
                 </li>
               </ul>
             )}
-    {login && isadmin==true&&
+    {login && isadmin &&
 
-<ul>
+(<ul>
   <li className="flex items-center gap-1 mb-4">
   <RiAdminFill />
 <Link to={"/adminHome"}>
 Switch to Admin
 </Link>
   </li>
-</ul>
+</ul>)
 }
           </div>
-        {/* <div className="mt-10 text-[#545353]  p-2">
-          <ul className="mt-20 ">
-            <li
-              onClick={Register}
-              className="flex items-center gap-1 mb-4 "
-            >
-              {" "}
-              <span>
-                <FaRegRegistered />
-              </span>
-              Register
-            </li>
-
-            <li onClick={Login} className="flex items-center gap-1 mb-4">
-              {" "}
-              <span>
-                <CiLogin />
-              </span>
-              Login
-            </li>
-
-            <li className="flex items-center gap-1 mb-4">
-              {" "}
-              <span>
-                <MdContactPage />
-              </span>
-              <Link to={"/"}>
-                <span>Contact</span>
-              </Link>
-            </li>
-            <li className="flex items-center gap-1 mb-4 ">
-              {" "}
-              <span>
-                <RiProfileLine />
-              </span>
-              <Link to={"/"}>
-                <span>About</span>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      
-        {/* <div className="p-4">
-          <button onClick={toggleSidebar} className="mb-4">
-            <IoClose size={24} />
-          </button>
-          <h2 className="text-2xl font-bold mb-4">Sidebar</h2>
-          <ul>
-            <li className="mb-2"><a href="#item1">Item 1</a></li>
-            <li className="mb-2"><a href="#item2">Item 2</a></li>
-            <li className="mb-2"><a href="#item3">Item 3</a></li>
-            <li className="mb-2"><a href="#item4">Item 4</a></li>
-          </ul>
-        </div> */}
+     
       </div> 
 
-      {isSideOpen && (
+      {/* {isSideOpen && (
         <div
           onClick={toggleSidebar}
           className="fixed inset-0 bg-black opacity-50 z-30"
         ></div>
-      )}
+      )} */}
     </div>
   );
 

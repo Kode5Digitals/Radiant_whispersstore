@@ -19,7 +19,6 @@ function AdminProducts() {
   const{openEdit,setOpenEdit,setEditobj}=useContext(Cartcontext)
   const [moreLoading, setMoreLoading] = useState(false);
   const products = useSelector((state) => state.products);
-  // const navigate=useNavigate()
   const [visibleProducts, setVisibleProducts] = useState(10);
   const [openDelete,setOpenDelete]=useState(false)
   const[ deleteName, setDeleteName]=useState({name:"",id:""}) 
@@ -30,6 +29,7 @@ function AdminProducts() {
       setLoading(true);
       const response = await httpAuth.get(`/api/products/allProducts`);
       const data = await response.data.products;
+      
       return data;
     } catch (error) {
       console.log(error);
@@ -57,7 +57,6 @@ function AdminProducts() {
         const response = await httpAuth.get(`/api/products/edit/${id}`);
         console.log(response)
         const data = await response.data.product;
-        console.log(data)
         setEditobj(data) 
    } catch (error) {
         console.log(error);
@@ -68,17 +67,19 @@ function AdminProducts() {
 
 const openDeleteModal=(name,id)=>{
     setOpenDelete(true)
-    console.log(id)
-   setDeleteName({name:name,id:id})
+   setDeleteName({name,id})
 }
 
 
-
+const closeDeleteModal = () => {
+  setOpenDelete(false);
+  setDeleteName({ name: '', id: '' });
+};
 
   return (
     <AdminDefaultlayout>
     {openEdit &&  <EditProduct setOpenEdit={setOpenEdit} />}
-     {openDelete  &&<DeleteProduct deleteName={deleteName} />}
+     {openDelete  &&<DeleteProduct deleteName={deleteName} closeDeleteModal={closeDeleteModal} />}
     <main className="mb-10 xl:mt-40 lg:mt-44 md:mt-32 sm:mt-84 mt-40">
       {loading && <LoadingSpinner />}
       <div className="xl:w-4/5 w-full   mx-auto  lg:p-4 md:p-5">
@@ -99,14 +100,14 @@ const openDeleteModal=(name,id)=>{
               </div>
               <div className="flex justify-between  ">
                 <div className="justify-center flex ">
-                  <button onClick={()=>openDeleteModal(prod.name,prod._id)} className="text-[12px]  border  px-6 rounded-md text-white p-2 bg-pink-700 ">
+                  <button onClick={()=>openDeleteModal(prod?.name,prod?._id)} className="text-[12px]  border  px-6 rounded-md text-white p-2 bg-pink-700 ">
                    Delete
                   </button>
                 </div>
                 <button
                   id={prod._id}
                   className="border text-sm px-6 rounded-md   bg-pink-300 border-pink-600 hover:text-white hover:bg-pink-950"
-                  onClick={() => handleEdit(prod._id)}
+                  onClick={() => handleEdit(prod?._id)}
                 >
                 Edit 
                 </button>
@@ -153,7 +154,8 @@ const openDeleteModal=(name,id)=>{
         pauseOnHover
         theme="light"
       />
-    </main></AdminDefaultlayout>
+    </main>
+    </AdminDefaultlayout>
     
   );
 }

@@ -8,6 +8,7 @@ import {Capitalize, formatAmount} from '../utils/utils';
 import HoverDescription from '../components/HoverDescription';
 import { useState } from 'react';
 import { TbCurrencyNaira } from 'react-icons/tb';
+import { FaShoppingCart } from 'react-icons/fa';
 function Wishlist() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +47,7 @@ const handleAddToCart = (product) => {
 <div className='flex flex-wrap justify-center gap-10 xl:w-3/4 w-full md:px-12 sm:p-4 m-auto mb-9 pt-2'>
 
 {wishlistItems?.map((item) => (
-  <div key={item._id} className='  mt-20 xl:w-60  max-w-60 p-3 h-84   hover:border-pink-600  border-2 rounded-lg relative group bg-whit shadow-lg '>
+  <div key={item._id} className='  mt-20 xl:w-60  max-w-60 p-3 h-84   hover:border-white  border-2 rounded-lg relative group bg-whit shadow-lg '>
     <span className='text-sm'>{(Capitalize(item.name))}</span>
     <div className='xl:min-w-32  h-42  mb-2 '>
     <img src={item.image} alt="" className='w-full h-full' />
@@ -58,8 +59,11 @@ const handleAddToCart = (product) => {
 
                   </div>
    <div className='flex justify-between'>
-   <button   id={item._id} className='p-1 rounded-sm text-[13px] text-black    bg-pink-300' onClick={()=>handleAddToCart(item)}>Add to cart</button>
-    <button id={item._id}  className='p-1 text-[13px]  rounded-sm w-19  bg-red-400' onClick={() => handleRemoveFromWishlist(item._id)}>Remove from whishlist</button>
+   <button   id={item._id} className='p-3 rounded-sm text-[13px] text-black    bg-pink-300' onClick={()=>handleAddToCart(item)}>
+   <FaShoppingCart size={16}/>
+
+   </button>
+    <button id={item._id}  className='p-1 text-[13px]  rounded-sm w-19 text-white bg-red-400' onClick={() => handleRemoveFromWishlist(item._id)}>Remove from whishlist</button>
   <HoverDescription description={item.description}/>
    </div>
   </div>

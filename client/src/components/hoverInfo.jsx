@@ -1,32 +1,30 @@
 
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const HoverInfo = ({  name, right = "0px", info}) => {
+
     
     
   return (
     <div
       style={{ right: right }}
-      className="absolute  bg-white  z-200 p-3 text-[10px] text-navyblue w-48 2xl:top-12 xl:top-14 shadow-lg rounded-lg hidden group-hover:block hover:block "
+      className="absolute  bg-white  z-200 p-3 text-[10px] text-[#878787] w-48 2xl:top-12 xl:top-14 shadow-lg rounded-lg hidden group-hover:block hover:block "
     >
 <h3> {name}</h3>
       <p className='text-[10px]'>{info}</p>
     
     </div>
-  );
-};
+  )
+}
 
 HoverInfo.propTypes = {
   name: PropTypes.string.isRequired,
   right: PropTypes.string,
   info: PropTypes.string.isRequired,
-};
+}
 
 
-export default HoverInfo;
-
-
-
+export default HoverInfo
 
 
 
@@ -39,9 +37,12 @@ export default HoverInfo;
 
 
 
-// import PropTypes from 'prop-types';
+
+
+
+// import PropTypes from 'prop-types'
 // import '../App.css'
-// import SocialLinks from './socialLinks';
+// import SocialLinks from './socialLinks'
 
 // const HoverInfo = (props) => {
 //     return (
@@ -50,7 +51,7 @@ export default HoverInfo;
 //          <p>{props.info}</p>
 //          <SocialLinks/>
 //         </div>
-//     );
+//     )
 // }
 
 // HoverInfo.propTypes = {
@@ -60,4 +61,4 @@ export default HoverInfo;
  
 // }
 
-// export default HoverInfo;
+// export default HoverInfo

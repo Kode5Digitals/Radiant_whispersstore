@@ -10,6 +10,7 @@ import {  addToCart } from "../stores/features/cart/cartSlice";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { formatPrice } from "../utils/utils";
 import { FaShoppingCart } from "react-icons/fa";
+import { ToastContainer } from "react-toastify";
 
 const ProductDetails = () => {
 const [productDetail,setProductDetail] =useState()
@@ -45,10 +46,10 @@ const handleAddToWishlist=(Id)=>{
     <img src={productDetail?.image} className="w-full h-full" alt="" /></div>
 
 <div className="p-2  ">
-<div className="xl:p-3 bg-pink-200 text-black xl:w-full p-1  ">
+<div className="xl:p-3 bg-[#EEDCF9] text-black xl:w-full p-1  ">
 <h2 className="xl:text-3xl">{productDetail?.name}</h2>
 </div>
-<h3 className="xl:text-sm text-[12px] ">{productDetail?.description}</h3>
+<h3 className="xl:text-sm text-[12px] mt-3">{productDetail?.description}</h3>
 
 
 <div className="flex items-center mt-3">
@@ -84,7 +85,18 @@ Add to whishlist
 
 
     </div>
-
+    <ToastContainer
+            position="bottom-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+             />
 
     </Defaultlayout>
   )
