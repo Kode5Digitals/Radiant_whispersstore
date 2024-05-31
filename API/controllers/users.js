@@ -400,18 +400,19 @@ const deleteAllUser=async(req,res)=>{
   const { fullname = '', password = '', confirmpassword = '', phonenumber = '' } = req.body;
 const id = req.params.id;
   const error = validationResult(req)
+ try{
+
   if (!error.isEmpty()) {
     res.json({ error: error.array(),error_type:0,created:false})
     return
   }
- try{
   const user =await userModel.findOne({_id:id});
   if (!user) {
     return res.status(404).json({ error: 'User not found',error_type:1 });
   }
     if (password !== confirmpassword) {
-      res.json({ message: "password do not match" ,error_type:1,created:false})
-      return
+      return res.json({ message: "password do not match" ,error_type:1,created:false})
+    
     }
     const updatedFields = {};
     if (fullname.trim() !== '') {
