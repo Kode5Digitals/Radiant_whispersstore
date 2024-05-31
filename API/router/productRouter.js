@@ -23,6 +23,6 @@ router.get("/category/:categoryName",category);
 router.get("/api/cart",getCart)
 router.post("/api/cart",retrivCart)
 router.get('/new-arrivals',newArrivals)
-router.get("/edit/:id",auth,GetEditProduct);
-router.post("/edit/:id",auth,editProduct);
+router.get("/edit/:id",GetEditProduct);
+router.post("/edit/:id",editProduct);
 module.exports =router
