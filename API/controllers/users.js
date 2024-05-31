@@ -220,7 +220,7 @@ const jwt = require("jsonwebtoken")
 const { REFRESH_TOKEN_SECRET,JWT_KEY } = require("../config/env")
 
 const Signup = async (req, res, next) => {
-  const { fullname, email, password, confirmpassword } = req.body
+  const { fullname, email,phonenumber, password, confirmpassword } = req.body
   const error = validationResult(req)
   if (!error.isEmpty()) {
     res.json({ error: error.array(),error_type:0,created:false})
@@ -238,17 +238,18 @@ const Signup = async (req, res, next) => {
 
   try {
     const salt = await bcrypt.genSalt(10)
-    hashedpassword = await bcrypt.hash(password, salt)
+    const hashedpassword = await bcrypt.hash(password, salt)
     const user = new userModel({
       fullname,
       email,
+      phonenumber,
       password: hashedpassword,
     })
     user.save().then((doc) => {
       const id = doc._id
       const token = jwt.sign({ id }, JWT_KEY, { expiresIn: "10d" })
       res
-        .cookie("jwtToken", token)
+        // .cookie("jwtToken", token)
         .status(201)
         .send({ id, created: true, token ,message:"sucessfilly registered" })
     })
@@ -375,7 +376,6 @@ const deleteAllUser=async(req,res)=>{
   }
 }
 
-
  const getMe = async (req, res) => {
   try {
       if (req.user) {
@@ -383,7 +383,7 @@ const deleteAllUser=async(req,res)=>{
           _id:req.user._id,
           fullname:req.user.fullname,
           email:req.user.email,
-          isAdmin:req.user.isAdmin
+          isAdmin:req.user.isAdmin,
 
         }
           res.json({data})
@@ -396,6 +396,35 @@ const deleteAllUser=async(req,res)=>{
   }
 }
 
+ const editUser=async(req, res) => {
+  const {fullname,password,phonenumber} = req.body;
+const id = req.params.id;
+  const user =await userModel.findOne({_id:id});
+ try{
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  
+ else{
+  if (user) {
+   
+    const salt = await bcrypt.genSalt(10)
+   const hashedpassword = await bcrypt.hash(password, salt)
+    const updateUser= {
+      fullname:fullname,
+      password:hashedpassword,
+      phonenumber:phonenumber,
+    };
+    await userModel.findByIdAndUpdate(id, updateUser);
+    return res.status(200).json({ message: 'User information updated successfully',created:true });
+  }
+ }
+ }catch(error){
+console.error(error)
+return res.status(200).json({ message: 'User information updated successfully', created:false });
+ }
+
+}
 
 module.exports = {
   Signup,
@@ -403,5 +432,6 @@ module.exports = {
   verifyAccount,
   deleteAllUser,
   refreshToken,
-  getMe
+  getMe,
+  editUser
 }

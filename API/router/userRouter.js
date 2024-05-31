@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check} = require("express-validator");
-const { Signup, Login, verifyAccount, deleteAllUser, refreshToken, getMe } = require("../controllers/users");
+const { Signup, Login, verifyAccount, deleteAllUser, refreshToken, getMe, editUser } = require("../controllers/users");
 const { AdminSignup } = require("../controllers/adminUser");
 const auth = require("../middleware/auth");
 
@@ -25,5 +25,6 @@ router.post(
 router.delete("/deleteusers",deleteAllUser)
 router.post("/refresh-token",refreshToken)
 router.post("/user/register",AdminSignup)
+router.put("/user/edit/:id",editUser)
 
 module.exports = router;
