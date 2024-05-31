@@ -16,6 +16,7 @@ const Cartprovider = ({ children }) => {
      const[login,setLogin]= useState(null);
      const[isadmin,setisadmin]=useState(null)
      const [user, setUser] = useState(null);
+     const[ producthistory,setProductHistory]=useState({})
 
 
 
@@ -27,6 +28,7 @@ const Cartprovider = ({ children }) => {
              const response = await http.get('/user/me');
              setUser(response.data.data)
              setisadmin(response.data.data.isAdmin)
+             setProductHistory(JSON.parse(localStorage.getItem("history")))
             console.log(response.data.data)
            }
          } catch (error) {
@@ -34,7 +36,7 @@ const Cartprovider = ({ children }) => {
          }
        };
        loadUser();
-     }, [user])
+     }, [])
 
      useEffect(()=>{
   const isLoggedIn = localStorage.getItem("Login") 
@@ -69,7 +71,6 @@ const Cartprovider = ({ children }) => {
   const Cartcont = {
     product: product,
     setProduct: setProduct,
-    // getnumber,
     // theme: theme,
     // settheme: settheme,
     cart: cart,
@@ -95,6 +96,9 @@ const Cartprovider = ({ children }) => {
     isadmin:isadmin,
     setisadmin:setisadmin,
     user:user,
+producthistory,
+setProductHistory
+
   };
 
   return (

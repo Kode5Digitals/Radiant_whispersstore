@@ -39,7 +39,10 @@ const Cartcontext = createContext({
      setLogin:()=>{},
     isadmin:null,
     setisadmin:()=>{},
-    refreshToken: ()=>{}
+    refreshToken: ()=>{},
+    user:null,
+    producthistory:{},
+    setProductHistor:()=>{},
 
 })
 

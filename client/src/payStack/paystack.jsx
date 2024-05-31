@@ -12,7 +12,7 @@ import { useRef, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 
 const PaystackComponent = () => {
-  const { totalPrice } = useSelector(selectCart)
+  const { totalPrice,setProductHistory} = useSelector(selectCart)
   const emailRef = useRef();
   const firstNameRef = useRef();
   const lastNameRef = useRef();
@@ -22,10 +22,10 @@ const [loading, setLoading] = useState(false);
 const { items } = useSelector(selectCart);
 const cartItemImages = items.map((item) => item.image)
 const cartItemNames= items.map((item) => item.name)
+const cartItems= items.map((item) => item)
 const key="pk_test_07070da6a9afaa698f923376dc24bbbe12df1d94";
 const [reference, setReference] = useState('');
 const [initialized, setInitialized] = useState(false);
-
 
 const generateUniqueReference = () => {
   return `ref_${Math.random().toString(36).substring(2, 15)}`;
@@ -39,7 +39,8 @@ const handlePayment = async () => {
     email: emailRef.current.value,
     firstName: firstNameRef.current.value,
     lastName: lastNameRef.current.value,
-    reference: newReference
+    reference: newReference,
+    products:cartItems
   }
  try{
   const res = await httpAuth.post("/api/paystack/payment", 
@@ -49,7 +50,6 @@ const { data } = res;
 if (data?.data?.reference) {
   setReference(data.data.reference);
   setInitialized(true);
-  console.log("Reference set:", data.data.reference);
 } else {
   throw new Error("No reference returned from the server");
 }
@@ -65,6 +65,8 @@ const handlePaymentSuccess = async (reference) => {
   try {
     const response = await httpAuth.get(`/api/paystack/verifyPayment/${reference}`);
     const  data  = response?.data.data
+    console.log(data.data.metadata)
+    localStorage.setItem("history",JSON.stringify(data.data.metadata))
     if (data.data.status === 'success') {
       emailRef.current.value = '';
       firstNameRef.current.value = '';
