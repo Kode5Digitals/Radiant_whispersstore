@@ -9,6 +9,11 @@ const generateUniqueReference = () => {
   const createPayment=async(req, res) =>{ 
     const {amount,email, firstName, lastName,products}=req.body
     const reference = generateUniqueReference();
+    const currentDate = new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+  })
     try {
         const response = await axios.post('https://api.paystack.co/transaction/initialize', {
             amount: amount * 100,
@@ -18,7 +23,7 @@ const generateUniqueReference = () => {
               firstName,
               lastName,
               products,
-              date:Date.now()
+              date:currentDate
             },
         }, {
             headers: {
@@ -40,7 +45,6 @@ const generateUniqueReference = () => {
 const verifyPayment = async (req, res) => {
   try {
     const { reference } = req.params; 
-
     const response = await axios.get(
       `https://api.paystack.co/transaction/verify/${reference}`,
       {
