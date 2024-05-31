@@ -407,14 +407,18 @@ const id = req.params.id;
   
  else{
   if (user) {
-   
-    const salt = await bcrypt.genSalt(10)
-   const hashedpassword = await bcrypt.hash(password, salt)
-    const updateUser= {
-      fullname:fullname,
-      password:hashedpassword,
-      phonenumber:phonenumber,
-    };
+    const updatedFields = {};
+    if (fullname.trim() !== '') {
+      updatedFields.fullname = fullname;
+    }
+    if (password.trim() !== '') {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      updatedFields.password = hashedPassword;
+    }
+    if (phonenumber.trim() !== '') {
+      updatedFields.phonenumber = phonenumber;
+    }
     await userModel.findByIdAndUpdate(id, updateUser);
     return res.status(200).json({ message: 'User information updated successfully',created:true });
   }
