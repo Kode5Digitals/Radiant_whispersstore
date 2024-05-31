@@ -409,8 +409,6 @@ const id = req.params.id;
   if (!user) {
     return res.status(404).json({ error: 'User not found',error_type:1 });
   }
-  
-
     if (password !== confirmpassword) {
       res.json({ message: "password do not match" ,error_type:1,created:false})
       return
@@ -431,7 +429,7 @@ const id = req.params.id;
     return res.status(200).json({ message: 'information updated successfully',created:true });
  }catch(error){
 console.error(error)
-return res.status(500).json({ message: ' information not updated',error_type:1, created:false });
+return res.status(500).json({ message: 'information not updated',error_type:1, created:false });
  }
 
 }
