@@ -200,7 +200,6 @@ const id = req.params.id;
       return res.status(404).json({ message: "password do not match" ,error_type:1,created:false})
     }
  try{
-
     const updatedFields = {};
     if (fullname.trim() !== '') {
       updatedFields.fullname = fullname;
