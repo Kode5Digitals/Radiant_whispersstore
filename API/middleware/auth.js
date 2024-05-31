@@ -13,7 +13,6 @@ const auth = async(req, res, next)=> {
         }
         
         const token = authHeader.split(' ')[1];
-        console.log("token:",token)
         if (!token) {
             return res.status(401).json({ message: "Unauthorized: Token not provided" });
         }
@@ -29,16 +28,13 @@ const auth = async(req, res, next)=> {
           if (!admin) {
               return res.status(401).json({ message: "Unauthorized: User not found" });
           }
-          // req.user = admin
-          req.user = admin.toObject(); // Convert admin object to plain JavaScript object
-          req.user.isAdmin = true; 
+          req.user = admin.toObject()
+          req.user.isAdmin = true
       } else {
-          // req.user = user
-          req.user = user.toObject(); // Convert user object to plain JavaScript object
+          req.user = user.toObject()
           req.user.isAdmin = false;
       }
 
-        console.log("req:",req)
 
         next();
     } catch (error) {

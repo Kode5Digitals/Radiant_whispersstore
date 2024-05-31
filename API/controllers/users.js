@@ -425,7 +425,7 @@ const id = req.params.id;
     if (phonenumber.trim() !== '') {
       updatedFields.phonenumber = phonenumber;
     }
-    await userModel.findByIdAndUpdate(id, updateUser);
+    await userModel.findByIdAndUpdate(id, updatedFields);
     return res.status(200).json({ message: 'Information updated successfully',created:true });
  }catch(error){
 console.error(error)
