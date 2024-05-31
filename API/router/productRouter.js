@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check} = require("express-validator");
-const { AddProduct, AllProduct, GetProduct, DeleteAllProduct, searchProduct, category, getCart, retrivCart,newArrivals} = require("../controllers/products");
+const { AddProduct, AllProduct, GetProduct, DeleteAllProduct, searchProduct, category, getCart, retrivCart,newArrivals, DeleteProduct} = require("../controllers/products");
 const auth = require("../middleware/auth");
 const { GetEditProduct, editProduct } = require("../controllers/api");
 const authorizeRoles = require("../middleware/roleBased");
@@ -17,7 +17,8 @@ const validationMiddlewares=[
 router.get("/allProducts",AllProduct);
 router.post("/addProduct",auth,authorizeRoles("admin"), AddProduct);
 router.get("/getProduct/:id",GetProduct);
-router.delete("/DeleteAll",auth,DeleteAllProduct);
+router.delete("/DeleteAll",DeleteAllProduct);
+router.delete("/deleteOne",DeleteProduct);
 router.get("/",searchProduct);
 router.get("/category/:categoryName",category);
 router.get("/api/cart",getCart)

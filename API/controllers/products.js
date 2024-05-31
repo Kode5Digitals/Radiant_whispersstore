@@ -59,17 +59,28 @@ const AddProduct=async(req,res)=>{
 
 
 
-const DeleteAllProduct=async(req,res)=>{
-
+const DeleteProduct=async(req,res)=>{
+const id = req.params.id;
     try {
-        await productsModel.deleteMany({});
-        res.status(200).json({ message: 'All documents deleted successfully.' });
+        await productsModel.deleteOne({_id:id});
+        res.status(200).json({ message: 'product deleted successfully.',created:true });
     } catch (error) {
         console.error('Error deleting documents:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Internal Server Error',created:false });
     }
 }
 
+
+
+const DeleteAllProduct=async(req,res)=>{
+      try {
+          await productsModel.deleteMany({});
+          res.status(200).json({ message: 'product deleted successfully.' });
+      } catch (error) {
+          console.error('Error deleting documents:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      }
+  }
 const AllProduct=async(req,res)=>{
     try {
     const products = await productsModel.find({});
@@ -164,6 +175,7 @@ module.exports = {
     category,
     getCart ,
     retrivCart,
-    newArrivals,  
+    newArrivals, 
+    DeleteProduct, 
   };
   
