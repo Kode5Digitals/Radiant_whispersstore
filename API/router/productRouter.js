@@ -18,7 +18,7 @@ router.get("/allProducts",AllProduct);
 router.post("/addProduct",auth,authorizeRoles("admin"), AddProduct);
 router.get("/getProduct/:id",GetProduct);
 router.delete("/DeleteAll",DeleteAllProduct);
-router.delete("/deleteOne",DeleteProduct);
+router.delete("/deleteOne/:id",DeleteProduct);
 router.get("/",searchProduct);
 router.get("/category/:categoryName",category);
 router.get("/api/cart",getCart)
