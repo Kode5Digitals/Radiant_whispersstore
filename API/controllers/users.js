@@ -397,16 +397,25 @@ const deleteAllUser=async(req,res)=>{
 }
 
  const editUser=async(req, res) => {
-  const {fullname,password,phonenumber} = req.body;
+  const {fullname,password,confirmpassword,phonenumber} = req.body;
 const id = req.params.id;
-  const user =await userModel.findOne({_id:id});
+  const error = validationResult(req)
+  if (!error.isEmpty()) {
+    res.json({ error: error.array(),error_type:0,created:false})
+    return
+  }
  try{
+  const user =await userModel.findOne({_id:id});
   if (!user) {
-    return res.status(404).json({ error: 'User not found' });
+    return res.status(404).json({ error: 'User not found',error_type:1 });
   }
   
  else{
   if (user) {
+    if (password !== confirmpassword) {
+      res.json({ message: "password do not match" ,error_type:1,created:false})
+      return
+    }
     const updatedFields = {};
     if (fullname.trim() !== '') {
       updatedFields.fullname = fullname;
@@ -425,7 +434,7 @@ const id = req.params.id;
  }
  }catch(error){
 console.error(error)
-return res.status(200).json({ message: 'User information updated successfully', created:false });
+return res.status(500).json({ message: 'User information not updated',error_type:1, created:false });
  }
 
 }
