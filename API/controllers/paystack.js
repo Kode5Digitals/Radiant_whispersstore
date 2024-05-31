@@ -7,7 +7,7 @@ const generateUniqueReference = () => {
 };
 
   const createPayment=async(req, res) =>{ 
-    const {amount,email, firstName, lastName }=req.body
+    const {amount,email, firstName, lastName,products}=req.body
     const reference = generateUniqueReference();
     try {
         const response = await axios.post('https://api.paystack.co/transaction/initialize', {
@@ -17,6 +17,8 @@ const generateUniqueReference = () => {
             metadata: {
               firstName,
               lastName,
+              products,
+              date:Date.now()
             },
         }, {
             headers: {
