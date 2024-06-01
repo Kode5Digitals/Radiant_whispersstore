@@ -4,18 +4,18 @@ const Policy = () => {
   return (
 <Defaultlayout>
 
-<div className="mt-36 xl:mt-24 p-8">
+<div className="mt-36 xl:mt-24 p-8 bg-[#e3e3e3]">
 <h2 className="text-xl font-bold font-xl">
     INTRODUCTION
 </h2>
-<div className="w-44 p-2 border bg-pink-400 "></div>
+<div className="w-44 p-2 border bg-white"></div>
 <p className="mt-4">
 At Radiant whispers store we prioritize customer satisfaction and strive to ensure that you are delighted with every purchase. If for any reason you are not fully satisfied with your purchase, we are here to help.
 </p>
 <h2 className="mt-16 text-md ">
 ELGIBILITY FOR REFUNDS
 </h2>
-<div className="w-56 p-2 border bg-pink-400"></div>
+<div className="w-56 p-2 border bg-white"></div>
 
 <h4 className="mt-8 font-bold">
 Time Frame:
@@ -79,14 +79,14 @@ If approved, refunds will be processed to your original method of payment within
 <h4 className="mt-16  text-xl">
 Exchanges
 </h4>
-<div className="w-28 p-2 border bg-pink-400"></div>
+<div className="w-28 p-2 border bg-white"></div>
 <p className="mt-4">
 We do not offer direct exchanges. If you need a different product, please place a new order for the desired item.
 </p>
 <h4 className="  mt-8 text-xl">
 Damaged or Defective Products
 </h4>
-<div className="w-80 p-2 border bg-pink-400"></div>
+<div className="w-80 p-2 border bg-white"></div>
 
 <p className="mt-4">
 If you receive a damaged or defective product, please contact us immediately with your order number and a photo of the damage/defect.

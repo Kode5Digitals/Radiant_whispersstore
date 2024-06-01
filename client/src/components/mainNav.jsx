@@ -15,7 +15,7 @@ import { selectCartLength } from "../stores/features/cart/cartSlice"
 import HoverInfo from "./hoverInfo"
 import { MdAccountCircle, MdArrowBackIos, MdOutlineCancel } from "react-icons/md"
 import { IoLogoWhatsapp, IoMdLogIn } from "react-icons/io"
-import { IoMail } from "react-icons/io5"
+import { IoMail, IoReload } from "react-icons/io5"
 import { FaFacebook, FaInstagramSquare } from "react-icons/fa"
 import { AiOutlineLogout } from "react-icons/ai"
 import { RiAdminFill } from "react-icons/ri"
@@ -42,14 +42,18 @@ const MainNavbar = ({  logoSrc,toggleSidebar }) => {
   const { wishlistItems } = useSelector((state) => state?.whishlist)
    const[openNavMenu,setOpenNavMenu]=useState(false)
    const[openContact,setOpenContact]=useState(false)
+   const[loading,setLoading]=useState(false)
   //search
   const handleSearch = useCallback(async () => {
+    setLoading(true)
     try {
       const response = await httpAuth.get(`/api/products/?search=${query}`)
       const data = await response.data
       setSearchedProducts(data)
     } catch (error) {
       console.error("Error fetching products:", error)
+    }finally{
+      setLoading(false)
     }
   }, [query])
 
@@ -135,7 +139,7 @@ setOpenContact (false)
     <div className="relative">
      
       <nav
-        className="text-[#571283]  
+        className="text-[#891980]  
       font-bold text-sm   p-3 sm:px-5  flex-wrap xl:flex-nowrap  bg-white border-b shadow-md flex fixed w-full  z-50  items-end top-0 xl:justify-around justify-between"
       >
         <RxHamburgerMenu
@@ -199,7 +203,7 @@ setOpenContact (false)
           </div>
           <div className="">
            <div className=" hidden xl:block md:block lg:block  ">
-           <div className=" border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex  w-[500px] md:w-[400px]  p-2 rounded-lg border-[#571283]   gap-3 items-center mt-6 xl:mt-0">
+           <div className=" border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex  w-[500px] md:w-[400px]  p-2 rounded-lg border-[#891980]   gap-3 items-center mt-6 xl:mt-0">
               <TfiSearch />
 
               <input
@@ -210,6 +214,7 @@ setOpenContact (false)
                 style={{ background: 0, outline: "0" }}
                 className="w-full"
               />
+             {loading&&<IoReload className="animate-spin"/> }
                 {showProducts && searchedProducts.length > 0 && (
               <div
                 ref={productRef}
@@ -247,7 +252,7 @@ setOpenContact (false)
 
 
         <div className=" xl:hidden md:hidden ">
-            <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex w-[390px] sm:ml-32 p-2 rounded-lg border-[#571283]   gap-3 items-center mt-6 xl:mt-0">
+            <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex w-[390px] sm:ml-32 p-2 rounded-lg border-[#891980]   gap-3 items-center mt-6 xl:mt-0">
               <TfiSearch />
               <input
                 type="text"
@@ -257,6 +262,8 @@ setOpenContact (false)
                 style={{ background: 0, outline: "0" }}
                 className="w-full"
               />
+             {loading&&<IoReload className="animate-spin"/> }
+
             </div>
             </div>
 
@@ -264,7 +271,7 @@ setOpenContact (false)
           <div className="relative group ">
             <button
              onMouseEnter={()=>setOpenContact(false)}
-             className="border-2 p-2  xl:w-20   text-[12px]    rounded-lg border-[#571283] hover:bg-[#571283] hover:text-white">
+             className="border-2 p-2  xl:w-20   text-[12px]    rounded-lg border-[#891980] hover:bg-[#891980] hover:text-white">
               About us
             </button>
             <HoverInfo
@@ -276,12 +283,12 @@ That's why we're dedicated to providing high-quality, natural body creams that m
             />
           </div>
           <div className="relative group">
-            <button onClick={ToggleContact} className="border-2 p-2  xl:w-24 text-[12px]    rounded-lg border-[#571283] bg-[#571283] text-white shadow-lg hover:bg-white hover:text-[#571283]">
+            <button onClick={ToggleContact} className="border-2 p-2  xl:w-24 text-[12px]    rounded-lg border-[#891980] bg-[#891980] text-white shadow-lg hover:bg-white hover:text-[#891980]">
               Contact us
             </button>
           </div>
 
-        <div className="flex gap-4 ml-12 border border-[#571283] p-2 rounded-md">
+        <div className="flex gap-4 ml-12 border border-[#891980] p-2 rounded-md">
         <Link to={"/whishlist"}>
             <div className="cursor-pointer relative md:block">
               <CiHeart size={22} />

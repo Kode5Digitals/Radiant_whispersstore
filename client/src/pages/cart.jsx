@@ -42,11 +42,11 @@ console.log(items)
   return (
     <main>
       <div className=" flex items-end justify-between   xl:justify-between mt-5 p-3">
-        <Link to="/home" className="text-lg text-[#571283] xl:ml-10">
+        <Link to="/home" className="text-lg text-[#891980] xl:ml-10">
           <FontAwesomeIcon icon={faArrowAltCircleLeft} size="2x" />
         </Link>
 
-        <div className="cursor-pointer flex  relative text-center xl:items-center text-lg xl:mr-6  text-[#571283]">
+        <div className="cursor-pointer flex  relative text-center xl:items-center text-lg xl:mr-6  text-[#891980]">
          <span className="xl:block hidden lg:block md:block"> My Shopping Cart</span> 
          <span className="xl:hidden block lg:hidden md:hidden">
           Cart
@@ -54,7 +54,7 @@ console.log(items)
          <FontAwesomeIcon icon={faCartPlus}  />
           <div
             style={{ fontSize: "10px" }}
-            className="w-4 text-sm bg-[#571283] text-white border-2 h-4 rounded-full border-[#571283] absolute flex justify-center items-center md:left-40 lg:left-[160px] lg:-top-2 xl:left-40 xl:-top-1 left-12 -top-2"
+            className="w-4 text-sm bg-[#891980] text-white border-2 h-4 rounded-full border-[#891980] absolute flex justify-center items-center md:left-40 lg:left-[160px] lg:-top-2 xl:left-40 xl:-top-1 left-12 -top-2"
           >
             <h6>{cartLength}</h6>
           </div>
@@ -140,18 +140,23 @@ console.log(items)
                 <TbCurrencyNaira /> 
                       {totalPrice}</p>
                   </li>
-                  <li className="mb-3  flex items-center justify-between">
+                  {/* <li className="mb-3  flex items-center justify-between">
                     Total Price <p className="flex items-center">
                 <TbCurrencyNaira /> 
                       {totalPrice}</p>
-                  </li>
+                  </li> */}
                 
                 </ul>
               </div>
-              <div className="flex gap-3 items-center ">
+              <hr />
+              <div className="mt-12 ">
+<div className="flex gap-2">
+<input type="checkbox" name="" id="" />
+<p>Agree</p>
+</div>
                 <label className="text-lg text-red-700" >Delivery fee  excluded!!!</label>
               </div>
-              <div className="text-center mt-4  ">
+              <div className="text-center mt-2  ">
                 <Link to={"/paystack"}>
                 <button  className=" bg-black p-4 text-white text-[12px]">
                   Proceed to Checkout

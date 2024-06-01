@@ -11,13 +11,13 @@ const Dashboard = () => {
   return (
 
    <div className="">
-   <div className="w-full bg-slate-600 h-full   text-center text-white text-lg">
+   <div className="w-full bg-[#676464] h-full   text-center text-white text-lg">
         Dashboard 
     </div>
 
 
-    <div className=" bg-white w-full shadow-xl mx-auto p-3  h-full">
-<table style={{ borderCollapse: 'collapse'  }} className="w-full h-full text-[12px] ">
+    <div className="bg-white w-full shadow-xl mx-auto p-3  h-full  text-[12px]">
+<table style={{ borderCollapse: 'collapse'  }} className="w-full h-full text-[12px]  table-fixed">
         <thead>
           <tr>
             <th className="border " >ProductName</th>
@@ -26,25 +26,30 @@ const Dashboard = () => {
 
           </tr>
         </thead >
-
+        </table>
+        <div className="overflow-y-auto max-h-64">
+<table className="w-full table-fixed">
         <tbody >
          {producthistory?.products?.map((product,index) => (
             <tr key={index} className="overflow-y-auto max-h-80">
               <td  className="border p-3">{product.name}</td>
-              <td  className="border p-3 flex items-center">
+              <td  className="border p-3 ">
+              <span className="flex items-center">
               <TbCurrencyNaira /> 
-                {formatAmount(Number(product.price))}</td>
+                {formatAmount(Number(product.price))}
+              </span>
+                </td>
               <td  className="border p-3">{product.quantity}</td>
             </tr>
          ))}
         </tbody>
-
-      </table>
-
-
-
+        </table>
     </div>
-    <div className="flex justify-end text-white">
+    </div>
+    <div className="flex justify-end text-white text-[12px]  pr-12">
+      <p>
+      {producthistory.firstname}
+      </p>
     <p>
   {producthistory.date}
 </p>

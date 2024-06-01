@@ -2,7 +2,6 @@ import { useContext, useRef, useState } from "react"
 import Cartcontext from "../cartcontext"
 import { ToastContainer, toast } from "react-toastify";
 import httpAuth from "../utils/https";
-import {  IoReloadOutline } from "react-icons/io5";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Accountsettings = () => {
@@ -56,7 +55,7 @@ const Accountsettings = () => {
 
   return (
     <div className=" text-[12px]  ">
-    <div className="w-full p-4  border-b-2 border-[#9da4b0] text-white text-center text-lg">
+    <div className="w-full p-4  border-b-2 border-[#9da4b0]  font-bold   text-center text-lg">
        Settings
      </div>
  
@@ -64,13 +63,13 @@ const Accountsettings = () => {
      <div className=" shadow-xl   pb-5 ">
         <form className="p-4">
             <input type="text" ref={fullnameRef} defaultValue={user?.fullname} name="fullname" id="fullname" className="w-full p-2 rounded-lg border-2 mb-5" placeholder="fullname" />
-            <input type="phonenumber" ref={phoneNumberRef} name="phonenumber" defaultValue={user?.email} id="phonenumber" className="w-full p-2 rounded-lg border-2 mb-3" placeholder="phonenumber" />
+            <input type="phonenumber" ref={phoneNumberRef} name="phonenumber" defaultValue={user?.phonenumber} id="phonenumber" className="w-full p-2 rounded-lg border-2 mb-3" placeholder="phonenumber" />
             <input type="password" ref={passwordRef} name="password" id="password" className="w-full p-2 rounded-lg border-2  mb-3" placeholder="password" />
             <input type="password" ref={confirmPasswordRef} name="confirmPassword" id="confirmPassword" className="w-full p-2 rounded-lg border-2 " placeholder="confirmPassword" />
         
         </form>
         <div className="flex justify-end px-6  ">
-        <button className="border-2 border-[#ffffff] text-white rounded-md px-8 py-2  flex items-center gap-1" onClick={handleSubmit}>Edit { loading&& <AiOutlineLoading3Quarters className="animate-spin"  size={10}/>}</button>
+        <button className="border-2 border-[#ffffff] hover:bg-[#891980] hover:text-white rounded-md px-8 py-2  flex items-center gap-1" onClick={handleSubmit}>Edit { loading&& <AiOutlineLoading3Quarters className="animate-spin"  size={10}/>}</button>
 
         </div>
      </div>

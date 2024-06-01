@@ -53,7 +53,7 @@ setCurrentCat(text)
   // #fd00cd
   return (
     <div
-      className="bg-[#571283] opacity-8 text-white
+      className="bg-[#891980] opacity-8 text-white
       font-bold text-sm   flex  items-center justify-around "
     >
       <div className="flex gap-10 items-center ">
@@ -63,7 +63,9 @@ setCurrentCat(text)
           onMouseLeave={handleMouseLeave}
         >
           <div className="flex  cursor-pointer text-md items-center justify-around ">
-          <BiSolidCategoryAlt /><h4>{currentCat}
+          <BiSolidCategoryAlt />
+          <h4>
+            {currentCat}
           </h4>
           {loading && <FaSpinner  className="animate-spin"/>}
 
@@ -72,7 +74,7 @@ setCurrentCat(text)
             </span>
           </div>
           {hovereddivItem === "Item 1" && (
-            <div className="absolute cursor-pointer  left-0  w-44 border-t-0 bg-[#571283] max-w-72 xl:bg-white border top-8 z-30 py-2">
+            <div className="absolute cursor-pointer  left-0  w-44 border-t-0 bg-[#891980] max-w-72 xl:bg-white border top-8 z-30 py-2">
                <div onClick={()=>handleAllProducts()} className="px-4 py-2  hover:bg-[#f4e4f2]  hover:text-black">
                 All products
               </div>

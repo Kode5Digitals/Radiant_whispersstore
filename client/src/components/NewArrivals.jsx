@@ -150,13 +150,13 @@ New Arrivals
                
 
 
-                <button className="text-[12px]   border  px-3 rounded-md  bg-white border-[#571283] ">
+                <button className="text-[12px]   border  px-3 rounded-md  bg-white border-[#891980] ">
              <Link  to={`/ProductDetails/${item?._id}`} className="flex items-end gap-2">
              More<TfiMore />
                 </Link></button> 
                 <button
                      id={item._id}
-                  className="border text-sm px-8 py-2 rounded-md  bg-[#571283]  border-[#571283] text-white hover:bg-pink-950"
+                  className="border text-sm px-8 py-2 rounded-md  bg-[#891980]  border-[#891980] text-white hover:bg-pink-950"
                   onClick={()=>handleAddToCart(item)}
                 >
                 

@@ -165,7 +165,7 @@ required
         </div>
         <button
           type="submit"
-          className="flex items-center gap-3 justify-center w-full mb-4  border border-gray-300 hover:text-white  hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+          className="flex items-center gap-3 justify-center w-full mb-4  border border-gray-300 hover:text-white  hover:bg-[#891980] py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
         >
           Register
           {loading && <FaSpinner  className="animate-spin"/>}
@@ -173,7 +173,7 @@ required
         </button>
         <button
           onClick={handleBack}
-          className="w-full text-[12px] bg-pink-600 hover:bg-pink-700 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+          className="w-full text-[12px] bg-[#891980] hover:bg-[#891980] text-white py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
         >
           Back
         </button>

@@ -14,6 +14,7 @@ function Login({setOpenLogin}) {
     const handleOpenRegister =()=>{
         setOpenRegister(true)
         setOpenLogin(false)
+
         }
 
     const handleSubmit = async (e) => {
@@ -28,12 +29,12 @@ try {
   if(res.data.created){
     setLogin(res.data.isLoggedIn)
     setisadmin(res.data.isAdmin)
+   toast.success(res.data.message)
     localStorage.setItem("Login",res.data.isLoggedIn)
     // localStorage.setItem("Admin",res.data.isAdmin)
     localStorage.setItem('token', res.data.accessToken)
     localStorage.setItem('refreshToken', res.data.refreshToken);
     setOpenLogin(false)
-    toast.success(res.data.message)
     }
     else{
         if(res.data.created.error_type === 0){
@@ -48,6 +49,7 @@ try {
   console.log(error)
 }
 finally{
+
     setLoading(false)
 
 }
@@ -58,6 +60,19 @@ finally{
     };
 
     return (
+        <div>
+               <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+             />
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50  p-2 xl:p-0 ">
              
             <form onSubmit={handleSubmit} className="forgot-password xl:w-1/3 lg:w-1/2 sm:w-full md:w-1/2  w-full   2xl:w-1/4  p-3 rounded-lg shadow-md bg-white transition duration-500 ease-in-out border-2 border-transparent hover:border-purple-500">
@@ -84,22 +99,12 @@ finally{
                      Signup </button>
                     <button className="border mb-3 text-[12px] p-1 rounded-lg w-1/3" onClick={handleBack}>Back</button>
                 </div>
-                <button className="mb-3 text-[12px] p-2 rounded-lg w-full mt-3 bg-[#fd00cd] leading-tight shadow text-white transition duration-300 ease-in-out transform hover:scale-105  flex items-center gap-3 justify-center" type="submit" >Login
+                <button className="mb-3 text-[12px] p-2 rounded-lg w-full mt-3 bg-[#891980] leading-tight shadow text-white transition duration-300 ease-in-out transform hover:scale-105  flex items-center gap-3 justify-center" type="submit" >Login
                 {loading && <FaSpinner  className="animate-spin"/>}
                 </button>
             </form>
-            <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-             />
+         
+        </div>
         </div>
     );
 }

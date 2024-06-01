@@ -11,7 +11,7 @@ const Banner2 = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 5000,
   };
 
   return (
@@ -22,21 +22,21 @@ const Banner2 = () => {
             <div
               className=" w-full  bg-cover bg-center flex justify-center items-center"
             >
-              <img src="banner3.png" alt="" className="" />
+              <img src="RadiantWhispersstoreBanner.png" alt="" className="" />
             </div>
           </div>
           <div>
           <div
               className=" w-full  bg-cover bg-center flex justify-center items-center"
             >
-              <img src="banner3.png" alt="" />
+              <img src="RadiantWhispersstoreBanner.png" alt="" />
             </div>
           </div>
           <div>
           <div
               className=" w-full  bg-cover bg-center flex justify-center items-center"
             >
-              <img src="banner3.png" alt="" />
+              <img src="RadiantWhispersstoreBanner.png" alt="" />
             </div>
           </div>
         </Slider>

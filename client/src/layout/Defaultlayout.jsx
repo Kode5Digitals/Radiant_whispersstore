@@ -16,11 +16,11 @@ const Defaultlayout = ({children}) => {
     };
     return (
         <>
-            <MainNavbar logoSrc="/Logo2.png" setIsOpen={setIsOpen} isOpen={isOpen} Back={Back} toggleSidebar={toggleSidebar} setSideOpen={setSideOpen}/>
+            <MainNavbar logoSrc="/RadiantwhispersstoreLogo.png" setIsOpen={setIsOpen} isOpen={isOpen} Back={Back} toggleSidebar={toggleSidebar} setSideOpen={setSideOpen}/>
              <SideMenu  />
              <Sidebar isSideOpen={isSideOpen} toggleSidebar={toggleSidebar} />
             {children}
-            <Footer  logoSrc="Logo4.png"/>
+            <Footer  logoSrc="RadiantwhispersstoreLogo.png"/>
 
         </>
     )

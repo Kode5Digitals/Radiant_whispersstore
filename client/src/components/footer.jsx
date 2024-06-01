@@ -8,8 +8,17 @@ import { FacebookShareButton } from "react-share"
 import { Link } from "react-router-dom";
 
 const Footer = ({logoSrc}) => {
+
+
+
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth', // for smooth scrolling
+      });
+    };
   return (
-      <footer >
+      <footer className="static bottom-0 " >
     <div className="flex flex-wrap-reverse md:p-5 md:flex-nowrap xl:flex-nowrap m-auto pb-10 mt-5 pl-4 xl:pl-32 xl:pr-32   bg-[#f5f5f5]  pt-10 xl:gap-28 gap-5  xl:justify-center"  >
       
  <div className=" w-3/5">
@@ -17,25 +26,25 @@ const Footer = ({logoSrc}) => {
  <ul  className="list text-[13px]"  >
       <li  className="text-lg font-bold mb-5">Contact Us</li>
       <li><a href="#" >Enquiry @Radiant_whispersstore.com</a></li>
-      <li>(+234)90778808938 </li>
-      <li className=" mt-2 w-[150px] md:block hidden xl:block">
-              <img src={logoSrc}  alt=""className="" />
+      <li>(+234)9130533225 </li>
+      <li className=" mt-2 w-[160px] md:block hidden xl:block" onClick={scrollToTop}>
+              <img src={logoSrc}  alt="Radiantwhispersstore Logo" className="" />
             </li> 
     </ul>
     <div  className="flex lg:hidden  xl:hidden gap-5 mt-10 md:hidden ">
-        <div className="socials hover:bg-[#571283] hover:text-white">
+        <div className="socials hover:bg-[#891980] hover:text-white">
           <FacebookShareButton url=''>
           <TiSocialFacebook />
           </FacebookShareButton>
          </div>
-        <div className="socials  hover:bg-[#571283] hover:text-white">
+        <div className="socials  hover:bg-[#891980] hover:text-white">
            <FaInstagram /></div>
-        <div className="socials  hover:bg-[#571283] hover:text-white">
-          <a href="https://wa.link/m4ypbh">
+        <div className="socials  hover:bg-[#891980] hover:text-white">
+          <a href="https://wa.link/2us3c8" >
           <IoLogoWhatsapp  />
           </a>
           </div>
-        <div className="socials  hover:bg-[#571283] hover:text-white"><FaTwitter /></div>
+        <div className="socials  hover:bg-[#891980] hover:text-white"><FaTwitter /></div>
       </div>
     
  </div>
@@ -45,7 +54,7 @@ const Footer = ({logoSrc}) => {
         &copy; 2024 Radiant_whispersstore. <br></br> All right reserved
       </li>
       <li  className="flex text-[12px] gap-2  xl:gap-6 mt-6 ">
-        <Link to={"/return-policy"}>
+        <Link to={"/return-policy"} onClick={scrollToTop}>
         Return Policy
         </Link>
        <a href="">Terms and condition</a>   
@@ -62,19 +71,19 @@ const Footer = ({logoSrc}) => {
 That&apos;s why we&apos;re dedicated to providing high-quality, natural body creams that moisturize, soothe, and protect your skin.
                 </li>
       <li  className="hidden lg:flex gap-5 mt-10  xl:flex md:flex">
-        <div className="socials hover:bg-[#571283] hover:text-white">   
+        <div className="socials hover:bg-[#891980] hover:text-white">   
          <FacebookShareButton url="">
           <TiSocialFacebook />
           </FacebookShareButton>
           </div>
-        <div className="socials  hover:bg-[#571283] hover:text-white"> <FaInstagram /></div>
-        <div className="socials  hover:bg-[#571283] hover:text-white">
+        <div className="socials  hover:bg-[#891980] hover:text-white"> <FaInstagram /></div>
+        <div className="socials  hover:bg-[#891980] hover:text-white">
          <a href="https://wa.link/m4ypbh">
          <IoLogoWhatsapp  />
          </a>
        
 </div>
-        <div className="socials  hover:bg-[#571283] hover:text-white"><FaTwitter /></div>
+        <div className="socials  hover:bg-[#891980] hover:text-white"><FaTwitter /></div>
       </li>
     </ul></div>
     

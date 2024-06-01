@@ -49,7 +49,7 @@ function Products() {
   }, [dispatch]);
 
   const handleLoadMore = () => {
-    setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 3);
+    setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 9);
   };
 
   const handleAddToWishlist = (Id) => {
@@ -89,7 +89,7 @@ function Products() {
       <div className="xl:w-4/5 lg:w-3/4  2xl:w-3/4 w-full mt-12 mx-auto ">
         {!loading && products.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-screen">
-            <Typography variant="h6" className="text-[#571283] text-xl">
+            <Typography variant="h6" className="text-[#891980] text-xl">
               No products available
             </Typography>
           </div>
@@ -113,7 +113,7 @@ function Products() {
                       <FaHeart
                         size={20}
                         id={prod._id}
-                        className="m-2 absolute top-1 right-2 cursor-pointer text-[#571283n]"
+                        className="m-2 absolute top-1 right-2 cursor-pointer text-[#891980n]"
                         onClick={() => handleAddToWishlist(prod)}
                       />
                     )}
@@ -131,7 +131,7 @@ function Products() {
                       </h4>
                     </div>
                     <h4 className="text-[12px]">{prod?.category}</h4>
-                    <button className="text-[12px] border px-2 rounded-md bg-white border-[#571283]">
+                    <button className="text-[12px] border px-2 rounded-md bg-white border-[#891980]">
                       <Link to={`/ProductDetails/${prod?._id}`}>
                         More info
                       </Link>
@@ -176,7 +176,7 @@ function Products() {
           {!loading && visibleProducts < products.length && (
             <button
               onClick={handleLoadMore}
-              className="w-52 border p-2 rounded-xl bg-[#fd00cd] text-white font-bold"
+              className="w-52 border p-2 rounded-xl bg-[#891980] text-white font-bold"
             >
               {loading ? "Loading..." : "Load More"}
             </button>
