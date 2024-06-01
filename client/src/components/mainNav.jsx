@@ -359,7 +359,6 @@ That's why we're dedicated to providing high-quality, natural body creams that m
         )}        
 
 { login && isadmin==true && ( <button className="mt-3 flex items-center gap-1">
-<RiAdminFill />
           <Link to={"/adminHome"}>
             Switch to Admin
             </Link>
