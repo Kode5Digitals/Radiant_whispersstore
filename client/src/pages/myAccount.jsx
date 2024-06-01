@@ -34,17 +34,17 @@ const handleSetLogOut=async()=>{
     <div>
    <div className="h-screen">
    <div className="w-full p-4 fixed top-0  bg-[#891980] flex justify-between text-white text-lg">
-   <div className="bg-white rounded-xl xl:w-32 md:w-28 flex justify-center items-center xl:gap-1 ">
+   <span className="bg-white rounded-xl xl:w-32 md:w-28 flex justify-end items-end xl:gap-1 ">
    <LiaHomeSolid className="text-black hidden xl:block lg:block md:block " size={15} />
    <Link to={"/home"} className="hover:text-[#9299a4] text-black xl:text-[13px] text-[12px] px-2 ">Home</Link>
 
-   </div>
-   <div className="text-sm xl:text-lg">
-   My Account
-   </div>
+   </span>
+   <p className="text-[14px] xl:text-[16px]  ">My Account</p>
+   <div>
    <i className="text-[12px]">
    {Capitalize(user?.email)}
    </i>
+   </div>
     </div>
    
     <div className="xl:w-5/6 xl:border-2  bg-white md:p-3  md:mt-40 shadow-xl mx-auto xl:h-[500px]  xl:mt-32 mt-14 mb-12">

@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import Cartcontext from "../cartcontext"
-import { formatAmount, formatPrice } from "../utils/utils"
+import { formatAmount} from "../utils/utils"
 import { TbCurrencyNaira } from "react-icons/tb"
 
 
@@ -12,7 +12,7 @@ const Dashboard = () => {
 
    <div className="">
    <div className="w-full bg-[#676464] h-full   text-center text-white text-lg">
-        Dashboard 
+      Poducts History
     </div>
 
 
