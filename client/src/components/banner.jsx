@@ -13,7 +13,7 @@ const Banner = () => {
   return (
     <div className="relative ">
 
-    <div className="mt-32 xl:mt-[74px]  md:mt-[70px]" >
+    <div className="mt-36 xl:mt-[74px]  md:mt-[70px]" >
        <div className=" w-full relative top-0   h-[400px] xl:h-[540px] lg:h-[400px] md:h-[380px]">
      <img src="RadiantWhisperBanner.png" alt="RadiantWhisperBanner" className="w-full h-full sm:hidden hidden xl:block lg:block md:hidden"/>
      <img src="RadiantWhispersstoreBanner2.png" alt="RadiantWhisperBanner"  className="block w-full h-full  sm:block xl:hidden lg:hidden md:block"/>

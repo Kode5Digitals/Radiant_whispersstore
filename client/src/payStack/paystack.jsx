@@ -12,7 +12,7 @@ import { useRef, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 
 const PaystackComponent = () => {
-  const { totalPrice,setProductHistory} = useSelector(selectCart)
+  const { totalPrice} = useSelector(selectCart)
   const emailRef = useRef();
   const firstNameRef = useRef();
   const lastNameRef = useRef();

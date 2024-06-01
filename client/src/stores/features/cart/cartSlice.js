@@ -1,14 +1,41 @@
 import {  toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import httpAuth from "../../../utils/https";
+
+export const addItemToCart = createAsyncThunk(
+  'cart/addItemToCart',
+  async ({ userId, productId, quantity }) => {
+    const response = await httpAuth.post('/api/cart/add-to-cart', { userId, productId, quantity });
+    return response.data;
+  }
+);
+
+
+export const fetchUserCart = createAsyncThunk(
+  'cart/fetchUserCart',
+  async (userId, thunkAPI) => {
+    try {
+      const response = await httpAuth.get(`/api/cart/${userId}`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    items: localStorage.getItem("cartItem")?JSON.parse(localStorage.getItem("cartItem")):[],
-    totalQuantity:  localStorage.getItem("totalQuantity")?JSON.parse(localStorage.getItem("totalQuantity")):Number(0),
-    totalPrice: localStorage.getItem("totalPrice")?JSON.parse(localStorage.getItem("totalPrice")):Number(0) ,
+    items: [],
+    totalQuantity: 0,
+    totalPrice: 0,
   },
+  // initialState: {
+  //   items: localStorage.getItem("cartItem")?JSON.parse(localStorage.getItem("cartItem")):[],
+  //   totalQuantity:  localStorage.getItem("totalQuantity")?JSON.parse(localStorage.getItem("totalQuantity")):Number(0),
+  //   totalPrice: localStorage.getItem("totalPrice")?JSON.parse(localStorage.getItem("totalPrice")):Number(0) ,
+  // },
   reducers: {
     addToCart: (state, action) => {
         const newItem = action.payload
@@ -83,7 +110,22 @@ const cartSlice = createSlice({
         localStorage.removeItem("cartItem")
       
       }
+
       
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(addItemToCart.fulfilled, (state, action) => {
+      state.items = action.payload.items;
+      state.totalQuantity = action.payload.totalQuantity;
+      state.totalPrice = action.payload.totalPrice;
+    });
+
+   builder.addCase(fetchUserCart.fulfilled, (state, action) => {
+      state.items = action.payload.items;
+      state.totalQuantity = action.payload.totalQuantity;
+      state.totalPrice = action.payload.totalPrice;
+    })
   },
 })
 

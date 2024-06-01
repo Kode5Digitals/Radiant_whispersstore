@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import http from "./utils/adminHttp";
+import { useDispatch } from "react-redux";
+import { fetchUserCart } from "./stores/features/cart/cartSlice";
 const Cartprovider = ({ children }) => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
@@ -17,8 +19,9 @@ const Cartprovider = ({ children }) => {
      const[isadmin,setisadmin]=useState(null)
      const [user, setUser] = useState(null);
      const[ producthistory,setProductHistory]=useState({})
+     const dispatch = useDispatch();
 
-
+    
 
      useEffect(() => {
        const loadUser = async () => {
@@ -38,10 +41,31 @@ const Cartprovider = ({ children }) => {
        loadUser();
      }, [])
 
+
      useEffect(()=>{
-  const isLoggedIn = localStorage.getItem("Login") 
-      setLogin(isLoggedIn)
-     },[])
+      const isLoggedIn = localStorage.getItem("Login") 
+          setLogin(isLoggedIn)
+         },[])
+
+
+
+
+    useEffect(() => {
+      if (user?._id) {
+        dispatch(fetchUserCart(user?._id));
+      }
+    }, [dispatch, user?._id]);
+
+
+
+
+
+    if (!cart) {
+      return <div>Loading...</div>;
+    }
+
+
+  
 
   const Back = () => {
     setIsOpen(false);

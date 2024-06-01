@@ -1,5 +1,5 @@
 import { CiHeart } from "react-icons/ci";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import httpAuth from "../utils/https";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -9,7 +9,7 @@ import { Typography } from "@mui/material";
 import Navbar from "./nav";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../stores/features/product/productSlice";
-import { addToCart } from "../stores/features/cart/cartSlice";
+import { addItemToCart, addToCart } from "../stores/features/cart/cartSlice";
 import { toggleWishlistItem } from "../stores/features/whishlist/wishlistSlice";
 import { FaHeart} from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
@@ -17,6 +17,7 @@ import { Truncate, formatPrice } from "../utils/utils";
 import cors from "cors";
 
 import { LiaShoppingBagSolid } from "react-icons/lia";
+import Cartcontext from "../cartcontext";
 cors();
 function Products() {
   const dispatch = useDispatch();
@@ -25,6 +26,8 @@ function Products() {
   const [visibleProducts, setVisibleProducts] = useState(15);
   const { wishlistItems } = useSelector((state) => state?.whishlist);
   const [quantity, setQuantity] = useState({});
+  const{user}=useContext(Cartcontext)
+
 
   const handleAllProducts = async () => {
     try {
@@ -76,10 +79,17 @@ function Products() {
     }));
   };
 
+  // const handleAddToCart = (product) => {
+  //   const selectedQuantity = quantity[product._id] || 1
+  //  dispatch( addToCart({...product, quantity:selectedQuantity})) ;
+  // }  
+
   const handleAddToCart = (product) => {
     const selectedQuantity = quantity[product._id] || 1
-   dispatch( addToCart({...product, quantity:selectedQuantity})) ;
-  }  
+    dispatch(addItemToCart({ userId:user._id, productId: product._id,quantity:selectedQuantity }));
+  };
+
+
 
   return (
     <main className="mb-10 ">

@@ -106,7 +106,7 @@ const closeDeleteModal = () => {
                 </div>
                 <button
                   id={prod._id}
-                  className="border text-sm px-6 rounded-md   bg-pink-300 border-pink-600 hover:text-white hover:bg-pink-950"
+                  className="border text-sm px-6 rounded-md   bg-[#891980] border-pink-600 text-white hover:bg-pink-950"
                   onClick={() => handleEdit(prod?._id)}
                 >
                 Edit 
