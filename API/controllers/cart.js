@@ -14,10 +14,8 @@ const calculateTotalPrice = async (cart) => {
 };
 
 // Add item to cart
-const Cart= async (req, res) => {
-
-    const { userId, productId, quantity } = req.body;
-
+const UserCart= async (req, res) => {
+const { userId, productId, quantity } = req.body;
     try {
       const product = await Product.findById(productId);
       if (!product) {
@@ -65,6 +63,6 @@ const getCartById= async (req, res) => {
 }
 
 module.exports = {
-    Cart,
+    UserCart,
     getCartById
 }
