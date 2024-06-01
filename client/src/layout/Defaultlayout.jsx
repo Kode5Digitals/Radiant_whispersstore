@@ -20,7 +20,7 @@ const Defaultlayout = ({children}) => {
              <SideMenu  />
              <Sidebar isSideOpen={isSideOpen} toggleSidebar={toggleSidebar} />
             {children}
-            <Footer  logoSrc="RadiantwhispersstoreLogo.png"/>
+            <Footer  logoSrc="/RadiantwhispersstoreLogo.png"/>
 
         </>
     )
