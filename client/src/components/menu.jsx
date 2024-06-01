@@ -44,7 +44,7 @@ const SideMenu = () => {
       >
         <div className="mt-3 flex justify-between items-center ">
           <div className="w-[80px] h-[30px] flex justify-center items-center  md:w-[80px]">
-            <img src="/Logo2.png" alt="" />
+            <img src="/RadiantwhispersstoreLogo.png" alt="" />
           </div>
           <div></div>
 
@@ -129,8 +129,7 @@ const SideMenu = () => {
 
             <ul>
               <li >
-          <Link to={"/adminHome"} className="flex items-center gap-1 mb-4">
-          <RiAdminFill />
+          <Link to={"/adminHome"} className=" mb-4">
 
             Switch to Admin
             </Link>
