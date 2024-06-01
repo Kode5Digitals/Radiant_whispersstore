@@ -6,7 +6,7 @@ const Banner = () => {
 
   const  scrollDown = () => {
     window.scrollTo({
-      top:500,
+      top:550,
       behavior: 'smooth', // for smooth scrolling
     });
   };
