@@ -47,7 +47,7 @@ const handleSetLogOut=async()=>{
    </i>
     </div>
    
-    <div className="xl:w-5/6 xl:border-2  bg-white md:p-3  md:mt-40 shadow-xl mx-auto xl:h-[500px]  xl:mt-32 mt-20 mb-12">
+    <div className="xl:w-5/6 xl:border-2  bg-white md:p-3  md:mt-40 shadow-xl mx-auto xl:h-[500px]  xl:mt-32 mt-14 mb-12">
 
 <div className="xl:w-3/4 w-full border mx-auto xl:h-3/4   flex sm:flex-wrap flex-wrap xl:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:mt-14">
   <div className="h-full p-2 border-8 shadow-xl w-1/4 hidden xl:block md:block"> 
@@ -74,7 +74,7 @@ Settings
   </ul>
   </div>
 <div >
-<div className="block xl:hidden lg:hidden md:hidden sm:block p-2 mt-20 ">
+<div className="block xl:hidden lg:hidden md:hidden sm:block p-2  ">
 <ul className="flex justify-around text-[12px] ">
 <li className="flex  items-center gap-1">
 <MdAccountCircle />
