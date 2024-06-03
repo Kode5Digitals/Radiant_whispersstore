@@ -19,39 +19,28 @@ const UserCart= async (req, res) => {
     const userId = req.params.userId;
   
     try {
-      // Check if the product exists
       const product = await Product.findById(productId);
       if (!product) {
         return res.status(404).json({ message: 'Product not found' });
       }
   
-      // Find the cart for the user
       let cart = await Cart.findOne({ userId });
-  
-      if (cart) {
-        // If the cart exists, check if the product is already in the cart
-        const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
-  
-        if (productIndex > -1) {
-          // If the product exists in the cart, update the quantity
-          cart.products[productIndex].quantity += quantity;
-        } else {
-          // If the product does not exist in the cart, add it
-          cart.products.push({ productId, quantity });
-        }
-      } else {
-        // If the cart does not exist, create a new cart for the user
-        cart = new Cart({
-          userId,
-          products: [{ productId, quantity }],
-        });
+      if (!cart) {
+        cart = new Cart({ userId, products: [] });
       }
-      await cart.save();
-      const totalQuantity = cart.products.reduce((acc, product) => acc + product.quantity, 0);
-      const totalPrice = cart.products.reduce((acc, product) => acc + product.quantity * product.productId.price, 0);
   
-      res.status(200).json({ message: 'Product added to cart', cart: { products: cart.products, totalQuantity, totalPrice } });
-     
+      const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+      if (productIndex > -1) {
+        cart.products[productIndex].quantity += quantity;
+      } else {
+        cart.products.push({ productId, quantity });
+      }
+  
+      await cart.populate('products.productId').execPopulate();
+      cart.calculateTotals();
+      await cart.save();
+  
+      res.status(200).json({ message: 'Product added to cart', cart });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
