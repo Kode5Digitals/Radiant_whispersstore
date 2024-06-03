@@ -34,7 +34,7 @@ const UserCart= async (req, res) => {
           await cart.populate('products.productId');
           cart.calculateTotals();
           await cart.save();
-          return res.status(200).json({ message: 'Product added to cart', cart });
+          return res.status(200).json({ message: 'Product added to cart', cart,created:true });
         } else {
           return res.status(400).json({ message: 'Product already in cart' });
         }
