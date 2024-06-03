@@ -36,10 +36,8 @@ const UserCart= async (req, res) => {
         cart.products.push({ productId, quantity });
       }
   
-      await cart.populate('products.productId').execPopulate();
-      cart.calculateTotals();
       await cart.save();
-  
+      cart.calculateTotals();
       res.status(200).json({ message: 'Product added to cart', cart });
     } catch (error) {
       console.error(error);
@@ -73,7 +71,7 @@ const getCartById= async (req, res) => {
             description: productItem.productId.description,
             image: productItem.productId.image,
             category:productItem.productId.category,
-            price,
+            price:productItem.productId.price,
             quantity
           };
 
