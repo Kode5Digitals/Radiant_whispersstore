@@ -80,6 +80,7 @@ const getCartById= async (req, res) => {
             name: productItem.productId.name,
             description: productItem.productId.description,
             image: productItem.productId.image,
+            category:productItem.productId.category,
             price,
             quantity
           };
