@@ -9,7 +9,7 @@ import { Typography } from "@mui/material";
 import Navbar from "./nav";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../stores/features/product/productSlice";
-import { addItemToCart, addToCart } from "../stores/features/cart/cartSlice";
+import { addItemToCart, selectCart} from "../stores/features/cart/cartSlice";
 import { toggleWishlistItem } from "../stores/features/whishlist/wishlistSlice";
 import { FaHeart} from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
@@ -27,7 +27,7 @@ function Products() {
   const { wishlistItems } = useSelector((state) => state?.whishlist);
   const [quantity, setQuantity] = useState({});
   const{user}=useContext(Cartcontext)
-
+  const { items } = useSelector(selectCart)
 
   const handleAllProducts = async () => {
     try {
@@ -87,6 +87,8 @@ function Products() {
   const handleAddToCart = (product) => {
     const selectedQuantity = quantity[product._id] || 1
     dispatch(addItemToCart({ userId:user._id, productId: product._id,quantity:selectedQuantity }));
+    console.log("in product",items)
+    console.log("in product",selectedQuantity)
   };
 
 

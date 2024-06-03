@@ -14,30 +14,54 @@ import {
   selectCartLength,
   selectCart,
   removeAllFromCart,
+  fetchUserCart,
+  increaseCartItemQuantity,
+  decreaseCartItemQuantity,
 } from "../stores/features/cart/cartSlice"
 import { TbCurrencyNaira } from "react-icons/tb"
 import { formatPrice } from "../utils/utils"
+import { useContext, useEffect } from "react"
+import Cartcontext from "../cartcontext"
 
 const Cart = () => {
   const { items, totalQuantity, totalPrice } = useSelector(selectCart)
   const cartLength = useSelector(selectCartLength)
   const dispatch = useDispatch()
-console.log(items)
+    const{user}=useContext(Cartcontext)
+
+  useEffect(() => {
+    if (user?._id) {
+      dispatch(fetchUserCart(user._id))
+      console.log("incart")
+    }
+  }, [dispatch, user?._id]);
+
+
+  console.log("items",items)
+
   const handleRemoveFromCart = (item) => {
     dispatch(removeFromCart(item))
   }
 
-  const handleIncreaseQuantity = (item) => {
-    dispatch(increaseQuantity(item))
+  const handleIncreaseQuantity = (productId,additionalQuantity) => {
+    // dispatch(increaseQuantity(item))
+    dispatch(increaseCartItemQuantity({ userId: user._id, productId: productId, quantity: additionalQuantity }));
   }
 
-  const handleDecreaseQuantity = (item) => {
-    dispatch(decreaseQuantity(item))
+  const handleDecreaseQuantity = (productId,decreaseQuantity) => {
+    // dispatch(decreaseQuantity(item))
+    dispatch(decreaseCartItemQuantity({ userId: user._id, productId: productId, quantity: decreaseQuantity }));
+
   }
 
   const handleremoveAllFromCart = () => {
     dispatch(removeAllFromCart())
   }
+
+
+
+
+
 
   return (
     <main>
@@ -72,49 +96,49 @@ console.log(items)
         </div>
       </div>
 
-      {items.length > 0 && (
+      {items?.length > 0 && (
         <div>
-          {items.map((val, index) => (
+          {items?.map((product, index) => (
             <div key={index} className="  mt-5 xl:w-3/4 lg:w-3/4 mx-auto p-6 flex xl:gap-14 gap-3">
               <div className="flex p-3 w-32  h-32 xl:w-72  xl:h-52 rounded-xl hover:w-[400px] overflow-hidden">
                 <img
-                  src={val?.image}
+                  src={product.productId?.image}
                   className="w-full h-full"
-                  alt={val?.name}
+                  alt={product.productId?.name}
                 />
               </div>
               <div className=" bg-white xl:h-52 w-full border shadow-md text-black p-3">
-                <h2 className="text-md text-center mb-2">{val?.name}</h2>
-                <h2 className="text-sm">{val?.description}</h2>
+                <h2 className="text-md text-center mb-2">{product.productId?.name}</h2>
+                <h2 className="text-sm">{product.productId?.description}</h2>
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md">{formatPrice(Number(val?.price))}</h4>
+                <h4 className="text-md">{formatPrice(Number(product.productId?.price))}</h4>
                 </div>
               
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md"><span></span>{formatPrice(Number(val?.price)*val.quantity)}</h4>
+                <h4 className="text-md"><span></span>{formatPrice(Number(product.productId?.price)*product.productId.quantity)}</h4>
                 </div>
                 <div className="flex justify-between mt-3">
                   <div className="flex ">
                     <button
                       className="w-9 h-9 border text-sm bg-white text-black flex justify-center items-center rounded-md"
-                      onClick={() => handleIncreaseQuantity(val._id)}
+                      onClick={() => handleIncreaseQuantity(product.productId._id,1)}
                     >
                       +
                     </button>
                     <h4 className="w-9 h-9 text-sm flex justify-center items-center rounded-md">
-                      {val?.quantity}
+                      {product.productId?.quantity}
                     </h4>
                     <button
                       className="w-9  bg-white border  h-9 text-sm flex  text-black  justify-center items-center rounded-md"
-                      onClick={() => handleDecreaseQuantity(val._id)}
+                      onClick={() => handleDecreaseQuantity(product.productId._id,1)}
                     >
                       -
                     </button>
                   </div>
                   <button
-                    onClick={() => handleRemoveFromCart(val._id)}
+                    onClick={() => handleRemoveFromCart(product.productId._id)}
                     className="del-btn  text-sm"
                   >
                     <FontAwesomeIcon color="red" icon={faTrash} />
@@ -173,7 +197,7 @@ console.log(items)
         </div>
       )}
 
-      {items.length === 0 && (
+      {items?.length === 0 && (
         <div className="w-full  h-[400px] flex justify-center items-center">
           <h1 className="text-center  text-3xl">Your cart is empty</h1>
         </div>

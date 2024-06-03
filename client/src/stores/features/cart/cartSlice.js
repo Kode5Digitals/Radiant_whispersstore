@@ -2,15 +2,7 @@ import {  toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import httpAuth from "../../../utils/https";
-
-export const addItemToCart = createAsyncThunk(
-  'cart/addItemToCart',
-  async ({ userId, productId, quantity }) => {
-    const response = await httpAuth.post('/api/cart/add-to-cart', { userId, productId, quantity });
-    return response.data;
-  }
-);
-
+   
 
 export const fetchUserCart = createAsyncThunk(
   'cart/fetchUserCart',
@@ -24,6 +16,34 @@ export const fetchUserCart = createAsyncThunk(
   }
 );
 
+
+export const addItemToCart = createAsyncThunk(
+  'cart/addItemToCart',
+  async ({ userId, productId, quantity }) => {
+    console.log(userId, productId, quantity)
+    const response = await httpAuth.post(`/api/cart/${userId}/add`, { productId, quantity });
+    console.log(response.data)
+    return response.data;
+  }
+);
+
+export const increaseCartItemQuantity = createAsyncThunk('cart/increaseCartItemQuantity', async ({ userId, productId, quantity }, thunkAPI) => {
+  try {
+    const response = await httpAuth.post(`/api/cart/${userId}/increase`, { userId, productId, quantity });
+    return response.data.cart;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
+
+export const decreaseCartItemQuantity = createAsyncThunk('cart/decreaseCartItemQuantity', async ({ userId, productId, quantity }, thunkAPI) => {
+  try {
+    const response = await httpAuth.post(`/api/cart/${userId}/decrease`, { userId, productId, quantity });
+    return response.data.cart;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+})
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
@@ -116,21 +136,33 @@ const cartSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(addItemToCart.fulfilled, (state, action) => {
-      state.items = action.payload.items;
+      state.items = action.payload.products;
       state.totalQuantity = action.payload.totalQuantity;
       state.totalPrice = action.payload.totalPrice;
     });
 
    builder.addCase(fetchUserCart.fulfilled, (state, action) => {
-      state.items = action.payload.items;
+      state.items = action.payload.products;
+      state.totalQuantity = action.payload.totalQuantity;
+      state.totalPrice = action.payload.totalPrice;
+    })
+
+     builder.addCase(increaseCartItemQuantity.fulfilled, (state, action) => {
+      state.items = action.payload.products;
+      state.totalQuantity = action.payload.totalQuantity;
+      state.totalPrice = action.payload.totalPrice;
+    });
+    builder.addCase(decreaseCartItemQuantity.fulfilled, (state, action) => {
+      state.items = action.payload.products;
       state.totalQuantity = action.payload.totalQuantity;
       state.totalPrice = action.payload.totalPrice;
     })
   },
 })
 
-export const { addToCart, removeFromCart, increaseQuantity, decreaseQuantity, removeAllFromCart } = cartSlice.actions
+export const { addToCart, removeFromCart, increaseQuantity, decreaseQuantity, removeAllFromCart, } = cartSlice.actions
 export default cartSlice.reducer
 
 export const selectCart = (state) => state.cart
-export const selectCartLength = (state) => state.cart.items.length
+export const selectCartLength = (state) => state.cart.totalQuantity
+// export const selectCartLength = (state) => state.cart.items.length
