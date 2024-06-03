@@ -35,9 +35,9 @@ const UserCart= async (req, res) => {
       } else {
         cart.products.push({ productId, quantity });
       }
-  
-      await cart.save();
+      await cart.populate('products.productId');
       cart.calculateTotals();
+      await cart.save();
       res.status(200).json({ message: 'Product added to cart', cart });
     } catch (error) {
       console.error(error);
@@ -47,45 +47,22 @@ const UserCart= async (req, res) => {
 }
 
 // Get cart
-const getCartById= async (req, res) => {
+  const getCartById = async (req, res) => {
+    const userId = req.params.userId;
+  
     try {
-        const cart = await Cart.findOne({ userId: req.params.userId })
-          .populate('products.productId'); // Populate product details
-    
-        if (!cart) {
-          return res.status(404).json({ message: 'Cart not found' });
-        }
-    
-        let totalQuantity = 0;
-        let totalPrice = 0;
-    
-        const cartWithProductDetails = cart.products.map(productItem => {
-          const quantity = productItem.quantity;
-          const price = productItem.productId.price;
-          totalQuantity += quantity;
-          totalPrice += price * quantity;
-    
-          return {
-            productId: productItem.productId._id,
-            name: productItem.productId.name,
-            description: productItem.productId.description,
-            image: productItem.productId.image,
-            category:productItem.productId.category,
-            price:productItem.productId.price,
-            quantity
-          };
-
-
-        })
-}
-catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }}
-
-
-
-
+      const cart = await Cart.findOne({ userId }).populate('products.productId');
+      if (!cart) {
+        return res.status(404).json({ message: 'Cart not found' });
+      }
+  
+      res.status(200).json(cart);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
 
 
 
