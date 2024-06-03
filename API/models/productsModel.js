@@ -6,7 +6,7 @@ const productSchema = new Schema(
             type:String
         },
         price: {
-            type:String
+            type:Number
         }, 
         image: {
             type:String
@@ -30,5 +30,5 @@ const productSchema = new Schema(
 
 )
 
-const productCollections = model("products", productSchema)
+const productCollections = model("Product", productSchema)
 module.exports = productCollections

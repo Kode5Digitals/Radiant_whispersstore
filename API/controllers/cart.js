@@ -15,52 +15,88 @@ const calculateTotalPrice = async (cart) => {
 
 // Add item to cart
 const UserCart= async (req, res) => {
-const { userId, productId, quantity } = req.body;
+    const { productId, quantity } = req.body;
+    const userId = req.params.userId;
+  
     try {
+      // Check if the product exists
       const product = await Product.findById(productId);
       if (!product) {
         return res.status(404).json({ message: 'Product not found' });
       }
   
-      let cart = await Cart.findOne({ user: userId });
-      if (!cart) {
-        cart = new Cart({ user: userId, items: [], totalQuantity: 0, totalPrice: 0 });
-      }
+      // Find the cart for the user
+      let cart = await Cart.findOne({ userId });
   
-      const existingItemIndex = cart.items.findIndex(item => item.productId.toString() === productId);
-      if (existingItemIndex > -1) {
-        cart.items[existingItemIndex].quantity += quantity;
-        cart.items[existingItemIndex].price = product.price;
+      if (cart) {
+        // If the cart exists, check if the product is already in the cart
+        const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+  
+        if (productIndex > -1) {
+          // If the product exists in the cart, update the quantity
+          cart.products[productIndex].quantity += quantity;
+        } else {
+          // If the product does not exist in the cart, add it
+          cart.products.push({ productId, quantity });
+        }
       } else {
-        cart.items.push({ productId, quantity, price: product.price });
+        // If the cart does not exist, create a new cart for the user
+        cart = new Cart({
+          userId,
+          products: [{ productId, quantity }],
+        });
       }
-  
-      cart.totalQuantity += quantity;
-      cart.totalPrice += product.price * quantity;
   
       await cart.save();
-      res.status(200).json(cart);
+      res.status(200).json({ message: 'Product added to cart', cart });
     } catch (error) {
-      console.error('Error adding to cart:', error);
-      res.status(500).json({ error: 'Internal server error' });
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
     }
-
 
 }
 
 // Get cart
 const getCartById= async (req, res) => {
-  try {
-    const cart = await Cart.findOne({ userId: req.params.userId }).populate('products.productId');
-    if (!cart) {
-      return res.status(404).json({ message: 'Cart not found' });
-    }
-    res.status(200).json(cart);
-  } catch (error) {
+    try {
+        const cart = await Cart.findOne({ userId: req.params.userId })
+          .populate('products.productId'); // Populate product details
+    
+        if (!cart) {
+          return res.status(404).json({ message: 'Cart not found' });
+        }
+    
+        let totalQuantity = 0;
+        let totalPrice = 0;
+    
+        const cartWithProductDetails = cart.products.map(productItem => {
+          const quantity = productItem.quantity;
+          const price = productItem.productId.price;
+          totalQuantity += quantity;
+          totalPrice += price * quantity;
+    
+          return {
+            productId: productItem.productId._id,
+            name: productItem.productId.name,
+            description: productItem.productId.description,
+            image: productItem.productId.image,
+            price,
+            quantity
+          };
+
+
+        })
+}
+catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
-  }
-}
+  }}
+
+
+
+
+
+
 
 module.exports = {
     UserCart,
