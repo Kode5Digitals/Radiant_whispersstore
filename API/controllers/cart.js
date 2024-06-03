@@ -46,9 +46,12 @@ const UserCart= async (req, res) => {
           products: [{ productId, quantity }],
         });
       }
-  
       await cart.save();
-      res.status(200).json({ message: 'Product added to cart', cart });
+      const totalQuantity = cart.products.reduce((acc, product) => acc + product.quantity, 0);
+      const totalPrice = cart.products.reduce((acc, product) => acc + product.quantity * product.productId.price, 0);
+  
+      res.status(200).json({ message: 'Product added to cart', cart: { products: cart.products, totalQuantity, totalPrice } });
+     
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
