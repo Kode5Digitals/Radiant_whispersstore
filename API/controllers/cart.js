@@ -34,16 +34,24 @@ const UserCart= async (req, res) => {
         }
     
         const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
-        if (productIndex) {
-          return res.status(400).json({ message: 'Product already in cart' });
+        if (productIndex===-1) {
+            cart.products.push({ productId, quantity });
+          await cart.populate('products.productId');
+          cart.calculateTotals();
+          await cart.save();
+          return res.status(200).json({ message: 'Product added to cart', cart,created:true });
+         
         } else {
-          cart.products.push({ productId, quantity });
+            return res.status(400).json({ message: 'Product already in cart' });
         }
-    
+         if (productIndex > -1) {
+            cart.products[productIndex].quantity += quantity;
+          } else {
+            cart.products.push({ productId, quantity });
+          }
         cart.calculateTotals();
         await cart.save();
-    
-        res.status(200).json({ message: 'Product added to cart', cart });
+             res.status(200).json({ message: 'Product added to cart', cart });
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
