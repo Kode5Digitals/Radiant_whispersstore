@@ -15,7 +15,7 @@ const calculateTotalPrice = async (cart) => {
 
 // Add item to cart
 const UserCart= async (req, res) => {
-    const { productId, quantity } = req.body;
+    const { productId, quantity ,sessionId} = req.body;
     const userId = req.params.userId;
     try {
         const product = await Product.findById(productId);
@@ -23,22 +23,38 @@ const UserCart= async (req, res) => {
           return res.status(404).json({ message: 'Product not found' });
         }
     
-        let cart = await Cart.findOne({ userId });
-        if (!cart) {
-          cart = new Cart({ userId, products: [] });
+       
+        let cart;
+        if (userId) {
+          cart = await Cart.findOne({ userId });
+        } else if (sessionId) {
+          cart = await Cart.findOne({ sessionId });
         }
     
+        if (!cart) {
+          cart = new Cart({ userId, sessionId, products: [] });
+        }
         const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
-        if (productIndex === -1) {
-          cart.products.push({ productId, quantity });
-          await cart.populate('products.productId');
+        // if (productIndex === -1) {
+        //   cart.products.push({ productId, quantity });
+        //   await cart.populate('products.productId');
+        //   cart.calculateTotals();
+        //   await cart.save();
+        //   return res.status(200).json({ message: 'Product added to cart', cart,created:true });
+        // } else {
+        //   return res.status(400).json({ message: 'Product already in cart' });
+        // }
+        if (productIndex > -1) {
+            cart.products[productIndex].quantity += quantity;
+          } else {
+            cart.products.push({ productId, quantity });
+          }
+      
+          await cart.populate('products.productId').execPopulate();
           cart.calculateTotals();
           await cart.save();
-          return res.status(200).json({ message: 'Product added to cart', cart,created:true });
-        } else {
-          return res.status(400).json({ message: 'Product already in cart' });
-        }
-    
+      
+          res.status(200).json({ message: 'Product added to cart', cart });
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
