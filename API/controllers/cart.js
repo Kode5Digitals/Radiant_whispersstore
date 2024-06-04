@@ -164,7 +164,26 @@ const decreaceCart= async (req, res) => {
     }
   }
   
-
+  const ClearAllCart= async (req, res) => {
+    const userId = req.params.userId;
+  
+    try {
+      let cart = await Cart.findOne({ userId }).populate('products.productId');
+  
+      if (!cart) {
+        return res.status(404).json({ message: 'Cart not found' });
+      }
+      cart.products = [];
+      cart.calculateTotals();
+      await cart.save();
+  
+      res.status(200).json({ message: 'All products removed from cart', cart });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  }
+  
 
 
 module.exports = {
@@ -172,5 +191,6 @@ module.exports = {
     getCartById,
     increaceCart,
     decreaceCart,
-    removeCart
+    removeCart,
+    ClearAllCart
 }
