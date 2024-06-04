@@ -167,7 +167,6 @@ const decreaceCart= async (req, res) => {
 
 // Get cart
   const getCartById = async (req, res) => {
-
     const { userId, sessionId } = req.query;
 
     try {
