@@ -7,7 +7,8 @@ const cartProductSchema = new Schema({
 });
 
 const cartSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
+  userId: { type: Schema.Types.ObjectId, ref: 'User'},
+  sessionId: { type: String },
   products: [cartProductSchema],
   totalQuantity: { type: Number, required: true, default: 0 },
   totalPrice: { type: Number, required: true, default: 0 }
