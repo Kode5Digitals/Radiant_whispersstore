@@ -44,7 +44,7 @@ const UserCart= async (req, res) => {
         } else {
           // Product not in cart, add it
           cart.products.push({ productId, quantity });
-          await cart.populate('products.productId').execPopulate();
+          await cart.populate('products.productId');
           cart.calculateTotals();
           await cart.save();
           return res.status(200).json({ message: 'Product added to cart', cart, created: true });
@@ -53,6 +53,7 @@ const UserCart= async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
       }
+    };
     // try {
     //     const product = await Product.findById(productId);
     //     if (!product) {
