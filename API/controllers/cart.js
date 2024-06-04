@@ -15,49 +15,82 @@ const calculateTotalPrice = async (cart) => {
 
 // Add item to cart
 const UserCart= async (req, res) => {
-    const { productId, quantity ,sessionId,userId} = req.body;
+    const { userId, sessionId, productId, quantity } = req.body;
     try {
         const product = await Product.findById(productId);
         if (!product) {
           return res.status(404).json({ message: 'Product not found' });
         }
     
-       
         let cart;
         if (userId) {
-          cart = await Cart.findOne({ userId });
+          cart = await Cart.findOne({ userId }).populate('products.productId');
         } else if (sessionId) {
-          cart = await Cart.findOne({ sessionId });
+          cart = await Cart.findOne({ sessionId }).populate('products.productId');
         }
     
         if (!cart) {
           cart = new Cart({ userId, sessionId, products: [] });
         }
+    
         const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
-        // if (productIndex === -1) {
-        //   cart.products.push({ productId, quantity });
-        //   await cart.populate('products.productId');
-        //   cart.calculateTotals();
-        //   await cart.save();
-        //   return res.status(200).json({ message: 'Product added to cart', cart,created:true });
-        // } else {
-        //   return res.status(400).json({ message: 'Product already in cart' });
-        // }
         if (productIndex > -1) {
-            cart.products[productIndex].quantity += quantity;
-          } else {
-            cart.products.push({ productId, quantity });
-          }
-      
-          await cart.populate('products.productId').execPopulate();
-          cart.calculateTotals();
-          await cart.save();
-      
-          res.status(200).json({ message: 'Product added to cart', cart });
+          cart.products[productIndex].quantity += quantity;
+        } else {
+          cart.products.push({ productId, quantity });
+        }
+    
+        cart.calculateTotals();
+        await cart.save();
+    
+        res.status(200).json({ message: 'Product added to cart', cart });
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
       }
+    // const { productId, quantity ,sessionId,userId} = req.body;
+    // try {
+    //     const product = await Product.findById(productId);
+    //     if (!product) {
+    //       return res.status(404).json({ message: 'Product not found' });
+    //     }
+    
+       
+    //     let cart;
+    //     if (userId) {
+    //       cart = await Cart.findOne({ userId });
+    //     } else if (sessionId) {
+    //       cart = await Cart.findOne({ sessionId });
+    //     }
+    
+    //     if (!cart) {
+    //       cart = new Cart({ userId, sessionId, products: [] });
+    //     }
+    //     const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+    //     // if (productIndex === -1) {
+    //     //   cart.products.push({ productId, quantity });
+    //     //   await cart.populate('products.productId');
+    //     //   cart.calculateTotals();
+    //     //   await cart.save();
+    //     //   return res.status(200).json({ message: 'Product added to cart', cart,created:true });
+    //     // } else {
+    //     //   return res.status(400).json({ message: 'Product already in cart' });
+    //     // }
+    //     if (productIndex > -1) {
+    //         cart.products[productIndex].quantity += quantity;
+    //       } else {
+    //         cart.products.push({ productId, quantity });
+    //       }
+      
+    //       await cart.populate('products.productId').execPopulate();
+    //       cart.calculateTotals();
+    //       await cart.save();
+      
+    //       res.status(200).json({ message: 'Product added to cart', cart });
+    //   } catch (error) {
+    //     console.error(error);
+    //     res.status(500).json({ message: 'Internal server error' });
+    //   }
 
 }
 
@@ -138,8 +171,7 @@ const decreaceCart= async (req, res) => {
     const { userId, sessionId } = req.query;
 
     try {
-      let cart;
-  
+      let cart
       if (userId) {
         cart = await Cart.findOne({ userId }).populate('products.productId');
       } else if (sessionId) {
