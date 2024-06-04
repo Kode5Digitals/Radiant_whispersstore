@@ -35,7 +35,7 @@ const UserCart= async (req, res) => {
     
         const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
         if (productIndex > -1) {
-          cart.products[productIndex].quantity += quantity;
+          return res.status(400).json({ message: 'Product already in cart' });
         } else {
           cart.products.push({ productId, quantity });
         }
@@ -48,13 +48,6 @@ const UserCart= async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
       }
-    // const { productId, quantity ,sessionId,userId} = req.body;
-    // try {
-    //     const product = await Product.findById(productId);
-    //     if (!product) {
-    //       return res.status(404).json({ message: 'Product not found' });
-    //     }
-    
        
     //     let cart;
     //     if (userId) {
