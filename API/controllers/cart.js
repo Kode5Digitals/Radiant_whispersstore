@@ -34,7 +34,7 @@ const UserCart= async (req, res) => {
         }
     
         const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
-        if (productIndex > -1) {
+        if (productIndex) {
           return res.status(400).json({ message: 'Product already in cart' });
         } else {
           cart.products.push({ productId, quantity });
