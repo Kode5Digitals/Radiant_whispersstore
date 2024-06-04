@@ -15,8 +15,7 @@ const calculateTotalPrice = async (cart) => {
 
 // Add item to cart
 const UserCart= async (req, res) => {
-    const { productId, quantity ,sessionId} = req.body;
-    const userId = req.params.userId;
+    const { productId, quantity ,sessionId,userId} = req.body;
     try {
         const product = await Product.findById(productId);
         if (!product) {
@@ -100,7 +99,6 @@ const increaceCart= async (req, res) => {
   
 const decreaceCart= async (req, res) => {
     const { userId, productId, quantity } = req.body;
-  
     try {
       const product = await Product.findById(productId);
       if (!product) {
@@ -136,20 +134,48 @@ const decreaceCart= async (req, res) => {
 
 // Get cart
   const getCartById = async (req, res) => {
-    const userId = req.params.userId;
-  
+
+    const { userId, sessionId } = req.query;
+
     try {
-      const cart = await Cart.findOne({ userId }).populate('products.productId');
+      let cart;
+  
+      if (userId) {
+        cart = await Cart.findOne({ userId }).populate('products.productId');
+      } else if (sessionId) {
+        cart = await Cart.findOne({ sessionId }).populate('products.productId');
+      } else {
+        return res.status(400).json({ message: 'UserId or SessionId is required' });
+      }
+  
       if (!cart) {
         return res.status(404).json({ message: 'Cart not found' });
       }
+  
+      cart.calculateTotals();
+      await cart.save();
   
       res.status(200).json(cart);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
     }
-  };
+
+
+//     const userId = req.params.userId;
+  
+//     try {
+//       const cart = await Cart.findOne({ userId }).populate('products.productId');
+//       if (!cart) {
+//         return res.status(404).json({ message: 'Cart not found' });
+//       }
+  
+//       res.status(200).json(cart);
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ message: 'Internal server error' });
+//     }
+  }
   
   const removeCart= async (req, res) => {
     const { productId} = req.body;
