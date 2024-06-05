@@ -185,7 +185,7 @@ const decreaceCart= async (req, res) => {
     }
 
     const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
-    if (productIndex > -1) {
+    if (productIndex !== -1) {
       cart.products.splice(productIndex, 1);
       cart.calculateTotals();
       await cart.save();
