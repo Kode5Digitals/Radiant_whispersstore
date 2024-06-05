@@ -16,17 +16,13 @@ const calculateTotalPrice = async (cart) => {
 // Add item to cart
 const UserCart= async (req, res) => {
     const { userId, sessionId, productId, quantity } = req.body;
-    
-    
   try {
-    // Check if the product exists in the database
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
     let cart;
-    // Find the cart for the user or session
     if (userId) {
       cart = await Cart.findOne({ userId }).populate('products.productId');
     } else if (sessionId) {
@@ -34,12 +30,10 @@ const UserCart= async (req, res) => {
     }
 
     if (cart) {
-      // Check if the product is already in the cart
       const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
       if (productIndex > -1) {
         return res.status(400).json({ message: 'Product already in cart' });
       } else {
-        // Product not in cart, add it
         cart.products.push({ productId, quantity });
         await cart.populate('products.productId');
         cart.calculateTotals();
@@ -47,7 +41,6 @@ const UserCart= async (req, res) => {
         return res.status(200).json({ message: 'Product added to cart', cart });
       }
     } else {
-      // No cart exists, create a new one
       cart = new Cart({ userId, sessionId, products: [{ productId, quantity }] });
       await cart.populate('products.productId');
       cart.calculateTotals();
