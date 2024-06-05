@@ -122,9 +122,9 @@ const decreaceCart= async (req, res) => {
         }
     
         const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
-        if (productIndex > -1) {
+        if (productIndex ==-1) {
           cart.products[productIndex].quantity -= quantity;
-          if (cart.products[productIndex].quantity >= 1) {
+          if (cart.products[productIndex].quantity > 1) {
             cart.products.splice(productIndex, 1);
           }
           cart.calculateTotals();
@@ -185,7 +185,7 @@ const decreaceCart= async (req, res) => {
     }
 
     const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
-    if (productIndex !== -1) {
+    if (productIndex > -1) {
       cart.products.splice(productIndex, 1);
       cart.calculateTotals();
       await cart.save();
