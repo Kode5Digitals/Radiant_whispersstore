@@ -20,8 +20,8 @@ const PaystackComponent = () => {
   const navigate=useNavigate()
 const [loading, setLoading] = useState(false);
 const { items } = useSelector(selectCart);
-const cartItemImages = items.map((item) => item.image)
-const cartItemNames= items.map((item) => item.name)
+const cartItemImages = items.map((item) => item.productId.image)
+const cartItemNames= items.map((item) => item.productId.name)
 const cartItems= items.map((item) => item)
 const key="pk_test_07070da6a9afaa698f923376dc24bbbe12df1d94";
 const [reference, setReference] = useState('');

@@ -11,15 +11,12 @@ import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 import httpAuth from "../utils/https"
 import { useSelector } from "react-redux"
-import { selectCartLength } from "../stores/features/cart/cartSlice"
 import HoverInfo from "./hoverInfo"
 import { MdAccountCircle, MdArrowBackIos, MdOutlineCancel } from "react-icons/md"
 import { IoLogoWhatsapp, IoMdLogIn } from "react-icons/io"
 import { IoMail, IoReload } from "react-icons/io5"
 import { FaFacebook, FaInstagramSquare } from "react-icons/fa"
 import { AiOutlineLogout } from "react-icons/ai"
-import { RiAdminFill } from "react-icons/ri"
-import http from "../utils/adminHttp"
 
 
 const MainNavbar = ({  logoSrc,toggleSidebar }) => {
@@ -35,7 +32,6 @@ const MainNavbar = ({  logoSrc,toggleSidebar }) => {
     setisadmin,
     setLogin
   } = useContext(Cartcontext)
-  // const cartLength = useSelector(selectCartLength)
   const [query, setQuery] = useState("")
   const [searchedProducts, setSearchedProducts] = useState([])
   const [showProducts, setShowProducts] = useState(false)
@@ -44,30 +40,14 @@ const MainNavbar = ({  logoSrc,toggleSidebar }) => {
    const[openNavMenu,setOpenNavMenu]=useState(false)
    const[openContact,setOpenContact]=useState(false)
    const[loading,setLoading]=useState(false)
-  const [cartLength, setCartLength] = useState(0);
-const {user}=useContext(Cartcontext)
-const userId=user?._id
-
-  useEffect(() => {
-    const fetchCartLength = async () => {
-      try {
-        const response = await httpAuth.get(`/api/cart/${userId}`);
-        console.log("cart data:",response.data)
-        const { products } = response.data;
-        setCartLength(products.length);
-      } catch (error) {
-        console.error('Error fetching cart:', error);
-      }
-    };
-
-    fetchCartLength();
-  }, [userId]);
-
-
-
-
-
-
+   const [cartLength, setCartLength] = useState(0);
+   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+ 
+   useEffect(() => {
+     setCartLength(totalQuantity);
+   }, [totalQuantity]);
+  //search
+  
   const handleSearch = useCallback(async () => {
     setLoading(true)
     try {

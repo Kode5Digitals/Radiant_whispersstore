@@ -8,54 +8,57 @@ import { Link } from "react-router-dom"
 import Footer from "../components/footer"
 import { useSelector, useDispatch } from "react-redux"
 import {
-  removeFromCart,
-  increaseQuantity,
-  decreaseQuantity,
   selectCartLength,
   selectCart,
-  removeAllFromCart,
   fetchUserCart,
   increaseCartItemQuantity,
   decreaseCartItemQuantity,
+  removeItemFromCart,
+  clearCart,
 } from "../stores/features/cart/cartSlice"
 import { TbCurrencyNaira } from "react-icons/tb"
 import { formatPrice } from "../utils/utils"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import Cartcontext from "../cartcontext"
-
 const Cart = () => {
   const { items, totalQuantity, totalPrice } = useSelector(selectCart)
   const cartLength = useSelector(selectCartLength)
   const dispatch = useDispatch()
-    const{user}=useContext(Cartcontext)
+    const{user,sessionId}=useContext(Cartcontext)
+    const[ loading,setloading]=useState()
 
   useEffect(() => {
-    if (user?._id) {
-      dispatch(fetchUserCart(user._id))
-      console.log("incart")
+  try{
+    setloading(true)
+    if (user?._id || sessionId) {
+      dispatch(fetchUserCart({ userId: user?._id, sessionId }));
     }
-  }, [dispatch, user?._id]);
+  }catch(err){
+console.error(err)
+setloading(false)
+  }finally{
+    setloading(false)
+  }
+  }, [dispatch, user,sessionId]);
 
 
   console.log("items",items)
 
-  const handleRemoveFromCart = (item) => {
-    dispatch(removeFromCart(item))
+  const handleRemoveFromCart = (productId) => {
+    dispatch(removeItemFromCart({ userId: user?._id, productId,sessionId }));
   }
 
   const handleIncreaseQuantity = (productId,additionalQuantity) => {
-    // dispatch(increaseQuantity(item))
-    dispatch(increaseCartItemQuantity({ userId: user._id, productId: productId, quantity: additionalQuantity }));
+    dispatch(increaseCartItemQuantity({ userId: user?._id, productId: productId,sessionId, quantity: additionalQuantity }));
   }
 
   const handleDecreaseQuantity = (productId,decreaseQuantity) => {
-    // dispatch(decreaseQuantity(item))
-    dispatch(decreaseCartItemQuantity({ userId: user._id, productId: productId, quantity: decreaseQuantity }));
+    dispatch(decreaseCartItemQuantity({ userId: user?._id, productId: productId,sessionId, quantity: decreaseQuantity }));
 
   }
 
   const handleremoveAllFromCart = () => {
-    dispatch(removeAllFromCart())
+    dispatch(clearCart({ userId: user?._id ,sessionId}));
   }
 
 
@@ -96,6 +99,7 @@ const Cart = () => {
         </div>
       </div>
 
+   {!loading&& <div>
       {items?.length > 0 && (
         <div>
           {items?.map((product, index) => (
@@ -117,7 +121,7 @@ const Cart = () => {
               
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md"><span></span>{formatPrice(Number(product.productId?.price)*product.productId.quantity)}</h4>
+                <h4 className="text-md"><span></span>{formatPrice(Number(product.productId?.price)*product.quantity)}</h4>
                 </div>
                 <div className="flex justify-between mt-3">
                   <div className="flex ">
@@ -128,7 +132,7 @@ const Cart = () => {
                       +
                     </button>
                     <h4 className="w-9 h-9 text-sm flex justify-center items-center rounded-md">
-                      {product.productId?.quantity}
+                      {product.quantity}
                     </h4>
                     <button
                       className="w-9  bg-white border  h-9 text-sm flex  text-black  justify-center items-center rounded-md"
@@ -195,9 +199,11 @@ const Cart = () => {
             </div>
           </div>
         </div>
-      )}
+      )}</div>
+}
 
-      {items?.length === 0 && (
+ { loading && <div>loading....</div> }
+      {!loading&&items?.length === 0 && (
         <div className="w-full  h-[400px] flex justify-center items-center">
           <h1 className="text-center  text-3xl">Your cart is empty</h1>
         </div>

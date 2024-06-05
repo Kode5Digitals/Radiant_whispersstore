@@ -1,4 +1,5 @@
 
+import { useEffect } from "react";
 import NewArrivals from "./components/NewArrivals";
 import Banner from "./components/banner";
 import Banner2 from "./components/banner2";
@@ -6,8 +7,14 @@ import Products from "./components/products";
 import "./index.css";
 import Defaultlayout from "./layout/Defaultlayout";
 import { IoLogoWhatsapp } from "react-icons/io";
+import { generateSessionId } from "./utils/uniqueId";
 
 function Home() {
+  useEffect(() => {
+    generateSessionId();
+    console.log("first")
+  }, [])
+
   return (
     <main >
    < Defaultlayout >

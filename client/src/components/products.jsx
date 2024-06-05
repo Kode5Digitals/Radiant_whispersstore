@@ -1,95 +1,99 @@
-import { CiHeart } from "react-icons/ci";
-import { useContext, useEffect, useState } from "react";
-import httpAuth from "../utils/https";
-import { Link } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import LoadingSpinner from "./loaderSpinner";
-import { Typography } from "@mui/material";
-import Navbar from "./nav";
-import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../stores/features/product/productSlice";
-import { addItemToCart, selectCart} from "../stores/features/cart/cartSlice";
-import { toggleWishlistItem } from "../stores/features/whishlist/wishlistSlice";
-import { FaHeart} from "react-icons/fa";
-import { TbCurrencyNaira } from "react-icons/tb";
-import { Truncate, formatPrice } from "../utils/utils";
-import cors from "cors";
+import { CiHeart } from "react-icons/ci"
+import { useContext, useEffect, useState } from "react"
+import httpAuth from "../utils/https"
+import { Link } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import LoadingSpinner from "./loaderSpinner"
+import { Typography } from "@mui/material"
+import Navbar from "./nav"
+import { useDispatch, useSelector } from "react-redux"
+import { setProducts } from "../stores/features/product/productSlice"
+import { addItemToCart, selectCart} from "../stores/features/cart/cartSlice"
+import { toggleWishlistItem } from "../stores/features/whishlist/wishlistSlice"
+import { FaHeart} from "react-icons/fa"
+import { TbCurrencyNaira } from "react-icons/tb"
+import { Truncate, formatPrice } from "../utils/utils"
+import cors from "cors"
 
-import { LiaShoppingBagSolid } from "react-icons/lia";
-import Cartcontext from "../cartcontext";
-cors();
+import { LiaShoppingBagSolid } from "react-icons/lia"
+import Cartcontext from "../cartcontext"
+cors()
 function Products() {
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const products = useSelector((state) => state.products);
-  const [visibleProducts, setVisibleProducts] = useState(15);
-  const { wishlistItems } = useSelector((state) => state?.whishlist);
-  const [quantity, setQuantity] = useState({});
-  const{user}=useContext(Cartcontext)
-  const { items } = useSelector(selectCart)
+  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false)
+  const products = useSelector((state) => state.products)
+  const [visibleProducts, setVisibleProducts] = useState(15)
+  const { wishlistItems } = useSelector((state) => state?.whishlist)
+  const [quantity, setQuantity] = useState({})
+  const{user,sessionId}=useContext(Cartcontext)
+  const {items} = useSelector(selectCart)
+
+
+useEffect(()=>{
+  console.log(items)
+
+},[items])
+
+
 
   const handleAllProducts = async () => {
     try {
-      setLoading(true);
-      const response = await httpAuth.get(`/api/products/allProducts`);
+      setLoading(true)
+      const response = await httpAuth.get(`/api/products/allProducts`)
       const data = await response.data?.products.map((product) => ({
         ...product,
         quantity: 1,
-      }));
-      return data;
+      }))
+      return data
     } catch (error) {
-      console.log(error);
+      console.log(error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
     handleAllProducts().then((products) => {
-      dispatch(setProducts(products));
-    });
-  }, [dispatch]);
+      dispatch(setProducts(products))
+    })
+  }, [dispatch])
 
   const handleLoadMore = () => {
-    setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 9);
-  };
+    setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 9)
+  }
 
   const handleAddToWishlist = (Id) => {
-    dispatch(toggleWishlistItem(Id));
-  };
+    dispatch(toggleWishlistItem(Id))
+  }
 
  
   const isProductInWishlist = (productId) => {
-    const wish = wishlistItems.some((item) => item._id === productId);
-    return wish;
-  };
+    const wish = wishlistItems.some((item) => item._id === productId)
+    return wish
+  }
 
   const handleIncrease = (productId) => {
     console.log(productId)
     setQuantity(prevQuantities => ({
       ...prevQuantities,
       [productId]: (prevQuantities[productId] || 1) + 1
-    }));
-  };
+    }))
+  }
   const handleDecrease = (productId) => {
     setQuantity(prevQuantities => ({
       ...prevQuantities,
       [productId]: Math.max((prevQuantities[productId] || 0) - 1, 1)
-    }));
-  };
+    }))
+  }
 
-  // const handleAddToCart = (product) => {
-  //   const selectedQuantity = quantity[product._id] || 1
-  //  dispatch( addToCart({...product, quantity:selectedQuantity})) ;
-  // }  
+
 
   const handleAddToCart = (product) => {
     const selectedQuantity = quantity[product._id] || 1
-    dispatch(addItemToCart({ userId:user._id, productId: product._id,quantity:selectedQuantity }));
-    console.log("in product",items)
-    console.log("in product",selectedQuantity)
-  };
+    dispatch(addItemToCart({ userId:user?._id,sessionId,productId: product._id,quantity:selectedQuantity }))
+    
+  }
 
 
 
@@ -209,7 +213,7 @@ function Products() {
         theme="light"
       />
     </main>
-  );
+  )
 }
 
-export default Products;
+export default Products
