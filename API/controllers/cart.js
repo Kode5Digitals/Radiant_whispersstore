@@ -169,40 +169,69 @@ const decreaceCart= async (req, res) => {
   
   const removeCart= async (req, res) => {
     const { productId,userId,sessionId} = req.body;
-    try {
-        let cart;
-        if (userId) {
-          cart = await Cart.findOne({ userId }).populate('products.productId');
-        } else if (sessionId) {
-          cart = await Cart.findOne({ sessionId }).populate('products.productId');
-        } else {
-          return res.status(400).json({ message: 'UserId or sessionId required' });
-        }
     
-        if (!cart) {
-          return res.status(404).json({ message: 'Cart not found' });
-        }
+  try {
+    let cart;
+    if (userId) {
+      cart = await Cart.findOne({ userId }).populate('products.productId');
+    } else if (sessionId) {
+      cart = await Cart.findOne({ sessionId }).populate('products.productId');
+    } else {
+      return res.status(400).json({ message: 'UserId or sessionId required' });
+    }
+
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found' });
+    }
+
+    const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+    if (productIndex > -1) {
+      cart.products.splice(productIndex, 1);
+      cart.calculateTotals();
+      await cart.save();
+      return res.status(200).json({ message: 'Product removed from cart', cart });
+    } else {
+      return res.status(404).json({ message: 'Product not in cart' });
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+    // try {
+    //     let cart;
+    //     if (userId) {
+    //       cart = await Cart.findOne({ userId }).populate('products.productId');
+    //     } else if (sessionId) {
+    //       cart = await Cart.findOne({ sessionId }).populate('products.productId');
+    //     } else {
+    //       return res.status(400).json({ message: 'UserId or sessionId required' });
+    //     }
     
-        const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
-        if (productIndex > -1) {
-          cart.products.splice(productIndex, 1);
-          cart.calculateTotals();
-          await cart.save();
-          return res.status(200).json({ message: 'Product removed from cart', cart });
-        } else {
-          return res.status(404).json({ message: 'Product not in cart' });
-        }
+    //     if (!cart) {
+    //       return res.status(404).json({ message: 'Cart not found' });
+    //     }
     
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-      }
+    //     const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+    //     if (productIndex > -1) {
+    //       cart.products.splice(productIndex, 1);
+    //       cart.calculateTotals();
+    //       await cart.save();
+    //       return res.status(200).json({ message: 'Product removed from cart', cart });
+    //     } else {
+    //       return res.status(404).json({ message: 'Product not in cart' });
+    //     }
+    
+    //   } catch (error) {
+    //     console.error(error);
+    //     res.status(500).json({ message: 'Internal server error' });
+    //   }
     
     
   }
   
   const ClearAllCart= async (req, res) => {
-    const { userId,sessionId} = req.body;
+    const {userId,sessionId} = req.body;
     try {
         let cart;
         if (userId) {
