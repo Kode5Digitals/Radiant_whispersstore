@@ -16,6 +16,9 @@ const calculateTotalPrice = async (cart) => {
 // Add item to cart
 const UserCart= async (req, res) => {
     const { userId, sessionId, productId, quantity } = req.body;
+    if (!userId && !sessionId) {
+        return res.status(400).json({ message: 'UserId or sessionId is required' });
+      }
     try {
         const product = await Product.findById(productId);
         if (!product) {
@@ -57,7 +60,9 @@ const UserCart= async (req, res) => {
 
 const increaceCart= async (req, res) => {
     const { userId, sessionId, productId, quantity } = req.body;
- 
+    if (!userId && !sessionId) {
+        return res.status(400).json({ message: 'UserId or sessionId is required' });
+      }
 try {
     const product = await Product.findById(productId);
     if (!product) {
@@ -103,6 +108,9 @@ try {
   
 const decreaceCart= async (req, res) => {
     const { userId, productId, quantity,sessionId } = req.body;
+    if (!userId && !sessionId) {
+        return res.status(400).json({ message: 'UserId or sessionId is required' });
+      }
     try {
         let cart;
         if (userId) {
@@ -142,7 +150,9 @@ const decreaceCart= async (req, res) => {
 // Get cart
   const getCartById = async (req, res) => {
     const { userId, sessionId } = req.query;
-
+    if (!userId && !sessionId) {
+        return res.status(400).json({ message: 'UserId or sessionId is required' });
+      }
     try {
       let cart
       if (userId) {
@@ -166,7 +176,9 @@ const decreaceCart= async (req, res) => {
   
   const removeCart= async (req, res) => {
     const { productId,userId,sessionId} = req.body;
-    
+    if (!userId && !sessionId) {
+        return res.status(400).json({ message: 'UserId or sessionId is required' });
+      }
   try {
     let cart;
     if (userId) {
@@ -257,6 +269,9 @@ const decreaceCart= async (req, res) => {
   
   const ClearAllCart= async (req, res) => {
     const {userId,sessionId} = req.body;
+    if (!userId && !sessionId) {
+        return res.status(400).json({ message: 'UserId or sessionId is required' });
+      }
     try {
         let cart;
         if (userId) {
