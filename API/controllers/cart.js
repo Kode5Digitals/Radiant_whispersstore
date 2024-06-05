@@ -202,7 +202,7 @@ const decreaceCart= async (req, res) => {
   }
   
   const ClearAllCart= async (req, res) => {
-    const userId = req.params.userId;
+    const { userId,sessionId} = req.body;
     try {
         let cart;
         if (userId) {
