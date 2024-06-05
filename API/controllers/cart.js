@@ -169,7 +169,6 @@ const decreaceCart= async (req, res) => {
   
   const removeCart= async (req, res) => {
     const { productId,userId,sessionId} = req.body;
-    
   try {
     let cart;
     if (userId) {
@@ -177,11 +176,11 @@ const decreaceCart= async (req, res) => {
     } else if (sessionId) {
       cart = await Cart.findOne({ sessionId }).populate('products.productId');
     } else {
-      return res.status(400).json({ message: 'UserId or sessionId required' });
+      return res.json({ message: 'UserId or sessionId required' });
     }
 
     if (!cart) {
-      return res.status(404).json({ message: 'Cart not found' });
+      return res.json({ message: 'Cart not found' });
     }
 
     const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
@@ -189,9 +188,9 @@ const decreaceCart= async (req, res) => {
       cart.products.splice(productIndex, 1);
       cart.calculateTotals();
       await cart.save();
-      return res.status(200).json({ message: 'Product removed from cart', cart });
+      return res.json({ message: 'Product removed from cart', cart });
     } else {
-      return res.status(404).json({ message: 'Product not in cart' });
+      return res.json({ message: 'Product not in cart' });
     }
 
   } catch (error) {
