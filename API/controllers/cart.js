@@ -182,7 +182,7 @@ const decreaceCart= async (req, res) => {
         if (!cart) {
           return res.json({ message: 'Cart not found' });
         }   
-        const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+        const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
         if (productIndex > -1) {
           cart.products.splice(productIndex, 1);
           cart.calculateTotals();
