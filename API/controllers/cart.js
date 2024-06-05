@@ -96,8 +96,50 @@ try {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
-    // const { productId, quantity } = req.body;
-    // const userId = req.params.userId;
+   
+  }
+  
+
+  
+const decreaceCart= async (req, res) => {
+    const { userId, productId, quantity,sessionId } = req.body;
+    try {
+        const product = await Product.findById(productId);
+        if (!product) {
+          return res.status(404).json({ message: 'Product not found' });
+        }
+    
+        let cart;
+        if (userId) {
+          cart = await Cart.findOne({ userId }).populate('products.productId');
+        } else if (sessionId) {
+          cart = await Cart.findOne({ sessionId }).populate('products.productId');
+        } else {
+          return res.status(400).json({ message: 'UserId or sessionId required' });
+        }
+    
+        if (!cart) {
+          return res.status(404).json({ message: 'Cart not found' });
+        }
+    
+        const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+        if (productIndex > -1) {
+          cart.products[productIndex].quantity -= quantity;
+          if (cart.products[productIndex].quantity <= 0) {
+            cart.products.splice(productIndex, 1);
+          }
+          cart.calculateTotals();
+          await cart.save();
+          return res.status(200).json({ message: 'Product quantity decreased', cart });
+        } else {
+          return res.status(404).json({ message: 'Product not in cart' });
+        }
+    
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
+    };
     // try {
     //   const product = await Product.findById(productId);
     //   if (!product) {
@@ -111,11 +153,14 @@ try {
   
     //   const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
     //   if (productIndex > -1) {
-    //     cart.products[productIndex].quantity += quantity;
+    //     cart.products[productIndex].quantity -= quantity;
+    //     if (cart.products[productIndex].quantity <= 0) {
+    //       cart.products.splice(productIndex, 1);
+    //     }
     //     await cart.populate('products.productId');
     //     cart.calculateTotals();
     //     await cart.save();
-    //     return res.status(200).json({ message: 'Product quantity increased', cart });
+    //     return res.status(200).json({ message: 'Product quantity decreased', cart });
     //   } else {
     //     return res.status(404).json({ message: 'Product not in cart' });
     //   }
@@ -124,41 +169,6 @@ try {
     //   console.error(error);
     //   res.status(500).json({ message: 'Internal server error' });
     // }
-  }
-  
-
-  
-const decreaceCart= async (req, res) => {
-    const { userId, productId, quantity } = req.body;
-    try {
-      const product = await Product.findById(productId);
-      if (!product) {
-        return res.status(404).json({ message: 'Product not found' });
-      }
-  
-      let cart = await Cart.findOne({ userId });
-      if (!cart) {
-        return res.status(404).json({ message: 'Cart not found' });
-      }
-  
-      const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
-      if (productIndex > -1) {
-        cart.products[productIndex].quantity -= quantity;
-        if (cart.products[productIndex].quantity <= 0) {
-          cart.products.splice(productIndex, 1);
-        }
-        await cart.populate('products.productId');
-        cart.calculateTotals();
-        await cart.save();
-        return res.status(200).json({ message: 'Product quantity decreased', cart });
-      } else {
-        return res.status(404).json({ message: 'Product not in cart' });
-      }
-  
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
   }
   
 
