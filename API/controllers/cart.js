@@ -16,6 +16,7 @@ const calculateTotalPrice = async (cart) => {
 // Add item to cart
 const UserCart= async (req, res) => {
     const { userId, sessionId, productId, quantity } = req.body;
+    console.log("herer",req.body)
     if (!userId && !sessionId) {
         return res.status(400).json({ message: 'UserId or sessionId is required' });
       }
