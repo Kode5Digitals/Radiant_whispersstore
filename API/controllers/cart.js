@@ -104,10 +104,6 @@ try {
 const decreaceCart= async (req, res) => {
     const { userId, productId, quantity,sessionId } = req.body;
     try {
-        const product = await Product.findById(productId);
-        if (!product) {
-          return res.status(404).json({ message: 'Product not found' });
-        }
         let cart;
         if (userId) {
           cart = await Cart.findOne({ userId }).populate('products.productId');
@@ -121,19 +117,20 @@ const decreaceCart= async (req, res) => {
           return res.status(404).json({ message: 'Cart not found' });
         }
     
-        const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
-        if (productIndex ==-1) {
-          cart.products[productIndex].quantity -= quantity;
-          if (cart.products[productIndex].quantity > 1) {
-            cart.products.splice(productIndex, 1);
+        const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+        if (productIndex > -1) {
+          const newQuantity = cart.products[productIndex].quantity - 1;
+          if (newQuantity < 1) {
+            return res.status(400).json({ message: 'Quantity cannot be less than 1' });
           }
+          cart.products[productIndex].quantity = newQuantity;
+          await cart.populate('products.productId');
           cart.calculateTotals();
           await cart.save();
           return res.status(200).json({ message: 'Product quantity decreased', cart });
         } else {
           return res.status(404).json({ message: 'Product not in cart' });
         }
-    
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
