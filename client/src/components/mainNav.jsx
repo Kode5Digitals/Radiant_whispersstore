@@ -10,13 +10,15 @@ import { BiSolidRegistered, BiSolidUserPin } from "react-icons/bi"
 import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 import httpAuth from "../utils/https"
-import { useSelector } from "react-redux"
 import HoverInfo from "./hoverInfo"
 import { MdAccountCircle, MdArrowBackIos, MdOutlineCancel } from "react-icons/md"
 import { IoLogoWhatsapp, IoMdLogIn } from "react-icons/io"
 import { IoMail, IoReload } from "react-icons/io5"
 import { FaFacebook, FaInstagramSquare } from "react-icons/fa"
 import { AiOutlineLogout } from "react-icons/ai"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchUserCart } from "../stores/features/cart/cartSlice"
+
 
 
 const MainNavbar = ({  logoSrc,toggleSidebar }) => {
@@ -30,7 +32,9 @@ const MainNavbar = ({  logoSrc,toggleSidebar }) => {
     login,
     isadmin,
     setisadmin,
-    setLogin
+    setLogin,
+    cartLength,
+    setCartLength
   } = useContext(Cartcontext)
   const [query, setQuery] = useState("")
   const [searchedProducts, setSearchedProducts] = useState([])
@@ -40,12 +44,22 @@ const MainNavbar = ({  logoSrc,toggleSidebar }) => {
    const[openNavMenu,setOpenNavMenu]=useState(false)
    const[openContact,setOpenContact]=useState(false)
    const[loading,setLoading]=useState(false)
-   const [cartLength, setCartLength] = useState(0);
    const totalQuantity = useSelector((state) => state.cart.totalQuantity);
- 
+   const dispatch=useDispatch()
+   const {user,sessionId}=useContext(Cartcontext)
+    
+   
+    useEffect(() => {
+      try{
+        if (user?._id || sessionId) {
+          dispatch(fetchUserCart({ userId: user?._id, sessionId }));
+        }
+      }catch(err){
+    console.error(err)
+      }}, [dispatch, user,sessionId]);
    useEffect(() => {
      setCartLength(totalQuantity);
-   }, [totalQuantity]);
+   }, [totalQuantity,setCartLength]);
   //search
   
   const handleSearch = useCallback(async () => {

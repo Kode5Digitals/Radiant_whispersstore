@@ -26,16 +26,17 @@ function Products() {
   const [visibleProducts, setVisibleProducts] = useState(15)
   const { wishlistItems } = useSelector((state) => state?.whishlist)
   const [quantity, setQuantity] = useState({})
-  const{user,sessionId}=useContext(Cartcontext)
+  const{user,sessionId,setCartLength}=useContext(Cartcontext)
   const {items} = useSelector(selectCart)
+  const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
 
 useEffect(()=>{
-  console.log(items)
-
+console.log(items)
 },[items])
-
-
+useEffect(() => {
+  setCartLength(totalQuantity);
+}, [totalQuantity,setCartLength]);
 
   const handleAllProducts = async () => {
     try {

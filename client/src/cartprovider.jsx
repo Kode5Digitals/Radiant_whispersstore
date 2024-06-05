@@ -104,7 +104,8 @@ const Cartprovider = ({ children }) => {
     user:user,
     producthistory,
     setProductHistory,
-    cartLength,setCartLength,
+    cartLength,
+    setCartLength,
     sessionId:sessionId
   };
 

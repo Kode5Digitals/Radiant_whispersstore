@@ -1,9 +1,9 @@
 import { PiGreaterThanLight } from "react-icons/pi";
 import { PiLessThanLight } from "react-icons/pi";
-import {  useEffect, useRef, useState } from "react";
+import {  useContext, useEffect, useRef, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import httpAuth from "../utils/https";
-import {  addToCart } from "../stores/features/cart/cartSlice";
+import {  addItemToCart, addToCart } from "../stores/features/cart/cartSlice";
 import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -14,6 +14,7 @@ import { TbCurrencyNaira } from "react-icons/tb";
 import { BiLoaderCircle } from "react-icons/bi";
 import cors from "cors"
 import { LiaShoppingBagSolid } from "react-icons/lia";
+import Cartcontext from "../cartcontext";
 cors()
 function NewArrivals() {
   const flexContainerRef = useRef(null);
@@ -22,6 +23,7 @@ const {wishlistItems}= useSelector((state)=>state?.whishlist);
 const [loading,setLoading]=useState(true)
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch()
+  const{user,sessionId}=useContext(Cartcontext)
 
   useEffect(() => {
     const fetchNewArrivals = async () => {
@@ -74,11 +76,13 @@ const [loading,setLoading]=useState(true)
   
   
   //add to cart
+ 
+  
   const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-  };
-  
-  
+    const selectedQuantity =  1
+    dispatch(addItemToCart({ userId:user?._id,sessionId,productId: product._id,quantity:selectedQuantity }))
+    
+  }
 
   return ( 
     <div className="xl:mt-24 ">

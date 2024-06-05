@@ -1,16 +1,17 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Defaultlayout from "../layout/Defaultlayout"
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa6"
 import { useDispatch, useSelector } from "react-redux"
 import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
-import {  addToCart } from "../stores/features/cart/cartSlice";
+import {  addItemToCart } from "../stores/features/cart/cartSlice";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { formatPrice } from "../utils/utils";
 import { FaShoppingCart } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
+import Cartcontext from "../cartcontext";
 
 const ProductDetails = () => {
 const [productDetail,setProductDetail] =useState()
@@ -18,12 +19,9 @@ const params=useParams()
 const productid=params.product_id
 const {wishlistItems}= useSelector((state)=>state?.whishlist); 
 const dispatch = useDispatch()
+const {user,sessionId}=useContext(Cartcontext)
 
  
-const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-  };
-
 useEffect(()=>{
     axios({
     url:`https://radiant-whispersstore.onrender.com/api/products/getProduct/${productid}`,
@@ -38,7 +36,11 @@ console.log(err)
 const handleAddToWishlist=(Id)=>{
   dispatch(toggleWishlistItem(Id))
 }
-
+const handleAddToCart = (product) => {
+  const selectedQuantity =  1
+  dispatch(addItemToCart({ userId:user?._id,sessionId,productId: product._id,quantity:selectedQuantity }))
+  
+}
   return (
    < Defaultlayout>
     <div className="mt-40 h-full p-3 xl:p-0 xl:flex xl:w-3/4  m-auto mb-16 justify-center xl:mr-32 xl:gap-10  ">

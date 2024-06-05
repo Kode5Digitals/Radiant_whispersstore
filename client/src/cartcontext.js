@@ -43,7 +43,7 @@ const Cartcontext = createContext({
     user:null,
     producthistory:{},
     setProductHistor:()=>{},
-    cartLength:0,
+    cartLength:Number,
     setCartLength:()=>{},
     sessionId:""
 })

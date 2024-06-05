@@ -1,5 +1,5 @@
 
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import NewArrivals from "./components/NewArrivals";
 import Banner from "./components/banner";
 import Banner2 from "./components/banner2";
@@ -8,13 +8,26 @@ import "./index.css";
 import Defaultlayout from "./layout/Defaultlayout";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { generateSessionId } from "./utils/uniqueId";
+import { fetchUserCart } from "./stores/features/cart/cartSlice";
+import { useDispatch } from "react-redux";
+import Cartcontext from "./cartcontext";
+
 
 function Home() {
+ const dispatch=useDispatch()
+ const {user,sessionId}=useContext(Cartcontext)
   useEffect(() => {
     generateSessionId();
-    console.log("first")
   }, [])
-
+ 
+  useEffect(() => {
+    try{
+      if (user?._id || sessionId) {
+        dispatch(fetchUserCart({ userId: user?._id, sessionId }));
+      }
+    }catch(err){
+  console.error(err)
+    }}, [dispatch, user,sessionId]);
   return (
     <main >
    < Defaultlayout >

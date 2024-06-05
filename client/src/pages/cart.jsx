@@ -26,7 +26,6 @@ const Cart = () => {
   const dispatch = useDispatch()
     const{user,sessionId}=useContext(Cartcontext)
     const[ loading,setloading]=useState()
-
   useEffect(() => {
   try{
     setloading(true)
@@ -132,9 +131,10 @@ setloading(false)
                       +
                     </button>
                     <h4 className="w-9 h-9 text-sm flex justify-center items-center rounded-md">
-                      {product.quantity}
+                      {product.quantity|| 1}
                     </h4>
                     <button
+                    
                       className="w-9  bg-white border  h-9 text-sm flex  text-black  justify-center items-center rounded-md"
                       onClick={() => handleDecreaseQuantity(product.productId._id,1)}
                     >
