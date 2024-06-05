@@ -5,8 +5,8 @@ const { getCartById, UserCart, increaceCart, decreaceCart, removeCart, ClearAllC
 
 router.post("/cart/add", UserCart);
 router.get("/cart/getCart", getCartById);
-router.post('/cart/:userId/increase',increaceCart)
-router.post('/cart/:userId/decrease',decreaceCart)
-router.post('/cart/:userId/remove',removeCart)
-router.post('/cart/:userId/clearAll',ClearAllCart)
+router.post('/cart/increase',increaceCart)
+router.post('/cart/decrease',decreaceCart)
+router.post('/cart/remove',removeCart)
+router.post('/cart/clearAll',ClearAllCart)
 module.exports =router
