@@ -121,7 +121,7 @@ const decreaceCart= async (req, res) => {
           return res.status(404).json({ message: 'Cart not found' });
         }
     
-        const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+        const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
         if (productIndex > -1) {
           cart.products[productIndex].quantity -= quantity;
           if (cart.products[productIndex].quantity <= 0) {
@@ -169,33 +169,35 @@ const decreaceCart= async (req, res) => {
   
   const removeCart= async (req, res) => {
     const { productId,userId,sessionId} = req.body;
-    try {
-        let cart;
-        if (userId) {
-          cart = await Cart.findOne({ userId }).populate('products.productId');
-        } else if (sessionId) {
-          cart = await Cart.findOne({ sessionId }).populate('products.productId');
-        } else {
-          return res.json({ message: 'UserId or sessionId required' });
-        }
     
-        if (!cart) {
-          return res.json({ message: 'Cart not found' });
-        }   
-        const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
-        if (productIndex > -1) {
-          cart.products.splice(productIndex, 1);
-          cart.calculateTotals();
-          await cart.save();
-          return res.json({ message: 'Product removed from cart', cart });
-        } else {
-          return res.json({ message: 'Product not in cart' });
-        }
-    
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-      }
+  try {
+    let cart;
+    if (userId) {
+      cart = await Cart.findOne({ userId }).populate('products.productId');
+    } else if (sessionId) {
+      cart = await Cart.findOne({ sessionId }).populate('products.productId');
+    } else {
+      return res.json({ message: 'UserId or sessionId required' });
+    }
+
+    if (!cart) {
+      return res.json({ message: 'Cart not found' });
+    }
+
+    const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
+    if (productIndex > -1) {
+      cart.products.splice(productIndex, 1);
+      cart.calculateTotals();
+      await cart.save();
+      return res.json({ message: 'Product removed from cart', cart });
+    } else {
+      return res.json({ message: 'Product not in cart' });
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 //   try {
 //     let cart;
 //     if (userId) {
