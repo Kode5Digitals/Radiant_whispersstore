@@ -108,7 +108,6 @@ const decreaceCart= async (req, res) => {
         if (!product) {
           return res.status(404).json({ message: 'Product not found' });
         }
-    
         let cart;
         if (userId) {
           cart = await Cart.findOne({ userId }).populate('products.productId');
@@ -139,36 +138,6 @@ const decreaceCart= async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
       }
-    };
-    // try {
-    //   const product = await Product.findById(productId);
-    //   if (!product) {
-    //     return res.status(404).json({ message: 'Product not found' });
-    //   }
-  
-    //   let cart = await Cart.findOne({ userId });
-    //   if (!cart) {
-    //     return res.status(404).json({ message: 'Cart not found' });
-    //   }
-  
-    //   const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
-    //   if (productIndex > -1) {
-    //     cart.products[productIndex].quantity -= quantity;
-    //     if (cart.products[productIndex].quantity <= 0) {
-    //       cart.products.splice(productIndex, 1);
-    //     }
-    //     await cart.populate('products.productId');
-    //     cart.calculateTotals();
-    //     await cart.save();
-    //     return res.status(200).json({ message: 'Product quantity decreased', cart });
-    //   } else {
-    //     return res.status(404).json({ message: 'Product not in cart' });
-    //   }
-  
-    // } catch (error) {
-    //   console.error(error);
-    //   res.status(500).json({ message: 'Internal server error' });
-    // }
   }
   
 
@@ -199,52 +168,65 @@ const decreaceCart= async (req, res) => {
   }
   
   const removeCart= async (req, res) => {
-    const { productId} = req.body;
-    const userId = req.params.userId;
+    const { productId,userId,sessionId} = req.body;
     try {
-      let cart = await Cart.findOne({ userId }).populate('products.productId');
-  
-      if (!cart) {
-        return res.status(404).json({ message: 'Cart not found' });
+        let cart;
+        if (userId) {
+          cart = await Cart.findOne({ userId }).populate('products.productId');
+        } else if (sessionId) {
+          cart = await Cart.findOne({ sessionId }).populate('products.productId');
+        } else {
+          return res.status(400).json({ message: 'UserId or sessionId required' });
+        }
+    
+        if (!cart) {
+          return res.status(404).json({ message: 'Cart not found' });
+        }
+    
+        const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+        if (productIndex > -1) {
+          cart.products.splice(productIndex, 1);
+          cart.calculateTotals();
+          await cart.save();
+          return res.status(200).json({ message: 'Product removed from cart', cart });
+        } else {
+          return res.status(404).json({ message: 'Product not in cart' });
+        }
+    
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
       }
-  
-      const productIndex = cart.products.findIndex(p => p.productId._id.toString() === productId);
-      
-      if (productIndex === -1) {
-        return res.status(404).json({ message: 'Product not found in cart' });
-      }
-  
-      cart.products.splice(productIndex, 1);
-  
-      cart.calculateTotals();
-  
-      await cart.save();
-  
-      res.status(200).json({ message: 'Product removed from cart', cart });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
+    
+    
   }
   
   const ClearAllCart= async (req, res) => {
     const userId = req.params.userId;
-  
     try {
-      let cart = await Cart.findOne({ userId }).populate('products.productId');
-  
-      if (!cart) {
-        return res.status(404).json({ message: 'Cart not found' });
+        let cart;
+        if (userId) {
+          cart = await Cart.findOne({ userId }).populate('products.productId');
+        } else if (sessionId) {
+          cart = await Cart.findOne({ sessionId }).populate('products.productId');
+        } else {
+          return res.status(400).json({ message: 'UserId or sessionId required' });
+        }
+    
+        if (!cart) {
+          return res.status(404).json({ message: 'Cart not found' });
+        }
+    
+        cart.products = [];
+        cart.calculateTotals();
+        await cart.save();
+        return res.status(200).json({ message: 'All products removed from cart', cart });
+    
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
       }
-      cart.products = [];
-      cart.calculateTotals();
-      await cart.save();
-  
-      res.status(200).json({ message: 'All products removed from cart', cart });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
+   
   }
   
 
