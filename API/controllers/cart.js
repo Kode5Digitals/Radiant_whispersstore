@@ -19,7 +19,7 @@ const UserCart= async (req, res) => {
     try {
         const product = await Product.findById(productId);
         if (!product) {
-          return res.status(404).json({ message: 'Product not found' });
+          return res.status(404).json({ message: 'Product not found',error_type:1 });
         }
     
         let cart;
@@ -32,13 +32,13 @@ const UserCart= async (req, res) => {
         if (cart) {
           const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
           if (productIndex > -1) {
-            return res.status(400).json({ message: 'Product already in cart' });
+            return res.status(400).json({ message: 'Product already in cart',error_type:1 });
           } else {
             cart.products.push({ productId, quantity });
             await cart.populate('products.productId');
             cart.calculateTotals();
             await cart.save();
-            return res.status(200).json({ message: 'Product added to cart', cart });
+            return res.status(200).json({ message: 'Product added to cart', cart ,created:true});
           }
         } else {
           cart = new Cart({ userId, sessionId, products: [{ productId, quantity }] });
