@@ -73,19 +73,23 @@ try {
       return res.status(400).json({ message: 'UserId or sessionId required' });
     }
   
-    if (!cart) {
-      return res.status(404).json({ message: 'Cart not found' });
-    }
-  
-    const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
-    if (productIndex > -1) {
-      cart.products[productIndex].quantity += quantity;
-      await cart.populate('products.productId').execPopulate();
+    if (cart) {
+      const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+      if (productIndex > -1) {
+        cart.products[productIndex].quantity += quantity;
+        cart.calculateTotals();
+        await cart.save();
+        await cart.populate('products.productId'); // Populate after saving
+        return res.status(200).json({ message: 'Product quantity increased', cart });
+      } else {
+        return res.status(404).json({ message: 'Product not in cart' });
+      }
+    } else {
+      cart = new Cart({ userId, sessionId, products: [{ productId, quantity }] });
       cart.calculateTotals();
       await cart.save();
-      return res.status(200).json({ message: 'Product quantity increased', cart });
-    } else {
-      return res.status(404).json({ message: 'Product not in cart' });
+      await cart.populate('products.productId'); // Populate after saving
+      return res.status(200).json({ message: 'Cart created and product added', cart, created: true });
     }
   
   } catch (error) {
