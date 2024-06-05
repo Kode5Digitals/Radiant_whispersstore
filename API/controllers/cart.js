@@ -74,12 +74,12 @@ try {
     }
   
     if (cart) {
-      const productIndex = cart.products.findIndex(p => p.productId.toString().equals(productId));
+      const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
       if (productIndex > -1) {
         cart.products[productIndex].quantity += quantity;
         cart.calculateTotals();
         await cart.save();
-        await cart.populate('products.productId'); // Populate after saving
+        await cart.populate('products.productId')
         return res.status(200).json({ message: 'Product quantity increased', cart });
       } else {
         return res.status(404).json({ message: 'Product not in cart' });
