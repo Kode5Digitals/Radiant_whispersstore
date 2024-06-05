@@ -29,7 +29,7 @@ const UserCart= async (req, res) => {
             return res.json({ message: 'Product already in cart',error_type:1 ,created:false});
           } else {
             cart.products.push({ productId, quantity });
-            // await cart.populate('products.productId');
+            await cart.populate('products.productId');
             cart.calculateTotals();
             await cart.save();
             return res.json({ message: 'Product added to cart', cart ,created:true});
@@ -37,7 +37,7 @@ const UserCart= async (req, res) => {
         }
          else {
           cart = new Cart({sessionId, products: [{ productId, quantity }] });
-          await cart.populate('products.productId');
+        //   await cart.populate('products.productId');
           cart.calculateTotals();
           await cart.save();
           return res.json({ message: 'Cart created and product added', cart, created: true });
