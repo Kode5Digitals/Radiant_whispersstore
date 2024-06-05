@@ -74,7 +74,7 @@ try {
     }
   
     if (cart) {
-      const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+      const productIndex = cart.products.findIndex(p => p.productId.toString().equals(productId));
       if (productIndex > -1) {
         cart.products[productIndex].quantity += quantity;
         cart.calculateTotals();
