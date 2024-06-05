@@ -16,48 +16,41 @@ const calculateTotalPrice = async (cart) => {
 // Add item to cart
 const UserCart= async (req, res) => {
     const { userId, sessionId, productId, quantity } = req.body;
+    try {
+        const product = await Product.findById(productId);
+        if (!product) {
+          return res.status(404).json({ message: 'Product not found' });
+        }
     
-  try {
-    // Check if the product exists in the database
-    const product = await Product.findById(productId);
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
-    }
-
-    let cart;
-    // Find the cart for the user or session
-    if (userId) {
-      cart = await Cart.findOne({ userId }).populate('products.productId');
-    } else if (sessionId) {
-      cart = await Cart.findOne({ sessionId }).populate('products.productId');
-    }
-
-    if (cart) {
-      // Check if the product is already in the cart
-      const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
-      if (productIndex > -1) {
-        console.log('Product already in cart:', productId);
-        return res.status(400).json({ message: 'Product already in cart' });
-      } else {
-        // Product not in cart, add it
-        cart.products.push({ productId, quantity });
-        await cart.populate('products.productId').exec();  // Use exec() to ensure correct references
-        cart.calculateTotals();
-        await cart.save();
-        return res.status(200).json({ message: 'Product added to cart', cart });
+        let cart;
+        if (userId) {
+          cart = await Cart.findOne({ userId }).populate('products.productId');
+        } else if (sessionId) {
+          cart = await Cart.findOne({ sessionId }).populate('products.productId');
+        }
+    
+        if (cart) {
+          const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
+          if (productIndex > -1) {
+            return res.status(400).json({ message: 'Product already in cart' });
+          } else {
+            cart.products.push({ productId, quantity });
+            await cart.populate('products.productId');
+            cart.calculateTotals();
+            await cart.save();
+            return res.status(200).json({ message: 'Product added to cart', cart });
+          }
+        } else {
+          cart = new Cart({ userId, sessionId, products: [{ productId, quantity }] });
+          await cart.populate('products.productId');
+          cart.calculateTotals();
+          await cart.save();
+          return res.status(200).json({ message: 'Cart created and product added', cart, created: true });
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
       }
-    } else {
-      // No cart exists, create a new one
-      cart = new Cart({ userId, sessionId, products: [{ productId, quantity }] });
-      await cart.populate('products.productId').exec();  // Use exec() to ensure correct references
-      cart.calculateTotals();
-      await cart.save();
-      return res.status(200).json({ message: 'Cart created and product added', cart, created: true });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
 //   try {
 //     const product = await Product.findById(productId);
 //     if (!product) {
