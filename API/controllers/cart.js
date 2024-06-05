@@ -3,16 +3,6 @@ const router = express.Router();
 const Cart = require('../models/cartModel');
 const Product = require('../models/productsModel')
 
-const calculateTotalPrice = async (cart) => {
-  let totalPrice = 0;
-  for (const item of cart.products) {
-    const product = await Product.findById(item.productId);
-    totalPrice += product.price * item.quantity;
-  }
-  cart.totalPrice = totalPrice;
-  await cart.save();
-};
-
 // Add item to cart
 const UserCart= async (req, res) => {
     const { userId, sessionId, productId, quantity } = req.body;
@@ -39,7 +29,7 @@ const UserCart= async (req, res) => {
             return res.json({ message: 'Product already in cart',error_type:1 ,created:false});
           } else {
             cart.products.push({ productId, quantity });
-            await cart.populate('products.productId');
+            // await cart.populate('products.productId');
             cart.calculateTotals();
             await cart.save();
             return res.json({ message: 'Product added to cart', cart ,created:true});
