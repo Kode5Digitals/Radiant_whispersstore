@@ -117,17 +117,17 @@ const decreaceCart= async (req, res) => {
           return res.status(404).json({ message: 'Cart not found' });
         }
     
-        const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
-        if (productIndex > -1) {
-          const newQuantity = cart.products[productIndex].quantity - 1;
-          if (newQuantity < 1) {
+        const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
+        if (productIndex !== -1) {
+          const product = cart.products[productIndex];
+          if (product.quantity > 1) {
+            product.quantity -= 1;
+            cart.calculateTotals();
+            await cart.save();
+            return res.status(200).json({ message: 'Product quantity decreased', cart });
+          } else {
             return res.status(400).json({ message: 'Quantity cannot be less than 1' });
           }
-          cart.products[productIndex].quantity = newQuantity;
-          await cart.populate('products.productId');
-          cart.calculateTotals();
-          await cart.save();
-          return res.status(200).json({ message: 'Product quantity decreased', cart });
         } else {
           return res.status(404).json({ message: 'Product not in cart' });
         }
