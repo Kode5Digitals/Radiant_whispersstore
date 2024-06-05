@@ -3,7 +3,7 @@ import { PiLessThanLight } from "react-icons/pi";
 import {  useContext, useEffect, useRef, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import httpAuth from "../utils/https";
-import {  addItemToCart, addToCart } from "../stores/features/cart/cartSlice";
+import {  addItemToCart } from "../stores/features/cart/cartSlice";
 import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";

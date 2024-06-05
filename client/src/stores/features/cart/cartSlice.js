@@ -12,7 +12,7 @@ async ({userId,sessionId}, thunkAPI) => {
       toast.success(response.data.message)
       return response.data
     } catch (error) {
-      toast.error('Failed to add product to cart.')
+      // toast.error('Failed to add product to cart.')
       return thunkAPI.rejectWithValue({ error: error.message })
     }
   }

@@ -8,26 +8,26 @@ import "./index.css";
 import Defaultlayout from "./layout/Defaultlayout";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { generateSessionId } from "./utils/uniqueId";
-import { fetchUserCart } from "./stores/features/cart/cartSlice";
-import { useDispatch } from "react-redux";
 import Cartcontext from "./cartcontext";
+import { useSelector } from "react-redux";
+import { selectCart } from "./stores/features/cart/cartSlice";
 
 
 function Home() {
- const dispatch=useDispatch()
- const {user,sessionId}=useContext(Cartcontext)
+ const {setCartLength}=useContext(Cartcontext)
+
+ const { totalQuantity} = useSelector(selectCart)
   useEffect(() => {
     generateSessionId();
   }, [])
  
+
   useEffect(() => {
-    try{
-      if (user?._id || sessionId) {
-        dispatch(fetchUserCart({ userId: user?._id, sessionId }));
-      }
-    }catch(err){
-  console.error(err)
-    }}, [dispatch, user,sessionId]);
+    setCartLength(totalQuantity);
+  }, [totalQuantity,setCartLength]);
+
+
+ 
   return (
     <main >
    < Defaultlayout >
