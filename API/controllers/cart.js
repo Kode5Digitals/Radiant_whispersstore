@@ -44,8 +44,9 @@ const UserCart= async (req, res) => {
             await cart.save();
             return res.json({ message: 'Product added to cart', cart ,created:true});
           }
-        } else {
-          cart = new Cart({ userId, sessionId, products: [{ productId, quantity }] });
+        }
+         else {
+          cart = new Cart({sessionId, products: [{ productId, quantity }] });
           await cart.populate('products.productId');
           cart.calculateTotals();
           await cart.save();
@@ -91,7 +92,7 @@ try {
         return res.status(404).json({ message: 'Product not in cart' });
       }
     } else {
-      cart = new Cart({ userId, sessionId, products: [{ productId, quantity }] });
+      cart = new Cart({  sessionId, products: [{ productId, quantity }] });
       cart.calculateTotals();
       await cart.save();
       await cart.populate('products.productId'); // Populate after saving
