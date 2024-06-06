@@ -35,9 +35,9 @@ const UserCart= async (req, res) => {
             sessionId,
             products: [{ productId, quantity }]
           };
-          if (userId) {
-            newCartData.userId = userId;
-          }
+        //   if (userId) {
+        //     newCartData.userId = userId;
+        //   }
           cart = new Cart(newCartData);
           await cart.calculateTotals();
           await cart.save();
