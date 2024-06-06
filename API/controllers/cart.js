@@ -37,7 +37,8 @@ const UserCart= async (req, res) => {
           return res.status(201).json({ message: 'Cart created and product added', cart, created: true });
         }
       } catch (error) {
-        console.error(error);
+        console.log("Internal server error cat")
+        // console.error(error)
         res.status(500).json({ message: 'Internal server error cat' });
       }
 }
