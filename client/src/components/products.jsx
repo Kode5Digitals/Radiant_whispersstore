@@ -92,7 +92,7 @@ useEffect(() => {
 
   const handleAddToCart = (product) => {
     const selectedQuantity = quantity[product._id] || 1
-    dispatch(addItemToCart({ userId:user?._id,sessionId,productId: product._id,quantity:selectedQuantity }))
+    dispatch(addItemToCart({ sessionId,productId: product._id,quantity:selectedQuantity }))
     
   }
 
