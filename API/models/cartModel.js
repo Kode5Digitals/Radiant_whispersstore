@@ -7,15 +7,13 @@ const cartProductSchema = new Schema({
 });
 
 const cartSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId,  ref: 'User', sparse: true},
-  sessionId: { type: String , sparse: true},
+  userId: { type: Schema.Types.ObjectId,  ref: 'User'},
+  sessionId: { type: String , required: true, unique: true},
   products: [cartProductSchema],
   totalQuantity: { type: Number, required: true, default: 0 },
   totalPrice: { type: Number, required: true, default: 0 }
 }, { timestamps: true });
 
-cartSchema.index({ userId: 1 }, { unique: true, sparse: true });
-cartSchema.index({ sessionId: 1 }, { unique: true, sparse: true })
 cartSchema.methods.calculateTotals = function () {
     const self = this;
     return mongoose.model('Product').populate(this, 'products.productId')
