@@ -21,5 +21,5 @@ const userschema = new Schema(
 
 )
 
-const usercollections = model("User", userschema)
+const usercollections = model("Users", userschema)
 module.exports = usercollections
