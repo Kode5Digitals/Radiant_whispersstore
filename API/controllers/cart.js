@@ -5,7 +5,7 @@ const Product = require('../models/productsModel')
 
 // Add item to cart
 const UserCart= async (req, res) => {
-    const {  sessionId, productId, quantity } = req.body;
+    const { userId, sessionId, productId, quantity } = req.body;
     console.log("herer",req.body)
     
     if (!sessionId) {
@@ -23,12 +23,12 @@ const UserCart= async (req, res) => {
         if (cart) {
           const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
           if (productIndex > -1) {
-            return res.status(400).json({ message: 'Product already in cart', error_type: 1, created: false });
+            return res.json({ message: 'Product already in cart', error_type: 1, created: false });
           } else {
             cart.products.push({ productId, quantity });
             await cart.calculateTotals();
             await cart.save();
-            return res.status(200).json({ message: 'Product added to cart', cart, created: true });
+            return res.json({ message: 'Product added to cart', cart, created: true });
           }
         } else {
           const newCartData = {
@@ -52,9 +52,9 @@ const UserCart= async (req, res) => {
 
 
 const increaceCart= async (req, res) => {
-    const { userId, sessionId, productId, quantity } = req.body;
-    if (!userId && !sessionId) {
-        return res.status(400).json({ message: 'UserId or sessionId is required' });
+    const {  sessionId, productId, quantity } = req.body;
+    if (!sessionId) {
+        return res.status(400).json({ message: 'sessionId is required' });
       }
 try {
     const product = await Product.findById(productId);
@@ -63,9 +63,7 @@ try {
     }
   
     let cart;
-    if (userId) {
-      cart = await Cart.findOne({ userId }).populate('products.productId');
-    } else if (sessionId) {
+     if (sessionId) {
       cart = await Cart.findOne({ sessionId }).populate('products.productId');
     } else {
       return res.status(400).json({ message: 'UserId or sessionId required' });
@@ -100,22 +98,20 @@ try {
 
   
 const decreaceCart= async (req, res) => {
-    const { userId, productId, quantity,sessionId } = req.body;
-    if (!userId && !sessionId) {
-        return res.status(400).json({ message: 'UserId or sessionId is required' });
+    const { productId, quantity,sessionId } = req.body;
+    if (!sessionId) {
+        return res.status(400).json({ message: 'SessionId is required' });
       }
     try {
         let cart;
-        if (userId) {
-          cart = await Cart.findOne({ userId }).populate('products.productId');
-        } else if (sessionId) {
+         if (sessionId) {
           cart = await Cart.findOne({ sessionId }).populate('products.productId');
         } else {
-          return res.status(400).json({ message: 'UserId or sessionId required' });
+          return res.status(400).json({ message: 'SessionId required' });
         }
     
         if (!cart) {
-          return res.status(404).json({ message: 'Cart not found' });
+          return res.json({ message: 'Cart not found' });
         }
     
         const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
@@ -166,15 +162,13 @@ const decreaceCart= async (req, res) => {
   }
   
   const removeCart= async (req, res) => {
-    const { productId,userId,sessionId} = req.body;
-    if (!userId && !sessionId) {
+    const { productId, sessionId} = req.body;
+    if (!sessionId) {
         return res.status(400).json({ message: 'UserId or sessionId is required' });
       }
   try {
     let cart;
-    if (userId) {
-      cart = await Cart.findOne({ userId }).populate('products.productId');
-    } else if (sessionId) {
+    if (sessionId) {
       cart = await Cart.findOne({ sessionId }).populate('products.productId');
     } else {
       return res.json({ message: 'UserId or sessionId required' });
