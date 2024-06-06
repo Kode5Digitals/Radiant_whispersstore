@@ -189,7 +189,8 @@ const decreaceCart= async (req, res) => {
 
         if (userId) {
             cart = await Cart.findOne({ userId }).populate('products.productId');
-        } else if (sessionId) {
+        }
+         else  {
             cart = await Cart.findOne({ sessionId }).populate('products.productId');
         }
 
