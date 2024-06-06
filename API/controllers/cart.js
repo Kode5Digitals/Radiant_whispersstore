@@ -190,7 +190,7 @@ const decreaceCart= async (req, res) => {
      if (sessionId) {
         cart = await Cart.findOne({ sessionId }).populate('products.productId');
       } else {
-        return res.status(400).json({ message: 'UserId or SessionId is required' });
+        return res.status(400).json({ message: 'SessionId is required' });
       }
       if (!cart) {
         return res.status(404).json({ message: 'Cart not found' });
