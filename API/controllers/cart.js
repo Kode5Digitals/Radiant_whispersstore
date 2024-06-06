@@ -45,7 +45,7 @@ const UserCart= async (req, res) => {
         }
       } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error from usercart' });
       }
     // if (!userId && !sessionId) {
     //     return res.status(400).json({ message: 'UserId or sessionId is required' });
@@ -200,7 +200,7 @@ const decreaceCart= async (req, res) => {
       res.status(200).json(cart);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ message: 'Internal server error from  get' });
     }
   }
   
