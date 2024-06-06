@@ -21,28 +21,35 @@ const UserCart= async (req, res) => {
 
         if (userId) {
             cart = await Cart.findOne({ userId }).populate('products.productId');
-        } else if (sessionId) {
+        } else {
             cart = await Cart.findOne({ sessionId }).populate('products.productId');
         }
-
         if (cart) {
+            // Update the existing cart
             const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
             if (productIndex > -1) {
-                cart.products[productIndex].quantity += quantity;
+                return res.status(409).json({ message: 'Product already in cart', error_type: 1, created: false });
             } else {
                 cart.products.push({ productId, quantity });
+                await cart.populate('products.productId');
+                await cart.calculateTotals();
+                await cart.save();
+                return res.status(200).json({ message: 'Product added to cart', cart, created: true });
             }
         } else {
-            cart = new Cart({
-                userId: userId || undefined,
-                sessionId,
-                products: [{ productId, quantity }]
-            });
+            // Create a new cart
+            if (userId) {
+                cart = new Cart({ userId, products: [{ productId, quantity }] });
+            } else {
+                cart = new Cart({ sessionId, products: [{ productId, quantity }] });
+            }
+            await cart.populate('products.productId');
+            await cart.calculateTotals();
+            await cart.save();
+            return res.status(201).json({ message: 'Cart created and product added', cart, created: true });
         }
 
-        await cart.calculateTotals();
-        await cart.save();
-        res.status(200).json({ message: 'Product added to cart', cart });
+       
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
