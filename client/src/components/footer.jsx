@@ -78,7 +78,7 @@ That&apos;s why we&apos;re dedicated to providing high-quality, natural body cre
           </div>
         <div className="socials  hover:bg-[#891980] hover:text-white"> <FaInstagram /></div>
         <div className="socials  hover:bg-[#891980] hover:text-white">
-         <a href="https://wa.link/m4ypbh">
+         <a href="https://wa.link/2us3c8">
          <IoLogoWhatsapp  />
          </a>
        

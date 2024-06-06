@@ -6,13 +6,12 @@ import httpAuth from "../../../utils/https"
 
 export const fetchUserCart = createAsyncThunk(
   'cart/fetchUserCart',
-async ({sessionId}, thunkAPI) => {
+async ({userId,sessionId}, thunkAPI) => {
     try {
-      const response = await httpAuth.get(`/api/cart/getCart`,{ params: { sessionId }})
+      const response = await httpAuth.get(`/api/cart/getCart`,{ params: { userId, sessionId }})
       toast.success(response.data.message)
       return response.data
     } catch (error) {
-      // toast.error('Failed to add product to cart.')
       return thunkAPI.rejectWithValue({ error: error.message })
     }
   }
@@ -21,9 +20,9 @@ async ({sessionId}, thunkAPI) => {
 
 export const addItemToCart = createAsyncThunk(
   'cart/addItemToCart',
-  async  ({ productId, quantity,sessionId },  { rejectWithValue })=> {
+  async  ({ userId, productId, quantity,sessionId },  { rejectWithValue })=> {
     try{
-      const response = await httpAuth.post(`/api/cart/add`, { productId, quantity,sessionId})
+      const response = await httpAuth.post(`/api/cart/add`, { productId, quantity,sessionId,userId })
       if(response.data.created){
         toast.success(response.data.message)
       }else{
@@ -51,6 +50,7 @@ export const increaseCartItemQuantity = createAsyncThunk('cart/increaseCartItemQ
     console.log(response.data)
     return response.data.cart
   } catch (error) {
+console.log(error)
     return thunkAPI.rejectWithValue(error.response.data)
   }
 })

@@ -30,7 +30,7 @@ const Cart = () => {
   try{
     setloading(true)
     if (user?._id || sessionId) {
-      dispatch(fetchUserCart({ userId: user?._id, sessionId }));
+      dispatch(fetchUserCart({ sessionId }));
     }
   }catch(err){
 console.error(err)
@@ -44,7 +44,7 @@ setloading(false)
   console.log("items",items)
 
   const handleRemoveFromCart = (productId) => {
-    dispatch(removeItemFromCart({ userId: user?._id, productId,sessionId }));
+    dispatch(removeItemFromCart({  productId,sessionId }));
   }
 
   const handleIncreaseQuantity = (productId,additionalQuantity) => {
