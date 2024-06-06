@@ -181,15 +181,13 @@ const decreaceCart= async (req, res) => {
 
 // Get cart
   const getCartById = async (req, res) => {
-    const { userId, sessionId } = req.query;
-    if (!userId && !sessionId) {
+    const {sessionId } = req.query;
+    if (!sessionId) {
         return res.status(400).json({ message: 'UserId or sessionId is required' });
       }
     try {
       let cart
-      if (userId) {
-        cart = await Cart.findOne({ userId }).populate('products.productId');
-      } else if (sessionId) {
+     if (sessionId) {
         cart = await Cart.findOne({ sessionId }).populate('products.productId');
       } else {
         return res.status(400).json({ message: 'UserId or SessionId is required' });
