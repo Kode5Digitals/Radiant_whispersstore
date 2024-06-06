@@ -5,7 +5,7 @@ const Product = require('../models/productsModel')
 
 // Add item to cart
 const UserCart= async (req, res) => {
-    const { userId, sessionId, productId, quantity } = req.body;
+    const {  sessionId, productId, quantity } = req.body;
     console.log("herer",req.body)
     if (!sessionId) {
         return res.status(400).json({ message: 'SessionId is required' });
