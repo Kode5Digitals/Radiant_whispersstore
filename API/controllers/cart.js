@@ -99,39 +99,45 @@ const UserCart= async (req, res) => {
 
 
 const increaceCart= async (req, res) => {
-    const {  sessionId, productId, quantity } = req.body;
-    if (!sessionId) {
-        return res.status(400).json({ message: 'sessionId is required' });
-      }
-try {
+    const { userId, sessionId, productId, quantity } = req.body;
+  
+  if (!userId && !sessionId) {
+    return res.status(400).json({ message: 'UserId or sessionId is required' });
+  }
+  
+  try {
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
   
     let cart;
-     if (sessionId) {
+    if (userId) {
+      cart = await Cart.findOne({ userId }).populate('products.productId');
+    } else if (sessionId) {
       cart = await Cart.findOne({ sessionId }).populate('products.productId');
-    } else {
-      return res.status(400).json({ message: 'UserId or sessionId required' });
     }
   
     if (cart) {
       const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
       if (productIndex > -1) {
         cart.products[productIndex].quantity += quantity;
-        cart.calculateTotals();
+        await cart.calculateTotals();
         await cart.save();
-        await cart.populate('products.productId')
+        await cart.populate('products.productId');
         return res.status(200).json({ message: 'Product quantity increased', cart });
       } else {
         return res.status(404).json({ message: 'Product not in cart' });
       }
     } else {
-      cart = new Cart({  sessionId, products: [{ productId, quantity }] });
-      cart.calculateTotals();
+      cart = new Cart({
+        userId: userId || undefined,
+        sessionId: sessionId || undefined,
+        products: [{ productId, quantity }]
+      });
+      await cart.calculateTotals();
       await cart.save();
-      await cart.populate('products.productId'); // Populate after saving
+      await cart.populate('products.productId');
       return res.status(200).json({ message: 'Cart created and product added', cart, created: true });
     }
   
@@ -140,100 +146,95 @@ try {
     res.status(500).json({ message: 'Internal server error' });
   }
    
+   
   }
   
 
   
 const decreaceCart= async (req, res) => {
-    const { productId, quantity,sessionId } = req.body;
-    if (!sessionId) {
-        return res.status(400).json({ message: 'SessionId is required' });
-      }
-    try {
-        let cart;
-         if (sessionId) {
-          cart = await Cart.findOne({ sessionId }).populate('products.productId');
-        } else {
-          return res.status(400).json({ message: 'SessionId required' });
+    const decreaseCart = async (req, res) => {
+        const { userId, sessionId, productId, quantity } = req.body;
+        
+        if (!userId && !sessionId) {
+          return res.status(400).json({ message: 'UserId or sessionId is required' });
         }
-    
-        if (!cart) {
-          return res.json({ message: 'Cart not found' });
-        }
-    
-        const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
-        if (productIndex !== -1) {
-          const product = cart.products[productIndex];
-          if (product.quantity > 1) {
-            product.quantity -= 1;
-            cart.calculateTotals();
-            await cart.save();
-            return res.status(200).json({ message: 'Product quantity decreased', cart });
-          } else {
-            return res.status(400).json({ message: 'Quantity cannot be less than 1' });
+      
+        try {
+          let cart;
+      
+          if (userId) {
+            cart = await Cart.findOne({ userId }).populate('products.productId');
+          } else if (sessionId) {
+            cart = await Cart.findOne({ sessionId }).populate('products.productId');
           }
-        } else {
-          return res.status(404).json({ message: 'Product not in cart' });
+      
+          if (!cart) {
+            return res.status(404).json({ message: 'Cart not found' });
+          }
+      
+          const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
+          if (productIndex !== -1) {
+            const product = cart.products[productIndex];
+            if (product.quantity > 1) {
+              product.quantity -= 1;
+              await cart.calculateTotals();
+              await cart.save();
+              return res.status(200).json({ message: 'Product quantity decreased', cart });
+            } else {
+              return res.status(400).json({ message: 'Quantity cannot be less than 1' });
+            }
+          } else {
+            return res.status(404).json({ message: 'Product not in cart' });
+          }
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Internal server error' });
         }
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-      }
+      };
+    
   }
   
 
 
 // Get cart
   const getCartById = async (req, res) => {
-    const {userId,sessionId } = req.query;
-
-    if (!userId && !sessionId) {
-        return res.status(400).json({ message: 'UserId or sessionId is required' });
-    }
-
-    try {
-        let cart;
-
-        if (userId) {
+        const { userId, sessionId } = req.query;
+      
+        if (!userId && !sessionId) {
+          return res.status(400).json({ message: 'UserId or sessionId is required' });
+        }
+      
+        try {
+          let cart;
+      
+          if (userId) {
             cart = await Cart.findOne({ userId }).populate('products.productId');
-        }
-         else  {
+          } else if (sessionId) {
             cart = await Cart.findOne({ sessionId }).populate('products.productId');
-        }
-
-        if (!cart) {
+          }
+      
+          if (!cart) {
             return res.status(404).json({ message: 'Cart not found' });
+          }
+      
+          await cart.calculateTotals();
+          await cart.save();
+          res.status(200).json(cart);
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Internal server error' });
         }
+      };
+      
 
-        await cart.calculateTotals();
-        await cart.save();
-        res.status(200).json(cart);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-    // if (!sessionId) {
-    //     return res.status(400).json({ message: 'UserId or sessionId is required' });
-    //   }
-    // try {
-    //   let cart
-    //  if (sessionId) {
-    //     cart = await Cart.findOne({ sessionId }).populate('products.productId');
-    //   } else {
-    //     return res.status(400).json({ message: 'SessionId is required' });
-    //   }
-    //   if (!cart) {
-    //     return res.status(404).json({ message: 'Cart not found' });
-    //   }
-    //   cart.calculateTotals();
-    //   await cart.save();
-    //   res.status(200).json(cart);
-    // } catch (error) {
-    //   console.error(error);
-    //   res.status(500).json({ message: 'Internal server error from  get' });
-    // }
-  }
-  
+
+
+
+
+
+
+
+
   const removeCart= async (req, res) => {
     const { productId, sessionId} = req.body;
     if (!sessionId) {
