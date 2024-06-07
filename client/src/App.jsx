@@ -11,16 +11,22 @@ import { generateSessionId } from "./utils/uniqueId";
 import Cartcontext from "./cartcontext";
 import { useSelector } from "react-redux";
 import { selectCart } from "./stores/features/cart/cartSlice";
-
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Home() {
- const {setCartLength}=useContext(Cartcontext)
-
+ const {setCartLength,loadUser}=useContext(Cartcontext)
  const { totalQuantity} = useSelector(selectCart)
-  useEffect(() => {
-    generateSessionId();
-  }, [])
- 
+
+ useEffect(() => {
+  generateSessionId();
+}, [])
+
+
+ useEffect(()=>{
+  loadUser(); 
+},[])
+
 
   useEffect(() => {
     setCartLength(totalQuantity);
@@ -49,6 +55,9 @@ function Home() {
  </a>
 
     </div>
+    <ToastContainer
+     position="top-right" autoClose={5000} hideProgressBar={false} />
+
     </main>
 
   );

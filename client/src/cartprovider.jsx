@@ -16,31 +16,72 @@ const Cartprovider = ({ children }) => {
      const[login,setLogin]= useState(null);
      const[isadmin,setisadmin]=useState(null)
      const [user, setUser] = useState(null);
-     const[ producthistory,setProductHistory]=useState({})
+     const[ producthistory,setProductHistory]=useState([])
   const [cartLength, setCartLength] = useState(0)
     const[sessionId,setsessionId]=useState(localStorage.getItem("sessionId"))
+    const [Userloading, setUserLoading] = useState(true);
+    const loadUser = async () => {
+      try {
+          const token = localStorage.getItem('token');
+          if (token) {
+              const response = await http.get('/user/me');
+              setUser(response.data.data);
+              setisadmin(response.data.data.isAdmin);
+  
+              const history = localStorage.getItem("history");
+              if (history) {
+                  try {
+                      setProductHistory(JSON.parse(history));
+                  } catch (parseError) {
+                      console.error('Failed to parse history:', parseError);
+                      setProductHistory([]);
+                  }
+              } else {
+                  setProductHistory([]);
+              }
+              const sessionId = localStorage.getItem("sessionId");
+              if (sessionId) {
+                  try {
+                      setsessionId(JSON.parse(sessionId));
+                  } catch (parseError) {
+                      console.error('Failed to parse sessionId:', parseError);
+                      setsessionId(null);
+                  }
+              } else {
+                  setsessionId(null);
+              }
+  
+              console.log(response.data.data);
+          }
+      } catch (error) {
+          console.error('Failed to load user', error);
+      } finally {
+          setUserLoading(false);
+      }
+  };
+  
 
-    
-
-     useEffect(() => {
-       const loadUser = async () => {
-         try {
-           const token =  localStorage.getItem('token');
-           if (token) {
-             const response = await http.get('/user/me');
-             setUser(response.data.data)
-             setisadmin(response.data.data.isAdmin)
-            console.log(JSON.parse(localStorage.getItem("sessionId")))
-             setProductHistory(JSON.parse(localStorage.getItem("history")))
-             setsessionId(JSON.parse(localStorage.getItem("sessionId")))
-            console.log(response.data.data)
-           }
-         } catch (error) {
-           console.error('Failed to load user', error);
-         }
-       };
-       loadUser();
-     }, [])
+    //  useEffect(() => {
+      //  const loadUser = async () => {
+      //    try {
+      //      const token =  localStorage.getItem('token');
+      //      if (token) {
+      //        const response = await http.get('/user/me');
+      //        setUser(response.data.data)
+      //        setisadmin(response.data.data.isAdmin)
+      //        setProductHistory(JSON.parse(localStorage.getItem("history"))|| [])
+      //        setsessionId(JSON.parse(localStorage.getItem("sessionId"))|| [])
+      //       console.log(response.data.data)
+      //      }
+      //    } catch (error) {
+      //      console.error('Failed to load user', error);
+      //    }
+      //   finally{
+      //     setUserLoading(false)
+      //    }
+      //  };
+    //    loadUser();
+    //  }, [])
 
 
      useEffect(()=>{
@@ -106,7 +147,9 @@ const Cartprovider = ({ children }) => {
     setProductHistory,
     cartLength,
     setCartLength,
-    sessionId:sessionId
+    sessionId:sessionId,
+    Userloading,
+    loadUser
   };
 
   return (

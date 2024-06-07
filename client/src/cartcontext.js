@@ -41,11 +41,16 @@ const Cartcontext = createContext({
     setisadmin:()=>{},
     refreshToken: ()=>{},
     user:null,
+    setUser:()=>{},
     producthistory:{},
-    setProductHistor:()=>{},
+    setProductHistory:()=>{},
     cartLength:Number,
     setCartLength:()=>{},
-    sessionId:""
+    sessionId:"",
+    setsessionId:()=>{},
+    Userloading:Boolean,
+    loadUser:()=>{},
+
 })
 
 export default Cartcontext

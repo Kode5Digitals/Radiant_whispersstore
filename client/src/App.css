@@ -162,3 +162,13 @@ animation: myAnim 0.9s ease 5s 1 normal forwards;
 		transform-origin: 50% 100%;
 	}
 }
+.animated-text {
+  
+  animation:  5s ease-in-out infinite;
+}
+
+@keyframes fade {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}

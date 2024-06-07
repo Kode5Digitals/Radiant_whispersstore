@@ -16,13 +16,17 @@ import { TbCurrencyNaira } from "react-icons/tb";
 
 function AdminProducts() {
   const [loading, setLoading] = useState(false);
-  const{openEdit,setOpenEdit,setEditobj}=useContext(Cartcontext)
+  const{openEdit,setOpenEdit,setEditobj, loadUser}=useContext(Cartcontext)
   const [moreLoading, setMoreLoading] = useState(false);
   const products = useSelector((state) => state.products);
-  const [visibleProducts, setVisibleProducts] = useState(10);
+  const [visibleProducts, setVisibleProducts] = useState(20);
   const [openDelete,setOpenDelete]=useState(false)
   const[ deleteName, setDeleteName]=useState({name:"",id:""}) 
   const dispatch = useDispatch();
+  
+  useEffect(()=>{
+    loadUser(); 
+  },[])
 
   const handleAllProducts = async () => {
     try {

@@ -9,7 +9,7 @@ import { Typography } from "@mui/material"
 import Navbar from "./nav"
 import { useDispatch, useSelector } from "react-redux"
 import { setProducts } from "../stores/features/product/productSlice"
-import { addItemToCart, selectCart} from "../stores/features/cart/cartSlice"
+import { addItemToCart} from "../stores/features/cart/cartSlice"
 import { toggleWishlistItem } from "../stores/features/whishlist/wishlistSlice"
 import { FaHeart} from "react-icons/fa"
 import { TbCurrencyNaira } from "react-icons/tb"
@@ -27,13 +27,9 @@ function Products() {
   const { wishlistItems } = useSelector((state) => state?.whishlist)
   const [quantity, setQuantity] = useState({})
   const{user,sessionId,setCartLength}=useContext(Cartcontext)
-  const {items} = useSelector(selectCart)
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
 
-useEffect(()=>{
-console.log(items)
-},[items])
 useEffect(() => {
   setCartLength(totalQuantity);
 }, [totalQuantity,setCartLength]);

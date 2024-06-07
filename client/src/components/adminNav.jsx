@@ -1,14 +1,32 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Cartcontext from "../cartcontext";
 import { AiOutlineLogin } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { IoReloadCircleSharp } from "react-icons/io5";
 
 const AdminNav = () => {
-    const {
-        handleLogin,
+    const {setLogin,
+        setisadmin
       } = useContext(Cartcontext);
-
-
+const [loading,setLoading]=useState(false)
+const navigate=useNavigate()
+      const handleSetLogOut=()=>{
+        setLoading(true)
+        try{
+          localStorage.removeItem("Login")
+          localStorage.removeItem("Admin")
+          localStorage.removeItem("token")
+          localStorage.removeItem("refreshToken")
+          setisadmin(false)
+          setLogin(false)
+          navigate("/")
+        }catch(error){
+console.error(error)
+        }finally{
+          setLoading(false)
+        }
+        
+      }
   return (
    <div className="flex fixed top-0 bg-white border-b-2 z-50 w-full items-center p-2 justify-between">
 <Link to={"/adminHome"}>
@@ -28,11 +46,9 @@ const AdminNav = () => {
  <button className="p-1 border-black border rounded-sm">
           Switch to User
           </button> </Link>
-<button onClick={handleLogin} className="flex items-center">
-            <span>
-              <AiOutlineLogin />
-            </span>
-            LoginOut
+<button onClick={handleSetLogOut}>
+            
+           {loading? <IoReloadCircleSharp className="animate-spin"/>:<span  className="flex items-center"><AiOutlineLogin/>Logout</span>}
           </button>
 
 

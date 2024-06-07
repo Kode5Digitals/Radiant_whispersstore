@@ -1,8 +1,22 @@
 // import { TfiSearch } from "react-icons/tfi"
 import { LiaShoppingBagSolid } from "react-icons/lia"
 import "../App.css"
+import { useEffect, useState } from "react";
 
 const Banner = () => {
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const texts = " Skin";
+  const words = texts.split('');
+  useEffect(() => {
+    const changeText = () => {
+      setCurrentTextIndex((prevIndex) => (prevIndex + 1) %  words.length);
+    };
+   
+    
+    const intervalId = setInterval(changeText, 3000);
+    
+    return () => clearInterval(intervalId);
+  }, [words.length]);
 
   const  scrollDown = () => {
     window.scrollTo({
@@ -17,9 +31,9 @@ const Banner = () => {
        <div className=" w-full relative top-0   h-[400px] xl:h-[540px] lg:h-[400px] md:h-[440px]">
      <img src="RadiantWhisperBanner.png" alt="RadiantWhisperBanner" className="w-full h-full sm:hidden hidden xl:block lg:block md:hidden"/>
      <img src="RadiantWhispersstoreBanner2.png" alt="RadiantWhisperBanner"  className="block w-full h-full  sm:block xl:hidden lg:hidden md:block"/>
-<div className="absolute xl:top-24 top-16  right-[-30px] sm:right-[-44px] xl:pl-20 w-1/2 xl:left-[550px] 2xl:left-[700px] 2xl:pl-44   lg:right-[32px]  md:right-[-100px]   ">
-<h2 className="text-2xl lg:text-3xl md:text-4xl lg:text-[40px] lg:pr-40  xl:text-6xl    xl:pr-40 md:pr-30 sm:pr-40 pr-10">
-                 We care about your <span className="text-[#891980] " >skin</span>
+<div className="absolute xl:top-24 top-16  right-[-40px] sm:right-[-72px] xl:pl-20 w-1/2 xl:left-[550px] 2xl:left-[700px] 2xl:pl-44   lg:right-[32px]  md:right-[-100px]   ">
+<h2 className="text-xl lg:text-3xl md:text-4xl lg:text-[40px] lg:pr-40  xl:text-5xl    xl:pr-24 md:pr-10 sm:pr-40  ">
+ We care about your <img src="skin.gif" alt=""  className="w-32 xl:w-72"/>
                  </h2>
                  <p className="xl:text-lg xl:mt-12 text-[12px] lg:text-[19px] md:text-[14px] pr-16 text-justify  sm:pr-32 md:pr-40 mt-5 sm:mt-10">
                  Envelop yourself in the luxurious embrace of nature purity, where the essence of cream whispers tales of indulgence and revitalization.

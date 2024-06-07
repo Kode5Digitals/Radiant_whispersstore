@@ -2,10 +2,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import PropTypes from "prop-types";
-import {useEffect, useRef, useState } from "react";
+import {useContext, useEffect, useRef, useState } from "react";
 import { MdCancel } from 'react-icons/md';
 import { IoReload } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+import httpAuth from '../utils/https';
+import Cartcontext from '../cartcontext';
 
 const DeleteProduct=({deleteName,closeDeleteModal} ) => {
   const nameRef = useRef("");
@@ -13,7 +15,7 @@ const DeleteProduct=({deleteName,closeDeleteModal} ) => {
   const[loading,setloading]=useState(false)
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const navigate=useNavigate()
-
+const{ loadUser}=useContext(Cartcontext)
   useEffect(() => {
     const handleInputChange = () => {
       if (nameRef.current) {
@@ -42,8 +44,8 @@ const DeleteProduct=({deleteName,closeDeleteModal} ) => {
     formData.append('id',id);
     try {
     
-      const response = await axios.post(
-        `https://radiant-whispersstore.onrender.com/api/product/deleteOne/${id}`,
+      const response = await httpAuth.delete(
+        `/api/product/deleteOne/${id}`,
       formData ,
           {
             headers: { "Content-Type":"application/json" },
@@ -51,7 +53,9 @@ const DeleteProduct=({deleteName,closeDeleteModal} ) => {
       )
       if (response.data.created) {
         toast.success(response.data.message);
-        navigate("/adminHome")
+        loadUser()
+        // navigate("/adminHome")
+        location.reload("/adminHome")
       } else {
           toast.error(response.data.message);
         } 
