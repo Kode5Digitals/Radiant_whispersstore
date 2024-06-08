@@ -198,7 +198,7 @@ const decreaceCart= async (req, res) => {
 
 // Get cart
   const getCartById = async (req, res) => {
-
+    const { userId, sessionId } = req.query;
     if (!userId && !sessionId) {
         return res.status(400).json({ message: 'UserId or sessionId is required' });
       }
