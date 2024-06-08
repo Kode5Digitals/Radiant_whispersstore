@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Cartcontext from "../cartcontext";
 import { AiOutlineLogin } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,9 +6,18 @@ import { IoReloadCircleSharp } from "react-icons/io5";
 
 const AdminNav = () => {
     const {setLogin,
-        setisadmin
+        setisadmin,
+        loadUser
       } = useContext(Cartcontext);
 const [loading,setLoading]=useState(false)
+
+
+
+useEffect(()=>{
+  loadUser(); 
+},[])
+
+
 const navigate=useNavigate()
       const handleSetLogOut=()=>{
         setLoading(true)

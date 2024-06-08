@@ -1,16 +1,15 @@
 import { useContext, useRef, useState } from "react";
-import PropTypes from "prop-types";
 import httpAuth from "../utils/https";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cartcontext from "../cartcontext";
 import { FaSpinner } from "react-icons/fa";
 
-function Login({ setOpenLogin }) {
+function Login() {
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const [loading, setLoading] = useState(false);
-  const { setOpenRegister, setLogin, setisadmin,loadUser } = useContext(Cartcontext);
+  const { setOpenRegister, setLogin, setisadmin,loadUser,setOpenLogin } = useContext(Cartcontext);
 
   const handleOpenRegister = () => {
     setOpenRegister(true);
@@ -130,8 +129,5 @@ function Login({ setOpenLogin }) {
   );
 }
 
-Login.propTypes = {
-  setOpenLogin: PropTypes.func.isRequired,
-};
 
 export default Login;

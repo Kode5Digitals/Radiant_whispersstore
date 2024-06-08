@@ -30,7 +30,6 @@ export const addItemToCart = createAsyncThunk(
           toast.error(response.data.message)
         }
       }
-console.log(response.data)
 return response.data
     }
     catch (error) {
@@ -47,7 +46,6 @@ return response.data
 export const increaseCartItemQuantity = createAsyncThunk('cart/increaseCartItemQuantity', async ({ userId, productId, quantity,sessionId }, thunkAPI) => {
   try {
     const response = await httpAuth.post(`/api/cart/increase`, { userId, productId, quantity,sessionId })
-    console.log(response.data)
     return response.data.cart
   } catch (error) {
 console.log(error)
@@ -73,7 +71,6 @@ export const removeItemFromCart = createAsyncThunk(
   async ({ userId, productId ,sessionId}, thunkAPI) => {
     try {
       const response = await httpAuth.post(`/api/cart/remove`, { userId, productId,sessionId });
-      console.log(response.data.message)
       return response.data.cart
     } catch (error) {
       console.error(error)

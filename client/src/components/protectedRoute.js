@@ -4,11 +4,17 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Cartcontext from '../cartcontext';
 const ProtectedRoute = ({ roles, children }) => {
-  const { user,Userloading} = useContext(Cartcontext);
+  const { user,Userloading, loadUser} = useContext(Cartcontext);
   const location = useLocation();
   const navigate = useNavigate();
+  
+  useEffect(()=>{
+    loadUser(); 
+    },[])
 
-  useEffect(() => {
+
+
+
     if (!Userloading) {
       if (!user) {
         navigate("/", { state: { from: location } });
@@ -16,7 +22,6 @@ const ProtectedRoute = ({ roles, children }) => {
         navigate("/");
       }
     }
-  }, [user, roles, location, navigate, Userloading]);
 
   if (Userloading|| !user || (roles && !roles.includes(user.isAdmin ? 'admin' : 'user'))) {
     return null; 

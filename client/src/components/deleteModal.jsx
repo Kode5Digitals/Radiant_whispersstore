@@ -1,21 +1,26 @@
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from "axios";
 import PropTypes from "prop-types";
 import {useContext, useEffect, useRef, useState } from "react";
 import { MdCancel } from 'react-icons/md';
 import { IoReload } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
 import httpAuth from '../utils/https';
 import Cartcontext from '../cartcontext';
 
-const DeleteProduct=({deleteName,closeDeleteModal} ) => {
+const DeleteProduct=({deleteName,closeDeleteModal,  setOpenDelete} ) => {
   const nameRef = useRef("");
   const deleteRef = useRef(null)
   const[loading,setloading]=useState(false)
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-  const navigate=useNavigate()
 const{ loadUser}=useContext(Cartcontext)
+
+
+
+useEffect(()=>{
+  loadUser(); 
+},[])
+
+
   useEffect(() => {
     const handleInputChange = () => {
       if (nameRef.current) {
@@ -53,9 +58,8 @@ const{ loadUser}=useContext(Cartcontext)
       )
       if (response.data.created) {
         toast.success(response.data.message);
-        loadUser()
-        // navigate("/adminHome")
-        location.reload("/adminHome")
+        setOpenDelete(false)
+        location.reload()
       } else {
           toast.error(response.data.message);
         } 
@@ -122,6 +126,7 @@ DeleteProduct.propTypes = {
     id: PropTypes.string.isRequired,
   }).isRequired,
   closeDeleteModal: PropTypes.func.isRequired,
+  setOpenDelete: PropTypes.func.isRequired,
 };
 export default DeleteProduct;
 

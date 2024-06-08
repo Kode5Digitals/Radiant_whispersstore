@@ -6,7 +6,7 @@ import {  RiProfileLine } from "react-icons/ri"
 import Cartcontext from "../cartcontext"
 import { useContext, useEffect, useState } from "react"
 import { AiOutlineLogout } from "react-icons/ai"
-import { Link, useNavigate } from "react-router-dom"
+import { Link} from "react-router-dom"
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io"
 import { FaFacebook, FaInstagramSquare } from "react-icons/fa"
 import { IoLogoWhatsapp, IoMail } from "react-icons/io5"
@@ -15,7 +15,6 @@ const SideMenu = () => {
   const { isOpen, Back, handleLogin, handleRegister, login , user,setisadmin,setLogin,loadUser} =useContext(Cartcontext)
     const [constactIsVisible, setConstactIsVisible] = useState(false);
     const [aboutIsVisible, setAboutIsVisible] = useState(false);
-// const navigate=useNavigate()
 
 
     useEffect(()=>{

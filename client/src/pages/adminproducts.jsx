@@ -23,10 +23,10 @@ function AdminProducts() {
   const [openDelete,setOpenDelete]=useState(false)
   const[ deleteName, setDeleteName]=useState({name:"",id:""}) 
   const dispatch = useDispatch();
-  
-  useEffect(()=>{
-    loadUser(); 
-  },[])
+
+  // useEffect(()=>{
+  // loadUser(); 
+  // },[])
 
   const handleAllProducts = async () => {
     try {
@@ -37,6 +37,7 @@ function AdminProducts() {
       return data;
     } catch (error) {
       console.log(error);
+      return []
     } finally {
       setLoading(false);
       setMoreLoading(false);
@@ -50,7 +51,7 @@ function AdminProducts() {
   }, [dispatch]);
 
   const handleLoadMore = () => {
-    setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 1);
+    setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 10);
   };
 
   //edit product
@@ -83,7 +84,7 @@ const closeDeleteModal = () => {
   return (
     <AdminDefaultlayout>
     {openEdit &&  <EditProduct setOpenEdit={setOpenEdit} />}
-     {openDelete  &&<DeleteProduct deleteName={deleteName} closeDeleteModal={closeDeleteModal} />}
+     {openDelete  &&<DeleteProduct deleteName={deleteName} closeDeleteModal={closeDeleteModal}   setOpenDelete={  setOpenDelete}/>}
     <main className="mb-10 xl:mt-40 lg:mt-44 md:mt-32 sm:mt-84 mt-40">
       {loading && <LoadingSpinner />}
       <div className="xl:w-4/5 w-full   mx-auto  lg:p-4 md:p-5">

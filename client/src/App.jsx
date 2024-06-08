@@ -11,8 +11,8 @@ import { generateSessionId } from "./utils/uniqueId";
 import Cartcontext from "./cartcontext";
 import { useSelector } from "react-redux";
 import { selectCart } from "./stores/features/cart/cartSlice";
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer } from "react-toastify";
+// import 'react-toastify/dist/ReactToastify.css';
 
 function Home() {
  const {setCartLength,loadUser}=useContext(Cartcontext)
@@ -55,8 +55,8 @@ function Home() {
  </a>
 
     </div>
-    <ToastContainer
-     position="top-right" autoClose={5000} hideProgressBar={false} />
+    {/* <ToastContainer
+     position="top-right" autoClose={5000} hideProgressBar={false} /> */}
 
     </main>
 

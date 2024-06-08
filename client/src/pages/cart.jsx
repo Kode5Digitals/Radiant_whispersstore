@@ -18,33 +18,37 @@ import {
 } from "../stores/features/cart/cartSlice"
 import { TbCurrencyNaira } from "react-icons/tb"
 import { formatPrice } from "../utils/utils"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import Cartcontext from "../cartcontext"
 const Cart = () => {
   const { items, totalQuantity, totalPrice } = useSelector(selectCart)
   const cartLength = useSelector(selectCartLength)
   const dispatch = useDispatch()
-    const{user,sessionId}=useContext(Cartcontext)
-    const[ loading,setloading]=useState()
+    const{user,loadUser,sessionId,Userloading}=useContext(Cartcontext)
+    let userId=user?._id
+
+    useEffect(()=>{
+      loadUser(); 
+    },[])
+    
+
+
   useEffect(() => {
-  try{
-    setloading(true)
-    if (user?._id || sessionId) {
+    if (userId) {
+      dispatch(fetchUserCart({ userId }));
+    } else {
       dispatch(fetchUserCart({ sessionId }));
     }
-  }catch(err){
-console.error(err)
-setloading(false)
-  }finally{
-    setloading(false)
-  }
-  }, [dispatch, user,sessionId]);
+  }, [dispatch,userId, sessionId])
 
 
-  console.log("items",items)
 
+
+
+
+  
   const handleRemoveFromCart = (productId) => {
-    dispatch(removeItemFromCart({  productId,sessionId }));
+    dispatch(removeItemFromCart({ userId: user?._id,  productId,sessionId }));
   }
 
   const handleIncreaseQuantity = (productId,additionalQuantity) => {
@@ -98,7 +102,7 @@ setloading(false)
         </div>
       </div>
 
-   {!loading&& <div>
+   {!Userloading&& <div>
       {items?.length > 0 && (
         <div>
           {items?.map((product, index) => (
@@ -202,8 +206,15 @@ setloading(false)
       )}</div>
 }
 
- { loading && <div>loading....</div> }
-      {!loading&&items?.length === 0 && (
+ {Userloading && 
+        <div className="w-full  h-[400px] flex justify-center items-center">
+          <div>loading....</div>
+        </div>
+      }
+
+
+
+      {!Userloading&&items?.length === 0 && (
         <div className="w-full  h-[400px] flex justify-center items-center">
           <h1 className="text-center  text-3xl">Your cart is empty</h1>
         </div>
