@@ -172,7 +172,7 @@ const decreaceCart= async (req, res) => {
       const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
       if (productIndex !== -1) {
         const product = cart.products[productIndex];
-        if (product.quantity >= 1) {
+        if (product.quantity > 1) {
           product.quantity -= 1;
         } else {
           cart.products.splice(productIndex, 1);
@@ -198,7 +198,7 @@ const decreaceCart= async (req, res) => {
 
 // Get cart
   const getCartById = async (req, res) => {
-    const { userId, sessionId } = req.query;
+  const { userId, sessionId } = req.query;
     if (!userId && !sessionId) {
         return res.status(400).json({ message: 'UserId or sessionId is required' });
       }
