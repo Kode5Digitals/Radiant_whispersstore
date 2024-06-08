@@ -15,6 +15,9 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
     const [constactIsVisible, setConstactIsVisible] = useState(false);
     const [aboutIsVisible, setAboutIsVisible] = useState(false);
 
+
+
+    
     const handleToggleContact= () => {
       setConstactIsVisible(!constactIsVisible);
       setAboutIsVisible(false);

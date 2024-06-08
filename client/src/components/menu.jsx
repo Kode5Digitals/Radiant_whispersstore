@@ -2,7 +2,7 @@ import { CiLogin } from "react-icons/ci"
 import { FaRegRegistered } from "react-icons/fa6"
 import { LiaTimesSolid } from "react-icons/lia"
 import { MdAccountCircle, MdContactPage} from "react-icons/md"
-import {  RiProfileLine } from "react-icons/ri"
+import {  RiAdminFill, RiProfileLine } from "react-icons/ri"
 import Cartcontext from "../cartcontext"
 import { useContext, useEffect, useState } from "react"
 import { AiOutlineLogout } from "react-icons/ai"
@@ -12,14 +12,14 @@ import { FaFacebook, FaInstagramSquare } from "react-icons/fa"
 import { IoLogoWhatsapp, IoMail } from "react-icons/io5"
 
 const SideMenu = () => {
-  const { isOpen, Back, handleLogin, handleRegister, login , user,setisadmin,setLogin,loadUser} =useContext(Cartcontext)
+  const { isOpen, Back, handleLogin, handleRegister, login ,isadmin,setisadmin,setLogin} =useContext(Cartcontext)
     const [constactIsVisible, setConstactIsVisible] = useState(false);
     const [aboutIsVisible, setAboutIsVisible] = useState(false);
 
 
-    useEffect(()=>{
-      loadUser(); 
-    },[])
+    // useEffect(()=>{
+    //   loadUser(); 
+    // },[])
  
 
     const handleToggleContact= () => {
@@ -183,19 +183,18 @@ That&apos;s why we&apos;re dedicated to providing high-quality, natural body cre
               </li>
             </ul>
           )}
+   {login && isadmin &&
 
-          {login && user?.isadmin &&
-
-            <ul>
-           <li >
-          <Link to={"/adminHome"} className=" mb-4 cursor-pointer">
-
-            Switch to Admin
-            </Link>
-              </li>
-            </ul>
-          }
-
+(<ul>
+  <li className="flex items-center gap-1 mb-4 cursor-pointer">
+  <RiAdminFill />
+<Link to={"/adminHome"}>
+Switch to Admin
+</Link>
+  </li>
+</ul>)
+}
+         
         </div>
       </div>
     </div>
