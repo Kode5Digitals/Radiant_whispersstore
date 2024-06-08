@@ -41,11 +41,6 @@ const Cart = () => {
     }
   }, [dispatch,userId, sessionId])
 
-
-
-
-
-
   
   const handleRemoveFromCart = (productId) => {
     dispatch(removeItemFromCart({ userId: user?._id,  productId,sessionId }));
@@ -182,10 +177,7 @@ const Cart = () => {
               </div>
               <hr />
               <div className="mt-12 ">
-<div className="flex gap-2">
-<input type="checkbox" name="" id="" />
-<p>Agree</p>
-</div>
+
                 <label className="text-lg text-red-700" >Delivery fee  excluded!!!</label>
               </div>
               <div className="text-center mt-2  ">
