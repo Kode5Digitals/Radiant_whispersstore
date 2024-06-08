@@ -107,10 +107,10 @@ useEffect(() => {
             </Typography>
           </div>
         ) : (
-          <div className="flex p-2 xl:p-0 gap-3 flex-shrink-0 productscale flex-wrap w-full sm:gap-5 sm:flex-wrap justify-evenly xl:justify-center 2xl:justify-between ">
+          <div className="flex p-2 xl:p-0  flex-shrink-0 productscale flex-wrap w-full sm:gap-5 sm:flex-wrap justify-evenly xl:justify-center 2xl:justify-between ">
             {!loading &&
               products.slice(0, visibleProducts).map((prod, index) => (
-                <div key={index} className="mb-20  w-48 xl:w-48 h-84 ">
+                <div key={index} className="mb-32  w-40 xl:w-48 h-96 ">
                   <div className="w-full h-52 shadow-xl overflow-hidden rounded-lg mb-3  border relative">
                     <div className="hover:p-2 p-5">
                       <img src={prod?.image} className="w-full h-full" alt="" />
@@ -132,9 +132,9 @@ useEffect(() => {
                     )}
                   </div>
                   <div className="p-1 ">
-                    <h3 className="text-sm">{Truncate(prod?.name, 25)}</h3>
+                    <h3 className="text-sm">{Truncate(prod?.name, 16)}</h3>
                     <p className="text-[12px] w-full ">
-                      {Truncate(prod?.description, 25)}
+                      {Truncate(prod?.description, 20)}
                     </p>
                     <div className="flex items-center">
                       <TbCurrencyNaira />

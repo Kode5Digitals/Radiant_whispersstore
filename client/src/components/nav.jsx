@@ -74,7 +74,7 @@ setCurrentCat(text)
             </span>
           </div>
           {hovereddivItem === "Item 1" && (
-            <div className="absolute cursor-pointer  left-0  w-44 border-t-0 bg-[#891980] max-w-72 xl:bg-white border top-8 z-30 py-2">
+            <div className="absolute cursor-pointer text-white   left-0  w-44 border-t-0 bg-[#891980] max-w-72 xl:bg-white border top-8 z-30 py-2">
                <div onClick={()=>handleAllProducts()} className="px-4 py-2  hover:bg-[#f4e4f2]  hover:text-black">
                 All products
               </div>

@@ -167,20 +167,13 @@ const Cart = () => {
                 <TbCurrencyNaira /> 
                       {totalPrice}</p>
                   </li>
-                  {/* <li className="mb-3  flex items-center justify-between">
-                    Total Price <p className="flex items-center">
-                <TbCurrencyNaira /> 
-                      {totalPrice}</p>
-                  </li> */}
+                
                 
                 </ul>
               </div>
               <hr />
-              <div className="mt-12 ">
-
-                <label className="text-lg text-red-700" >Delivery fee  excluded!!!</label>
-              </div>
-              <div className="text-center mt-2  ">
+              
+              <div className="text-center mt-24  ">
                 <Link to={"/paystack"}>
                 <button  className=" bg-black p-4 text-white text-[12px]">
                   Proceed to Checkout

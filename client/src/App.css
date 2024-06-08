@@ -147,6 +147,14 @@ animation: myAnim 0.9s ease 5s 1 normal forwards;
 	}
 }
 
+.bannerImage {
+  background-image: url('RadiantWhispersstoreBanner2.png');
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+
 
 .productscale{
   animation: myAnim 2s ease 0s 1 normal forwards;

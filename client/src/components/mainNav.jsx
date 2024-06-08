@@ -269,8 +269,8 @@ setOpenContact (false)
         </div>
 
 
-        <div className=" xl:hidden md:hidden ">
-            <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex w-[390px] sm:ml-32 p-2 rounded-lg border-[#891980]   gap-3 items-center mt-6 xl:mt-0">
+        <div className=" xl:hidden md:hidden w-full  pl-2">
+            <div className="border  md:items-center md:mr-10 md:mt-0 xl:mr-20 flex w-full  p-2 rounded-lg border-[#891980]   gap-3 items-center mt-6 xl:mt-0">
               <TfiSearch />
               <input
                 type="text"
