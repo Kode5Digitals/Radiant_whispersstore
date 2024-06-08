@@ -236,67 +236,86 @@ const decreaceCart= async (req, res) => {
 
 
   const removeCart= async (req, res) => {
-    const { productId, sessionId} = req.body;
-    if (!sessionId) {
+    const { userId, sessionId, productId } = req.body;
+    if (!userId && !sessionId) {
         return res.status(400).json({ message: 'UserId or sessionId is required' });
       }
-  try {
-    let cart;
-    if (sessionId) {
-      cart = await Cart.findOne({ sessionId }).populate('products.productId');
-    } else {
-      return res.json({ message: 'UserId or sessionId required' });
-    }
-
-    if (!cart) {
-      return res.json({ message: 'Cart not found' });
-    }
-
-    const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
-    if (productIndex > -1) {
-      cart.products.splice(productIndex, 1);
-      cart.calculateTotals();
-      await cart.save();
-      return res.json({ message: 'Product removed from cart', cart });
-    } else {
-      return res.json({ message: 'Product not in cart' });
-    }
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-
-  }
-  
-  const ClearAllCart= async (req, res) => {
-    const {sessionId} = req.body;
-    if (!sessionId) {
-        return res.status(400).json({ message: 'SessionId is required' });
-      }
-    try {
-        let cart
-        if (sessionId) {
+    
+      try {
+        let cart;
+    
+        if (userId) {
+          cart = await Cart.findOne({ userId }).populate('products.productId');
+        } else if (sessionId) {
           cart = await Cart.findOne({ sessionId }).populate('products.productId');
-        } else {
-          return res.status(400).json({ message: 'SessionId required' });
         }
     
         if (!cart) {
           return res.status(404).json({ message: 'Cart not found' });
         }
     
-        cart.products = [];
-        cart.calculateTotals();
-        await cart.save();
-        return res.status(200).json({ message: 'All products removed from cart', cart });
-    
+        const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
+        if (productIndex !== -1) {
+          cart.products.splice(productIndex, 1);
+
+          await cart.calculateTotals();
+          await cart.save();
+          return res.status(200).json({ message: 'Product removed from cart', cart });
+        } else {
+          return res.status(404).json({ message: 'Product not in cart' });
+        }
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
       }
-   
+
   }
+  
+  
+  const ClearAllCart= async (req, res) => {
+    const { userId, sessionId } = req.body;
+
+    if (!userId && !sessionId) {
+      return res.status(400).json({ message: 'UserId or sessionId is required' });
+    }
+  
+    try {
+      let cart;
+  
+      if (userId) {
+        cart = await Cart.findOne({ userId }).populate('products.productId');
+      } else if (sessionId) {
+        cart = await Cart.findOne({ sessionId }).populate('products.productId');
+      }
+  
+      if (!cart) {
+        return res.status(404).json({ message: 'Cart not found' });
+      }
+  
+      cart.products = [];
+      await cart.calculateTotal
+      await cart.save();
+      return res.status(200).json({ message: 'Cart cleared', cart });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 
 
