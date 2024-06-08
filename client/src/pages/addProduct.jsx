@@ -81,7 +81,7 @@ const AddProduct = () => {
     <AdminDefaultlayout>
 
     <div
-      className="flex items-start  justify-center pb-96 p-4 xl:p-24 bg-pink-700 xl:h-full w-full h-full  "
+      className="flex items-start  justify-center pb-96 p-4 xl:p-24 bg-[#891980] xl:h-full w-full h-full  "
       // style={{ height: "100vh" }}
     >
       <ToastContainer
@@ -122,7 +122,7 @@ const AddProduct = () => {
         <div>
           <label
             htmlFor="price"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 mt-3"
           >
             Price
           </label>

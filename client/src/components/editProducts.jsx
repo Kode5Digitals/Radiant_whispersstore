@@ -122,7 +122,7 @@ const handleBack=()=>{
 
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-90 z-50" ref={editRef}>
+    <div className="fixed inset-0 p-10 flex justify-center bg-gray-800 bg-opacity-90 z-50" ref={editRef}>
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
@@ -137,16 +137,16 @@ const handleBack=()=>{
       />
       <form
         onSubmit={handleSubmit}
-        className="forgot-password xl:w-1/4 w-full p-3 lg:w-3/4 2xl:w-1/4 md:w-3/4 sm:w-3/4 rounded-lg shadow-md bg-pink-200 transition duration-500 ease-in-out border-2 border-transparent"
+        className="forgot-password xl:w-1/4 w-full p-3 lg:w-3/4 2xl:w-1/4 md:w-3/4 sm:w-3/4 rounded-lg shadow-md bg-[#891980] transition duration-500 ease-in-out border-2 border-transparent"
       > 
       <div className="flex justify-end cursor-pointer">
       <MdCancel onClick={handleBack}/>
       </div>
-        <h2 className="text-center text-2xl mt-3 mb-3">Add product</h2>
+        <h2 className="text-center text-2xl mt-3 mb-3 text-white">Add product</h2>
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm text-white font-medium "
           >
             Name
           </label>
@@ -162,7 +162,7 @@ const handleBack=()=>{
         <div>
           <label
             htmlFor="price"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-white mt-2"
           >
             Price
           </label>
@@ -175,7 +175,7 @@ const handleBack=()=>{
             placeholder="Enter price"
           />
         </div>
-        <label htmlFor="category">Category:</label>
+        <label htmlFor="category " className="text-white">Category:</label>
         <select id="category"   defaultValue={editObj?.category} name="category" ref={categoryRef} className="text-sm mt-4 bg-white border-2 p-2 ml-3 rounded-xl mb-4">
           <option value="body cream">body cream</option>
           <option value="face cream">face cream</option>
@@ -201,7 +201,7 @@ const handleBack=()=>{
         <div>
           <label
             htmlFor="description"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-white"
           >
             Description
           </label>
@@ -224,10 +224,11 @@ const handleBack=()=>{
           Edit Product 
           {loading &&<IoReload className="animate-spin" />}
         </button>
-      </form>
-      <div className="w-[300px] h-[300px] border bg-white">
+        <div className="w-full h-[400px] border bg-white">
         <img style={{ width: "100%", height: "100%" }} src={imagesrc}  alt="" />
       </div>
+      </form>
+    
     </div>
   );
 };
