@@ -76,7 +76,10 @@ const router = createBrowserRouter([
   {
     path: "/edit-product/:id",
     element: (
+      <ProtectedRoute roles={['admin']}>
         <AdminProducts />
+      </ProtectedRoute>
+
     ),
   },
   { path: "/return-policy", element: <Policy /> },
@@ -84,20 +87,28 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-        <Dashboard/>
+      <ProtectedRoute roles={['user']}>
+   <Dashboard/>
+      </ProtectedRoute>
+      
+     
     ),
   },
   {
+    
     path: "/myaccount",
     element: (
+      <ProtectedRoute roles={['user']}>
         <MyAccount />
+
+      </ProtectedRoute>
+
     ),
     children: [
                 {index:true, element: <Dashboard/> },
                 { path: "dashboard",index:true, element: <Dashboard/> },
                 { path: "settings", element: <Accountsettings/> },
               ]
-
   },
   {
     path: "/login",

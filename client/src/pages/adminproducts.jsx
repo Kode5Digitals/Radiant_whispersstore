@@ -24,9 +24,7 @@ function AdminProducts() {
   const[ deleteName, setDeleteName]=useState({name:"",id:""}) 
   const dispatch = useDispatch();
 
-  // useEffect(()=>{
-  // loadUser(); 
-  // },[])
+ 
 
   const handleAllProducts = async () => {
     try {
@@ -56,11 +54,10 @@ function AdminProducts() {
 
   //edit product
  const handleEdit=async(id)=>{
-  console.log(id)
+ 
 
     try {
         const response = await httpAuth.get(`/api/products/edit/${id}`);
-        console.log(response)
         const data = await response.data.product;
         setEditobj(data) 
    } catch (error) {
