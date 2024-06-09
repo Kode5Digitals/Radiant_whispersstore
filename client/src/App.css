@@ -151,11 +151,42 @@ animation: myAnim 0.9s ease 5s 1 normal forwards;
   background-image: url('RadiantWhispersstoreBanner2.png');
   background-size: cover; 
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center left;
+  background-color: #f0f0f0;
 }
 
+@media(min-width: 800px) {
+  .bannerImage{
+    background-image: url('RadiantWhisperBanner.png');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center left;
+    background-color: #f0f0f0;
+  }
+  
+}
 
+/* @media (min-width: 378px) and (max-width: 425px) {
+  .bannerText{
+    padding-left: 12px;
+  }
+}
+@media (min-width: 416px) and (max-width: 500px) {
+  .bannerText{
+    padding-left:28px;
+  }
+}
+@media (min-width: 500px) and (max-width: 600px) {
+  .bannerText{
+    padding-left:48px;
+  }
+}
 
+@media (min-width: 600px) and (max-width: 700px) {
+  .bannerText{
+    padding-left:54px;
+  }
+} */
 .productscale{
   animation: myAnim 2s ease 0s 1 normal forwards;
 }
