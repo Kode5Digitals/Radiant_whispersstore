@@ -8,7 +8,7 @@ const WishlistItemSchema = new Schema({
 const WishlistSchema = new Schema({
   userId: { type: String, required: false },
   sessionId: { type: String, required: false },
-  items: [WishlistItemSchema],
+  wishlists: [WishlistItemSchema],
 }, {
   timestamps: true,
 });
