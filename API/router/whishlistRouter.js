@@ -5,3 +5,4 @@ const router = express.Router();
 router.get("/whishlists",getWhishlist);
 router.post("/addwhishlist",addWishlist)
 router.delete('/removewhishlist', removeWhishlist)
+module.exports = router;
