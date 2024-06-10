@@ -18,7 +18,8 @@ const getWhishlist=async (req, res) => {
 
 
   const addWishlist = async (req, res) => {
-    const { userId, sessionId, wishlists } = req.body;
+    const {wishlists } = req.body;
+    const { userId, sessionId } = req.query;
   
     try {
       let filter;
