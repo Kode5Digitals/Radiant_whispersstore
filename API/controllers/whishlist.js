@@ -97,8 +97,8 @@ const getWhishlist=async (req, res) => {
 // }
 
 const removeWhishlist  = async (req, res) => {
-  const { userId, sessionId, productId } = req.body;
-
+  const {productId} = req.body;
+  const { userId, sessionId } = req.query;
   try {
     let filter = userId ? { userId } : { sessionId };
     let wishlist = await wishlistModel.findOne(filter);
