@@ -59,10 +59,10 @@ const getWishlist=async (req, res) => {
 
 const removeWishlist  = async (req, res) => {
   const {productId,userId, sessionId} = req.body;
+  console.log("removewhish:",req.body)
   try {
     let filter = userId ? { userId } : { sessionId };
     let wishlist = await wishlistModel.findOne(filter);
-
     if (!wishlist) {
       return res.status(404).json({ error: 'Wishlist not found' });
     }
