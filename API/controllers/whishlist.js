@@ -46,7 +46,7 @@ const getWhishlist=async (req, res) => {
         model: 'Product' // This should match your Product model name
       });
       
-      res.json({ message: 'Item added to wishlist successfully', wishlist: populatedWishlist });
+      res.json({ message: 'Item added to wishlist successfully', wishlists: populatedWishlist });
   
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -73,7 +73,7 @@ const removeWhishlist  = async (req, res) => {
 
     const savedWishlist = await wishlist.save();
     const populatedWishlist = await wishlistModel.findById(savedWishlist._id).populate('items.productId');
-    res.json({ message: 'Item removed from wishlist successfully', wishlist: populatedWishlist });
+    res.json({ message: 'Item removed from wishlist successfully', wishlists: populatedWishlist });
 
   } catch (error) {
     res.status(500).json({ error: error.message });
