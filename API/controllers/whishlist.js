@@ -80,6 +80,22 @@ const removeWishlist  = async (req, res) => {
 
 
 
+ const clearWishlist = async (req, res) => {
+  const { userId, sessionId } = req.body;
+  try {
+    let filter = userId ? { userId } : { sessionId };
+    let wishlist = await wishlistModel.findOne(filter).populate('items.productId');
+    if (wishlist) {
+      wishlist.items = [];
+      const savedWishlist = await wishlist.save();
+      res.json({ message: 'Wishlist cleared successfully', wishlist: savedWishlist });
+    } else {
+      res.status(404).json({ message: 'Wishlist not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
 
 
 
@@ -87,6 +103,7 @@ const removeWishlist  = async (req, res) => {
 module.exports = {
     getWishlist,
    addWishlist,
-   removeWishlist
+   removeWishlist,
+   clearWishlist
   }
   
