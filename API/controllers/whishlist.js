@@ -38,6 +38,9 @@ const getWhishlist=async (req, res) => {
         // Product is not in the wishlist, add it
         wishlist.items.push({ productId });
       }
+      else{
+     return   res.json({ message: 'Item already in wishlist'});
+      }
   
       // Save the wishlist
       const savedWishlist = await wishlist.save();
