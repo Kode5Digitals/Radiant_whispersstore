@@ -3,7 +3,7 @@ const wishlistModel = require("../models/whishlistModel");
 
 
 
-const getWhishlist=async (req, res) => {
+const getWishlist=async (req, res) => {
     const { userId, sessionId } = req.query;
     try {
       const wishlists = await wishlistModel.findOne({ userId, sessionId }).populate({
@@ -22,33 +22,26 @@ const getWhishlist=async (req, res) => {
     const { productId, userId, sessionId } = req.body;
 
     try {
-      // Determine filter based on userId or sessionId
       const filter = userId ? { userId } : { sessionId };
       
-      // Find or create the wishlist
       let wishlist = await wishlistModel.findOne(filter);
       if (!wishlist) {
         wishlist = new wishlistModel({ userId, sessionId, items: [] });
       }
   
-      // Check if the product already exists in the wishlist
       const isProductInWishlist = wishlist.items.some(item => item.productId.toString() === productId);
   
       if (!isProductInWishlist) {
-        // Product is not in the wishlist, add it
         wishlist.items.push({ productId });
       }
       else{
      return   res.json({ message: 'Item already in wishlist'});
       }
   
-      // Save the wishlist
       const savedWishlist = await wishlist.save();
-      
-      // Populate the wishlist with product details
       const populatedWishlist = await wishlistModel.findById(savedWishlist._id).populate({
         path: 'items.productId',
-        model: 'Product' // This should match your Product model name
+        model: 'Product' 
       });
       
       res.json({ message: 'Item added to wishlist successfully', wishlists: populatedWishlist });
@@ -64,7 +57,7 @@ const getWhishlist=async (req, res) => {
 
 
 
-const removeWhishlist  = async (req, res) => {
+const removeWishlist  = async (req, res) => {
   const {productId,userId, sessionId} = req.body;
   try {
     let filter = userId ? { userId } : { sessionId };
@@ -92,8 +85,8 @@ const removeWhishlist  = async (req, res) => {
 
 
 module.exports = {
-    getWhishlist,
+    getWishlist,
    addWishlist,
-   removeWhishlist
+   removeWishlist
   }
   
