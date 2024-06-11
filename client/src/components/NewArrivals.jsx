@@ -4,7 +4,7 @@ import {  useContext, useEffect, useRef, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import httpAuth from "../utils/https";
 import {  addItemToCart } from "../stores/features/cart/cartSlice";
-import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
+import {addWishlist, deleteWishlist} from"../stores/features/whishlist/wishlistSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {Truncate, formatPrice} from "../utils/utils"
@@ -19,7 +19,7 @@ cors()
 function NewArrivals() {
   const flexContainerRef = useRef(null);
   const [showLeftIndicator, setShowLeftIndicator] = useState(false);
-const {wishlistItems}= useSelector((state)=>state?.whishlist);      
+const wishlists= useSelector((state)=>state?.wishlist.items);      
 const [loading,setLoading]=useState(true)
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch()
@@ -64,24 +64,23 @@ const [loading,setLoading]=useState(true)
       behavior: "smooth",
     });
   };
-
-
-  const handleAddToWishlist=(Id)=>{
-    dispatch(toggleWishlistItem(Id))
+  const handleAddToWishlist = (product) => {
+    dispatch(addWishlist({ userId:user?._id, sessionId,productId:product?._id}));
   }
+  const handleRemoveFromWishlist = (product) => {
+    dispatch(deleteWishlist({ userId:user?._id, sessionId,productId:product?._id}));
+  }
+
+
   const isProductInWishlist = (productId) => {
-    const wish = wishlistItems.some(item => item._id === productId)
+    const wish = wishlists.some(item => item.productId._id === productId)
     return wish
   };
   
-  
   //add to cart
- 
-  
   const handleAddToCart = (product) => {
     const selectedQuantity =  1
     dispatch(addItemToCart({ userId:user?._id,sessionId,productId: product._id,quantity:selectedQuantity }))
-    
   }
 
   return ( 
@@ -136,8 +135,8 @@ New Arrivals
                   <FaHeart
                     size={20}
                     id={item._id}
-                    className="m-2 absolute top-1 right-2 cursor-pointer text-[#fd00cd]"
-                    onClick={() => handleAddToWishlist(item)}
+                    className="m-2 absolute top-1 right-2 cursor-pointer text-[#891980]"
+                    onClick={() => handleRemoveFromWishlist(item)}
                   />
                 )}
 

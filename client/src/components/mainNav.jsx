@@ -18,6 +18,7 @@ import { FaFacebook, FaInstagramSquare } from "react-icons/fa"
 import { AiOutlineLogout } from "react-icons/ai"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchUserCart } from "../stores/features/cart/cartSlice"
+import { fetchWishlists } from "../stores/features/whishlist/wishlistSlice"
 
 
 
@@ -40,13 +41,15 @@ const MainNavbar = ({  logoSrc,toggleSidebar }) => {
   const [searchedProducts, setSearchedProducts] = useState([])
   const [showProducts, setShowProducts] = useState(false)
   const productRef = useRef(null)
-  const { wishlistItems } = useSelector((state) => state?.whishlist)
+  const  wishlists  = useSelector((state) => state?.wishlist.items)
    const[openNavMenu,setOpenNavMenu]=useState(false)
    const[openContact,setOpenContact]=useState(false)
    const[loading,setLoading]=useState(false)
    const totalQuantity = useSelector((state) => state.cart.totalQuantity);
    const dispatch=useDispatch()
    const {user,sessionId}=useContext(Cartcontext)
+
+  // console.log("wishlists:",wishlists)
     
    
     useEffect(() => {
@@ -57,11 +60,22 @@ const MainNavbar = ({  logoSrc,toggleSidebar }) => {
       }catch(err){
     console.error(err)
       }}, [dispatch, user,sessionId]);
+
    useEffect(() => {
      setCartLength(totalQuantity);
    }, [totalQuantity,setCartLength]);
-  //search
   
+
+  useEffect(() => {
+  try{
+        if (user?._id || sessionId) {
+          dispatch(fetchWishlists({ userId: user?._id, sessionId }));
+        }
+      }catch(err){
+    console.error(err)}
+
+  }, [user,sessionId, dispatch])
+
   const handleSearch = useCallback(async () => {
     setLoading(true)
     try {
@@ -184,7 +198,7 @@ setOpenContact (false)
                 style={{ fontSize: "10px" }}
                 className="w-4 text-sm  bg-black text-white h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2    md:bottom-[-10px]"
               >
-                <h6>{wishlistItems?.length}</h6>
+                <h6>{wishlists?.length||0}</h6>
               </div>
               
            </div>
@@ -210,7 +224,7 @@ setOpenContact (false)
                 style={{ fontSize: "10px" }}
                 className="w-4 text-sm text-white  h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2 md:bottom-[-10px]"
               >
-                <p>{wishlistItems?.length}</p>
+                <p>{wishlists?.length||0}</p>
               </div>
             </div>
             <BiSolidUserPin
@@ -315,7 +329,7 @@ That's why we're dedicated to providing high-quality, natural body creams that m
                 style={{ fontSize: "10px" }}
                 className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2"
               >
-                <p>{wishlistItems?.length}</p>
+                <p>{wishlists?.length||0}</p>
               </div>
             </div>
           </Link>

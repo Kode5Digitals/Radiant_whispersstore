@@ -10,7 +10,7 @@ import Navbar from "./nav"
 import { useDispatch, useSelector } from "react-redux"
 import { setProducts } from "../stores/features/product/productSlice"
 import { addItemToCart} from "../stores/features/cart/cartSlice"
-import { toggleWishlistItem } from "../stores/features/whishlist/wishlistSlice"
+import { addWishlist, deleteWishlist} from "../stores/features/whishlist/wishlistSlice"
 import { FaHeart} from "react-icons/fa"
 import { TbCurrencyNaira } from "react-icons/tb"
 import { Truncate, formatPrice } from "../utils/utils"
@@ -24,17 +24,16 @@ function Products() {
   const [loading, setLoading] = useState(false)
   const products = useSelector((state) => state.products)
   const [visibleProducts, setVisibleProducts] = useState(15)
-  const { wishlistItems } = useSelector((state) => state?.whishlist)
+const wishlist= useSelector((state) => state?.wishlist.items)
   const [quantity, setQuantity] = useState({})
   const{user,sessionId,setCartLength}=useContext(Cartcontext)
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-
 
 useEffect(() => {
   setCartLength(totalQuantity);
 }, [totalQuantity,setCartLength]);
 
-  const handleAllProducts = async () => {
+const handleAllProducts = async () => {
     try {
       setLoading(true)
       const response = await httpAuth.get(`/api/products/allProducts`)
@@ -60,16 +59,18 @@ useEffect(() => {
     setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 9)
   }
 
-  const handleAddToWishlist = (Id) => {
-    dispatch(toggleWishlistItem(Id))
+  const handleAddToWishlist = (product) => {
+    dispatch(addWishlist({ userId:user?._id, sessionId, productId:product?._id}));
+  }
+  const handleRemoveToWishlist = (product) => {
+    dispatch(deleteWishlist({ userId:user?._id, sessionId, productId:product?._id}));
   }
 
  
   const isProductInWishlist = (productId) => {
-    const wish = wishlistItems.some((item) => item._id === productId)
+     const wish= wishlist.some((item) => item.productId._id === productId)
     return wish
   }
-
   const handleIncrease = (productId) => {
     console.log(productId)
     setQuantity(prevQuantities => ({
@@ -109,43 +110,43 @@ useEffect(() => {
         ) : (
           <div className="flex p-2 xl:p-0  flex-shrink-0 productscale flex-wrap w-full sm:gap-5 sm:flex-wrap justify-evenly xl:justify-center 2xl:justify-between ">
             {!loading &&
-              products.slice(0, visibleProducts).map((prod, index) => (
+              products.slice(0, visibleProducts).map((product, index) => (
                 <div key={index} className="mb-32  w-40 xl:w-48 h-96 ">
                   <div className="w-full h-52 shadow-xl overflow-hidden rounded-lg mb-3  border relative">
                     <div className="hover:p-2 p-5">
-                      <img src={prod?.image} className="w-full h-full" alt="" />
+                      <img src={product?.image} className="w-full h-full" alt="" />
                     </div>{" "}
-                    {!isProductInWishlist(prod._id) ? (
+                    {!isProductInWishlist(product._id) ? (
                       <CiHeart
                         size={22}
-                        id={prod._id}
+                        id={product._id}
                         className="m-2 absolute top-1 right-2 cursor-pointer text-[#080808]"
-                        onClick={() => handleAddToWishlist(prod)}
+                        onClick={() => handleAddToWishlist(product)}
                       />
                     ) : (
                       <FaHeart
                         size={20}
-                        id={prod._id}
-                        className="m-2 absolute top-1 right-2 cursor-pointer text-[#891980n]"
-                        onClick={() => handleAddToWishlist(prod)}
+                        id={product._id}
+                        className="m-2 absolute top-1 right-2 cursor-pointer text-[#891980]"
+                        onClick={() => handleRemoveToWishlist(product)}
                       />
                     )}
                   </div>
                   <div className="p-1 ">
-                    <h3 className="text-sm">{Truncate(prod?.name, 16)}</h3>
+                    <h3 className="text-sm">{Truncate(product?.name, 16)}</h3>
                     <p className="text-[12px] w-full ">
-                      {Truncate(prod?.description, 20)}
+                      {Truncate(product?.description, 20)}
                     </p>
                     <div className="flex items-center">
                       <TbCurrencyNaira />
                       <h4 className="text-md">
                         <span></span>
-                        {formatPrice(Number(prod?.price))}
+                        {formatPrice(Number(product?.price))}
                       </h4>
                     </div>
-                    <h4 className="text-[12px]">{prod?.category}</h4>
+                    <h4 className="text-[12px]">{product?.category}</h4>
                     <button className="text-[12px] border px-2 rounded-md bg-white border-[#891980]">
-                      <Link to={`/ProductDetails/${prod?._id}`}>
+                      <Link to={`/ProductDetails/${product?._id}`}>
                         More info
                       </Link>
                     </button>
@@ -154,16 +155,16 @@ useEffect(() => {
                     <div className="flex justify-between border-black mt-3 border rounded-lg">
                       <div className="flex ">
                         <button
-                         onClick={()=>handleIncrease(prod._id)}
+                         onClick={()=>handleIncrease(product._id)}
                          className="w-7 h-7  text-sm bg-white text-black flex justify-center items-center rounded-md"
                         >
                           +
                         </button>
                         <h4 className="w-5 h-7 border-black border text-sm flex justify-center items-center  ">
-                        {quantity[prod._id] || 1}
+                        {quantity[product._id] || 1}
                         </h4>
                         <button
-                        onClick={()=>handleDecrease(prod._id)}
+                        onClick={()=>handleDecrease(product._id)}
                           className="w-7 h-7    bg-white border   text-sm flex  text-black  justify-center items-center rounded-md"
                         >
                           -
@@ -172,9 +173,9 @@ useEffect(() => {
                     </div>
 
                     <button
-                      id={prod._id}
+                      id={product._id}
                       className="border text-sm  w-14 h-7 flex justify-center items-center text-white  rounded-md bg-[#C683EF]  border-pink-600 hover:text-white hover:bg-pink-950"
-                      onClick={() => handleAddToCart(prod)}
+                      onClick={() => handleAddToCart(product)}
                     >
                     
               <LiaShoppingBagSolid size={20} />

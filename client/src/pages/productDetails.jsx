@@ -5,7 +5,7 @@ import Defaultlayout from "../layout/Defaultlayout"
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa6"
 import { useDispatch, useSelector } from "react-redux"
-import {toggleWishlistItem} from"../stores/features/whishlist/wishlistSlice"
+import {addWishlist, deleteWishlist} from"../stores/features/whishlist/wishlistSlice"
 import {  addItemToCart } from "../stores/features/cart/cartSlice";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { formatPrice } from "../utils/utils";
@@ -17,10 +17,14 @@ const ProductDetails = () => {
 const [productDetail,setProductDetail] =useState()
 const params=useParams()
 const productid=params.product_id
-const {wishlistItems}= useSelector((state)=>state?.whishlist); 
+const wishlistItems= useSelector((state)=>state?.wishlist.items); 
 const dispatch = useDispatch()
-const {user,sessionId}=useContext(Cartcontext)
+const {user,sessionId,loadUser}=useContext(Cartcontext)
 
+
+useEffect(()=>{
+  loadUser(); 
+},[])
  
 useEffect(()=>{
     axios({
@@ -33,9 +37,13 @@ console.log(err)
 })
 },[productid])
 
-const handleAddToWishlist=(Id)=>{
-  dispatch(toggleWishlistItem(Id))
+const handleAddToWishlist = (product) => {
+  dispatch(addWishlist({ userId:user?._id, sessionId, productId:product?._id}));
 }
+const handleRemoveToWishlist = (product) => {
+  dispatch(deleteWishlist({ userId:user?._id, sessionId,productId:product?._id}));
+}
+
 const handleAddToCart = (product) => {
   const selectedQuantity =  1
   dispatch(addItemToCart({ userId:user?._id,sessionId,productId: product._id,quantity:selectedQuantity }))
@@ -70,7 +78,7 @@ const handleAddToCart = (product) => {
                   <FaHeart
                     size={18}
                     className=" text-[#fd00cd] mr-2"
-                    onClick={() => handleAddToWishlist(productDetail)}
+                    onClick={() => handleRemoveToWishlist(productDetail)}
                   />
                 )}
 </div>

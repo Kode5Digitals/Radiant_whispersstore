@@ -4,7 +4,7 @@ import { LiaTimesSolid } from "react-icons/lia"
 import { MdAccountCircle, MdContactPage} from "react-icons/md"
 import {  RiAdminFill, RiProfileLine } from "react-icons/ri"
 import Cartcontext from "../cartcontext"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { AiOutlineLogout } from "react-icons/ai"
 import { Link} from "react-router-dom"
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io"
@@ -17,9 +17,6 @@ const SideMenu = () => {
     const [aboutIsVisible, setAboutIsVisible] = useState(false);
 
 
-    // useEffect(()=>{
-    //   loadUser(); 
-    // },[])
  
 
     const handleToggleContact= () => {

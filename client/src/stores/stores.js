@@ -6,7 +6,7 @@ const store = configureStore({
   reducer: {
     products: productReducer,
     cart: cartReducer,
-   whishlist: whishlistReducer,
+   wishlist: whishlistReducer,
   },
 })
 
