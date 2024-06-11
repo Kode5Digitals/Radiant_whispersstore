@@ -6,11 +6,10 @@ const wishlistModel = require("../models/whishlistModel");
 const getWhishlist=async (req, res) => {
     const { userId, sessionId } = req.query;
     try {
-      const wishlists = await wishlistModel.find({ userId, sessionId }).populate({
+      const wishlists = await wishlistModel.findOne({ userId, sessionId }).populate({
         path: 'items.productId',
         model: 'Product' // This should match your Product model name
       });;
-      console.log(wishlists)
       res.json({ message: 'Wishlists retrieved successfully', wishlists });
     } catch (error) {
       res.status(500).json({ error: error.message });
