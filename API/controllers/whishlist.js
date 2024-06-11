@@ -17,8 +17,7 @@ const getWhishlist=async (req, res) => {
 
 
   const  addWishlist= async (req, res) => {
-      const {productId} = req.body;
-    const { userId, sessionId } = req.query;
+      const {productId,userId,sessionId} = req.body;
     try {
       let filter = userId ? { userId } : { sessionId };
       let wishlist = await wishlistModel.findOne(filter);
