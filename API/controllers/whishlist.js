@@ -17,30 +17,59 @@ const getWhishlist=async (req, res) => {
 
 
   const  addWishlist= async (req, res) => {
-      const {productId,userId,sessionId} = req.body;
-    try {
-      let filter = userId ? { userId } : { sessionId };
-      let wishlist = await wishlistModel.findOne(filter);
-  
-      if (!wishlist) {
-        wishlist = new wishlistModel({ userId, sessionId, items: [] });
-      }
-  
-      const itemIndex = wishlist.items.findIndex(item => item.productId.toString() === productId);
-  
-      if (itemIndex > -1) {
-        wishlist.items[itemIndex].quantity += quantity;
-      } else {
-        wishlist.items.push({ productId});
-      }
-  
-      const savedWishlist = await wishlist.save();
-      const populatedWishlist = await wishlistModel.findById(savedWishlist._id).populate('items.productId');
-      res.json({ message: 'Item added to wishlist successfully', wishlist: populatedWishlist });
-  
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    const { productId, userId, sessionId } = req.body;
+
+  try {
+    const filter = userId ? { userId } : { sessionId };
+    
+    let wishlist = await wishlistModel.findOne(filter);
+    if (!wishlist) {
+      wishlist = new wishlistModel({ userId, sessionId, items: [] });
     }
+
+    const itemIndex = wishlist.items.findIndex(item => item.productId.toString() === productId);
+
+    // if (itemIndex > -1) {
+    //   // Item exists, handle the case as needed (e.g., update quantity if applicable)
+    //   // wishlist.items[itemIndex].quantity += quantity; // Uncomment if you have a quantity field
+    // } else {
+    //   // Add new item to wishlist
+    //   wishlist.items.push({ productId });
+    // }
+
+    // Save the wishlist
+    const savedWishlist = await wishlist.save();
+    
+    const populatedWishlist = await wishlistModel.findById(savedWishlist._id).populate('items.productId');
+    res.json({ message: 'Item added to wishlist successfully', wishlist: populatedWishlist });
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+    //   const {productId,userId,sessionId} = req.body;
+    // try {
+    //   let filter = userId ? { userId } : { sessionId };
+    //   let wishlist = await wishlistModel.findOne(filter);
+  
+    //   if (!wishlist) {
+    //     wishlist = new wishlistModel({ userId, sessionId, items: [] });
+    //   }
+  
+    //   const itemIndex = wishlist.items.findIndex(item => item.productId.toString() === productId);
+  
+    //   if (itemIndex > -1) {
+    //     wishlist.items[itemIndex].quantity += quantity;
+    //   } else {
+    //     wishlist.items.push({ productId});
+    //   }
+  
+    //   const savedWishlist = await wishlist.save();
+    //   const populatedWishlist = await wishlistModel.findById(savedWishlist._id).populate('items.productId');
+    //   res.json({ message: 'Item added to wishlist successfully', wishlist: populatedWishlist });
+  
+    // } catch (error) {
+    //   res.status(500).json({ error: error.message });
+    // }
   };
   
 
@@ -96,8 +125,7 @@ const getWhishlist=async (req, res) => {
 // }
 
 const removeWhishlist  = async (req, res) => {
-  const {productId} = req.body;
-  const { userId, sessionId } = req.query;
+  const {productId,userId, sessionId} = req.body;
   try {
     let filter = userId ? { userId } : { sessionId };
     let wishlist = await wishlistModel.findOne(filter);

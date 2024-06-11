@@ -6,9 +6,9 @@ const WishlistItemSchema = new Schema({
 });
 
 const WishlistSchema = new Schema({
-  userId: { type: String, required: false },
+  userId: { type: Schema.Types.ObjectId, required: false },
   sessionId: { type: String, required: false, unique: true, },
-  wishlists: [WishlistItemSchema],
+  items: [WishlistItemSchema],
 }, {
   timestamps: true,
 });
