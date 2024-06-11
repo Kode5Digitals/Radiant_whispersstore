@@ -1,4 +1,3 @@
-const whishlistModel = require("../models/whishlistModel");
 const wishlistModel = require("../models/whishlistModel");
 
 
@@ -8,6 +7,7 @@ const getWhishlist=async (req, res) => {
     const { userId, sessionId } = req.query;
     try {
       const wishlists = await wishlistModel.find({ userId, sessionId });
+      console.log(wishlists)
       res.json({ message: 'Wishlists retrieved successfully', wishlists });
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -51,32 +51,7 @@ const getWhishlist=async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  //   const { productId, userId, sessionId } = req.body;
-
-  // try {
-  //   const filter = userId ? { userId } : { sessionId };
-    
-  //   let wishlist = await wishlistModel.findOne(filter);
-  //   if (!wishlist) {
-  //     wishlist = new wishlistModel({ userId, sessionId, items: [] });
-  //   }
-
-  //   const itemIndex = wishlist.items.findIndex(item => item.productId.toString() === productId);
-
-  //   if (itemIndex === -1) {
-  //     // Add new item to wishlist only if it does not exist
-  //     wishlist.items.push({ productId });
-  //   }
-  //   // Save the wishlist
-  //   const savedWishlist = await wishlist.save();
-    
-  //   const populatedWishlist = await wishlistModel.findById(savedWishlist._id).populate('items.productId');
-  //   res.json({ message: 'Item added to wishlist successfully', wishlist: populatedWishlist });
-
-  // } catch (error) {
-  //   res.status(500).json({ error: error.message });
-  // }
-   
+  
   };
   
 
