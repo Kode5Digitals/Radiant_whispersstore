@@ -25,7 +25,6 @@ const {user,sessionId,loadUser}=useContext(Cartcontext)
 useEffect(()=>{
   loadUser(); 
 },[])
- 
 useEffect(()=>{
     axios({
     url:`https://radiant-whispersstore.onrender.com/api/products/getProduct/${productid}`,
@@ -37,13 +36,21 @@ console.log(err)
 })
 },[productid])
 
+
 const handleAddToWishlist = (product) => {
   dispatch(addWishlist({ userId:user?._id, sessionId, productId:product?._id}));
 }
 const handleRemoveToWishlist = (product) => {
+  if (!wishlistItems) return false;
   dispatch(deleteWishlist({ userId:user?._id, sessionId,productId:product?._id}));
 }
 
+ 
+const isProductInWishlist = (productId) => {
+  const wish= wishlistItems.some((item) => item.productId._id === productId)
+  console.log(wish)
+ return wish
+}
 const handleAddToCart = (product) => {
   const selectedQuantity =  1
   dispatch(addItemToCart({ userId:user?._id,sessionId,productId: product._id,quantity:selectedQuantity }))
@@ -68,7 +75,7 @@ const handleAddToCart = (product) => {
                 </div>
                 <div className="flex items-end gap-3">
 <div className="flex w-12 border rounded border-[#fd00cd] mt-3">
-{!wishlistItems.includes(productDetail) ? (
+{!isProductInWishlist(productDetail?._id)?(
                   <CiHeart
                     size={20}
                     className="ml-6"
@@ -82,7 +89,7 @@ const handleAddToCart = (product) => {
                   />
                 )}
 </div>
-{!wishlistItems.includes(productDetail) ? (<p>
+{!isProductInWishlist(productDetail?._id) ? (<p>
 Add to whishlist
 </p>):(<p>Item added to wishlist</p>)}
 </div>

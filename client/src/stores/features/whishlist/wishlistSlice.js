@@ -23,7 +23,6 @@ export const addWishlist = createAsyncThunk(
   async ({ productId, userId, sessionId }, thunkAPI) => {
     try {
       const response = await httpAuth.post('/api/wishlists/addwishlist',{ productId ,userId, sessionId})
-      console.log(response.data)
       toast.success(response.data.message);
       return response.data;
     } catch (error) {
