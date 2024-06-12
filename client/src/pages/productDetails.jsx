@@ -12,12 +12,14 @@ import { formatPrice } from "../utils/utils";
 import { FaShoppingCart } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
 import Cartcontext from "../cartcontext";
+import { LiaShoppingBagSolid } from "react-icons/lia";
 
 const ProductDetails = () => {
 const [productDetail,setProductDetail] =useState()
 const params=useParams()
 const productid=params.product_id
 const wishlistItems= useSelector((state)=>state?.wishlist.items); 
+const cartItems= useSelector((state)=>state?.cart.items); 
 const dispatch = useDispatch()
 const {user,sessionId,loadUser}=useContext(Cartcontext)
 
@@ -37,6 +39,7 @@ console.log(err)
 },[productid])
 
 
+
 const handleAddToWishlist = (product) => {
   dispatch(addWishlist({ userId:user?._id, sessionId, productId:product?._id}));
 }
@@ -45,10 +48,14 @@ const handleRemoveToWishlist = (product) => {
   dispatch(deleteWishlist({ userId:user?._id, sessionId,productId:product?._id}));
 }
 
+
  
 const isProductInWishlist = (productId) => {
   const wish= wishlistItems.some((item) => item.productId._id === productId)
-  console.log(wish)
+ return wish
+}
+const isProductInCart = (productId) => {
+  const wish= cartItems.some((item) => item.productId._id === productId)
  return wish
 }
 const handleAddToCart = (product) => {
@@ -74,7 +81,7 @@ const handleAddToCart = (product) => {
 <h3 className="xl:text-lg ">{formatPrice(Number(productDetail?.price))}</h3>
                 </div>
                 <div className="flex items-end gap-3">
-<div className="flex w-12 border rounded border-[#fd00cd] mt-3">
+<div className="flex w-12 border rounded border-[#891980] mt-3 cursor-pointer">
 {!isProductInWishlist(productDetail?._id)?(
                   <CiHeart
                     size={20}
@@ -84,7 +91,7 @@ const handleAddToCart = (product) => {
                 ) : (
                   <FaHeart
                     size={18}
-                    className=" text-[#fd00cd] mr-2"
+                    className=" text-[#891980] mr-2"
                     onClick={() => handleRemoveToWishlist(productDetail)}
                   />
                 )}
@@ -94,15 +101,17 @@ Add to whishlist
 </p>):(<p>Item added to wishlist</p>)}
 </div>
 
-                <button className="mt-4" onClick={()=>handleAddToCart(productDetail)}>
-               <FaShoppingCart size={24}/>
-                </button>
+             <div className="flex mt-4 gap-9">
+             <button className="" onClick={()=>handleAddToCart(productDetail)}>
+               <LiaShoppingBagSolid size={24} className={`${!isProductInCart(productDetail?._id)?'text-black':'text-[#891980]'}`}/></button>
+                {!isProductInCart(productDetail?._id) ? (<p>
+Add to cart
+</p>):(<p>Item in cart</p>) }
+             </div>
+                
 </div>
 
-
-
-    </div>
-    <ToastContainer
+<ToastContainer
             position="bottom-right"
             autoClose={2000}
             hideProgressBar={false}
@@ -114,6 +123,9 @@ Add to whishlist
             pauseOnHover
             theme="light"
              />
+
+    </div>
+   
 
     </Defaultlayout>
   )

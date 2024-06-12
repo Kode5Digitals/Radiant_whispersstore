@@ -8,7 +8,6 @@ export const fetchWishlists = createAsyncThunk(
   async ({userId,sessionId}, thunkAPI) => {
     try {
       const response = await httpAuth.get(`/api/wishlists/wishlistsItems`,{ params: { userId, sessionId }})
-      console.log(" fetch:",response.data)
       // toast.success(response.data.message)
       return response.data
     } catch (error) {

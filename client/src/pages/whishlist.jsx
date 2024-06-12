@@ -9,6 +9,8 @@ import { useContext, useEffect, useState } from 'react';
 import { TbCurrencyNaira } from 'react-icons/tb';
 import { FaShoppingCart } from 'react-icons/fa';
 import Cartcontext from '../cartcontext';
+import { LiaShoppingBagSolid } from 'react-icons/lia';
+import { CiCircleRemove } from 'react-icons/ci';
 
 
 
@@ -29,7 +31,6 @@ useEffect(() => {
   try{
         if (user?._id || sessionId) {
           dispatch(fetchWishlists({ userId: user?._id, sessionId }));
-          console.log("fetched")
         }
       }catch(err){
     console.error(err)}
@@ -80,18 +81,17 @@ const handleRemoveFromWishlist = (itemId) => {
     <div className='xl:min-w-32  h-42  mb-2 '>
     <img src={item.productId.image} alt="" className='w-full h-full' />
     </div>
-    <div className="flex items-center mb-2">
-
-                <TbCurrencyNaira /> 
-    <span  className='p-1 rounded-sm text-[13px]'>{formatAmount(Number(item.productId?.price))}</span>
-
-                  </div>
-   <div className='flex justify-between'>
-   <button   id={item.productId?._id} className='p-3 rounded-sm text-[13px] text-black    bg-pink-300' onClick={()=>handleAddToCart(item.productId._id)}>
-   <FaShoppingCart size={16}/>
+   
+   <div className='flex justify-between items-center'>
+   <button   id={item.productId?._id} className=' text-[13px] text-black ' onClick={()=>handleAddToCart(item.productId._id)}>
+   <LiaShoppingBagSolid className='text-[#891984]' size={20}/>
 
    </button>
-    <button id={item._id}  className='p-1 text-[13px]  rounded-sm w-19 text-white bg-red-400' onClick={() => handleRemoveFromWishlist(item.productId?._id)}>Remove from whishlist</button>
+   <div className="flex items-center border-2 p-2 rounded-sm ">
+<TbCurrencyNaira /> 
+<span  className=' text-[16px] '>{formatAmount(Number(item.productId?.price))}</span>
+  </div>
+    <button id={item._id}  className=' text-[13px] hover:bg-red-600 hover:text-white ' onClick={() => handleRemoveFromWishlist(item.productId?._id)}><CiCircleRemove  size={24}/></button>
   <HoverDescription description={item.productId?.description}/>
    </div>
   </div>
