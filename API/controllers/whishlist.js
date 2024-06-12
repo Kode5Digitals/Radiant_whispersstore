@@ -35,7 +35,7 @@ const getWishlist=async (req, res) => {
         wishlist.items.push({ productId });
       }
       else{
-     return   res.json({ message: 'Item already in wishlist'});
+     return   res.json({ message: 'Item already in wishlist',added:false });
       }
   
       const savedWishlist = await wishlist.save();
@@ -44,7 +44,7 @@ const getWishlist=async (req, res) => {
         model: 'Product' 
       });
       
-      res.json({ message: 'Item added to wishlist successfully', wishlists: populatedWishlist });
+      res.json({ message: 'Item added to wishlist successfully', wishlists: populatedWishlist ,added:true });
   
     } catch (error) {
       res.status(500).json({ error: error.message });
