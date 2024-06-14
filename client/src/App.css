@@ -165,17 +165,129 @@ animation: myAnim 0.9s ease 5s 1 normal forwards;
   }
   
 }
+.bannerTextCase{
+  margin-top:125px ;
+  padding-left: 32px;
+  padding-right: 10px;
+
+
+}
+
+.bannerTopText{
+  font-size: 18px;
+}
+.bannerBottomText{
+  font-size: 12px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.banner{
+  height: 300px;
+   }
+
+@media (min-width: 500px) and (max-width:700px) {
+  .banner{
+ height: 400px;
+  }
+  .bannerTextCase{
+    padding-left:48px;
+    padding-right:20px;
+    margin-top:180px ;
+
+  }
+}
+@media (min-width: 701px) and (max-width:769px) {
+  .banner{
+ height: 450px;
+  }
+  .bannerTextCase{
+    padding-left:48px;
+    padding-right:20px;
+    margin-top:200px ;
+  }
+  .bannerTopText{
+    font-size: 30px;
+  }
+  .bannerBottomText{
+    font-size: 15px;
+  }
+}
+@media (min-width: 769px) and (max-width:863px) {
+  .banner{
+ height: 450px;
+  }
+  .bannerTextCase{
+    padding-left:150px;
+    padding-right:30px;
+    margin-top:200px ;
+  }
+  .bannerTopText{
+    font-size: 30px;
+  }
+  .bannerBottomText{
+    font-size: 15px;
+  }
+}
+@media (min-width: 863px) and (max-width:1000px) {
+  .banner{
+ height: 500px;
+  }
+  .bannerTextCase{
+    padding-left:180px;
+    padding-right:30px;
+    margin-top:230px ;
+  }
+  .bannerTopText{
+    font-size: 30px;
+  }
+  .bannerBottomText{
+    font-size: 15px;
+  }
+}
+@media (min-width: 1000px) and (max-width:1280px) {
+  .banner{
+    height: 520px;  
+  }
+  .bannerTextCase{
+    padding-left:50px;
+    padding-right:50px;
+    margin-top:220px ;
+
+  }
+  .bannerTopText{
+    font-size: 50px;
+  }
+  .bannerBottomText{
+    font-size: 20px;
+  }
+} 
+
+@media (min-width:1280px) {
+  .banner{
+    height: 520px;  
+  }
+  .bannerTextCase{
+    padding-left:50px;
+    padding-right:50px;
+    margin-top:220px ;
+
+  }
+  .bannerTopText{
+    font-size: 50px;
+  }
+  .bannerBottomText{
+    font-size: 20px;
+  }
+} 
+
 
 /* @media (min-width: 378px) and (max-width: 425px) {
   .bannerText{
     padding-left: 12px;
   }
 }
-@media (min-width: 416px) and (max-width: 500px) {
-  .bannerText{
-    padding-left:28px;
-  }
-}
+
 @media (min-width: 500px) and (max-width: 600px) {
   .bannerText{
     padding-left:48px;

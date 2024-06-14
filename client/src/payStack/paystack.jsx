@@ -16,6 +16,7 @@ const PaystackComponent = () => {
   const emailRef = useRef();
   const firstNameRef = useRef();
   const lastNameRef = useRef();
+ const addressRef= useRef();
   const amount= totalPrice
   const navigate=useNavigate()
 const [loading, setLoading] = useState(false);
@@ -39,6 +40,7 @@ const handlePayment = async () => {
     email: emailRef.current.value,
     firstName: firstNameRef.current.value,
     lastName: lastNameRef.current.value,
+    address:addressRef.current.value,
     reference: newReference,
     products:cartItems
   }
@@ -143,6 +145,18 @@ navigate("/cart")
                 type="email"
                 placeholder="Email"
                 ref={emailRef}               
+                required
+              />
+              </div>
+              <div className="xl:w-full w-full ">
+              <label htmlFor="email">Address:</label>
+              <br />
+              <input
+              className="w-full  rounded-sm  p-2 border mb-4"
+                id="address"
+                type="text"
+                placeholder="address"
+                ref={addressRef}               
                 required
               />
               </div>
