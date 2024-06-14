@@ -78,7 +78,7 @@ const handleRemoveFromWishlist = (itemId) => {
 {wishlist?.map((item) => (
   <div key={item.productId?._id} className='  mt-20 xl:w-60  max-w-60 p-3 h-84   hover:border-white  border-2 rounded-lg relative group bg-whit shadow-lg '>
     <span className='text-sm'>{Capitalize(item.productId?.name)}</span>
-    <div className='xl:min-w-32  h-42  mb-2 '>
+    <div className='xl:min-w-32  h-40   mb-2  overflow-hidden'>
     <img src={item.productId.image} alt="" className='w-full h-full' />
     </div>
    

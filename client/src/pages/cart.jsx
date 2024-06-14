@@ -130,7 +130,8 @@ const Cart = () => {
                       +
                     </button>
                     <h4 className="w-9 h-9 text-sm flex justify-center items-center rounded-md">
-                      {product.quantity|| 1}
+                      {/* {product.quantity|| 1} */}
+                      {items.find(item => item.productId._id === product.productId?._id)?.quantity || 1}
                     </h4>
                     <button
                     
