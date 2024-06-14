@@ -7,7 +7,7 @@ const generateUniqueReference = () => {
 };
 
   const createPayment=async(req, res) =>{ 
-    const {amount,email, firstName, lastName,products}=req.body
+    const {amount,email, firstName, lastName,address,products}=req.body
     const reference = generateUniqueReference();
     const currentDate = new Date().toLocaleDateString('en-US', {
       year: 'numeric',
@@ -22,6 +22,7 @@ const generateUniqueReference = () => {
             metadata: {
               firstName,
               lastName,
+              address,
               products,
               date:currentDate
             },
