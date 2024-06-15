@@ -98,7 +98,7 @@ const AddProduct = () => {
       />
       <form 
         onSubmit={handleSubmit}
-        className="forgot-password flex mt-32  xl:mt-0 w-full sm:flex-wrap xl:flex-nowrap  flex-wrap  p-3 gap-10    lg:w-3/4 2xl:w-1/4 md:w-3/4 sm:w-3/4 rounded-lg shadow-md bg-pink-200  transition duration-500 ease-in-out border-2 border-transparent "
+        className="forgot-password flex mt-32  xl:mt-0 w-full sm:flex-wrap xl:flex-nowrap  flex-wrap  p-5  gap-10    lg:w-3/4 2xl:w-1/4 md:w-3/4 sm:w-3/4 rounded-lg shadow-md bg-pink-200  transition duration-500 ease-in-out border-2 border-transparent "
       >
        <div className=" xl:w-1/2  w-full">
        <h2 className="text-center text-2xl mt-3 mb-3">Add product</h2>
@@ -200,7 +200,7 @@ const AddProduct = () => {
 </button>}
        </div>
        
-       <div className="xl:w-1/2 w-3/4 m-auto">
+       <div className="xl:w-1/2 w-3/4 m-auto ">
        <div className="w-full  m-auto h-[300px] border">
         <img style={{ width: "100%", height: "100% " }} src={imagesrc} alt="" />
       </div>

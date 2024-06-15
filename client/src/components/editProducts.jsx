@@ -224,7 +224,7 @@ const handleBack=()=>{
           Edit Product 
           {loading &&<IoReload className="animate-spin" />}
         </button>
-        <div className="w-full h-[400px] border bg-white">
+        <div className="w-full h-[400px] border bg-white mb-32">
         <img style={{ width: "100%", height: "100%" }} src={imagesrc}  alt="" />
       </div>
       </form>
