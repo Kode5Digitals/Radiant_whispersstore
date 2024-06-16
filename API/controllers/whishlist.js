@@ -26,7 +26,9 @@ const getWishlist=async (req, res) => {
       
       let wishlist = await wishlistModel.findOne(filter);
       if (!wishlist) {
-        wishlist = new wishlistModel({ userId, sessionId, items: [] });
+        // wishlist = new wishlistModel({ userId, sessionId, items: [] });
+        const newWishlistData = userId ? { userId, items: [] } : { sessionId, items: [] };
+        wishlist = new wishlistModel(newWishlistData);
       }
   
       const isProductInWishlist = wishlist.items.some(item => item.productId.toString() === productId);
