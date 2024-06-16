@@ -80,7 +80,7 @@ const wishlistSlice = createSlice({
         state.items =  action.payload?.wishlists?.items|| []
       })
       .addCase(clearWishlist.fulfilled, (state, action) => {
-        state.items =action.payload|| [];
+        state.items =action.payload;
       });
   },
 });
