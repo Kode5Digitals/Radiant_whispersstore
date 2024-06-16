@@ -9,7 +9,6 @@ import {addWishlist, deleteWishlist} from"../stores/features/whishlist/wishlistS
 import {  addItemToCart } from "../stores/features/cart/cartSlice";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { formatPrice } from "../utils/utils";
-import { FaShoppingCart } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
 import Cartcontext from "../cartcontext";
 import { LiaShoppingBagSolid } from "react-icons/lia";

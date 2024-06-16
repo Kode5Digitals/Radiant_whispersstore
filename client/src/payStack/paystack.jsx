@@ -101,7 +101,7 @@ navigate("/cart")
       <Link to={"/cart"}>
       <IoIosArrowDropleft size={30}/> </Link>
       </div>
-      <div className="flex flex-wrap w-full  xl:w-3/4 md:w-1/2  bg-white     m-auto justify-center xl:p-20">
+      <div className="flex flex-wrap w-full h-[550px]  xl:w-3/4 md:w-1/2  bg-white     m-auto justify-center xl:p-10">
         <div className=" xl:w-1/2 h-[400px]  border text-center w-full   xl:block ">
       <i className="flex items-center pl-2">Thank you for your patronage <CiFaceSmile/></i>
 
@@ -109,7 +109,7 @@ navigate("/cart")
         </div>
 
         
-        <div className=" h-[400px] xl:w-1/2 flex xl:p-4 justify-center  w-full p-2   border">
+        <div className=" h-[450px] xl:w-1/2 flex xl:p-4 justify-center   w-full p-2   border">
           <div className=" bg-white xl:p-2  w-full p-1 text-[12px]">
 
           <div className="xl:w-full w-full ">
@@ -155,7 +155,7 @@ navigate("/cart")
               className="w-full  rounded-sm  p-2 border mb-4"
                 id="address"
                 type="text"
-                placeholder="address"
+                placeholder="Address"
                 ref={addressRef}               
                 required
               />

@@ -1,4 +1,3 @@
-
 const NotFound = () => {
   return (
     <div className="bg-cover bg-center h-screen " style={{ backgroundImage: 'url("404.jpeg")', backgroundColor: 'rgb(25, 34, 39)',  color: 'white' }} >

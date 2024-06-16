@@ -7,7 +7,6 @@ import {Capitalize, formatAmount} from '../utils/utils';
 import HoverDescription from '../components/HoverDescription';
 import { useContext, useEffect, useState } from 'react';
 import { TbCurrencyNaira } from 'react-icons/tb';
-import { FaShoppingCart } from 'react-icons/fa';
 import Cartcontext from '../cartcontext';
 import { LiaShoppingBagSolid } from 'react-icons/lia';
 import { CiCircleRemove } from 'react-icons/ci';

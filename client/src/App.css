@@ -166,7 +166,7 @@ animation: myAnim 0.9s ease 5s 1 normal forwards;
   
 }
 .bannerTextCase{
-  margin-top:125px ;
+  margin-top:90px ;
   padding-left: 32px;
   padding-right: 10px;
 
@@ -174,10 +174,10 @@ animation: myAnim 0.9s ease 5s 1 normal forwards;
 }
 
 .bannerTopText{
-  font-size: 18px;
+  font-size: 20px;
 }
 .bannerBottomText{
-  font-size: 12px;
+  font-size: 10px;
   text-align: justify;
   text-justify: inter-word;
 }
@@ -193,8 +193,16 @@ animation: myAnim 0.9s ease 5s 1 normal forwards;
   .bannerTextCase{
     padding-left:48px;
     padding-right:20px;
-    margin-top:180px ;
+    margin-top:150px ;
 
+  }
+  .bannerTopText{
+    font-size: 20px;
+  }
+  .bannerBottomText{
+    font-size: 13px;
+    text-align: justify;
+    text-justify: inter-word;
   }
 }
 @media (min-width: 701px) and (max-width:769px) {
@@ -204,7 +212,7 @@ animation: myAnim 0.9s ease 5s 1 normal forwards;
   .bannerTextCase{
     padding-left:48px;
     padding-right:20px;
-    margin-top:200px ;
+    margin-top:160px ;
   }
   .bannerTopText{
     font-size: 30px;
@@ -220,7 +228,7 @@ animation: myAnim 0.9s ease 5s 1 normal forwards;
   .bannerTextCase{
     padding-left:150px;
     padding-right:30px;
-    margin-top:200px ;
+    margin-top:150px ;
   }
   .bannerTopText{
     font-size: 30px;
@@ -229,7 +237,7 @@ animation: myAnim 0.9s ease 5s 1 normal forwards;
     font-size: 15px;
   }
 }
-@media (min-width: 863px) and (max-width:1000px) {
+@media (min-width: 863px) and (max-width:999px) {
   .banner{
  height: 500px;
   }
@@ -252,7 +260,7 @@ animation: myAnim 0.9s ease 5s 1 normal forwards;
   .bannerTextCase{
     padding-left:50px;
     padding-right:50px;
-    margin-top:220px ;
+    margin-top:170px ;
 
   }
   .bannerTopText{
@@ -270,7 +278,7 @@ animation: myAnim 0.9s ease 5s 1 normal forwards;
   .bannerTextCase{
     padding-left:50px;
     padding-right:50px;
-    margin-top:220px ;
+    margin-top:180px ;
 
   }
   .bannerTopText{

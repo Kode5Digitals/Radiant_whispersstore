@@ -1,5 +1,5 @@
 import { IoClose, IoLogoWhatsapp, IoMail } from 'react-icons/io5';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types"
 import { useContext, useState } from 'react';
 import Cartcontext from '../cartcontext';
 import { Link } from 'react-router-dom';
@@ -10,8 +10,8 @@ import { FaFacebook, FaInstagramSquare, FaRegRegistered } from 'react-icons/fa';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 
-const Sidebar = ({isSideOpen, toggleSidebar}) => {
-    const { handleLogin, handleRegister,setisadmin,setLogin,login,isadmin,} = useContext(Cartcontext);
+const Sidebar = ({ isSideOpen, setSideOpen }) => {
+    const { handleLogin, handleRegister,setisadmin,setLogin,login,isadmin} = useContext(Cartcontext);
     const [constactIsVisible, setConstactIsVisible] = useState(false);
     const [aboutIsVisible, setAboutIsVisible] = useState(false);
 
@@ -30,11 +30,16 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
  
    const Register=()=>{
     handleRegister()
-    toggleSidebar()
+    setSideOpen(false)
+    
    }
    const Login=()=>{
     handleLogin()
-    toggleSidebar()
+    setSideOpen(false)
+   }
+   const back=()=>{
+   setSideOpen(false)
+   console.log(isSideOpen)
    }
 
    const handleSetLogOut=()=>{
@@ -55,19 +60,18 @@ const Sidebar = ({isSideOpen, toggleSidebar}) => {
     <div className="relative h-full xl:hidden sm:hidden lg:block hidden md:block  2xl:hidden">
       <div
         className=
-        {`fixed top-0 z-[5000000000]  md:right-0 w-64 h-full bg-white p-4 transform ${
-            isSideOpen ? 'translate-x-0' : 'translate-x-full'
-          } transition-transform duration-300 ease-in-out`}
+        {`fixed top-0 z-[5000000000]  md:right-0 w-64 h-full bg-white p-4 transform transition-transform duration-300 ease-in-out
+          ${isSideOpen? 'translate-x-0' : 'translate-x-full'} `}
       >
         
         <div className="mt-3 flex justify-between items-center ">
 
         <div className="w-[80px] h-[30px] flex justify-center items-center  md:w-[80px]">
-            <img src="/Logo2.png" alt="" />
+            <img src="/RadiantwhispersstoreLogo.png" alt="" />
           </div>
-        <p>
-            <IoClose onClick={toggleSidebar} />
-          </p>
+        <p className='cursor-pointer'>
+            <IoClose onClick={back} />
+          </p> 
         </div>
 
 
@@ -157,16 +161,16 @@ That&apos;s why we&apos;re dedicated to providing high-quality, natural body cre
   
             {login && (
               <ul className="mt-5 ">
-                <li
-                  className="flex items-center gap-1 mb-4 cursor-pointer "
-                  onClick={() => handleNavigation('/myaccount')}
-                >
-                  <span>
-                  <MdAccountCircle/>
-                  </span>
-                  My Account
-                  
-                </li>
+              {!isadmin&&<li
+                className="flex items-center gap-1 mb-4 cursor-pointer "
+                onClick={() => handleNavigation('/myaccount')}
+              >
+                <span>
+                <MdAccountCircle/>
+                </span>
+                My Account
+                
+              </li>}
   
                 <li
                   onClick={handleSetLogOut}
@@ -196,20 +200,13 @@ Switch to Admin
      
       </div> 
 
-      {/* {isSideOpen && (
-        <div
-          onClick={toggleSidebar}
-          className="fixed inset-0 bg-black opacity-50 z-30"
-        ></div>
-      )} */}
     </div>
-  );
+  )
 
 };
-Sidebar.propTypes =  {
-    isSideOpen: PropTypes.bool.isRequired,
-    toggleSidebar: PropTypes.func.isRequired,
 
+Sidebar.propTypes = {
+  isSideOpen: PropTypes.bool.isRequired,
+  setSideOpen: PropTypes.func.isRequired,
 }
-  
 export default Sidebar;

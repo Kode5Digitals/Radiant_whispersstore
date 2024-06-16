@@ -18,6 +18,7 @@ const Cartprovider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [producthistory, setProductHistory] = useState([])
   const [cartLength, setCartLength] = useState(0)
+  const [wishlistLength, setWishlistLength] = useState(0)
   const [sessionId, setsessionId] = useState(localStorage.getItem("sessionId"))
   const [Userloading, setUserLoading] = useState(true)
 
@@ -104,6 +105,8 @@ const Cartprovider = ({ children }) => {
     sessionId: sessionId,
     Userloading,
     loadUser,
+    wishlistLength,
+     setWishlistLength
   }
 
   return (

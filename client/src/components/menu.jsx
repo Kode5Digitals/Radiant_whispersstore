@@ -54,7 +54,7 @@ const SideMenu = () => {
   return (
     <div className="xl:hidden  lg:hidden md:hidden block sm:block">
       <div
-        className={`menu fixed z-[10000] top-0 bg-white p-2 w-2/3 h-full overflow-hidden left-0 transition-all duration-300
+        className={`menu fixed z-[10000] top-0 bg-white p-2 w-1/3 h-full overflow-hidden left-0 transition-all duration-300
       ${isOpen ? "translate-x-0" : "-translate-x-full"}
   `}
       >
@@ -64,7 +64,7 @@ const SideMenu = () => {
           </div>
           <div></div>
 
-          <p>
+          <p className="cursor-pointer">
             <LiaTimesSolid onClick={Back} />
           </p>
         </div>
@@ -154,7 +154,7 @@ That&apos;s why we&apos;re dedicated to providing high-quality, natural body cre
 
           {login && (
             <ul className="mt-5 ">
-              <li
+          { !isadmin &&   <li
                 className="flex items-center gap-1 mb-4 cursor-pointer"
                 onClick={() => handleNavigation('/myaccount')}
               >
@@ -165,7 +165,7 @@ That&apos;s why we&apos;re dedicated to providing high-quality, natural body cre
                 
                 My Account
                 
-              </li>
+              </li>}
 
              
               <li

@@ -50,7 +50,9 @@ const Cartcontext = createContext({
     setsessionId:()=>{},
     Userloading:Boolean,
     loadUser:()=>{},
-
+    isSideOpen:Boolean,
+    wishlistLength:Number,
+    setWishlistLength:()=>{}
 })
 
 export default Cartcontext
