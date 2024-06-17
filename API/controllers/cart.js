@@ -13,7 +13,7 @@ const addToCart = async (req, res) => {
       try {
         const product = await Product.findById(productId);
         if (!product) {
-          return res.status(404).json({ message: 'Product not found' });
+          return res.json({ message: 'Product not found' });
         }
   
         let cart = await Cart.findOne({ userId }).populate('products.productId');
@@ -34,7 +34,7 @@ const addToCart = async (req, res) => {
         await cart.calculateTotals();
         await cart.save();
         await cart.populate('products.productId');
-        res.status(200).json({ message: 'Cart updated', cart });
+        res.json({ message: 'Cart updated', cart });
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -44,7 +44,7 @@ const addToCart = async (req, res) => {
       try {
         const product = await Product.findById(productId);
         if (!product) {
-          return res.status(404).json({ message: 'Product not found' });
+          return res.json({ message: 'Product not found' });
         }
   
         let cart = await Cart.findOne({ sessionId }).populate('products.productId');
@@ -65,7 +65,7 @@ const addToCart = async (req, res) => {
         await cart.calculateTotals();
         await cart.save();
         await cart.populate('products.productId');
-        res.status(200).json({ message: 'Cart updated', cart });
+        res.json({ message: 'Cart updated', cart });
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -97,7 +97,7 @@ const increaceCart= async (req, res) => {
             await cart.calculateTotals();
             await cart.save();
             await cart.populate('products.productId');
-            return res.status(200).json({ message: 'Product quantity increased', cart });
+            return res.json({ message: 'Product quantity increased', cart });
           } else {
             return res.status(404).json({ message: 'Product not in cart' });
           }
@@ -110,7 +110,7 @@ const increaceCart= async (req, res) => {
         try {
           let cart = await Cart.findOne({ sessionId }).populate('products.productId');
           if (!cart) {
-            return res.status(404).json({ message: 'Cart not found' });
+            return res.json({ message: 'Cart not found' });
           }
     
           const productIndex = cart.products.findIndex(p =>  p.productId && p.productId.equals(productId));
@@ -119,7 +119,7 @@ const increaceCart= async (req, res) => {
             await cart.calculateTotals();
             await cart.save();
             await cart.populate('products.productId');
-            return res.status(200).json({ message: 'Product quantity increased', cart });
+            return res.json({ message: 'Product quantity increased', cart });
           } else {
             return res.status(404).json({ message: 'Product not in cart' });
           }
@@ -161,7 +161,7 @@ const decreaceCart= async (req, res) => {
         await cart.calculateTotals();
         await cart.save();
         await cart.populate('products.productId');
-        return res.status(200).json({ message: 'Product quantity decreased', cart });
+        return res.json({ message: 'Product quantity decreased', cart });
       } else {
         return res.status(404).json({ message: 'Product not in cart' });
       }
@@ -174,7 +174,7 @@ const decreaceCart= async (req, res) => {
     try {
       let cart = await Cart.findOne({ sessionId }).populate('products.productId');
       if (!cart) {
-        return res.status(404).json({ message: 'Cart not found' });
+        return res.json({ message: 'Cart not found' });
       }
 
       const productIndex = cart.products.findIndex(p => p.productId &&  p.productId.equals(productId));
@@ -188,7 +188,7 @@ const decreaceCart= async (req, res) => {
         await cart.calculateTotals();
         await cart.save();
         await cart.populate('products.productId');
-        return res.status(200).json({ message: 'Product quantity decreased', cart });
+        return res.json({ message: 'Product quantity decreased', cart });
       } else {
         return res.status(404).json({ message: 'Product not in cart' });
       }
@@ -257,7 +257,7 @@ const decreaceCart= async (req, res) => {
             await cart.calculateTotals();
             await cart.save();
             await cart.populate('products.productId');
-            return res.status(200).json({ message: 'Product removed from cart', cart });
+            return res.json({ message: 'Product removed from cart', cart });
           } else {
             return res.status(404).json({ message: 'Product not in cart' });
           }
@@ -279,7 +279,7 @@ const decreaceCart= async (req, res) => {
             await cart.calculateTotals();
             await cart.save();
             await cart.populate('products.productId');
-            return res.status(200).json({ message: 'Product removed from cart', cart });
+            return res.json({ message: 'Product removed from cart', cart });
           } else {
             return res.status(404).json({ message: 'Product not in cart' });
           }
