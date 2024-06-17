@@ -68,8 +68,12 @@ const handleAllProducts = async () => {
 
  
   const isProductInWishlist = (productId) => {
-     const wish= wishlist.some((item) => item.productId._id === productId)
-    return wish
+    if (Array.isArray(wishlist)) {
+      return wishlist.some((item) => item.productId._id === productId)
+    }
+    return false
+    //  const wish= wishlist.some((item) => item.productId._id === productId)
+    // return wish
   }
   const handleIncrease = (productId) => {
     console.log(productId)

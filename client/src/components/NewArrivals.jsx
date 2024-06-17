@@ -73,8 +73,12 @@ const [loading,setLoading]=useState(true)
 
 
   const isProductInWishlist = (productId) => {
-    const wish = wishlists.some(item => item.productId._id === productId)
-    return wish
+    if (Array.isArray(wishlists)) {
+      return wishlists.some((item) => item.productId._id === productId);
+    }
+    return false;
+    // const wish = wishlists.some(item => item.productId._id === productId)
+    // return wish
   };
   
   //add to cart

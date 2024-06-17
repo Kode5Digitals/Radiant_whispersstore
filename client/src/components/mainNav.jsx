@@ -195,7 +195,7 @@ const MainNavbar = ({ logoSrc, isSideOpen, setSideOpen }) => {
                   style={{ fontSize: "10px" }}
                   className="w-4 text-sm  bg-black text-white h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2    md:bottom-[-10px]"
                 >
-                  <h6>{wishlistLength}</h6>
+                  <h6>{wishlistLength||0}</h6>
                 </div>
               </div>
             </div>
@@ -218,7 +218,7 @@ const MainNavbar = ({ logoSrc, isSideOpen, setSideOpen }) => {
                 style={{ fontSize: "10px" }}
                 className="w-4 text-sm text-white  h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2 md:bottom-[-10px]"
               >
-                <p>{wishlistLength}</p>
+                <p>{wishlistLength||0}</p>
               </div>
             </div>
             <BiSolidUserPin
@@ -305,7 +305,7 @@ That's why we're dedicated to providing high-quality, natural body creams that m
                   style={{ fontSize: "10px" }}
                   className="w-4 text-sm bg-black text-white h-4 rounded-full border absolute flex justify-center items-center bottom-[-10px] left-2"
                 >
-                  <p>{wishlistLength}</p>
+                  <p>{wishlistLength||0}</p>
                 </div>
               </div>
             </Link>
