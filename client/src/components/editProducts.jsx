@@ -122,7 +122,7 @@ const handleBack=()=>{
 
 
   return (
-    <div className="fixed inset-0 p-10 flex justify-center bg-gray-800 bg-opacity-90 z-50" ref={editRef}>
+    <div className="fixed inset-0 p-10 flex justify-center  bg-gray-800 bg-opacity-90 z-50" ref={editRef}>
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
@@ -137,7 +137,7 @@ const handleBack=()=>{
       />
       <form
         onSubmit={handleSubmit}
-        className="forgot-password xl:w-1/4 w-full p-3 lg:w-3/4 2xl:w-1/4 md:w-3/4 sm:w-3/4 rounded-lg shadow-md bg-[#891980] transition duration-500 ease-in-out border-2 border-transparent"
+        className="forgot-password xl:w-1/4 w-full p-2 lg:w-3/4 2xl:w-1/4 min-h-full md:w-3/4 sm:w-3/4 rounded-lg   shadow-md bg-[#891980] transition duration-500 ease-in-out border-2 border-transparent overflow-auto"
       > 
       <div className="flex justify-end cursor-pointer">
       <MdCancel onClick={handleBack}/>
