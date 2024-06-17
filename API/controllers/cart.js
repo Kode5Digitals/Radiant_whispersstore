@@ -5,7 +5,9 @@ const Product = require('../models/productsModel')
 
 const addToCart = async (req, res) => {
     const { userId, sessionId, productId, quantity } = req.body;
-  
+    if (!productId) {
+      return res.status(400).json({ message: 'ProductId is required' });
+    }
     if (userId) {
       // Handle logged-in user
       try {
@@ -16,7 +18,7 @@ const addToCart = async (req, res) => {
   
         let cart = await Cart.findOne({ userId }).populate('products.productId');
         if (cart) {
-          const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
+          const productIndex = cart.products.findIndex(p => p.productId && p.productId.equals(productId));
           if (productIndex > -1) {
             cart.products[productIndex].quantity += quantity;
           } else {
@@ -78,6 +80,9 @@ const addToCart = async (req, res) => {
 
 const increaceCart= async (req, res) => {
     const { userId, sessionId, productId, quantity } = req.body;
+    if (!productId) {
+      return res.status(400).json({ message: 'ProductId is required' });
+    }
     if (userId) {
         // Handle logged-in user
         try {
@@ -86,7 +91,7 @@ const increaceCart= async (req, res) => {
             return res.status(404).json({ message: 'Cart not found' });
           }
     
-          const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
+          const productIndex = cart.products.findIndex(p => p.productId &&  p.productId.equals(productId));
           if (productIndex !== -1) {
             cart.products[productIndex].quantity += quantity;
             await cart.calculateTotals();
@@ -108,7 +113,7 @@ const increaceCart= async (req, res) => {
             return res.status(404).json({ message: 'Cart not found' });
           }
     
-          const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
+          const productIndex = cart.products.findIndex(p =>  p.productId && p.productId.equals(productId));
           if (productIndex !== -1) {
             cart.products[productIndex].quantity += quantity;
             await cart.calculateTotals();
@@ -133,6 +138,9 @@ const increaceCart= async (req, res) => {
   
 const decreaceCart= async (req, res) => {
         const { userId, sessionId, productId, quantity } = req.body;
+        if (!productId) {
+          return res.status(400).json({ message: 'ProductId is required' });
+        }
         
      if (userId) {
     // Handle logged-in user
@@ -142,7 +150,7 @@ const decreaceCart= async (req, res) => {
         return res.status(404).json({ message: 'Cart not found' });
       }
 
-      const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
+      const productIndex = cart.products.findIndex(p => p.productId &&  p.productId.equals(productId));
       if (productIndex !== -1) {
         const product = cart.products[productIndex];
         if (product.quantity > 1) {
@@ -169,7 +177,7 @@ const decreaceCart= async (req, res) => {
         return res.status(404).json({ message: 'Cart not found' });
       }
 
-      const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
+      const productIndex = cart.products.findIndex(p => p.productId &&  p.productId.equals(productId));
       if (productIndex !== -1) {
         const product = cart.products[productIndex];
         if (product.quantity > 1) {
@@ -199,6 +207,7 @@ const decreaceCart= async (req, res) => {
 // Get cart
   const getCartById = async (req, res) => {
   const { userId, sessionId } = req.query;
+
     if (!userId && !sessionId) {
         return res.status(400).json({ message: 'UserId or sessionId is required' });
       }
@@ -231,6 +240,9 @@ const decreaceCart= async (req, res) => {
 
   const removeCart= async (req, res) => {
     const { userId, sessionId, productId } = req.body;
+    if (!productId) {
+      return res.status(400).json({ message: 'ProductId is required' });
+    }
     if (userId) {
         // Handle logged-in user
         try {
@@ -239,7 +251,7 @@ const decreaceCart= async (req, res) => {
             return res.status(404).json({ message: 'Cart not found' });
           }
     
-          const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
+          const productIndex = cart.products.findIndex(p =>p.productId &&  p.productId.equals(productId));
           if (productIndex !== -1) {
             cart.products.splice(productIndex, 1);
             await cart.calculateTotals();
