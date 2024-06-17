@@ -1,4 +1,4 @@
-const wishlistModel = require("../models/whishlistModel");
+const wishlistModel = require("../models/wishlistModel");
 
 
 
@@ -8,7 +8,7 @@ const getWishlist=async (req, res) => {
     try {
       const wishlists = await wishlistModel.findOne({ userId, sessionId }).populate({
         path: 'items.productId',
-        model: 'Product' // This should match your Product model name
+        model: 'Product' 
       });;
       res.json({ message: 'Wishlists retrieved successfully', wishlists });
     } catch (error) {
@@ -26,7 +26,6 @@ const getWishlist=async (req, res) => {
       
       let wishlist = await wishlistModel.findOne(filter);
       if (!wishlist) {
-        // wishlist = new wishlistModel({ userId, sessionId, items: [] });
         const newWishlistData = userId ? { userId, items: [] } : { sessionId, items: [] };
         wishlist = new wishlistModel(newWishlistData);
       }
