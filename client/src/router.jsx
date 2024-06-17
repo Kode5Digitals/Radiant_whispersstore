@@ -1,21 +1,21 @@
-import  { lazy, Suspense } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
-import ProtectedRoute from './components/protectedRoute';
+import React,  { lazy, Suspense } from 'react'
+import { createBrowserRouter } from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoute.js'
 
-const NotFound = lazy(() => import('./pages/NotFound'));
-const App = lazy(() => import('./App'));
-const AddProduct = lazy(() => import('./pages/AddProduct'));
-const ProductDetails = lazy(() => import('./pages/ProductDetails'));
-const Cart = lazy(() => import("./pages/Cart"));
-const PaystackComponent = lazy(() => import("./payStack/paystack"));
-const Wishlist = lazy(() => import("./pages/Wishlist"));
-const AdminProducts = lazy(() => import('./pages/AdminProducts'));
-const Policy = lazy(() => import('./pages/Policy'));
-const Register = lazy(() => import('./pages/Register'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const MyAccount = lazy(() => import('./pages/MyAccount'));
-const AccountSettings = lazy(() => import('./pages/AccountSettings'));
-const Login = lazy(() => import('./pages/Login'));
+const NotFound = React.lazy(() => import('../src/pages/NotFound.jsx'))
+const App = lazy(() => import('./App.jsx'))
+const AddProduct = lazy(() => import('./pages/AddProduct.jsx'))
+const ProductDetails = lazy(() => import('./pages/ProductDetails.jsx'))
+const Cart = lazy(() => import("./pages/Cart.jsx"))
+const PaystackComponent = lazy(() => import("./payStack/paystack.jsx"))
+const Wishlist = lazy(() => import("./pages/Wishlist.jsx"))
+const AdminProducts = lazy(() => import('./pages/AdminProducts.jsx'))
+const Policy = lazy(() => import('./pages/Policy.jsx'))
+const  Register = lazy(() => import('./pages/Register.jsx'))
+const Dashboard = lazy(() => import('./pages/Dashboard.jsx'))
+const MyAccount = lazy(() => import('./pages/MyAccount.jsx'))
+const AccountSettings = lazy(() => import('./pages/AccountSettings.jsx'))
+const Login = lazy(() => import('./pages/Login.jsx'))
 
 const router = createBrowserRouter([
   { path: "*", element: <Suspense fallback={<div>Loading...</div>}><NotFound /></Suspense> },
@@ -113,6 +113,6 @@ const router = createBrowserRouter([
       </Suspense>
     ),
   },
-]);
+])
 
-export default router;
+export default router
