@@ -28,7 +28,8 @@ const wishlist= useSelector((state) => state?.wishlist.items)
   const [quantity, setQuantity] = useState({})
   const{user,sessionId,setCartLength}=useContext(Cartcontext)
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-
+  const[wishLoading,setWishLoading]=useState({})
+  
 useEffect(() => {
   setCartLength(totalQuantity);
 }, [totalQuantity,setCartLength]);
@@ -59,12 +60,34 @@ const handleAllProducts = async () => {
     setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 9)
   }
 
-  const handleAddToWishlist = (product) => {
-    dispatch(addWishlist({ userId:user?._id, sessionId, productId:product?._id}));
-  }
-  const handleRemoveToWishlist = (product) => {
-    dispatch(deleteWishlist({ userId:user?._id, sessionId, productId:product?._id}));
-  }
+    // const handleAddToWishlist = (product) => {
+  
+    //     dispatch(addWishlist({ userId:user?._id, sessionId, productId:product?._id}));
+    
+    // }
+
+  const handleAddClick = async (product) => {
+    setWishLoading((prev) => ({ ...prev, [product._id]: true }));
+    try {
+      await dispatch(addWishlist({ userId: user?._id, sessionId, productId: product._id })).unwrap();
+    } catch (error) {
+      console.error("Failed to add to wishlist:", error);
+    } finally {
+      setWishLoading((prev) => ({ ...prev, [product._id]: false }));
+    }
+
+  };
+
+  const handleRemoveClick = async (product) => {
+    setWishLoading((prev) => ({ ...prev, [product._id]: true }));
+    try {
+      await dispatch(deleteWishlist({ userId: user?._id, sessionId, productId: product._id })).unwrap();
+    } catch (error) {
+      console.error("Failed to remove from wishlist:", error);
+    } finally {
+      setWishLoading((prev) => ({ ...prev, [product._id]: false }));
+    }
+  };
 
  
   const isProductInWishlist = (productId) => {
@@ -119,21 +142,25 @@ const handleAllProducts = async () => {
                   <div className="w-full h-52 shadow-xl overflow-hidden rounded-lg mb-3  border relative">
                     <div className="hover:p-2 p-5">
                       <img src={product?.image} className="w-full h-full" alt="" />
-                    </div>{" "}
+                    </div>
                     {!isProductInWishlist(product._id) ? (
-                      <CiHeart
+                    <div className={`m-2 absolute top-1 right-2 cursor-pointer border-2 rounded-full w-6 h-6  flex justify-centeritems-center  border-black ${wishLoading[product._id] ? 'animate-spin' : ''} `}>
+                        <CiHeart
                         size={22}
                         id={product._id}
-                        className="m-2 absolute top-1 right-2 cursor-pointer text-[#080808]"
-                        onClick={() => handleAddToWishlist(product)}
+                        className=" text-[#080808]"
+                        onClick={() => handleAddClick(product)}
                       />
+                    </div>
                     ) : (
-                      <FaHeart
-                        size={20}
+                     <div className={`m-2 absolute top-1 right-2 cursor-pointer  border-2 rounded-full w-6 h-6  flex justify-center  items-center border-[#891980] ${wishLoading[product._id] ? 'animate-spin' : ''} `}>
+                       <FaHeart
+                        size={15}
                         id={product._id}
-                        className="m-2 absolute top-1 right-2 cursor-pointer text-[#891980]"
-                        onClick={() => handleRemoveToWishlist(product)}
+                        className=" text-[#891980]"
+                        onClick={() => handleRemoveClick(product)}
                       />
+                     </div>
                     )}
                   </div>
                   <div className="p-1 ">
