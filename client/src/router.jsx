@@ -1,6 +1,6 @@
 import React,  { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
-import ProtectedRoute from './components/ProtectedRoute'
+import ProtectedRoute from './components/ProtectedRoute.js'
 
 const NotFound = React.lazy(() => import('../src/pages/NotFound.jsx'))
 const App = lazy(() => import('./App.jsx'))
