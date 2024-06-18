@@ -11,19 +11,38 @@ const ProtectedRoute = ({ roles, children }) => {
     loadUser(); 
     },[])
 
-    if (!Userloading) {
-      if (!user) {
-        navigate("/", { state: { from: location } });
-      } else if (roles && !roles.includes(user.isAdmin ? 'admin' : 'user')) {
-        navigate("/");
-      }
+//     if (!Userloading) {
+//       if (!user) {
+//         navigate("/", { state: { from: location } });
+//       } else if (roles && !roles.includes(user.isAdmin ? 'admin' : 'user')) {
+//         navigate("/");
+//       }
+//     }
+
+//   if (Userloading|| !user || (roles && !roles.includes(user.isAdmin ? 'admin' : 'user'))) {
+//     return null; 
+//   }
+
+//   return children;
+// };
+
+
+
+useEffect(() => {
+  if (!Userloading) {
+    if (!user) {
+      navigate("/", { state: { from: location } });
+    } else if (roles && !roles.includes(user.isAdmin ? 'admin' : 'user')) {
+      navigate("/");
     }
-
-  if (Userloading|| !user || (roles && !roles.includes(user.isAdmin ? 'admin' : 'user'))) {
-    return null; 
   }
+}, [Userloading, user, roles, location, navigate]);
 
-  return children;
+if (Userloading || !user || (roles && !roles.includes(user.isAdmin ? 'admin' : 'user'))) {
+  return null;
+}
+
+return children;
 };
 ProtectedRoute.propTypes = {
     children: PropTypes.node.isRequired,
