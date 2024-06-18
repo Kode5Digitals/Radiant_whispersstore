@@ -6,7 +6,7 @@ import './App.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import ProtectedRoute from './components/ProtectedRoute'
 import Cartprovider from './cartprovider'
-import AddProduct from './pages/AddProduct'
+import AddProduct from './pages/AddProduct.jsx'
 import ProductDetails from './pages/ProductDetails'
 import Cart from './pages/Cart'
 import { Provider } from 'react-redux'
