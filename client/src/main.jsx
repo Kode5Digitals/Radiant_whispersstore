@@ -1,24 +1,165 @@
-import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { RouterProvider } from 'react-router-dom';
-import store from "./stores/stores.js"
-import router from './router.jsx';
-import CartProvider from './cartprovider.jsx';
-import './index.css';
-import './App.css';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+import './App.css'
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import ProtectedRoute from './components/ProtectedRoute.jsx'
+// import Cartprovider from './cartprovider.jsx'
+import AddProduct from './pages/AddProduct.jsx'
+import ProductDetails from './pages/ProductDetails.jsx'
+import Cart from './pages/Cart.jsx'
+import { Provider } from 'react-redux'
+import store from './stores/stores.js'
+import Wishlist from './pages/Wishlist.jsx'
+import PaystackComponent from '../src/payStack/paystack.jsx'
+import AdminProducts from './pages/AdminProducts.jsx'
+import NotFound from './pages/NotFound.jsx'
+import Policy from './pages/Policy.jsx'
+import Register from './pages/Register.jsx'
+import MyAccount from './pages/MyAccount.jsx'
+import Dashboard from './pages/Dashboard.jsx'
+import Login from './pages/Login.jsx'
+import Accountsettings from './pages/AccountSettings.jsx'
 
+const router = createBrowserRouter([
+  { path: "*", element: <NotFound /> },
+  { path: "/", element: <App /> },
+  {
+    path: "/home",
+    element: 
+        <App />
+    ,
+  },
+  {
+    path: "/addproduct",
+    element: (
+      <ProtectedRoute roles={['admin']}>
+  <AddProduct />
+      </ProtectedRoute>
+      
+    ),
+  },
+  {
+    path: "/ProductDetails/:product_id",
+    element: <ProductDetails />,
+  },
+  {
+    path: "/cart",
+    element: (
+        <Cart />
+    ),
+    children: [
+      { path: "paystack", element: <PaystackComponent /> },
+    ],
+  },
+  { path: "paystack", element: <PaystackComponent /> },
+  {
+    path: "/whishlist",
+    element: (
+        <Wishlist />
+    ),
+  },
+  {
+    path: "/adminHome",
+    element: (
+      <ProtectedRoute roles={['admin']}>
+        <AdminProducts />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/edit-product/:id",
+    element: (
+      <ProtectedRoute roles={['admin']}>
+        <AdminProducts />
+      </ProtectedRoute>
+
+    ),
+  },
+  { path: "/return-policy", element: <Policy /> },
+  { path: "/register", element: <Register /> },
+  {
+    path: "/dashboard",
+    element: (
+      <ProtectedRoute roles={['user']}>
+   <Dashboard/>
+      </ProtectedRoute>
+    ),
+  },
+  {
+
+    path: "/myaccount",
+    element: (
+      <ProtectedRoute roles={['user']}>
+        <MyAccount />
+
+      </ProtectedRoute>
+
+    ),
+    children: [
+                {index:true, element: <Dashboard/> },
+                { path: "dashboard",index:true, element: <Dashboard/> },
+                { path: "settings", element: <Accountsettings/> },
+              ]
+
+  },
+  {
+    path: "/login",
+    element: (
+        <Login/>
+    ),
+  },
+]);
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <CartProvider>
+    <Cartprovider>
       <Provider store={store}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <RouterProvider router={router} />
-        </Suspense>
-      </Provider>
-    </CartProvider>
-  </React.StrictMode>
-);
+      <RouterProvider router={router}  />
+    </Provider>
+    </Cartprovider>
+  </React.StrictMode>)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { Suspense } from 'react';
+// import ReactDOM from 'react-dom/client';
+// import { Provider } from 'react-redux';
+// import { RouterProvider } from 'react-router-dom';
+// import store from "./stores/stores.js"
+// import router from './router.jsx';
+// import CartProvider from './cartprovider.jsx';
+// import './index.css';
+// import './App.css';
+
+// ReactDOM.createRoot(document.getElementById('root')).render(
+//   <React.StrictMode>
+//     <CartProvider>
+//       <Provider store={store}>
+//         <Suspense fallback={<div>Loading...</div>}>
+//           <RouterProvider router={router} />
+//         </Suspense>
+//       </Provider>
+//     </CartProvider>
+//   </React.StrictMode>
+// );
 
 
 
