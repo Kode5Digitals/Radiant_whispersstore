@@ -1,0 +1,1 @@
+function a(t){return t.charAt(0).toUpperCase()+t.slice(1)}function o(t,e){return t.length>e&&(t=t.substring(0,e)+"..."),t}function r(t){return t.toLocaleString()}function u(t){return t.toLocaleString("en-NG")}export{a as C,o as T,r as a,u as f};
