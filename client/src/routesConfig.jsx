@@ -30,7 +30,7 @@ const routesConfig = [
     element: (
       <Suspense fallback={<div>Loading...</div>}>
         <ProtectedRoute roles={['admin']}>
-          <AddProduct />
+       <AddProduct/>
         </ProtectedRoute>
       </Suspense>
     ),
