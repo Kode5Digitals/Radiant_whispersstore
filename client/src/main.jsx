@@ -1,26 +1,26 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import App from './App'
 import './index.css'
 import './App.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import ProtectedRoute from './components/ProtectedRoute.jsx'
-// import Cartprovider from './cartprovider.jsx'
-import AddProduct from './pages/AddProduct.jsx'
-import ProductDetails from './pages/ProductDetails.jsx'
-import Cart from './pages/Cart.jsx'
+import ProtectedRoute from './components/ProtectedRoute'
+import Cartprovider from './cartprovider'
+import AddProduct from './pages/AddProduct'
+import ProductDetails from './pages/ProductDetails'
+import Cart from './pages/Cart'
 import { Provider } from 'react-redux'
 import store from './stores/stores.js'
-import Wishlist from './pages/Wishlist.jsx'
-import PaystackComponent from '../src/payStack/paystack.jsx'
-import AdminProducts from './pages/AdminProducts.jsx'
-import NotFound from './pages/NotFound.jsx'
-import Policy from './pages/Policy.jsx'
-import Register from './pages/Register.jsx'
-import MyAccount from './pages/MyAccount.jsx'
-import Dashboard from './pages/Dashboard.jsx'
-import Login from './pages/Login.jsx'
-import Accountsettings from './pages/AccountSettings.jsx'
+import Wishlist from './pages/Wishlist'
+import PaystackComponent from '../src/payStack/paystack'
+import AdminProducts from './pages/AdminProducts'
+import NotFound from './pages/NotFound'
+import Policy from './pages/Policy'
+import Register from './pages/Register'
+import MyAccount from './pages/MyAccount'
+import Dashboard from './pages/Dashboard'
+import Login from './pages/Login'
+import Accountsettings from './pages/AccountSettings'
 
 const router = createBrowserRouter([
   { path: "*", element: <NotFound /> },
@@ -144,8 +144,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 // import { Provider } from 'react-redux';
 // import { RouterProvider } from 'react-router-dom';
 // import store from "./stores/stores.js"
-// import router from './router.jsx';
-// import CartProvider from './cartprovider.jsx';
+// import router from './router';
+// import CartProvider from './cartprovider';
 // import './index.css';
 // import './App.css';
 
@@ -201,43 +201,43 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
 // import React, { lazy, Suspense } from 'react'
 // import ReactDOM from 'react-dom/client'
-// import App from './App.jsx'
+// import App from './App'
 // import './index.css'
 // import './App.css'
 // import { createBrowserRouter, RouterProvider } from "react-router-dom"
-// import Cartprovider from './cartprovider.jsx'
-// // export { default as NotFound } from "./pages/NotFound.jsx";
-// import AddProduct from './pages/addProduct.jsx'
-// import ProductDetails from './pages/productDetails.jsx'
-// import Cart from './pages/cart.jsx'
+// import Cartprovider from './cartprovider'
+// // export { default as NotFound } from "./pages/NotFound";
+// import AddProduct from './pages/addProduct'
+// import ProductDetails from './pages/productDetails'
+// import Cart from './pages/cart'
 // import { Provider } from 'react-redux'
 // import store from './stores/stores.js'
-// import Wishlist from './pages/whishlist.jsx'
-// import PaystackComponent from '../src/payStack/paystack.jsx'
-// import AdminProducts from './pages/adminproducts.jsx'
-// import NotFound from './pages/NotFound.jsx'
-// import Policy from './pages/policy.jsx'
-// import Register from './pages/Register.jsx'
-// import MyAccount from './pages/myAccount.jsx'
+// import Wishlist from './pages/whishlist'
+// import PaystackComponent from '../src/payStack/paystack'
+// import AdminProducts from './pages/adminproducts'
+// import NotFound from './pages/NotFound'
+// import Policy from './pages/policy'
+// import Register from './pages/Register'
+// import MyAccount from './pages/myAccount'
 // import ProtectedRoute from './components/protectedRoute.js'
-// import Dashboard from './pages/dashboad.jsx'
-// import Login from './pages/Login.jsx'
-// import Accountsettings from './pages/accountsettings.jsx'
+// import Dashboard from './pages/dashboad'
+// import Login from './pages/Login'
+// import Accountsettings from './pages/accountsettings'
 
-// // const NotFound = lazy(() => import('./pages/NotFound.jsx'));
+// // const NotFound = lazy(() => import('./pages/NotFound'));
 // const App = lazy(() => import('./App'));
-// const AddProduct = lazy(() => import('./pages/addProduct.jsx'));
-// const ProductDetails = lazy(() => import('./pages/productDetails.jsx'));
-// const Cart = lazy(() => import('./pages/cart.jsx'));
-// const PaystackComponent = lazy(() => import('../src/payStack/paystack.jsx'));
-// const Wishlist = lazy(() => import('./pages/whishlist.jsx'));
-// const AdminProducts = lazy(() => import('./pages/adminproducts.jsx'));
-// const Policy = lazy(() => import('./pages/policy.jsx'));
-// const Register = lazy(() => import('./pages/Register.jsx'));
-// const Dashboard = lazy(() => import('./pages/dashboad.jsx'));
-// const MyAccount = lazy(() => import('./pages/myAccount.jsx'));
-// const Accountsettings = lazy(() => import('./pages/accountsettings.jsx'));
-// const Login = lazy(() => import('./pages/Login.jsx'));
+// const AddProduct = lazy(() => import('./pages/addProduct'));
+// const ProductDetails = lazy(() => import('./pages/productDetails'));
+// const Cart = lazy(() => import('./pages/cart'));
+// const PaystackComponent = lazy(() => import('../src/payStack/paystack'));
+// const Wishlist = lazy(() => import('./pages/whishlist'));
+// const AdminProducts = lazy(() => import('./pages/adminproducts'));
+// const Policy = lazy(() => import('./pages/policy'));
+// const Register = lazy(() => import('./pages/Register'));
+// const Dashboard = lazy(() => import('./pages/dashboad'));
+// const MyAccount = lazy(() => import('./pages/myAccount'));
+// const Accountsettings = lazy(() => import('./pages/accountsettings'));
+// const Login = lazy(() => import('./pages/Login'));
 // const ProtectedRoute = lazy(() => import('./components/protectedRoute.js'));
 
 
