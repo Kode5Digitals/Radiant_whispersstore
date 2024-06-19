@@ -1,116 +1,131 @@
-import React from 'react'
+
+import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
 import './index.css'
 import './App.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import ProtectedRoute from './components/ProtectedRoute'
 import Cartprovider from './cartprovider'
-import AddProduct from '@/AddProduct.jsx'
-import ProductDetails from '@/ProductDetails'
-import Cart from '@/Cart'
 import { Provider } from 'react-redux'
+import ProtectedRoute from './components/ProtectedRoute'
 import store from './stores/stores.js'
-import Wishlist from '@/Wishlist'
-import PaystackComponent from '../src/payStack/paystack'
-import AdminProducts from '@/AdminProducts'
-import NotFound from '@/NotFound'
-import Policy from '@/Policy'
-import Register from '@/Register'
-import MyAccount from '@/MyAccount'
-import Dashboard from '@/Dashboard'
-import Login from '@/Login'
-import Accountsettings from '@/AccountSettings'
+
+
+const NotFound = lazy(() => import('@/NotFound'));
+const App = lazy(() => import('./App'));
+const AddProduct = lazy(() => import('@/AddProduct'));
+const ProductDetails = lazy(() => import('@/ProductDetails'));
+const Cart = lazy(() => import('@/Cart'));
+const PaystackComponent = lazy(() => import('../src/payStack/paystack'));
+const Wishlist = lazy(() => import('@/Wishlist'));
+const AdminProducts = lazy(() => import('@/AdminProducts'));
+const Policy = lazy(() => import('@/Policy'));
+const Register = lazy(() => import('@/Register'));
+const Dashboard = lazy(() => import('@/Dashboard'));
+const MyAccount = lazy(() => import('@/MyAccount'));
+const AccountSettings = lazy(() => import('@/AccountSettings'));
+const Login = lazy(() => import('@/Login'));
+
+
 
 const router = createBrowserRouter([
-  { path: "*", element: <NotFound /> },
-  { path: "/", element: <App /> },
+  { path: "*", element: <Suspense fallback={<div>Loading...</div>}><NotFound /></Suspense> },
+  { path: "/", element: <Suspense fallback={<div>Loading...</div>}><App /></Suspense> },
   {
     path: "/home",
-    element: 
-        <App />
-    ,
+    element: <Suspense fallback={<div>Loading...</div>}><App /></Suspense>,
   },
   {
     path: "/addproduct",
     element: (
-      <ProtectedRoute roles={['admin']}>
-  <AddProduct />
-      </ProtectedRoute>
-      
+      <Suspense fallback={<div>Loading...</div>}>
+        <ProtectedRoute roles={['admin']}>
+          <AddProduct />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: "/ProductDetails/:product_id",
-    element: <ProductDetails />,
+    element: <Suspense fallback={<div>Loading...</div>}><ProductDetails /></Suspense>,
   },
   {
     path: "/cart",
     element: (
+      <Suspense fallback={<div>Loading...</div>}>
         <Cart />
+      </Suspense>
     ),
     children: [
-      { path: "paystack", element: <PaystackComponent /> },
+      { path: "paystack", element: <Suspense fallback={<div>Loading...</div>}><PaystackComponent /></Suspense> },
     ],
   },
-  { path: "paystack", element: <PaystackComponent /> },
+  { path: "paystack", element: <Suspense fallback={<div>Loading...</div>}><PaystackComponent /></Suspense> },
   {
-    path: "/whishlist",
+    path: "/wishlist",
     element: (
+      <Suspense fallback={<div>Loading...</div>}>
         <Wishlist />
+      </Suspense>
     ),
   },
   {
     path: "/adminHome",
     element: (
-      <ProtectedRoute roles={['admin']}>
-        <AdminProducts />
-      </ProtectedRoute>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ProtectedRoute roles={['admin']}>
+          <AdminProducts />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: "/edit-product/:id",
     element: (
-      <ProtectedRoute roles={['admin']}>
-        <AdminProducts />
-      </ProtectedRoute>
-
+      <Suspense fallback={<div>Loading...</div>}>
+        <ProtectedRoute roles={['admin']}>
+          <AdminProducts />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
-  { path: "/return-policy", element: <Policy /> },
-  { path: "/register", element: <Register /> },
+  { path: "/return-policy", element: <Suspense fallback={<div>Loading...</div>}><Policy /></Suspense> },
+  { path: "/register", element: <Suspense fallback={<div>Loading...</div>}><Register /></Suspense> },
   {
     path: "/dashboard",
     element: (
-      <ProtectedRoute roles={['user']}>
-   <Dashboard/>
-      </ProtectedRoute>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ProtectedRoute roles={['user']}>
+          <Dashboard />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
-
     path: "/myaccount",
     element: (
-      <ProtectedRoute roles={['user']}>
-        <MyAccount />
-
-      </ProtectedRoute>
-
+      <Suspense fallback={<div>Loading...</div>}>
+        <ProtectedRoute roles={['user']}>
+          <MyAccount />
+        </ProtectedRoute>
+      </Suspense>
     ),
     children: [
-                {index:true, element: <Dashboard/> },
-                { path: "dashboard",index:true, element: <Dashboard/> },
-                { path: "settings", element: <Accountsettings/> },
-              ]
-
+      { index: true, element: <Suspense fallback={<div>Loading...</div>}><Dashboard /></Suspense> },
+      { path: "dashboard", index: true, element: <Suspense fallback={<div>Loading...</div>}><Dashboard /></Suspense> },
+      { path: "settings", element: <Suspense fallback={<div>Loading...</div>}><AccountSettings /></Suspense> },
+    ]
   },
   {
     path: "/login",
     element: (
-        <Login/>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Login />
+      </Suspense>
     ),
   },
 ]);
+
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Cartprovider>
@@ -118,7 +133,148 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <RouterProvider router={router}  />
     </Provider>
     </Cartprovider>
-  </React.StrictMode>)
+
+  </React.StrictMode>
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React from 'react'
+// import ReactDOM from 'react-dom/client'
+// import App from './App'
+// import './index.css'
+// import './App.css'
+// import { createBrowserRouter, RouterProvider } from "react-router-dom"
+// import ProtectedRoute from './components/ProtectedRoute'
+// import Cartprovider from './cartprovider'
+// import AddProduct from '@/AddProduct.jsx'
+// import ProductDetails from '@/ProductDetails'
+// import Cart from '@/Cart'
+// import { Provider } from 'react-redux'
+// import store from './stores/stores.js'
+// import Wishlist from '@/Wishlist'
+// import PaystackComponent from '../src/payStack/paystack'
+// import AdminProducts from '@/AdminProducts'
+// import NotFound from '@/NotFound'
+// import Policy from '@/Policy'
+// import Register from '@/Register'
+// import MyAccount from '@/MyAccount'
+// import Dashboard from '@/Dashboard'
+// import Login from '@/Login'
+// import Accountsettings from '@/AccountSettings'
+
+// const router = createBrowserRouter([
+//   { path: "*", element: <NotFound /> },
+//   { path: "/", element: <App /> },
+//   {
+//     path: "/home",
+//     element: 
+//         <App />
+//     ,
+//   },
+//   {
+//     path: "/addproduct",
+//     element: (
+//       <ProtectedRoute roles={['admin']}>
+//   <AddProduct />
+//       </ProtectedRoute>
+      
+//     ),
+//   },
+//   {
+//     path: "/ProductDetails/:product_id",
+//     element: <ProductDetails />,
+//   },
+//   {
+//     path: "/cart",
+//     element: (
+//         <Cart />
+//     ),
+//     children: [
+//       { path: "paystack", element: <PaystackComponent /> },
+//     ],
+//   },
+//   { path: "paystack", element: <PaystackComponent /> },
+//   {
+//     path: "/wishlist",
+//     element: (
+//         <Wishlist />
+//     ),
+//   },
+//   {
+//     path: "/adminHome",
+//     element: (
+//       <ProtectedRoute roles={['admin']}>
+//         <AdminProducts />
+//       </ProtectedRoute>
+//     ),
+//   },
+//   {
+//     path: "/edit-product/:id",
+//     element: (
+//       <ProtectedRoute roles={['admin']}>
+//         <AdminProducts />
+//       </ProtectedRoute>
+
+//     ),
+//   },
+//   { path: "/return-policy", element: <Policy /> },
+//   { path: "/register", element: <Register /> },
+//   {
+//     path: "/dashboard",
+//     element: (
+//       <ProtectedRoute roles={['user']}>
+//    <Dashboard/>
+//       </ProtectedRoute>
+//     ),
+//   },
+//   {
+
+//     path: "/myaccount",
+//     element: (
+//       <ProtectedRoute roles={['user']}>
+//         <MyAccount />
+
+//       </ProtectedRoute>
+
+//     ),
+//     children: [
+//                 {index:true, element: <Dashboard/> },
+//                 { path: "dashboard",index:true, element: <Dashboard/> },
+//                 { path: "settings", element: <Accountsettings/> },
+//               ]
+
+//   },
+//   {
+//     path: "/login",
+//     element: (
+//         <Login/>
+//     ),
+//   },
+// ]);
+// ReactDOM.createRoot(document.getElementById('root')).render(
+//   <React.StrictMode>
+//     <Cartprovider>
+//       <Provider store={store}>
+//       <RouterProvider router={router}  />
+//     </Provider>
+//     </Cartprovider>
+//   </React.StrictMode>)
 
 
 
@@ -199,19 +355,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
 
 
-// import React, { lazy, Suspense } from 'react'
-// import ReactDOM from 'react-dom/client'
-// import App from './App'
-// import './index.css'
-// import './App.css'
-// import { createBrowserRouter, RouterProvider } from "react-router-dom"
-// import Cartprovider from './cartprovider'
-// // export { default as NotFound } from "@/NotFound";
 // import AddProduct from '@/addProduct'
 // import ProductDetails from '@/productDetails'
 // import Cart from '@/cart'
 // import { Provider } from 'react-redux'
-// import store from './stores/stores.js'
 // import Wishlist from '@/whishlist'
 // import PaystackComponent from '../src/payStack/paystack'
 // import AdminProducts from '@/adminproducts'
@@ -223,138 +370,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 // import Dashboard from '@/dashboad'
 // import Login from '@/Login'
 // import Accountsettings from '@/accountsettings'
-
-// // const NotFound = lazy(() => import('@/NotFound'));
-// const App = lazy(() => import('./App'));
-// const AddProduct = lazy(() => import('@/addProduct'));
-// const ProductDetails = lazy(() => import('@/productDetails'));
-// const Cart = lazy(() => import('@/cart'));
-// const PaystackComponent = lazy(() => import('../src/payStack/paystack'));
-// const Wishlist = lazy(() => import('@/whishlist'));
-// const AdminProducts = lazy(() => import('@/adminproducts'));
-// const Policy = lazy(() => import('@/policy'));
-// const Register = lazy(() => import('@/Register'));
-// const Dashboard = lazy(() => import('@/dashboad'));
-// const MyAccount = lazy(() => import('@/myAccount'));
-// const Accountsettings = lazy(() => import('@/accountsettings'));
-// const Login = lazy(() => import('@/Login'));
-// const ProtectedRoute = lazy(() => import('./components/protectedRoute.js'));
-
-
-
-// const router = createBrowserRouter([
-//   { path: "*", element: <Suspense fallback={<div>Loading...</div>}><NotFound /></Suspense> },
-//   { path: "/", element: <Suspense fallback={<div>Loading...</div>}><App /></Suspense> },
-//   {
-//     path: "/home",
-//     element: <Suspense fallback={<div>Loading...</div>}><App /></Suspense>,
-//   },
-//   {
-//     path: "/addproduct",
-//     element: (
-//       <Suspense fallback={<div>Loading...</div>}>
-//         <ProtectedRoute roles={['admin']}>
-//           <AddProduct />
-//         </ProtectedRoute>
-//       </Suspense>
-//     ),
-//   },
-//   {
-//     path: "/ProductDetails/:product_id",
-//     element: <Suspense fallback={<div>Loading...</div>}><ProductDetails /></Suspense>,
-//   },
-//   {
-//     path: "/cart",
-//     element: (
-//       <Suspense fallback={<div>Loading...</div>}>
-//         <Cart />
-//       </Suspense>
-//     ),
-//     children: [
-//       { path: "paystack", element: <Suspense fallback={<div>Loading...</div>}><PaystackComponent /></Suspense> },
-//     ],
-//   },
-//   { path: "paystack", element: <Suspense fallback={<div>Loading...</div>}><PaystackComponent /></Suspense> },
-//   {
-//     path: "/whishlist",
-//     element: (
-//       <Suspense fallback={<div>Loading...</div>}>
-//         <Wishlist />
-//       </Suspense>
-//     ),
-//   },
-//   {
-//     path: "/adminHome",
-//     element: (
-//       <Suspense fallback={<div>Loading...</div>}>
-//         <ProtectedRoute roles={['admin']}>
-//           <AdminProducts />
-//         </ProtectedRoute>
-//       </Suspense>
-//     ),
-//   },
-//   {
-//     path: "/edit-product/:id",
-//     element: (
-//       <Suspense fallback={<div>Loading...</div>}>
-//         <ProtectedRoute roles={['admin']}>
-//           <AdminProducts />
-//         </ProtectedRoute>
-//       </Suspense>
-//     ),
-//   },
-//   { path: "/return-policy", element: <Suspense fallback={<div>Loading...</div>}><Policy /></Suspense> },
-//   { path: "/register", element: <Suspense fallback={<div>Loading...</div>}><Register /></Suspense> },
-//   {
-//     path: "/dashboard",
-//     element: (
-//       <Suspense fallback={<div>Loading...</div>}>
-//         <ProtectedRoute roles={['user']}>
-//           <Dashboard />
-//         </ProtectedRoute>
-//       </Suspense>
-//     ),
-//   },
-//   {
-//     path: "/myaccount",
-//     element: (
-//       <Suspense fallback={<div>Loading...</div>}>
-//         <ProtectedRoute roles={['user']}>
-//           <MyAccount />
-//         </ProtectedRoute>
-//       </Suspense>
-//     ),
-//     children: [
-//       { index: true, element: <Suspense fallback={<div>Loading...</div>}><Dashboard /></Suspense> },
-//       { path: "dashboard", index: true, element: <Suspense fallback={<div>Loading...</div>}><Dashboard /></Suspense> },
-//       { path: "settings", element: <Suspense fallback={<div>Loading...</div>}><Accountsettings /></Suspense> },
-//     ]
-//   },
-//   {
-//     path: "/login",
-//     element: (
-//       <Suspense fallback={<div>Loading...</div>}>
-//         <Login />
-//       </Suspense>
-//     ),
-//   },
-// ]);
-
-
-// ReactDOM.createRoot(document.getElementById('root')).render(
-//   <React.StrictMode>
-//     <Cartprovider>
-//       <Provider store={store}>
-//       <RouterProvider router={router}  />
-//     </Provider>
-//     </Cartprovider>
-
-//   </React.StrictMode>
-// )
-
-
-
-
 // const router = createBrowserRouter([
 //   { path: "*", element: <NotFound /> },
 //   { path: "/", element: <App /> },

@@ -1,0 +1,1 @@
+import{j as e}from"./index-W29gIuby.js";const o=()=>e.jsx("div",{className:"bg-cover bg-center h-screen ",style:{backgroundImage:'url("404.jpeg")',backgroundColor:"rgb(25, 34, 39)",color:"white"},children:e.jsx("p",{className:"animate-pulse",children:"Sorry page not found"})});export{o as default};

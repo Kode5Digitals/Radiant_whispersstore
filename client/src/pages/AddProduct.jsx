@@ -11,13 +11,12 @@ const AddProduct = () => {
   const nameRef = useRef("");
   const priceRef = useRef("");
   const imageRef = useRef("");
-  const descriptionRef = useRef("");
-  const categoryRef = useRef('');
+  const descriptionRef = useRef("")
+  const categoryRef = useRef('')
   const [imagesrc, setimagesrc] = useState([]);
   const [loading,setLoading]=useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       setLoading(true)
         const formData = new FormData();
