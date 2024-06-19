@@ -5,8 +5,9 @@ const wishlistModel = require("../models/wishlistModel");
 
 const getWishlist=async (req, res) => {
     const { userId, sessionId } = req.query;
+    const filter = userId ? { userId } : { sessionId }
     try {
-      const wishlists = await wishlistModel.findOne({ userId, sessionId }).populate({
+      const wishlists = await wishlistModel.findOne(filter).populate({
         path: 'items.productId',
         model: 'Product' 
       });;
