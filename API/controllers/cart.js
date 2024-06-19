@@ -6,13 +6,13 @@ const Product = require('../models/productsModel')
 const addToCart = async (req, res) => {
     const { userId, sessionId, productId, quantity } = req.body;
     if (!productId) {
-      return res.status(400).json({ message: 'ProductId is required' });
+      return res.status(400).json({ message: 'ProductId is required',error_type:1 });
     }
     if (userId) {
       try {
         const product = await Product.findById(productId);
         if (!product) {
-          return res.json({ message: 'Product not found' });
+          return res.json({ message: 'Product not found' ,error_type:1 });
         }
   
         let cart = await Cart.findOne({ userId }).populate('products.productId');
@@ -33,17 +33,17 @@ const addToCart = async (req, res) => {
         await cart.calculateTotals();
         await cart.save();
         await cart.populate('products.productId');
-        res.json({ message: 'Cart updated', cart });
+        res.json({ message: 'Item added to cart', cart ,Added:true,});
       } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error' ,error_type:1});
       }
     } else if (sessionId) {
       // Handle session-based user
       try {
         const product = await Product.findById(productId);
         if (!product) {
-          return res.json({ message: 'Product not found' });
+          return res.json({ message: 'Product not found'  ,error_type:1});
         }
   
         let cart = await Cart.findOne({ sessionId }).populate('products.productId');
@@ -64,15 +64,15 @@ const addToCart = async (req, res) => {
         await cart.calculateTotals();
         await cart.save();
         await cart.populate('products.productId');
-        res.json({ message: 'Cart updated', cart });
+        res.json({ message: 'Item added to cart', cart ,Added:true});
       } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error' ,error_type:1});
       }
     } else {
       res.status(400).json({ message: 'UserId or sessionId is required' });
     }
-  };
+  }
   
 
 
