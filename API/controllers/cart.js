@@ -8,6 +8,7 @@ const addToCart = async (req, res) => {
     if (!productId) {
       return res.status(400).json({ message: 'ProductId is required',error_type:1 });
     }
+    
     if (userId) {
       try {
         const product = await Product.findById(productId);
@@ -19,7 +20,8 @@ const addToCart = async (req, res) => {
         if (cart) {
           const productIndex = cart.products.findIndex(p => p.productId && p.productId.equals(productId));
           if (productIndex > -1) {
-            cart.products[productIndex].quantity += quantity;
+            // cart.products[productIndex].quantity += quantity;
+            return res.json({ message: 'Item already in cart', error_type: 2 })
           } else {
             cart.products.push({ productId, quantity });
           }
@@ -50,7 +52,8 @@ const addToCart = async (req, res) => {
         if (cart) {
           const productIndex = cart.products.findIndex(p => p.productId.equals(productId));
           if (productIndex > -1) {
-            cart.products[productIndex].quantity += quantity;
+            // cart.products[productIndex].quantity += quantity;
+            return res.json({ message: 'Item already in cart', error_type: 2 })
           } else {
             cart.products.push({ productId, quantity });
           }
