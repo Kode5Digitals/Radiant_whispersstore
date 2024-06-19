@@ -29,22 +29,18 @@ const getWishlist=async (req, res) => {
         const newWishlistData = userId ? { userId, items: [] } : { sessionId, items: [] };
         wishlist = new wishlistModel(newWishlistData);
       }
-  
       const isProductInWishlist = wishlist.items.some(item => item.productId.toString() === productId);
-  
       if (!isProductInWishlist) {
         wishlist.items.push({ productId });
+        const savedWishlist = await wishlist.save();
+        const populatedWishlist = await wishlistModel.findById(savedWishlist._id).populate({
+          path: 'items.productId',
+          model: 'Product' 
+        });
       }
-      else{
-     return   res.json({ message: 'Item already in wishlist',added:false });
+      else {
+        res.json({ message: 'Item already in wishlist', added: false });
       }
-  
-      const savedWishlist = await wishlist.save();
-      const populatedWishlist = await wishlistModel.findById(savedWishlist._id).populate({
-        path: 'items.productId',
-        model: 'Product' 
-      });
-      
       res.json({ message: 'Item added to wishlist successfully', wishlists: populatedWishlist ,added:true });
   
     } catch (error) {
