@@ -28,18 +28,15 @@ function Login() {
         withCredentials: true,
       });
       if (res.data.created) {
-        toast.success(res.data.message);
+        console.log(res.data.message)
+        toast.success("Login successful");
         setLogin(res.data.isLoggedIn);
         setisadmin(res.data.isAdmin);
-        toast.success(res.data.message);
         localStorage.setItem("Login", res.data.isLoggedIn);
-        // localStorage.setItem("Admin",res.data.isAdmin)
         localStorage.setItem("token", res.data.accessToken);
         localStorage.setItem("refreshToken", res.data.refreshToken);
         setOpenLogin(false);
-        toast.success(res.data.message);
 
-        // Radiantwhispersstore5
     
       } else {
         if (res.data.created.error_type === 0) {

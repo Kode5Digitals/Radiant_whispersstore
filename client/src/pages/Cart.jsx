@@ -137,6 +137,7 @@ const Cart = () => {
                     
                       className="w-9  bg-white border  h-9 text-sm flex  text-black  justify-center items-center rounded-md"
                       onClick={() => handleDecreaseQuantity(product.productId._id,1)}
+                      disabled={items.find(item => item.productId._id === product.productId?._id)?.quantity <= 1}
                     >
                       -
                     </button>

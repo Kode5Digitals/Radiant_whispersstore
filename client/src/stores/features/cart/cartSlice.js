@@ -23,11 +23,14 @@ export const addItemToCart = createAsyncThunk(
   async  ({ userId, productId,sessionId },  { rejectWithValue })=> {
     try{
       const response = await httpAuth.post(`/api/cart/add`, { productId,sessionId,userId })
-      if(response.data.created){
+      if(response.data.Added){
         toast.success(response.data.message)
-      }else{
+      }else if (response.data.error_type === 2) {
+        toast.error('Item already in cart')}
+      else{
         if(response.data.error_type===1){
           toast.error(response.data.message)
+          return rejectWithValue(response.data.message); 
         }
       }
 return response.data

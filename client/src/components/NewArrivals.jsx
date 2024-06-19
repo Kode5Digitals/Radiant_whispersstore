@@ -181,7 +181,10 @@ New Arrivals
   <BiLoaderCircle className="animate-spin" />
   Loading...
             </div>}
-  
+            { !loading&&products?.length==0 && <div className=" bg-red-100 mb-32 text-md  flex items-center justify-center transition duration-300 ease-in-out transform ">
+            No new Arrivals
+            </div>}
+
     </div>
   )
 }
