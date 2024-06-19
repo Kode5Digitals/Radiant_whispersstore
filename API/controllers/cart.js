@@ -6,7 +6,7 @@ const Product = require('../models/productsModel')
 const addToCart = async (req, res) => {
     const { userId, sessionId, productId, quantity } = req.body;
     if (!productId) {
-      return res.status(400).json({ message: 'ProductId is required',error_type:1 });
+      return res.json({ message: 'ProductId is required',error_type:1 });
     }
     
     if (userId) {
@@ -38,7 +38,7 @@ const addToCart = async (req, res) => {
         res.json({ message: 'Item added to cart', cart ,Added:true,});
       } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' ,error_type:1});
+        res.json({ message: 'Internal server error' ,error_type:1});
       }
     } else if (sessionId) {
       // Handle session-based user
@@ -70,10 +70,10 @@ const addToCart = async (req, res) => {
         res.json({ message: 'Item added to cart', cart ,Added:true});
       } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' ,error_type:1});
+        res.json({ message: 'Internal server error' ,error_type:1});
       }
     } else {
-      res.status(400).json({ message: 'UserId or sessionId is required' });
+      res.json({ message: 'UserId or sessionId is required' });
     }
   }
   
