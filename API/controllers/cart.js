@@ -9,7 +9,6 @@ const addToCart = async (req, res) => {
       return res.status(400).json({ message: 'ProductId is required' });
     }
     if (userId) {
-      // Handle logged-in user
       try {
         const product = await Product.findById(productId);
         if (!product) {
@@ -156,7 +155,8 @@ const decreaceCart= async (req, res) => {
         if (product.quantity > 1) {
           product.quantity -= 1;
         } else {
-          cart.products.splice(productIndex, 1);
+          // cart.products.splice(productIndex, 1);
+          return res.status(400).json({ message: 'Product quantity cannot be less than 1' })
         }
         await cart.calculateTotals();
         await cart.save();
