@@ -20,9 +20,9 @@ async ({userId,sessionId}, thunkAPI) => {
 
 export const addItemToCart = createAsyncThunk(
   'cart/addItemToCart',
-  async  ({ userId, productId,sessionId },  { rejectWithValue })=> {
+  async  ({ userId, productId,sessionId,quantity},  { rejectWithValue })=> {
     try{
-      const response = await httpAuth.post(`/api/cart/add`, { productId,sessionId,userId })
+      const response = await httpAuth.post(`/api/cart/add`, { productId,sessionId,userId,quantity })
       if(response.data.Added){
         toast.success(response.data.message)
       }else if (response.data.error_type === 2) {
