@@ -70,7 +70,7 @@ const addToCart = async (req, res) => {
         res.json({ message: 'Item added to cart', cart ,Added:true});
       } catch (error) {
         console.error(error);
-        res.json({ message: 'Internal server error' ,error_type:1});
+        res.status(500).json({ message: 'Internal server error' ,error_type:1});
       }
     } else {
       res.json({ message: 'UserId or sessionId is required' });
