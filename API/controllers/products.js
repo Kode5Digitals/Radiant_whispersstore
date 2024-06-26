@@ -97,13 +97,18 @@ catch (error) {
 
 const GetProduct=async(req,res)=>{
 const { id } = req.params
-const product=await productsModel.findById(id)
+try{
+  const product=await productsModel.findById(id)
 if(!product){
     res.json({message:"Product not found", status:0})
     return
 }
 if(product){
 res.json({message:'Product  found' ,product})
+}
+}catch{
+res.status(500).json({message:'Internal server error'})
+
 }
 }
 
