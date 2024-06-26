@@ -12,9 +12,10 @@ import { formatPrice } from "../utils/utils";
 import { ToastContainer } from "react-toastify";
 import Cartcontext from "../cartcontext";
 import { LiaShoppingBagSolid } from "react-icons/lia";
+import { RiShoppingBagFill } from "react-icons/ri";
 
 const ProductDetails = () => {
-const [productDetail,setProductDetail] =useState()
+const [productDetail,setProductDetail] =useState(null)
 const params=useParams()
 const productid=params.product_id
 const wishlistItems= useSelector((state)=>state?.wishlist.items); 
@@ -65,9 +66,11 @@ const handleAddToCart = (product) => {
   return (
    < Defaultlayout>
     <div className="mt-40 h-full p-3 xl:p-0 xl:flex xl:w-3/4  m-auto mb-16 justify-center xl:mr-32 xl:gap-10  ">
-<div className=" w-1/4 rounded-2xl border overflow-hidden shadow-lg  ">
-    <img src={productDetail?.image} className="w-full h-full" alt="" /></div>
+<div className=" w-1/3 rounded-2xl border overflow-hidden shadow-lg flex justify-center items-center ">
+<div className="">
+<img src={productDetail?.image} alt={productDetail?.name} className="w-full h-full"  /></div>
 
+</div>
 <div className="p-2  ">
 <div className="xl:p-3 bg-[#EEDCF9] text-black xl:w-full p-1  ">
 <h2 className="xl:text-3xl">{productDetail?.name}</h2>
@@ -102,7 +105,8 @@ Add to whishlist
 
              <div className="flex mt-4 gap-9">
              <button className="" onClick={()=>handleAddToCart(productDetail)}>
-               <LiaShoppingBagSolid size={24} className={`${!isProductInCart(productDetail?._id)?'text-black':'text-[#891980]'}`}/></button>
+              {isProductInCart(productDetail?._id) ?<RiShoppingBagFill size={24}className="text-[#891980]" />: <LiaShoppingBagSolid size={24} className="text-[#891980]" />}
+               </button>
                 {!isProductInCart(productDetail?._id) ? (<p>
 Add to cart
 </p>):(<p>Item in cart</p>) }

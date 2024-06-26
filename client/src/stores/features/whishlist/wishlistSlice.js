@@ -24,10 +24,24 @@ export const addWishlist = createAsyncThunk(
       const response = await httpAuth.post('/api/wishlists/addwishlist',{ productId ,userId, sessionId})
       toast.success(response.data.message);
       return response.data;
-    } catch (error) {
-      toast.error(error.message);
+    }
+    catch (error) {
+      if (!error.response) {
+        // Network error (no response from server)
+        toast.error("Network error: Please check your internet connection.");
+      } else if (error.response.status >= 500) {
+        // Server error (status code 5xx)
+        toast.error("Server error: Please try again later.");
+      } else if (error.response.status >= 400) {
+        // Client error (status code 4xx)
+        toast.error(`Error: ${error.response.data.message || "An error occurred."}`);
+      } else {
+        // Other errors
+        toast.error("An unexpected error occurred.");
+      }
       return thunkAPI.rejectWithValue({ error: error.message });
     }
+    
   }
 )
 

@@ -1,8 +1,7 @@
 import { CiHeart } from "react-icons/ci"
 import { useContext, useEffect, useState } from "react"
 import httpAuth from "../utils/https"
-import { Link } from "react-router-dom"
-import { ToastContainer } from "react-toastify"
+import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import LoadingSpinner from "./loaderSpinner"
 import { Typography } from "@mui/material"
@@ -18,10 +17,13 @@ import cors from "cors"
 
 import { LiaShoppingBagSolid } from "react-icons/lia"
 import Cartcontext from "../cartcontext"
+import { FaSpinner } from "react-icons/fa6"
+import { useNavigate } from "react-router-dom"
 cors()
 function Products() {
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
+const [cartLoading, setCartLoading] = useState({})
   const products = useSelector((state) => state.products)
   const [visibleProducts, setVisibleProducts] = useState(15)
 const wishlist= useSelector((state) => state?.wishlist.items)
@@ -29,9 +31,16 @@ const wishlist= useSelector((state) => state?.wishlist.items)
   const{user,sessionId,setCartLength}=useContext(Cartcontext)
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
   const[wishLoading,setWishLoading]=useState({})
-  
+const cartItems= useSelector((state)=>state?.cart.items); 
+const [detailLoading, setDetailLoading] = useState({});
+  const navigate=useNavigate()
+
+
+
+
+
 useEffect(() => {
-  setCartLength(totalQuantity);
+  setCartLength(totalQuantity)
 }, [totalQuantity,setCartLength]);
 
 const handleAllProducts = async () => {
@@ -55,16 +64,38 @@ const handleAllProducts = async () => {
       dispatch(setProducts(products))
     })
   }, [dispatch])
+  
+  const isProductInCart = (productId) => {
+    const wish= cartItems.some((item) => item.productId._id === productId)
+   return wish
+  }
+
+
+  const handleClick = async(productId) => {
+    setDetailLoading((prevLoading) => ({ ...prevLoading, [productId]: true }));
+    try {
+      const response = await httpAuth.get(`https://radiant-whispersstore.onrender.com/api/products/getProduct/${productId}`);
+      const data = await response.data;
+      console.log(data)
+      
+      if (data.product) {
+      navigate(`/ProductDetails/${productId}`);
+      }
+       else if(data.status==0) {
+      toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error('Check your Network connection');
+    } finally {
+      setDetailLoading((prevLoading) => ({ ...prevLoading, [productId]: false }));
+    }
+  };
 
   const handleLoadMore = () => {
     setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 9)
   }
 
-    // const handleAddToWishlist = (product) => {
   
-    //     dispatch(addWishlist({ userId:user?._id, sessionId, productId:product?._id}));
-    
-    // }
 
   const handleAddClick = async (product) => {
     setWishLoading((prev) => ({ ...prev, [product._id]: true }));
@@ -95,8 +126,6 @@ const handleAllProducts = async () => {
       return wishlist.some((item) => item.productId._id === productId)
     }
     return false
-    //  const wish= wishlist.some((item) => item.productId._id === productId)
-    // return wish
   }
   const handleIncrease = (productId) => {
     console.log(productId)
@@ -113,14 +142,20 @@ const handleAllProducts = async () => {
   }
 
 
+  const handleAddToCart = async (product) => {
+    setCartLoading((prevLoading) => ({ ...prevLoading, [product._id]: true }));
+    try {
+      const selectedQuantity = quantity[product._id] || 1;
+      await dispatch(addItemToCart({ userId: user?._id, sessionId, productId: product._id, quantity: selectedQuantity }));
+    } catch (err) {
+      toast.error("An unexpected error occurred.");
+    } finally {
+      setCartLoading((prevLoading) => ({ ...prevLoading, [product._id]: false }));
+    }
+  };
+  
 
-  const handleAddToCart = (product) => {
-    const selectedQuantity = quantity[product._id] || 1
-    dispatch(addItemToCart({ userId:user?._id,sessionId,productId: product._id,quantity:selectedQuantity }))
-    
-  }
-
-
+ 
 
   return (
     <main className="mb-10 ">
@@ -139,8 +174,8 @@ const handleAllProducts = async () => {
             {!loading &&
               products.slice(0, visibleProducts).map((product, index) => (
                 <div key={index} className="mb-32  w-40 xl:w-48 h-96 ">
-                  <div className="w-full h-52 shadow-xl overflow-hidden rounded-lg mb-3  border relative">
-                    <div className="hover:p-2 p-5">
+                  <div className="w-full h-56  flex justify-center items-center shadow-xl overflow-hidden rounded-lg mb-3  border relative">
+                    <div className="hover:p-2 p-5 ">
                       <img src={product?.image} className="w-full h-full" alt="" />
                     </div>
                     {!isProductInWishlist(product._id) ? (
@@ -176,10 +211,19 @@ const handleAllProducts = async () => {
                       </h4>
                     </div>
                     <h4 className="text-[12px]">{product?.category}</h4>
-                    <button className="text-[12px] border px-2 rounded-md bg-white border-[#891980]">
-                      <Link to={`/ProductDetails/${product?._id}`}>
-                        More info
-                      </Link>
+                    <button      
+      onClick={() => handleClick(product._id)}
+      disabled={detailLoading[product._id]}
+      
+      className="text-[12px] w-16 h-5  border px-1 flex justify-center items-center rounded-md bg-white border-[#891980]">
+    
+        <span>
+        {detailLoading[product._id]  ? (
+        <FaSpinner  className="animate-spin"/>
+      ):"More info"}
+         </span>
+
+                  
                     </button>
                   </div>
                   <div className="flex justify-between items-cente items-end ">
@@ -196,7 +240,7 @@ const handleAllProducts = async () => {
                         </h4>
                         <button
                         onClick={()=>handleDecrease(product._id)}
-                          className="w-7 h-7    bg-white border   text-sm flex  text-black  justify-center items-center rounded-md"
+                          className="w-7 h-7  bg-white border   text-sm flex  text-black  justify-center items-center rounded-md"
                         >
                           -
                         </button>
@@ -205,11 +249,12 @@ const handleAllProducts = async () => {
 
                     <button
                       id={product._id}
-                      className="border text-sm  w-14 h-7 flex justify-center items-center text-white  rounded-md bg-[#C683EF]  border-pink-600 hover:text-white hover:bg-pink-950"
+                      className={`border text-sm  w-14 h-7 flex justify-center items-center   rounded-md  border-[#C683EF]   ${isProductInCart(product._id)? "bg-[#C683EF] text-white":"hover:bg-pink-900 text-black hover:text-white"}`}
                       onClick={() => handleAddToCart(product)}
                     >
-                    
-              <LiaShoppingBagSolid size={20} />
+                    {cartLoading[product._id]==true? <FaSpinner className={` animate-spin  ${isProductInCart(product._id)?"text-white hover:text-white":"hover:text-white"}`}/>:
+              <LiaShoppingBagSolid size={20}  />
+            }
                     </button>
                   </div>
                 </div>

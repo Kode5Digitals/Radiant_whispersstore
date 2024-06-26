@@ -8,7 +8,7 @@ import Cartprovider from './cartprovider'
 import { Provider } from 'react-redux'
 import ProtectedRoute from './components/ProtectedRoute'
 import store from './stores/stores.js'
-
+import LoadingSpinner from "./components/loaderSpinner.jsx"
 
 const NotFound = lazy(() => import('@/NotFound'));
 const App = lazy(() => import('./App'));
@@ -28,16 +28,16 @@ const Login = lazy(() => import('@/Login'));
 
 
 const router = createBrowserRouter([
-  { path: "*", element: <Suspense fallback={<div>Loading...</div>}><NotFound /></Suspense> },
-  { path: "/", element: <Suspense fallback={<div>Loading...</div>}><App /></Suspense> },
+  { path: "*", element: <Suspense fallback={<LoadingSpinner/>}><NotFound /></Suspense> },
+  { path: "/", element: <Suspense fallback={<LoadingSpinner/>}><App /></Suspense> },
   {
     path: "/home",
-    element: <Suspense fallback={<div>Loading...</div>}><App /></Suspense>,
+    element: <Suspense fallback={<LoadingSpinner/>}><App /></Suspense>,
   },
   {
     path: "/addproduct",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner/>}>
         <ProtectedRoute roles={['admin']}>
           <AddProduct />
         </ProtectedRoute>
@@ -46,24 +46,24 @@ const router = createBrowserRouter([
   },
   {
     path: "/ProductDetails/:product_id",
-    element: <Suspense fallback={<div>Loading...</div>}><ProductDetails /></Suspense>,
+    element: <Suspense fallback={<LoadingSpinner/>}><ProductDetails /></Suspense>,
   },
   {
     path: "/cart",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner/>}>
         <Cart />
       </Suspense>
     ),
     children: [
-      { path: "paystack", element: <Suspense fallback={<div>Loading...</div>}><PaystackComponent /></Suspense> },
+      { path: "paystack", element: <Suspense fallback={<LoadingSpinner/>}><PaystackComponent /></Suspense> },
     ],
   },
-  { path: "paystack", element: <Suspense fallback={<div>Loading...</div>}><PaystackComponent /></Suspense> },
+  { path: "paystack", element: <Suspense fallback={<LoadingSpinner/>}><PaystackComponent /></Suspense> },
   {
     path: "/wishlist",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner/>}>
         <Wishlist />
       </Suspense>
     ),
@@ -71,7 +71,7 @@ const router = createBrowserRouter([
   {
     path: "/adminHome",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner/>}>
         <ProtectedRoute roles={['admin']}>
           <AdminProducts />
         </ProtectedRoute>
@@ -81,19 +81,19 @@ const router = createBrowserRouter([
   {
     path: "/edit-product/:id",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner/>}>
         <ProtectedRoute roles={['admin']}>
           <AdminProducts />
         </ProtectedRoute>
       </Suspense>
     ),
   },
-  { path: "/return-policy", element: <Suspense fallback={<div>Loading...</div>}><Policy /></Suspense> },
-  { path: "/register", element: <Suspense fallback={<div>Loading...</div>}><Register /></Suspense> },
+  { path: "/return-policy", element: <Suspense fallback={<LoadingSpinner/>}><Policy /></Suspense> },
+  { path: "/register", element: <Suspense fallback={<LoadingSpinner/>}><Register /></Suspense> },
   {
     path: "/dashboard",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner/>}>
         <ProtectedRoute roles={['user']}>
           <Dashboard />
         </ProtectedRoute>
@@ -103,22 +103,22 @@ const router = createBrowserRouter([
   {
     path: "/myaccount",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner/>}>
         <ProtectedRoute roles={['user']}>
           <MyAccount />
         </ProtectedRoute>
       </Suspense>
     ),
     children: [
-      { index: true, element: <Suspense fallback={<div>Loading...</div>}><Dashboard /></Suspense> },
-      { path: "dashboard", index: true, element: <Suspense fallback={<div>Loading...</div>}><Dashboard /></Suspense> },
-      { path: "settings", element: <Suspense fallback={<div>Loading...</div>}><AccountSettings /></Suspense> },
+      { index: true, element: <Suspense fallback={<LoadingSpinner/>}><Dashboard /></Suspense> },
+      { path: "dashboard", index: true, element: <Suspense fallback={<LoadingSpinner/>}><Dashboard /></Suspense> },
+      { path: "settings", element: <Suspense fallback={<LoadingSpinner/>}><AccountSettings /></Suspense> },
     ]
   },
   {
     path: "/login",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner/>}>
         <Login />
       </Suspense>
     ),
@@ -309,7 +309,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 //   <React.StrictMode>
 //     <CartProvider>
 //       <Provider store={store}>
-//         <Suspense fallback={<div>Loading...</div>}>
+//         <Suspense fallback={<LoadingSpinner/>}>
 //           <RouterProvider router={router} />
 //         </Suspense>
 //       </Provider>

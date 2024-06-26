@@ -3,13 +3,14 @@ import { clearWishlist, deleteWishlist, fetchWishlists} from '../stores/features
 import Defaultlayout from '../layout/Defaultlayout';
 import {  addItemToCart} from "../stores/features/cart/cartSlice";
 import { ToastContainer } from 'react-toastify';
-import {Capitalize, formatAmount} from '../utils/utils';
+import {Capitalize, Truncate, formatAmount} from '../utils/utils';
 import HoverDescription from '../components/HoverDescription';
 import { useContext, useEffect, useState } from 'react';
 import { TbCurrencyNaira } from 'react-icons/tb';
 import Cartcontext from '../cartcontext';
 import { LiaShoppingBagSolid } from 'react-icons/lia';
 import { CiCircleRemove } from 'react-icons/ci';
+import { RiShoppingBagFill } from 'react-icons/ri';
 
 
 
@@ -19,6 +20,7 @@ function Wishlist() {
   const wishlist = useSelector((state)=>state?.wishlist.items); 
 const {user,sessionId,loadUser}=useContext(Cartcontext)
 const userId=user?._id
+const cartItems= useSelector((state)=>state?.cart.items); 
 
 
 useEffect(()=>{
@@ -36,6 +38,11 @@ useEffect(() => {
 
   }, [user,sessionId, dispatch])
 
+
+  const isProductInCart = (productId) => {
+    const wish= cartItems.some((item) => item.productId._id === productId)
+   return wish
+  }
 
 const handleRemoveFromWishlist = (itemId) => {
     dispatch(deleteWishlist({productId:itemId,sessionId,userId}));
@@ -76,14 +83,15 @@ const handleRemoveFromWishlist = (itemId) => {
 
 {wishlist?.map((item) => (
   <div key={item.productId?._id} className='  mt-20 xl:w-60  max-w-60 p-3 h-84   hover:border-white  border-2 rounded-lg relative group bg-whit shadow-lg '>
-    <span className='text-sm'>{Capitalize(item.productId?.name)}</span>
-    <div className='xl:min-w-32  h-40   mb-2  overflow-hidden'>
-    <img src={item.productId.image} alt="" className='w-full h-full' />
+    <span className='text-sm '>{Capitalize(Truncate(item.productId?.name,30))}</span>
+    <div className='xl:w-full  h-32 flex justify-center   mb-4 mt-6 overflow-hidden'>
+    <img src={item.productId.image} alt="" className='w-32 h-full' />
     </div>
    
    <div className='flex justify-between items-center'>
    <button   id={item.productId?._id} className=' text-[13px] text-black ' onClick={()=>handleAddToCart(item.productId._id)}>
-   <LiaShoppingBagSolid className='text-[#891984]' size={20}/>
+   {/* <LiaShoppingBagSolid className='text-[#891984]' size={20}/> */}
+   {isProductInCart(item.productId?._id) ?<RiShoppingBagFill size={24}className="text-[#891980]" />: <LiaShoppingBagSolid size={24} className="text-[#891980]" />}
 
    </button>
    <div className="flex items-center border-2 p-2 rounded-sm ">
@@ -99,7 +107,7 @@ const handleRemoveFromWishlist = (itemId) => {
 </div>
       
 <div className='flex justify-end mt-12 p-3'>
-<button  className='bg-black text-white text-[13px] rounded-sm p-2' onClick={HandleEmptyAllwishlist}>Empty all whishlist</button>
+<button  className='bg-[#890104] text-white text-[13px] rounded-sm p-2' onClick={HandleEmptyAllwishlist}>Empty all whishlist</button>
   </div>
   </div>
 

@@ -36,12 +36,18 @@ export const addItemToCart = createAsyncThunk(
 return response.data
     }
     catch (error) {
-      if (error.response && error.response.data.message) {
-        return rejectWithValue(error.response.data.message);
+      if (!error.response) {
+        toast.error("Network error: Please check your internet connection.");
+      } else if (error.response.status >= 500) {
+        toast.error("Server error: Please try again later.");
+      } else if (error.response.status >= 400) {
+        toast.error(`Error: ${error.response.data.message || "An error occurred."}`);
       } else {
-        return rejectWithValue(error.message);
+        toast.error("An unexpected error occurred.");
       }
+      return rejectWithValue({ error: error.message });
     }
+  
 
   }
 )

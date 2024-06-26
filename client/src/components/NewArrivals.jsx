@@ -15,15 +15,18 @@ import { BiLoaderCircle } from "react-icons/bi";
 import cors from "cors"
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import Cartcontext from "../cartcontext";
+import { FaSpinner } from "react-icons/fa6";
 cors()
 function NewArrivals() {
   const flexContainerRef = useRef(null);
   const [showLeftIndicator, setShowLeftIndicator] = useState(false);
-const wishlists= useSelector((state)=>state?.wishlist.items);      
+const wishlists= useSelector((state)=>state?.wishlist.items);    
+const [cartLoading, setCartLoading] = useState({})  
 const [loading,setLoading]=useState(true)
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch()
   const{user,sessionId}=useContext(Cartcontext)
+  const cartItems= useSelector((state)=>state?.cart.items); 
 
   useEffect(() => {
     const fetchNewArrivals = async () => {
@@ -42,7 +45,10 @@ const [loading,setLoading]=useState(true)
     fetchNewArrivals();
   }, []);
 
-
+  const isProductInCart = (productId) => {
+    const wish= cartItems.some((item) => item.productId._id === productId)
+   return wish
+  }
 
   const handleScroll = () => {
     const container = flexContainerRef.current;
@@ -82,10 +88,18 @@ const [loading,setLoading]=useState(true)
   };
   
   //add to cart
-  const handleAddToCart = (product) => {
-    const selectedQuantity =  1
-    dispatch(addItemToCart({ userId:user?._id,sessionId,productId: product._id,quantity:selectedQuantity }))
-  }
+  const handleAddToCart = async (product) => {
+    setCartLoading((prevLoading) => ({ ...prevLoading, [product._id]: true }));
+    try {
+   const selectedQuantity =  1
+   dispatch(addItemToCart({ userId:user?._id,sessionId,productId: product._id,quantity:selectedQuantity }))
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setCartLoading((prevLoading) => ({ ...prevLoading, [product._id]: false }));
+    }
+  };
+
 
   return ( 
     <div className="xl:mt-24 ">
@@ -161,7 +175,7 @@ New Arrivals
              <Link  to={`/ProductDetails/${item?._id}`} className="flex items-end gap-2">
              More<TfiMore />
                 </Link></button> 
-                <button
+                {/* <button
                      id={item._id}
                   className="border text-sm px-8 py-2 rounded-md  bg-[#891980]  border-[#891980] text-white hover:bg-pink-950"
                   onClick={()=>handleAddToCart(item)}
@@ -169,7 +183,17 @@ New Arrivals
                 
               <LiaShoppingBagSolid size={20} />
 
-                </button>
+                </button> */}
+                      <button
+                     id={item._id}
+
+                      className={`border text-sm px-8 py-2 rounded-md  bg-[#891980]  border-[#891980] text-white hover:bg-pink-950  ${isProductInCart(item._id)? "bg-[#C683EF] text-white":"hover:bg-pink-900 text-black hover:text-white"}`}
+                      onClick={()=>handleAddToCart(item)}
+                    >
+                    {cartLoading [item._id]==true? <FaSpinner className={` animate-spin  ${isProductInCart(item._id)?"text-white hover:text-white":"hover:text-white"}`}/>:
+              <LiaShoppingBagSolid size={20}  />
+            }
+                    </button>
               
               </div>
             </div>

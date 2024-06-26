@@ -137,10 +137,10 @@ const handleBack=()=>{
       />
       <form
         onSubmit={handleSubmit}
-        className="forgot-password xl:w-1/4 w-full p-2 lg:w-3/4 2xl:w-1/4 min-h-full md:w-3/4 sm:w-3/4 rounded-lg   shadow-md bg-[#891980] transition duration-500 ease-in-out border-2 border-transparent overflow-auto"
+        className="forgot-password xl:w-1/4 w-full p-2 lg:w-3/4 2xl:w-1/4 min-h-full md:w-3/4 sm:w-3/4 rounded-lg   shadow-md bg-[#891980] transition duration-500 ease-in-out border-2 border-transparent "
       > 
-      <div className="flex justify-end cursor-pointer">
-      <MdCancel onClick={handleBack}/>
+      <div className="flex justify-end cursor-pointer ">
+      <MdCancel onClick={handleBack} size={30}/>
       </div>
         <h2 className="text-center text-2xl mt-3 mb-3 text-white">Add product</h2>
         <div>
@@ -198,6 +198,9 @@ const handleBack=()=>{
             Select Product Image
           </label>
         </div>
+        <div className="w-full h-[400px] border bg-white mb-4">
+        <img style={{ width: "100%", height: "100%" }} src={imagesrc}  alt="" />
+      </div>
         <div>
           <label
             htmlFor="description"
@@ -215,18 +218,17 @@ const handleBack=()=>{
 
           />
         </div>
+       
         <button
         id={editObj?._id}
         onClick={(e)=>handleEdit(e,editObj?._id)}
           type="submit"
-          className="w-full mb-4 border-2 bg-[#f29cb3] flex items-center justify-center border-pink-700 hover:text-white hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+          className="w-full  border-2 bg-[#f29cb3] flex items-center justify-center border-pink-700 hover:text-white hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
         >
           Edit Product 
           {loading &&<IoReload className="animate-spin" />}
         </button>
-        <div className="w-full h-[400px] border bg-white mb-32">
-        <img style={{ width: "100%", height: "100%" }} src={imagesrc}  alt="" />
-      </div>
+       
       </form>
     
     </div>
