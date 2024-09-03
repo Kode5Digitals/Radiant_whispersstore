@@ -68,7 +68,7 @@ const verifyPayment = async (req, res) => {
 const requestKey=async(req, res)=>{
   try{
 console.log(KEY)
-res.status(200).json({ data:KEY });
+res.json({ data:KEY });
   }
   catch(err){
     res.status(500).json({ message: 'Could not get Key', error: err });
