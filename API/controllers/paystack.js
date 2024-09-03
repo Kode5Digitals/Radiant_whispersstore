@@ -69,11 +69,10 @@ const requestKey=async(req, res)=>{
   try{
 const key=KEY
 console.log("key")
-res.json({ data:key });
+res.json({ data:KEY });
   }
   catch(err){
     res.status(500).json({ message: 'Could not get Key', error: err });
-
   }
 }
 
