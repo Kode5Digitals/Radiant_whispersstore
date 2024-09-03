@@ -3,7 +3,7 @@ const {SECRET_KEY}=require("../config/env")
 const {KEY}=require("../config/env")
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
-
+console.log(`key ${KEY}`)
 const generateUniqueReference = () => {
   return `ref_${uuidv4()}`;
 };
@@ -68,7 +68,7 @@ const verifyPayment = async (req, res) => {
 const requestKey=async(req, res)=>{
   try{
 console.log(KEY)
-res.status(200).json({ data:"paystack" });
+res.status(200).json({ data:KEY });
   }
   catch(err){
     res.status(500).json({ message: 'Could not get Key', error: err });
