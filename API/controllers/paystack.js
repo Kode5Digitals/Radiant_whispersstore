@@ -1,4 +1,6 @@
-const SECRET_KEY = "sk_test_49141c222ff880892dd5b51feb1c185e8e9a5b61";
+
+const {SECRET_KEY}=require("../config/env")
+const {KEY}=require("../config/env")
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 
@@ -35,7 +37,7 @@ const generateUniqueReference = () => {
     
         res.status(200).json(response.data);
     } catch (error) {
-        console.error('Error creating payment:',error);
+        console.error('Error creating payment:');
         res.status(500).json({ error: 'Error creating payment' });
     }
       
@@ -63,8 +65,22 @@ const verifyPayment = async (req, res) => {
   }
 };
 
+const requestKey=async(req, res)=>{
+  try{
+const key=KEY
+console.log("key")
+res.json({ data:key });
+  }
+  catch(err){
+    res.status(500).json({ message: 'Could not get Key', error: err });
+
+  }
+}
+
 
   module.exports ={
     createPayment,
-    verifyPayment}
+    verifyPayment,
+    requestKey
+  }
   
