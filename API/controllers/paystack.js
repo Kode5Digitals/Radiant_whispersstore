@@ -69,7 +69,7 @@ const requestKey=async(req, res)=>{
   try{
     let public_Key= KEY
 console.log(KEY)
-res.json({ data:`KEY:${public_Key}` });
+res.json({ data:public_Key})
   }
   catch(err){
     res.status(500).json({ message: 'Could not get Key', error: err });
