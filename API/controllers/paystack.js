@@ -68,7 +68,7 @@ const verifyPayment = async (req, res) => {
 const requestKey=async(req, res)=>{
   try{
 const key=KEY
-console.log("key")
+console.log(key)
 res.json({ data:KEY });
   }
   catch(err){
