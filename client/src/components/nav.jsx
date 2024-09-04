@@ -15,7 +15,6 @@ const fetchCategory = async (name,text) => {
       try {
   setLoading(true)
         const response = await httpAuth.get(`/api/products/category/${name}`);
-        console.log(response)
 dispatch(setProducts(response.data));
 setCurrentCat(text)
 
