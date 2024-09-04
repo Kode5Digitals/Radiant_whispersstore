@@ -7,10 +7,9 @@ Cloud_name,
 CloudApi_key,
 CloudApi_secret ,
 PAYSTACK_PUBLIC_KEY,
-SECRET_KEY,
+PAYSTACK_SECRET_KEY,
 REFRESH_TOKEN_SECRET,
 JWT_KEY,
-KEY
 } = process.env
 module.exports = {
     PORT,
@@ -22,6 +21,6 @@ module.exports = {
     CloudApi_key,
     CloudApi_secret,
     PAYSTACK_PUBLIC_KEY,
-    SECRET_KEY,
-    KEY
+    PAYSTACK_SECRET_KEY,
+
 }

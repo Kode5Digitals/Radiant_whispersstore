@@ -1,6 +1,6 @@
 
-const {SECRET_KEY}=require("../config/env")
-const {KEY}=require("../config/env")
+const {PAYSTACK_SECRET_KEY}=require("../config/env")
+const {PAYSTACK_PUBLIC_KEY}=require("../config/env")
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const generateUniqueReference = () => {
@@ -29,7 +29,7 @@ const generateUniqueReference = () => {
             },
         }, {
             headers: {
-                Authorization: `Bearer ${SECRET_KEY}`,
+                Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
                 'Content-Type': 'application/json',
             },
         });
@@ -51,7 +51,7 @@ const verifyPayment = async (req, res) => {
       `https://api.paystack.co/transaction/verify/${reference}`,
       {
         headers: {
-          Authorization:`Bearer ${SECRET_KEY}`, 
+          Authorization:`Bearer ${PAYSTACK_SECRET_KEY}`, 
         },
       }
     );
@@ -66,7 +66,7 @@ const verifyPayment = async (req, res) => {
 
 const requestKey=async(req, res)=>{
   try{
-    let public_Key= KEY
+    let public_Key= PAYSTACK_PUBLIC_KEY
 res.json({ data:public_Key})
   }
   catch(err){
