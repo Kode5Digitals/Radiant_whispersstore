@@ -1,12 +1,11 @@
 
-const {PAYSTACK_SECRET_KEY}=require("../config/env")
-const {PAYSTACK_PUBLIC_KEY}=require("../config/env")
+const {PAYSTACK_SECRET_KEY,PAYSTACK_PUBLIC_KEY}=require("../config/env")
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const generateUniqueReference = () => {
   return `ref_${uuidv4()}`;
 };
-
+// console.log(PAYSTACK_SECRET_KEY)
   const createPayment=async(req, res) =>{ 
     const {amount,email, firstName, lastName,address,products}=req.body
     const reference = generateUniqueReference();
