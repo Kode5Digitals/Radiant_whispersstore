@@ -291,3 +291,4 @@ const handleAllProducts = async () => {
 }
 
 export default Products
+   

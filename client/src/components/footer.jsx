@@ -9,8 +9,6 @@ import { Link } from "react-router-dom";
 
 const Footer = ({logoSrc}) => {
 
-
-
     const scrollToTop = () => {
       window.scrollTo({
         top: 0,

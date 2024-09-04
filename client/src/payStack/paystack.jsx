@@ -8,11 +8,12 @@ import ImageCarousel from "../components/ImageCarousel";
 import { CiFaceSmile } from "react-icons/ci";
 import { ToastContainer, toast } from "react-toastify";
 import { PaystackButton } from 'react-paystack';
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 
 const PaystackComponent = () => {
   const { totalPrice} = useSelector(selectCart)
+  const [PAYSTACK_PUBLIC_KEY,setPAYSTACK_PUBLIC_KEY]=useState(null)
   const emailRef = useRef();
   const firstNameRef = useRef();
   const lastNameRef = useRef();
@@ -24,10 +25,27 @@ const { items } = useSelector(selectCart);
 const cartItemImages = items.map((item) => item.productId.image)
 const cartItemNames= items.map((item) => item.productId.name)
 const cartItems= items.map((item) => item)
-const key="pk_test_07070da6a9afaa698f923376dc24bbbe12df1d94";
+
 const [reference, setReference] = useState('');
 const [initialized, setInitialized] = useState(false);
 
+
+const getKey = async() => {
+  try {
+    const response = await httpAuth.get('/api/paystack/key');
+    const  data  = response.data
+    setPAYSTACK_PUBLIC_KEY(data.data)
+  } catch (error) {
+    console.log("error getting key",error)
+  }
+};
+
+
+
+useEffect(() => {
+  getKey();
+}, []); 
+console.log(`paystack: ${PAYSTACK_PUBLIC_KEY}`)
 const generateUniqueReference = () => {
   return `ref_${Math.random().toString(36).substring(2, 15)}`;
 };
@@ -182,12 +200,12 @@ navigate("/cart")
         {loading  ? <p className="animate-spin"><FaSpinner/> </p> : 'Pay Now'}
       </button>}
 
- {initialized&& reference&&    
+ {initialized && reference&&    
     
         <PaystackButton
           email={emailRef.current.value}
           amount={amount*100}
-          publicKey={key}
+          publicKey={PAYSTACK_PUBLIC_KEY}
           text="Proceed to Payment"
           reference={reference}
           className=" rounded-sm  p-2 hover:border-pink-300 border-2 mb-4 hover:text-[14px]  text-[12px] bg-blue-500 text-white "

@@ -39,7 +39,6 @@ const Sidebar = ({ isSideOpen, setSideOpen }) => {
    }
    const back=()=>{
    setSideOpen(false)
-   console.log(isSideOpen)
    }
 
    const handleSetLogOut=()=>{
