@@ -24,7 +24,8 @@ app.use(handler)
 
 const corsOptions = {
     origin: [
-      'https://radiant-whispersstore-nine.vercel.app',
+      // 'https://radiant-whispersstore-nine.vercel.app',
+      'https://radiantwhispersstore.com',
       "https://api.paystack.co",
       'http://localhost:5173'
     ],
