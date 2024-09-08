@@ -170,7 +170,7 @@ const deleteAllUser=async(req,res)=>{
           _id:req.user._id,
           fullname:req.user.fullname,
           email:req.user.email,
-          phonumber:req.user.phonenumber,
+          phonenumber:req.user.phonenumber,
           isAdmin:req.user.isAdmin,
 
         }
