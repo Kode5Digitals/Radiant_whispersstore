@@ -104,11 +104,11 @@ const Login = async (req, res, next) => {
         const { accessToken, refreshToken } = generateTokens(id, isAdmin)
         return res.json({ message: "Logged in", accessToken, refreshToken, created: true, isLoggedIn: true, isAdmin })
       } else {
-        return res.status(400).json({ message: "Invalid password", created: false, isLoggedIn: false })
+        return res.status(400).json({ message: "Invalid password",error_type: 1, created: false, isLoggedIn: false })
       }
     } catch (error) {
       console.error(error)
-      return res.status(500).json({ message: "Internal server error", isLoggedIn: false })
+      return res.status(500).json({ message: "Internal server error", isLoggedIn: false,error_type: 1 })
     }
   }
   
