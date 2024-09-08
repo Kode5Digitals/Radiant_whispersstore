@@ -108,7 +108,7 @@ const Login = async (req, res, next) => {
       }
     } catch (error) {
       console.error(error)
-      return res.status(500).json({ message: "Internal server error", isLoggedIn: false,error_type: 1 })
+      return res.status(500).json({ message: "Internal server error", isLoggedIn: false,error_type: 2 })
     }
   }
   
