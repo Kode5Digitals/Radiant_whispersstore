@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { check} = require("express-validator");
+const { check, body} = require("express-validator");
 const { Signup, Login, verifyAccount, deleteAllUser, refreshToken, getMe, editUser } = require("../controllers/users");
 const { AdminSignup } = require("../controllers/adminUser");
 const auth = require("../middleware/auth");
@@ -14,7 +14,11 @@ const registerValMiddleware=[
 ]
 
 router.post("/verifyAccount",verifyAccount);
-router.post("/login",Login)
+router.post("/login",  [
+  body('email').isEmail().withMessage('Please enter a valid email'),
+  body('password').notEmpty().withMessage('Password cannot be empty')
+],
+Login)
 router.get('/me', auth,getMe)
 router.post(
   "/register",
