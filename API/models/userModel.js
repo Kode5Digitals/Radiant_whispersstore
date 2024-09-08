@@ -10,6 +10,9 @@ const userschema = new Schema(
          password: {
             type: Schema.Types.String
         },
+        phonenumber: {
+            type: Schema.Types.String
+        },
         createdAt: {
             type: Schema.Types.Date
 
