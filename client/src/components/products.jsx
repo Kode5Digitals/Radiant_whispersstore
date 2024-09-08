@@ -224,7 +224,7 @@ const handleAllProducts = async () => {
                   
                     </button>
                   </div>
-                  <div className="flex justify-between items-cente items-end ">
+                  <div className="flex justify-between gap-1 items-end ">
                     <div className="flex justify-between border-black mt-3 border rounded-lg">
                       <div className="flex ">
                         <button
@@ -247,7 +247,7 @@ const handleAllProducts = async () => {
 
                     <button
                       id={product._id}
-                      className={`border text-sm  p-1 h-7 flex justify-center items-center   rounded-md  border-[#C683EF]   ${isProductInCart(product._id)? "bg-[#C683EF] text-white":"hover:bg-pink-900 text-black hover:text-white"}`}
+                      className={`border text-sm w-24  p-1 h-7 flex justify-center items-center   rounded-md  border-[#C683EF]   ${isProductInCart(product._id)? "bg-[#C683EF] text-white":"hover:bg-pink-900 text-black hover:text-white"}`}
                       onClick={() => handleAddToCart(product)}
                     >
                     {cartLoading[product._id]==true? <FaSpinner className={` animate-spin  ${isProductInCart(product._id)?"text-white hover:text-white":"hover:text-white"}`}/>:
