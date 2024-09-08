@@ -19,6 +19,12 @@ const getWishlist=async (req, res) => {
 
   const addWishlist = async (req, res) => {
     const { productId, userId, sessionId } = req.body;
+    if (!productId) {
+      return res.status(400).json({ message: 'ProductId is required' });
+    }
+    if (!userId && !sessionId) {
+      return res.status(400).json({ message: 'UserId or SessionId is required' });
+    }
   
     try {
       const filter = userId ? { userId } : { sessionId };
