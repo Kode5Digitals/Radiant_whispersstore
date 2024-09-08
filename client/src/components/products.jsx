@@ -15,7 +15,7 @@ import { TbCurrencyNaira } from "react-icons/tb"
 import { Truncate, formatPrice } from "../utils/utils"
 import cors from "cors"
 
-import { LiaShoppingBagSolid } from "react-icons/lia"
+// import { LiaShoppingBagSolid } from "react-icons/lia"
 import Cartcontext from "../cartcontext"
 import { FaSpinner } from "react-icons/fa6"
 import { useNavigate } from "react-router-dom"
@@ -66,7 +66,7 @@ const handleAllProducts = async () => {
   }, [dispatch])
   
   const isProductInCart = (productId) => {
-    const wish= cartItems.some((item) => item.productId._id === productId)
+    const wish= cartItems?.some((item) => item?.productId?._id === productId)
    return wish
   }
 
@@ -76,7 +76,6 @@ const handleAllProducts = async () => {
     try {
       const response = await httpAuth.get(`https://radiant-whispersstore.onrender.com/api/products/getProduct/${productId}`);
       const data = await response.data;
-      console.log(data)
       
       if (data.product) {
       navigate(`/ProductDetails/${productId}`);
@@ -104,7 +103,7 @@ const handleAllProducts = async () => {
     } catch (error) {
       console.error("Failed to add to wishlist:", error);
     } finally {
-      setWishLoading((prev) => ({ ...prev, [product._id]: false }));
+      setWishLoading((prev) => ({ ...prev, [product?._id]: false }));
     }
 
   };
@@ -112,23 +111,22 @@ const handleAllProducts = async () => {
   const handleRemoveClick = async (product) => {
     setWishLoading((prev) => ({ ...prev, [product._id]: true }));
     try {
-      await dispatch(deleteWishlist({ userId: user?._id, sessionId, productId: product._id })).unwrap();
+      await dispatch(deleteWishlist({ userId: user?._id, sessionId, productId: product?._id })).unwrap();
     } catch (error) {
       console.error("Failed to remove from wishlist:", error);
     } finally {
-      setWishLoading((prev) => ({ ...prev, [product._id]: false }));
+      setWishLoading((prev) => ({ ...prev, [product?._id]: false }));
     }
   };
 
  
   const isProductInWishlist = (productId) => {
     if (Array.isArray(wishlist)) {
-      return wishlist.some((item) => item.productId._id === productId)
+      return wishlist.some((item) => item?.productId?._id === productId)
     }
     return false
   }
   const handleIncrease = (productId) => {
-    console.log(productId)
     setQuantity(prevQuantities => ({
       ...prevQuantities,
       [productId]: (prevQuantities[productId] || 1) + 1
@@ -143,14 +141,14 @@ const handleAllProducts = async () => {
 
 
   const handleAddToCart = async (product) => {
-    setCartLoading((prevLoading) => ({ ...prevLoading, [product._id]: true }));
+    setCartLoading((prevLoading) => ({ ...prevLoading, [product?._id]: true }));
     try {
       const selectedQuantity = quantity[product._id] || 1;
-      await dispatch(addItemToCart({ userId: user?._id, sessionId, productId: product._id, quantity: selectedQuantity }));
+      await dispatch(addItemToCart({ userId: user?._id, sessionId, productId: product?._id, quantity: selectedQuantity }));
     } catch (err) {
       toast.error("An unexpected error occurred.");
     } finally {
-      setCartLoading((prevLoading) => ({ ...prevLoading, [product._id]: false }));
+      setCartLoading((prevLoading) => ({ ...prevLoading, [product?._id]: false }));
     }
   };
   
@@ -249,11 +247,14 @@ const handleAllProducts = async () => {
 
                     <button
                       id={product._id}
-                      className={`border text-sm  w-14 h-7 flex justify-center items-center   rounded-md  border-[#C683EF]   ${isProductInCart(product._id)? "bg-[#C683EF] text-white":"hover:bg-pink-900 text-black hover:text-white"}`}
+                      className={`border text-sm  w-24 h-7 flex justify-center items-center   rounded-md  border-[#C683EF]   ${isProductInCart(product._id)? "bg-[#C683EF] text-white":"hover:bg-pink-900 text-black hover:text-white"}`}
                       onClick={() => handleAddToCart(product)}
                     >
                     {cartLoading[product._id]==true? <FaSpinner className={` animate-spin  ${isProductInCart(product._id)?"text-white hover:text-white":"hover:text-white"}`}/>:
-              <LiaShoppingBagSolid size={20}  />
+             <div>
+               {/* <LiaShoppingBagSolid size={20}  /> */}
+               <p>Add to cart</p>
+             </div>
             }
                     </button>
                   </div>

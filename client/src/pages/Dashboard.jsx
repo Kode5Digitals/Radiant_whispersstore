@@ -16,10 +16,10 @@ const Dashboard = () => {
     </div>
     <div className="flex justify-end  text-[12px] mt-1  pr-12">
       <p>
-      {producthistory.firstname}
+      {producthistory?.firstname}
       </p>
     <p>
-  {producthistory.date}
+  {producthistory?.date}
 </p>
     </div>
 
@@ -38,14 +38,14 @@ const Dashboard = () => {
         <tbody >
          {producthistory?.products?.map((product,index) => (
             <tr key={index} className="overflow-y-auto max-h-80">
-              <td  className="border p-3 w-3/4">{product.name}</td>
+              <td  className="border p-3 w-3/4">{product?.name}</td>
               <td  className="border p-3  ">
               <span className="flex items-center">
               <TbCurrencyNaira /> 
-                {formatAmount(Number(product.price))}
+                {formatAmount(Number(product?.price))}
               </span>
                 </td>
-              <td  className="border p-3">{product.quantity}</td>
+              <td  className="border p-3">{product?.quantity}</td>
             </tr>
          ))}
         </tbody>

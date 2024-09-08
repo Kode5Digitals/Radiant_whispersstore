@@ -4,11 +4,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cartcontext from "../cartcontext";
 import { FaSpinner } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const [loading, setLoading] = useState(false);
+  const navigate=useNavigate()
   const { setOpenRegister, setLogin, setisadmin,loadUser,setOpenLogin } = useContext(Cartcontext);
 
   const handleOpenRegister = () => {
@@ -27,22 +29,24 @@ function Login() {
       const res = await httpAuth.post("/user/login", formData, {
         withCredentials: true,
       });
-      if (res.data.created) {
-        console.log(res.data.message)
-        toast.success("Login successful");
-        setLogin(res.data.isLoggedIn);
-        setisadmin(res.data.isAdmin);
-        localStorage.setItem("Login", res.data.isLoggedIn);
-        localStorage.setItem("token", res.data.accessToken);
-        localStorage.setItem("refreshToken", res.data.refreshToken);
+      if (res.data?.created) {
+        // console.log(res.data.message)
+        // toast.success("Login successful");
+        toast.success(res.data?.message);
+        setLogin(res.data?.isLoggedIn);
+        setisadmin(res.data?.isAdmin);
+        localStorage.setItem("Login", res.data?.isLoggedIn);
+        localStorage.setItem("token", res.data?.accessToken);
+        localStorage.setItem("refreshToken", res.data?.refreshToken);
+        setTimeout(() => navigate('/myaccount'), 2000)
         setOpenLogin(false);
 
     
       } else {
-        if (res.data.created.error_type === 0) {
-          toast.error(res.data.error[0].msg);
-        } else if (res.data.error_type === 1) {
-          toast.error(res.data.message);
+        if (res.data?.created.error_type === 0) {
+          toast.error(res.data?.error[0].msg);
+        } else if (res.data?.error_type === 1) {
+          toast.error(res.data?.message);
         }
       }
     } catch (error) {

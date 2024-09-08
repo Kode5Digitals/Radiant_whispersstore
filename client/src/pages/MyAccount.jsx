@@ -12,7 +12,6 @@ import { LiaHomeSolid } from "react-icons/lia"
 const MyAccount = () => {
 const {user}=useContext(Cartcontext)
 const [activeButton, setActiveButton] = useState("buttonA");
-
 const handleButtonClick = (button) => {
   setActiveButton(button);
 };

@@ -85,7 +85,7 @@ const handleRemoveFromWishlist = (itemId) => {
   <div key={item.productId?._id} className='  mt-20 xl:w-60  max-w-60 p-3 h-84   hover:border-white  border-2 rounded-lg relative group bg-whit shadow-lg '>
     <span className='text-sm '>{Capitalize(Truncate(item.productId?.name,30))}</span>
     <div className='xl:w-full  h-32 flex justify-center   mb-4 mt-6 overflow-hidden'>
-    <img src={item.productId.image} alt="" className='w-32 h-full' />
+    <img src={item?.productId?.image} alt="" className='w-32 h-full' />
     </div>
    
    <div className='flex justify-between items-center'>

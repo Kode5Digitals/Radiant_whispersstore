@@ -25,8 +25,7 @@ const[loading,setLoading]=useState(false)
       confirmpassword: confirmPasswordRef.current.value,
       
     };
-console.log(formData)
-    try {
+     try {
       
       const res = await httpAuth.post("/api/user/register",formData,  { withCredentials: true });
       if(res.data.created){

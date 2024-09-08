@@ -13,7 +13,7 @@ const Banner = () => {
   return (
     <div className="relative ">
 
-    <div className="mt-36 xl:mt-[74px]  bg-slate-600  banner  lg:mt-18 md:mt-[75px]  flex    sm:mt-36 " >
+    <div className="mt-36 xl:mt-[74px]    banner  lg:mt-18 md:mt-[75px]  flex    sm:mt-36 " >
 
        <div className="w-full relative top-0  " style={{backgroundImage:"RadiantWhisperBanner.png"}}>
      <img src="RadiantWhisperBanner.png" alt="RadiantWhisperBanner" className="w-full h-full sm:hidden hidden xl:block lg:block md:hidden"/>

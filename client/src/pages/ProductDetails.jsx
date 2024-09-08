@@ -51,16 +51,16 @@ const handleRemoveToWishlist = (product) => {
 
  
 const isProductInWishlist = (productId) => {
-  const wish= wishlistItems.some((item) => item.productId._id === productId)
+  const wish= wishlistItems?.some((item) => item?.productId?._id === productId)
  return wish
 }
 const isProductInCart = (productId) => {
-  const wish= cartItems.some((item) => item.productId._id === productId)
+  const wish= cartItems?.some((item) => item?.productId?._id === productId)
  return wish
 }
 const handleAddToCart = (product) => {
   const selectedQuantity =  1
-  dispatch(addItemToCart({ userId:user?._id,sessionId,productId: product._id,quantity:selectedQuantity }))
+  dispatch(addItemToCart({ userId:user?._id,sessionId,productId: product?._id,quantity:selectedQuantity }))
   
 }
   return (

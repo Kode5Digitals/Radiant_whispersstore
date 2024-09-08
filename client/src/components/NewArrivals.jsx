@@ -46,7 +46,7 @@ const [loading,setLoading]=useState(true)
   }, []);
 
   const isProductInCart = (productId) => {
-    const wish= cartItems.some((item) => item.productId._id === productId)
+    const wish= cartItems.some((item) => item?.productId?._id === productId)
    return wish
   }
 
@@ -80,7 +80,7 @@ const [loading,setLoading]=useState(true)
 
   const isProductInWishlist = (productId) => {
     if (Array.isArray(wishlists)) {
-      return wishlists.some((item) => item.productId._id === productId);
+      return wishlists.some((item) => item?.productId?._id === productId);
     }
     return false;
     // const wish = wishlists.some(item => item.productId._id === productId)
@@ -140,32 +140,32 @@ New Arrivals
       {!loading &&products?.map((item,index) => (
             <div key={index} className="mb-10 newAriival ">
               <div className="w-52 h-52 shadow-lg border-2 rounded-lg mb-3 relative">
-                <img src={item.image} className="w-full h-full" alt="" />
+                <img src={item.image} className="w-full h-full" alt="Product Image" />
               
-                {!isProductInWishlist(item._id)? ( 
+                {!isProductInWishlist(item?._id)? ( 
                   <CiHeart
                     size={22}
-                    id={item._id}
+                    id={item?._id}
                     className="m-2 absolute top-1 right-2 cursor-pointer text-[#080808]"
                     onClick={() => handleAddToWishlist(item)}
                   />
                 ) : (
                   <FaHeart
                     size={20}
-                    id={item._id}
+                    id={item?._id}
                     className="m-2 absolute top-1 right-2 cursor-pointer text-[#891980]"
                     onClick={() => handleRemoveFromWishlist(item)}
                   />
                 )}
 
               </div>
-              <h3 className="text-sm">{Truncate(item?.name,30)}</h3>
+              <h3 className="text-sm">{Truncate(item?.name,20)}</h3>
               <p className="text-[12px]">{Truncate(item?.description,30)}</p>
               <div className="flex items-center">
                 <TbCurrencyNaira /> 
                 <h4 className="text-md"><span></span>{formatPrice(Number(item?.price))}</h4>
                 </div>
-              <h3 className="text-[12px]">{item.category}</h3>
+              <h3 className="text-[12px]">{item?.category}</h3>
 
               <div className="flex justify-between mt-2">
                
@@ -185,12 +185,12 @@ New Arrivals
 
                 </button> */}
                       <button
-                     id={item._id}
+                     id={item?._id}
 
                       className={`border text-sm px-8 py-2 rounded-md  bg-[#891980]  border-[#891980] text-white hover:bg-pink-950  ${isProductInCart(item._id)? "bg-[#C683EF] text-white":"hover:bg-pink-900 text-black hover:text-white"}`}
                       onClick={()=>handleAddToCart(item)}
                     >
-                    {cartLoading [item._id]==true? <FaSpinner className={` animate-spin  ${isProductInCart(item._id)?"text-white hover:text-white":"hover:text-white"}`}/>:
+                    {cartLoading [item?._id]==true? <FaSpinner className={` animate-spin  ${isProductInCart(item?._id)?"text-white hover:text-white":"hover:text-white"}`}/>:
               <LiaShoppingBagSolid size={20}  />
             }
                     </button>

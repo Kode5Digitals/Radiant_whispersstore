@@ -104,46 +104,46 @@ const Cart = () => {
             <div key={index} className="  mt-5 xl:w-3/4 lg:w-3/4 mx-auto p-6 flex xl:gap-14 gap-3">
               <div className="flex p-3 w-32  h-32 xl:w-72  xl:h-52 rounded-xl hover:w-[400px] overflow-hidden">
                 <img
-                  src={product.productId?.image}
+                  src={product?.productId?.image}
                   className="w-full h-full"
-                  alt={product.productId?.name}
+                  alt={product?.productId?.name}
                 />
               </div>
               <div className=" bg-white xl:h-52 w-full border shadow-md text-black p-3">
-                <h2 className="text-md text-center mb-2">{product.productId?.name}</h2>
-                <h2 className="text-sm">{product.productId?.description}</h2>
+                <h2 className="text-md text-center mb-2">{product?.productId?.name}</h2>
+                <h2 className="text-sm">{product?.productId?.description}</h2>
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md">{formatPrice(Number(product.productId?.price))}</h4>
+                <h4 className="text-md">{formatPrice(Number(product?.productId?.price))}</h4>
                 </div>
               
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md"><span></span>{formatPrice(Number(product.productId?.price)*product.quantity)}</h4>
+                <h4 className="text-md"><span></span>{formatPrice(Number(product?.productId?.price)*product?.quantity)}</h4>
                 </div>
                 <div className="flex justify-between mt-3">
                   <div className="flex ">
                     <button
                       className="w-9 h-9 border text-sm bg-white text-black flex justify-center items-center rounded-md"
-                      onClick={() => handleIncreaseQuantity(product.productId._id,1)}
+                      onClick={() => handleIncreaseQuantity(product?.productId?._id,1)}
                     >
                       +
                     </button>
                     <h4 className="w-9 h-9 text-sm flex justify-center items-center rounded-md">
                       {/* {product.quantity|| 1} */}
-                      {items.find(item => item.productId._id === product.productId?._id)?.quantity || 1}
+                      {items.find(item => item?.productId?._id === product?.productId?._id)?.quantity || 1}
                     </h4>
                     <button
                     
                       className="w-9  bg-white border  h-9 text-sm flex  text-black  justify-center items-center rounded-md"
                       onClick={() => handleDecreaseQuantity(product.productId._id,1)}
-                      disabled={items.find(item => item.productId._id === product.productId?._id)?.quantity <= 1}
+                      disabled={items.find(item => item?.productId?._id === product?.productId?._id)?.quantity <= 1}
                     >
                       -
                     </button>
                   </div>
                   <button
-                    onClick={() => handleRemoveFromCart(product.productId._id)}
+                    onClick={() => handleRemoveFromCart(product?.productId?._id)}
                     className="del-btn  text-sm"
                   >
                     <FontAwesomeIcon color="red" icon={faTrash} />
