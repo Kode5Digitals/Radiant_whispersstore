@@ -14,15 +14,28 @@ const cartSchema = new Schema({
   totalPrice: { type: Number, required: true, default: 0 }
 }, { timestamps: true });
 
-cartSchema.methods.calculateTotals = function () {
-    const self = this;
-    return mongoose.model('Product').populate(this, 'products.productId')
-      .then(function(cart) {
-        self.totalQuantity = cart.products.reduce((acc, item) => acc + item.quantity, 0);
-        self.totalPrice = cart.products.reduce((acc, item) => acc + (item.quantity * item.productId.price), 0);
-      });
-  };
+// cartSchema.methods.calculateTotals = function () {
+//     const self = this;
+//     return mongoose.model('Product').populate(this, 'products.productId')
+//       .then(function(cart) {
+//         self.totalQuantity = cart.products.reduce((acc, item) => acc + item.quantity, 0);
+//         self.totalPrice = cart.products.reduce((acc, item) => acc + (item.quantity * item.productId.price), 0);
+//       });
+//   };
   
+cartSchema.methods.calculateTotals = async function () {
+  await mongoose.model('Cart').populate(this, {
+    path: 'products.productId',
+    model: 'Product'
+  });
+  this.totalQuantity = this.products.reduce((acc, item) => acc + item.quantity, 0);
+  this.totalPrice = this.products.reduce((acc, item) => {
+    if (item?.productId && typeof item?.productId.price === 'number') {
+      return acc + (item?.quantity * item?.productId.price);
+    }
+    return acc;
+  }, 0);
+};
 
 const Cart = mongoose.model('Cart', cartSchema);
 
