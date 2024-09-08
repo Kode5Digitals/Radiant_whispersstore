@@ -8,6 +8,10 @@ const addToCart = async (req, res) => {
     if (!productId) {
       return res.status(400).json({ message: 'ProductId is required',error_type:1 });
     }
+    if (quantity <= 0) {
+      return res.status(400).json({ message: 'Quantity must be greater than 0', error_type: 1 });
+    }
+  
 
     try {
       const product = await Product.findById(productId);
