@@ -216,7 +216,7 @@ const handleAllProducts = async () => {
       className="text-[12px] w-16 h-5  border px-1 flex justify-center items-center rounded-md bg-white border-[#891980]">
     
         <span>
-        {detailLoading[product._id]  ? (
+        {detailLoading[product?._id]  ? (
         <FaSpinner  className="animate-spin"/>
       ):"More info"}
          </span>
@@ -228,16 +228,16 @@ const handleAllProducts = async () => {
                     <div className="flex justify-between border-black mt-3 border rounded-lg">
                       <div className="flex ">
                         <button
-                         onClick={()=>handleIncrease(product._id)}
+                         onClick={()=>handleIncrease(product?._id)}
                          className="w-7 h-7  text-sm bg-white text-black flex justify-center items-center rounded-md"
                         >
                           +
                         </button>
                         <h4 className="w-5 h-7 border-black border text-sm flex justify-center items-center  ">
-                        {quantity[product._id] || 1}
+                        {quantity[product?._id] || 1}
                         </h4>
                         <button
-                        onClick={()=>handleDecrease(product._id)}
+                        onClick={()=>handleDecrease(product?._id)}
                           className="w-7 h-7  bg-white border   text-sm flex  text-black  justify-center items-center rounded-md"
                         >
                           -
@@ -247,10 +247,10 @@ const handleAllProducts = async () => {
 
                     <button
                       id={product._id}
-                      className={`border text-sm w-24  p-1 h-7 flex justify-center items-center   rounded-md  border-[#C683EF]   ${isProductInCart(product._id)? "bg-[#C683EF] text-white":"hover:bg-pink-900 text-black hover:text-white"}`}
+                      className={`border text-[12px] w-24  p-1 h-7 flex justify-center items-center   rounded-md  border-[#C683EF]   ${isProductInCart(product?._id)? "bg-[#C683EF] text-white":"hover:bg-pink-900 text-black hover:text-white"}`}
                       onClick={() => handleAddToCart(product)}
                     >
-                    {cartLoading[product._id]==true? <FaSpinner className={` animate-spin  ${isProductInCart(product._id)?"text-white hover:text-white":"hover:text-white"}`}/>:
+                    {cartLoading[product._id]==true? <FaSpinner className={` animate-spin  ${isProductInCart(product?._id)?"text-white hover:text-white":"hover:text-white"}`}/>:
              <div>
                {/* <LiaShoppingBagSolid size={20}  /> */}
                <p>Add to cart</p>
