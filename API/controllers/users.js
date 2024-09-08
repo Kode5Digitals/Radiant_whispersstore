@@ -83,7 +83,7 @@ const Login = async (req, res, next) => {
       const admin = await adminModel.findOne({ email: email })
   
       if (!user && !admin) {
-        return res.json({ message: "Invalid account", error_type: 1, created: false, isLoggedIn: false })
+        return res.status(404).json({ message: "Invalid account", error_type: 1, created: false, isLoggedIn: false })
       }
 
       let isValid = false
