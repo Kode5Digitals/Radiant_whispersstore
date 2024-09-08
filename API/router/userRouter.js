@@ -8,6 +8,7 @@ const auth = require("../middleware/auth");
 const registerValMiddleware=[
   check("fullname", "Enter fullname").not().isEmpty(),
     check("email", "Enter email").not().isEmpty().isEmail(),
+    check("phonenumber", "phonenumber").not().isEmpty(),
     check("password", "Enter password").not().isEmpty().isLength({ min: 5 }),
     check("confirmpassword", "Enter confirmPassword").not().isEmpty(),
 ]
