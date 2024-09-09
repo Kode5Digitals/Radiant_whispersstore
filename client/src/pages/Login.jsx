@@ -11,6 +11,7 @@ function Login() {
   const passwordRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('');
   const navigate=useNavigate()
   const { setOpenRegister, setLogin, setisadmin,loadUser,setOpenLogin } = useContext(Cartcontext);
@@ -30,11 +31,7 @@ function Login() {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    // const validationErrors = validateForm();
-    // if (Object.keys(validationErrors).length > 0) {
-    //   setErrors(validationErrors);
-    //   return;
-    // }
+   
     const formData = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -61,19 +58,19 @@ function Login() {
     
       } else {
         if (res.data?.error_type === 0 && res.data?.errors?.length > 0) {
-          res.data.errors.forEach((err) => toast.error(err.msg)); // Loop through errors and display each
-        } 
-        // if (res.data?.error_type === 0) {
-        //   toast.error(res.data?.errors[0]?.msg);
-        // }
+          const validationErrors = {};
+          res.data.errors.forEach((err) => {
+            validationErrors[err.path] = err.msg; // Map errors to field names
+          });
+          setErrors(validationErrors)
+        }
          else if (res.data?.error_type === 1) {
-          toast.error(res.data?.message);
-      console.log(res);
+      setErrorMessage(res.data?.message);
         }
       }
     } catch (error) {
       if (!error?.response?.data?.error_type) {
-        toast.error("Server error occurred. Please try again.");
+        setErrorMessage("Server error occurred. Please try again.");
       } else {
         console.error("Known error:", error.response?.data?.message || error.message);
       }
@@ -106,10 +103,12 @@ function Login() {
             ref={emailRef}
             id="email"
             type="email"
+            
             placeholder="Enter email"
-            className="border mb-6 text-[12px] rounded-lg w-full shadow appearance-none p-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={`border  text-[12px] rounded-lg w-full shadow appearance-none p-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email ? "mb-2":"mb-6"}`}
           />
-          {errors.email ? "input-error" : ""}
+          {errors.email && <p style={{ color: 'red' }} className="mb-5">{errors.email}</p>} {/* Display email error */}
+          
           <label htmlFor="email" className="text-[12px]">
             Password
           </label>
@@ -117,9 +116,12 @@ function Login() {
             ref={passwordRef}
             id="password"
             type="password"
+            // required
             placeholder="Enter password"
-            className="border mb-6 text-[12px] rounded-lg w-full shadow appearance-none p-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={`border text-[12px] rounded-lg w-full shadow appearance-none p-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.password ? "mb-2":"mb-6"}`}
           />
+          {errors?.password && <p style={{ color: 'red' }} className="mb-5">{errors?.password}</p>} {/* Display email error */}
+        
 
           <div className="flex justify-between mt-3">
             <button
@@ -142,6 +144,9 @@ function Login() {
             Login
             {loading && <FaSpinner className="animate-spin" />}
           </button>
+          {errorMessage && <p style={{ color: 'red',textAlign:"center" }}>{errorMessage}</p>} {/* Display general error message */}
+      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>} {/* Display success message */}
+      
         </form>
       </div>
       <ToastContainer
