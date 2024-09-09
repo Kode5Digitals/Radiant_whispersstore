@@ -7,9 +7,11 @@ import { FaSpinner } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const emailRef = useRef("");
-  const passwordRef = useRef("");
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate=useNavigate()
   const { setOpenRegister, setLogin, setisadmin,loadUser,setOpenLogin } = useContext(Cartcontext);
 
@@ -17,10 +19,22 @@ function Login() {
     setOpenRegister(true);
     setOpenLogin(false);
   };
+  const validateForm = () => {
+    const newErrors = {};
+    if (emailRef.current.value) newErrors.email = 'Email is required';
+    if (passwordRef.current.value) newErrors.password = 'Password is required';
+    else if (passwordRef.current.value.length < 6) newErrors.password = 'Password must be at least 6 characters long';
+    return newErrors;
+  };
 
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
+    // const validationErrors = validateForm();
+    // if (Object.keys(validationErrors).length > 0) {
+    //   setErrors(validationErrors);
+    //   return;
+    // }
     const formData = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -29,9 +43,12 @@ function Login() {
       const res = await httpAuth.post("/user/login", formData, {
         withCredentials: true,
       });
+      console.log(res);
+
       if (res.data?.created) {
-        // console.log(res.data.message)
-        // toast.success("Login successful");
+   
+        setSuccessMessage(res.data.message);
+        setErrors({});
         toast.success(res.data?.message);
         setLogin(res.data?.isLoggedIn);
         setisadmin(res.data?.isAdmin);
@@ -43,15 +60,27 @@ function Login() {
 
     
       } else {
-        if (res.data?.created.error_type === 0) {
-          toast.error(res.data?.error[0].msg);
-        } else if (res.data?.error_type === 1) {
+        if (res.data?.error_type === 0 && res.data?.errors?.length > 0) {
+          res.data.errors.forEach((err) => toast.error(err.msg)); // Loop through errors and display each
+        } 
+        // if (res.data?.error_type === 0) {
+        //   toast.error(res.data?.errors[0]?.msg);
+        // }
+         else if (res.data?.error_type === 1) {
           toast.error(res.data?.message);
+      console.log(res);
         }
       }
     } catch (error) {
-      console.log(error);
-    } finally {
+      if (!error?.response?.data?.error_type) {
+        toast.error("Server error occurred. Please try again.");
+      } else {
+        console.error("Known error:", error.response?.data?.message || error.message);
+      }
+      console.error(error);
+      toast.error("Server error occurred. Please try again.");
+    } 
+    finally {
       loadUser()
       setLoading(false);
     }
@@ -80,6 +109,7 @@ function Login() {
             placeholder="Enter email"
             className="border mb-6 text-[12px] rounded-lg w-full shadow appearance-none p-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
+          {errors.email ? "input-error" : ""}
           <label htmlFor="email" className="text-[12px]">
             Password
           </label>
