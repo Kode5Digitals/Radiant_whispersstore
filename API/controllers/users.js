@@ -76,14 +76,14 @@ const Login = async (req, res, next) => {
     const errors = validationResult(req)
     try {
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array(), error_type: 0, created: false, isLoggedIn: false })
+        return res.json({ errors: errors.array(), error_type: 0, created: false, isLoggedIn: false })
       }
   
       const user = await userModel.findOne({ email: email })
       const admin = await adminModel.findOne({ email: email })
   
       if (!user && !admin) {
-        return res.status(404).json({ message: "Invalid account", error_type: 1, created: false, isLoggedIn: false })
+        return res.json({ message: "Invalid account", error_type: 1, created: false, isLoggedIn: false })
       }
 
       let isValid = false
@@ -104,7 +104,7 @@ const Login = async (req, res, next) => {
         const { accessToken, refreshToken } = generateTokens(id, isAdmin)
         return res.json({ message: "Logged in", accessToken, refreshToken, created: true, isLoggedIn: true, isAdmin })
       } else {
-        return res.status(400).json({ message: "Invalid password",error_type: 1, created: false, isLoggedIn: false })
+        return res.json({ message: "Invalid password",error_type: 1, created: false, isLoggedIn: false })
       }
     } catch (error) {
       console.error(error)
