@@ -14,13 +14,15 @@ const app=express()
 app.use(bodyparser.json())
 app.use(cookiesparser())
 
-function handler(req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", '*')
-    res.setHeader("Access-Control-Allow-Headers", "Origin,X-Request,Content-Type,Accept,Authorization")
-    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,OPTIONS,DELETE")
-    next()
-}
-app.use(handler)
+// function handler(req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin", "https://radiantwhispersstore.com");
+//     // res.setHeader("Access-Control-Allow-Origin", '*')
+//     res.setHeader("Access-Control-Allow-Headers", "Origin,X-Request,Content-Type,Accept,Authorization")
+//     res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,OPTIONS,DELETE")
+//     res.setHeader("Access-Control-Allow-Credentials", "true")
+//     next()
+// }
+// app.use(handler)
 
 const corsOptions = {
     origin: [
@@ -31,7 +33,7 @@ const corsOptions = {
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
   };
 
 
