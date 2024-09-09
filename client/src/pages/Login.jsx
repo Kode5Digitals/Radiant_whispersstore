@@ -71,11 +71,12 @@ function Login() {
     } catch (error) {
       if (!error?.response?.data?.error_type) {
         setErrorMessage("Server error occurred. Please try again.");
-      } else {
-        console.error("Known error:", error.response?.data?.message || error.message);
-      }
-      console.error(error);
-      toast.error("Server error occurred. Please try again.");
+      } 
+      // else {
+      //   console.error("Known error:", error.response?.data?.message || error.message);
+      // }
+      // console.error(error);
+      // toast.error("Server error occurred. Please try again.");
     } 
     finally {
       loadUser()
@@ -107,7 +108,7 @@ function Login() {
             placeholder="Enter email"
             className={`border  text-[12px] rounded-lg w-full shadow appearance-none p-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email ? "mb-2":"mb-6"}`}
           />
-          {errors.email && <p style={{ color: 'red' }} className="mb-5">{errors.email}</p>} {/* Display email error */}
+          {errors.email && <p style={{ color: 'red' }} className="mb-5 text-[10px]">{errors.email}</p>} {/* Display email error */}
           
           <label htmlFor="email" className="text-[12px]">
             Password
@@ -120,7 +121,7 @@ function Login() {
             placeholder="Enter password"
             className={`border text-[12px] rounded-lg w-full shadow appearance-none p-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.password ? "mb-2":"mb-6"}`}
           />
-          {errors?.password && <p style={{ color: 'red' }} className="mb-5">{errors?.password}</p>} {/* Display email error */}
+          {errors?.password && <p style={{ color: 'red' }} className="mb-5 text-[10px]">{errors?.password}</p>} {/* Display email error */}
         
 
           <div className="flex justify-between mt-3">
@@ -144,8 +145,8 @@ function Login() {
             Login
             {loading && <FaSpinner className="animate-spin" />}
           </button>
-          {errorMessage && <p style={{ color: 'red',textAlign:"center" }}>{errorMessage}</p>} {/* Display general error message */}
-      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>} {/* Display success message */}
+          {errorMessage && <p style={{ color: 'red',textAlign:"center" }} className="text-[10px]">{errorMessage}</p>} {/* Display general error message */}
+      {successMessage && <p style={{ color: 'green' }} className="text-[10px]">{successMessage}</p>} {/* Display success message */}
       
         </form>
       </div>
