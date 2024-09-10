@@ -37,10 +37,7 @@ function Login() {
       password: passwordRef.current.value,
     };
     try {
-      const res = await httpAuth.post("/user/login", formData, {
-        withCredentials: true,
-      });
-      console.log(res);
+      const res = await httpAuth.post("/user/login", formData)
 
       if (res.data?.created) {
    
