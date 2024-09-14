@@ -8,11 +8,12 @@ import http from "../utils/adminHttp";
 
 
 const AddProduct = () => {
-  const nameRef = useRef("");
-  const priceRef = useRef("");
-  const imageRef = useRef("");
-  const descriptionRef = useRef("")
-  const categoryRef = useRef('')
+  const nameRef = useRef(null);
+  const priceRef = useRef(null);
+  const imageRef = useRef();
+  const descriptionRef = useRef(null)
+  const categoryRef = useRef(null)
+  const noOfAvailableItem =useRef(null)
   const [imagesrc, setimagesrc] = useState([]);
   const [loading,setLoading]=useState(false)
   const handleSubmit = async (e) => {
@@ -25,11 +26,11 @@ const AddProduct = () => {
         formData.append('image', imageRef.current.files[0]);
         formData.append('description', descriptionRef.current.value);
         formData.append('category',categoryRef.current.value)
+        formData.append('noofitem',noOfAvailableItem.current.value)
         const response = await http.post(
             "/api/products/addProduct", 
             formData
         )
-        console.log(response.data);
         if (response.data.created) {
             toast.success(response.data.message);
         } else {
@@ -138,6 +139,7 @@ const AddProduct = () => {
         </div>
 
 
+
         <label htmlFor="category">Category:</label>
   <select required id="category" name="category"  ref={categoryRef} className="text-sm mt-4  bg-white  border-2 p-2 ml-3 rounded-xl mb-4">
     <option value="body cream">body cream</option>
@@ -146,6 +148,25 @@ const AddProduct = () => {
   </select>
 
 
+
+  <div>
+          <label
+            htmlFor="price"
+            className="block text-sm font-medium text-gray-700 mt-3"
+          >
+            No of items 
+          </label>
+
+          <input
+            ref={noOfAvailableItem}
+            type="text"
+            id="noOfAvailableItem"
+            className="mt-1 p-2 text-[12px] block w-full border border-white rounded-md focus:outline-none focus:border-pink-500"
+            placeholder="Enter item no Available"
+            required
+          />
+          
+        </div>
         
         <div  
             className="mt-3 mb-3 flex p-2  gap-2 items-center w-full text-[12px] border-pink-700 bg-[#f29cb3] border-2 rounded-sm  focus:outline-none focus:border-pink-500"

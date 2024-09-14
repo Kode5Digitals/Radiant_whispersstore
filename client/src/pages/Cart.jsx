@@ -41,6 +41,11 @@ const Cart = () => {
     }
   }, [dispatch,userId, sessionId])
 
+
+
+
+
+
   
   const handleRemoveFromCart = (productId) => {
     dispatch(removeItemFromCart({ userId: user?._id,  productId,sessionId }));

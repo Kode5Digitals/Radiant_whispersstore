@@ -45,10 +45,15 @@ const getKey = async() => {
 useEffect(() => {
   getKey();
 }, []); 
-console.log(`paystack: ${PAYSTACK_PUBLIC_KEY}`)
 const generateUniqueReference = () => {
   return `ref_${Math.random().toString(36).substring(2, 15)}`;
 };
+
+
+
+
+
+
 const handlePayment = async () => {
   setLoading(true);
   const newReference = generateUniqueReference();
@@ -85,7 +90,6 @@ const handlePaymentSuccess = async (reference) => {
   try {
     const response = await httpAuth.get(`/api/paystack/verifyPayment/${reference}`);
     const  data  = response?.data.data
-    console.log(data.data.metadata)
     localStorage.setItem("history",JSON.stringify(data.data.metadata))
     if (data.data.status === 'success') {
       emailRef.current.value = '';

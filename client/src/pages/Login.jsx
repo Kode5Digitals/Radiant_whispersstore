@@ -20,13 +20,7 @@ function Login() {
     setOpenRegister(true);
     setOpenLogin(false);
   };
-  const validateForm = () => {
-    const newErrors = {};
-    if (emailRef.current.value) newErrors.email = 'Email is required';
-    if (passwordRef.current.value) newErrors.password = 'Password is required';
-    else if (passwordRef.current.value.length < 6) newErrors.password = 'Password must be at least 6 characters long';
-    return newErrors;
-  };
+
 
   const handleSubmit = async (e) => {
     setLoading(true);

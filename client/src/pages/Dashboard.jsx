@@ -7,7 +7,6 @@ import { TbCurrencyNaira } from "react-icons/tb"
 const Dashboard = () => {
   const {producthistory}=useContext(Cartcontext)
 
-  console.log(producthistory)
   return (
 
    <div className="">

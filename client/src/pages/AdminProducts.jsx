@@ -11,7 +11,7 @@ import AdminDefaultlayout from "../layout/AdminLayout";
 import EditProduct from "../components/editProducts";
 import Cartcontext from "../cartcontext";
 import DeleteProduct from "../components/deleteModal";
-import { Truncate } from "../utils/utils";
+import { Truncate, formatPrice } from "../utils/utils";
 import { TbCurrencyNaira } from "react-icons/tb";
 
 function AdminProducts() {
@@ -97,7 +97,7 @@ const closeDeleteModal = () => {
                 <h3 className="text-[13px]">{Truncate(prod?.name,23)}</h3>
                 <div className="flex items-center">
                 <TbCurrencyNaira /> 
-                <h4 className="text-md"><span></span>{prod?.price}</h4>
+                <h4 className="text-md"><span></span>  {formatPrice(Number(prod?.price))}</h4>
                 </div>
               </div>
               <div className="flex justify-between  ">
