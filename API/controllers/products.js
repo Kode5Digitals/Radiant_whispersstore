@@ -39,6 +39,7 @@ const AddProduct=async(req,res)=>{
                 category,
                 noofitem
             });
+           
 
             const findoneProduct = await productsModel.findOne({ name })
             if (findoneProduct) {

@@ -9,7 +9,8 @@ const productSchema = new Schema(
             type:Number
         }, 
         noofitem: {
-            type:Number
+            type:Number,
+            default: 0
         },
         image: {
             type:String

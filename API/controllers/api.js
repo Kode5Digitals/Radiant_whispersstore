@@ -25,7 +25,10 @@ const GetEditProduct = async (req, res) => {
         if (err) {
           return res.status(500).json({ error: "Error uploading file" });
         }
-  
+        await productsModel.updateMany(
+          { noofitem: { $exists: false } },  
+          { $set: { noofitem: 0 } }         
+        )
         const productId = req.params.id;
         const { name, price, description, category } = fields;
   
