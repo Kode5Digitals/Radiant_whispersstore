@@ -38,6 +38,7 @@ const GetEditProduct = async (req, res) => {
           price: fields.price[0],
           description: fields.description[0],
           category: fields.category[0],
+           noofitem:fields.noofitem[0]
         };
   
         // If there's a new image file, upload it to Cloudinary
