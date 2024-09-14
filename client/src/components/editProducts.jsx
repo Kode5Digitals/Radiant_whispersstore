@@ -129,9 +129,13 @@ const handleBack=()=>{
     
 
     <div
-      className="flex items-start  justify-center pb-96 p-4 xl:p-24 bg-[#891980] xl:h-full w-full h-full  "
+    ref={editRef}
+      className="
+      fixed inset-0 p-10 flex justify-center  bg-gray-800 bg-opacity-90 z-50"
+       
       // style={{ height: "100vh" }}
     >
+      {/* flex items-start  justify-center pb-96 p-4 xl:p-24 bg-[#891980] xl:h-full w-full h-full  */}
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
@@ -146,13 +150,13 @@ const handleBack=()=>{
       />
       <form 
        
-        className="forgot-password flex mt-32  xl:mt-0 w-full sm:flex-wrap xl:flex-nowrap  flex-wrap  p-5  gap-10    lg:w-3/4 2xl:w-1/4 md:w-3/4 sm:w-3/4 rounded-lg shadow-md bg-pink-200  transition duration-500 ease-in-out border-2 border-transparent "
+        className="forgot-password flex mt-24  xl:mt-0 w-full sm:flex-wrap xl:flex-nowrap  flex-wrap  p-3  gap-10    lg:w-3/4 2xl:w-1/4 md:w-3/4 sm:w-3/4 rounded-lg shadow-md bg-pink-200  transition duration-500 ease-in-out border-2 border-transparent "
       >
              <div className="flex justify-end cursor-pointer ">
        <MdCancel onClick={handleBack} size={30}/>
        </div>
        <div className=" xl:w-1/2  w-full">
-       <h2 className="text-center text-2xl mt-3 mb-3">Edit product</h2>
+       <h2 className="text-center text-2xl mt-2 mb-2">Edit product</h2>
         <div>
           <label
             htmlFor="name"
@@ -165,7 +169,7 @@ const handleBack=()=>{
             type="text"
             id="name"
             defaultValue={editObj?.name}
-            className="mt-1 p-2 block text-[12px] w-full border border-white rounded-md focus:outline-none focus:border-pink-500"
+            className="mt-1 p-1 block text-[12px] w-full border border-white rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter Product Name"
             required
 
@@ -174,7 +178,7 @@ const handleBack=()=>{
         <div>
           <label
             htmlFor="price"
-            className="block text-sm font-medium text-gray-700 mt-3"
+            className="block text-sm font-medium text-gray-700 mt-2"
           >
             Price
           </label>
@@ -184,7 +188,7 @@ const handleBack=()=>{
             type="text"
             id="price"
             defaultValue={editObj?.price}
-            className="mt-1 p-2 text-[12px] block w-full border border-white rounded-md focus:outline-none focus:border-pink-500"
+            className="mt-1 p-1 text-[12px] block w-full border border-white rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter price"
             required
           />
@@ -194,7 +198,7 @@ const handleBack=()=>{
 
 
         <label htmlFor="category">Category:</label>
-  <select required id="category" name="category"  ref={categoryRef} className="text-sm mt-4  bg-white  border-2 p-2 ml-3 rounded-xl mb-4">
+  <select required id="category" name="category"  ref={categoryRef} className="text-sm mt-2  bg-white  border-2 p-2 ml-3 rounded-xl mb-2">
     <option value="body cream">body cream</option>
     <option value="face cream">face cream</option>
     <option value="body wash">body wash</option>
@@ -215,7 +219,7 @@ const handleBack=()=>{
             defaultValue={editObj?.noofitem}
             type="text"
             id="noOfAvailableItem"
-            className="mt-1 p-2 text-[12px] block w-full border border-white rounded-md focus:outline-none focus:border-pink-500"
+            className="mt-1 p-1 text-[12px] block w-full border border-white rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter item no Available"
             required
           />
@@ -223,7 +227,7 @@ const handleBack=()=>{
         </div>
         
         <div  
-            className="mt-3 mb-3 flex p-2  gap-2 items-center w-full text-[12px] border-pink-700 bg-[#f29cb3] border-2 rounded-sm  focus:outline-none focus:border-pink-500"
+            className="mt-2 mb-3 flex p-1 gap-2 items-center w-full text-[12px] border-pink-700 bg-[#f29cb3] border-2 rounded-sm  focus:outline-none focus:border-pink-500"
             >
                 <MdInsertPhoto 
                  className="cursor-pointer"/>
@@ -252,7 +256,7 @@ const handleBack=()=>{
           <textarea
             ref={descriptionRef}
             id="description"
-            className="mt-1 mb-4 p-2 block text-[12px] w-full border h-32 border-white rounded-md focus:outline-none focus:border-pink-500"
+            className="mt-1 mb-4 p-2 block text-[12px] w-full border h-24 border-white rounded-md focus:outline-none focus:border-pink-500"
             placeholder="Enter Product Description"
             maxLength={200}
             required
@@ -266,11 +270,11 @@ const handleBack=()=>{
           type="submit"
           id={editObj?._id}
               onClick={(e)=>handleEdit(e,editObj?._id)}
-          className="w-full mb-4  border-2  bg-[#f29cb3] border-pink-700 hover:text-white  hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+          className="w-full mb-2  border-2  bg-[#f29cb3] border-pink-700 hover:text-white  hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
         >
           Edit Product
         </button>}
-     { loading &&  <button type="button" className="w-full mb-4 flex items-center justify-center border-2  bg-[#f29cb3] border-pink-700 hover:text-white  hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105" disabled>
+     { loading &&  <button type="button" className="w-full mb-2 flex items-center justify-center border-2  bg-[#f29cb3] border-pink-700 hover:text-white  hover:bg-pink-700 py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105" disabled>
   
   <BiLoaderCircle className="animate-spin" />
   Processing...

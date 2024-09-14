@@ -6,7 +6,7 @@ body{
     /* font-weight: 100; */
     font-style: normal;
 }
-body::-webkit-scrollbar {
+/* body::-webkit-scrollbar {
     width: 0; 
   }
 .scroll{
@@ -15,7 +15,7 @@ body::-webkit-scrollbar {
   }
   .scroll::-webkit-scrollbar {
     width: 0; 
-  }
+  } */
   .socials{
     width: 35px;
     height: 35px;
