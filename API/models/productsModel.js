@@ -8,6 +8,9 @@ const productSchema = new Schema(
         price: {
             type:Number
         }, 
+        noofitem: {
+            type:Number
+        },
         image: {
             type:String
         },

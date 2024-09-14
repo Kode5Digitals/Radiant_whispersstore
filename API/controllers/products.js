@@ -24,6 +24,7 @@ const AddProduct=async(req,res)=>{
           const name = fields.name[0];
           const price = fields.price[0];
           const description = fields.description[0]
+          const noofitem = fields.noofitem[0]
           const category = fields.category[0]
           const image = files.image[0].filepath;
 
@@ -35,7 +36,8 @@ const AddProduct=async(req,res)=>{
                 price,
                 image: cloudinaryUploadResult.secure_url, 
                 description,
-                category
+                category,
+                noofitem
             });
 
             const findoneProduct = await productsModel.findOne({ name })
