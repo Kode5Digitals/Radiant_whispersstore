@@ -4,9 +4,9 @@ const {verifyPayment,createPayment, requestKey} = require("../controllers/paysta
 const { check } = require("express-validator");
 
   const registerValMiddleware = [
-    check("firstname", "Enter fullname").not().isEmpty(),
+    check("firstName", "Enter firstname").not().isEmpty(),
     check("email", "Enter a valid email").not().isEmpty().isEmail(),
-    check("lastname", "Enter lastname").not().isEmpty(),
+    check("lastName", "Enter lastname").not().isEmpty(),
     check("address", "Enter address").not().isEmpty()
 ];
 
