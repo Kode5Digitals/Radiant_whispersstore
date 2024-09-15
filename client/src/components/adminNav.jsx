@@ -51,6 +51,12 @@ console.error(error)
  <button className="p-1 border-black border rounded-sm">
             Add products
           </button> </Link>
+
+          <Link to={"/stock"}>
+ <button className="p-1 w-24 border-black border rounded-sm">
+            Stock
+          </button> </Link>
+
           <Link to={"/"}>
  <button className="p-1 border-black border rounded-sm">
           Switch to User

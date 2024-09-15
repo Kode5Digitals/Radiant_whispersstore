@@ -131,7 +131,7 @@ const handleBack=()=>{
     <div
     ref={editRef}
       className="
-      fixed inset-0 p-10 flex justify-center  bg-gray-800 bg-opacity-90 z-50"
+      fixed inset-0 p-10 flex justify-center  bg-gray-800 bg-opacity-100 myscroll z-50"
        
       // style={{ height: "100vh" }}
     >

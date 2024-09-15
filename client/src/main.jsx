@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import ProtectedRoute from './components/ProtectedRoute'
 import store from './stores/stores.js'
 import LoadingSpinner from "./components/loaderSpinner.jsx"
+import ProductTable from './pages/stock.jsx'
 
 const NotFound = lazy(() => import('@/NotFound'));
 const App = lazy(() => import('./App'));
@@ -120,6 +121,16 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<LoadingSpinner/>}>
         <Login />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/stock",
+    element: (
+      <Suspense fallback={<LoadingSpinner/>}>
+         <ProtectedRoute roles={['admin']}>
+        <ProductTable />
+        </ProtectedRoute>
       </Suspense>
     ),
   },
