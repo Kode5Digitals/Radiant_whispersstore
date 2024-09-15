@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {verifyPayment,createPayment, requestKey} = require("../controllers/paystack");
+const { check } = require("express-validator");
 
   const registerValMiddleware = [
     check("firstname", "Enter fullname").not().isEmpty(),
@@ -12,4 +13,4 @@ const {verifyPayment,createPayment, requestKey} = require("../controllers/paysta
 router.post("/payment", registerValMiddleware ,createPayment)
 router.get("/verifyPayment/:reference",verifyPayment)
 router.get("/key",requestKey)
-module.exports =router
+module.exports =route
