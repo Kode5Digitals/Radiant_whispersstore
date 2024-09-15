@@ -1,6 +1,7 @@
 
 const {PAYSTACK_SECRET_KEY,PAYSTACK_PUBLIC_KEY}=require("../config/env")
 const axios = require('axios');
+const { validationResult } = require("express-validator");
 const { v4: uuidv4 } = require('uuid');
 const generateUniqueReference = () => {
   return `ref_${uuidv4()}`;
