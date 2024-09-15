@@ -90,7 +90,10 @@ const closeDeleteModal = () => {
             <div key={prod._id} className=" mb-20 max-w-48 xl:w-48  h-84  ">
   
               <div className="  w-full h-52 shadow-xl  overflow-hidden  border-2 rounded-lg mb-3 relative">
- 
+              {
+  prod.noofitem === 0 &&
+  (<div className={` border p-1 rounded-l-lg  absolute   cursor-pointer shadow-xl  text-[10px] text-red-500 flex justify-center items-center  bg-red-300 `}>Out of stock </div>)
+}
                 <img src={prod?.image} className="w-full h-full" alt="" />
               </div>
   
