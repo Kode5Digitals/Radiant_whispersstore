@@ -13,6 +13,7 @@ import { FaSpinner } from "react-icons/fa";
 
 const PaystackComponent = () => {
   const { totalPrice} = useSelector(selectCart)
+  const [errors, setErrors] = useState({});
   const [PAYSTACK_PUBLIC_KEY,setPAYSTACK_PUBLIC_KEY]=useState(null)
   const emailRef = useRef();
   const firstNameRef = useRef();
@@ -22,8 +23,8 @@ const PaystackComponent = () => {
   const navigate=useNavigate()
 const [loading, setLoading] = useState(false);
 const { items } = useSelector(selectCart);
-const cartItemImages = items.map((item) => item.productId.image)
-const cartItemNames= items.map((item) => item.productId.name)
+const cartItemImages = items.map((item) => item.productId?.image)
+const cartItemNames= items.map((item) => item.productId?.name)
 const cartItems= items.map((item) => item)
 
 const [reference, setReference] = useState('');
@@ -75,11 +76,20 @@ const { data } = res;
 if (data?.data?.reference) {
   setReference(data.data.reference);
   setInitialized(true);
+  setErrors({});
 } else {
   throw new Error("No reference returned from the server");
 }
  }catch(err){
-console.log("err",err)
+  if (err.response && err.response.data && err.response.data.errors) {
+    const formErrors = err.response.data.errors.reduce((acc, error) => {
+      acc[error.path] = error.msg;
+      return acc;
+    }, {});
+    setErrors(formErrors);
+  } else {
+    toast.error("An error occurred during payment. Please try again later.");
+  }
  }finally{
   setLoading(false)
  }
@@ -138,49 +148,54 @@ navigate("/cart")
               <label htmlFor="firstname">FirstName:</label>
               <br />
               <input
-              className="w-full  rounded-sm  p-2 border mb-4"
+              className={`w-full  rounded-sm  p-2 border ${errors.firstName ? "mb-0":"mb-4"}`}
               type="text"
               placeholder="First Name"
               ref={firstNameRef}
                 id="firstname"           
                 required
               />
+               {errors.firstName && <p className="text-red-500">{errors.firstName}</p>}
               </div>
               <div className="xl:w-full w-full ">
               <label htmlFor="lastname">LastName:</label>
+              
               <br />
               <input
-              className="w-full  rounded-sm  p-2 border mb-4"
+              className=   {`w-full  rounded-sm  p-2 border ${errors.lastName ? "mb-0":"mb-4"}`}
                 id="lastname"
                 type="text"
                 placeholder="Last Name"
                 ref={lastNameRef}
                 required
               />
+                {errors.lastName && <p className="text-red-500">{errors.lastName}</p>}
               </div>
             <div className="xl:w-full w-full ">
               <label htmlFor="email">Email:</label>
               <br />
               <input
-              className="w-full  rounded-sm  p-2 border mb-4"
+              className= {`w-full  rounded-sm  p-2 border ${errors.email ? "mb-0":"mb-4"}`}
                 id="email"
                 type="email"
                 placeholder="Email"
                 ref={emailRef}               
                 required
               />
+                 {errors.email && <p className="text-red-500">{errors.email}</p>}
               </div>
               <div className="xl:w-full w-full ">
               <label htmlFor="email">Address:</label>
               <br />
               <input
-              className="w-full  rounded-sm  p-2 border mb-4"
+              className= {`w-full  rounded-sm  p-2 border ${errors.address ? "mb-0":"mb-4"}`}
                 id="address"
                 type="text"
                 placeholder="Address"
                 ref={addressRef}               
                 required
               />
+               {errors.address && <p className="text-red-500">{errors.address}</p>}
               </div>
 
               <div>
