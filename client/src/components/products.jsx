@@ -172,10 +172,17 @@ const handleAllProducts = async () => {
             {!loading &&
               products.slice(0, visibleProducts).map((product, index) => (
                 <div key={index} className="mb-32  w-40 xl:w-48 h-96 ">
+   {
+  product.noofitem === 0 &&
+  (<div className={` border p-1 rounded-l-lg  absolute   cursor-pointer shadow-xl  text-[10px] text-red-500 flex justify-center items-center  bg-red-300 `}>Out of stock </div>)
+}
                   <div className="w-full h-56  flex justify-center items-center shadow-xl overflow-hidden rounded-lg mb-3  border relative">
+                
                     <div className="hover:p-2 p-5 ">
                       <img src={product?.image} className="w-full h-full" alt="" />
                     </div>
+
+
                     {!isProductInWishlist(product._id) ? (
                     <div className={`m-2 absolute top-1 right-2 cursor-pointer border-2 rounded-full w-6 h-6  flex justify-centeritems-center  border-black ${wishLoading[product._id] ? 'animate-spin' : ''} `}>
                         <CiHeart
@@ -194,7 +201,8 @@ const handleAllProducts = async () => {
                         onClick={() => handleRemoveClick(product)}
                       />
                      </div>
-                    )}
+                    )
+                    }
                   </div>
                   <div className="p-1 ">
                     <h3 className="text-sm">{Truncate(product?.name, 16)}</h3>
