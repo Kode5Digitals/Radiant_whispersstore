@@ -13,4 +13,4 @@ const { check } = require("express-validator");
 router.post("/payment", registerValMiddleware ,createPayment)
 router.get("/verifyPayment/:reference",verifyPayment)
 router.get("/key",requestKey)
-module.exports =route
+module.exports =router
