@@ -172,10 +172,7 @@ const handleAllProducts = async () => {
             {!loading &&
               products.slice(0, visibleProducts).map((product, index) => (
                 <div key={index} className="mb-32  w-40 xl:w-48 h-96 ">
-   {
-  product.noofitem === 0 &&
-  (<div className={` border p-1 rounded-l-lg  absolute   cursor-pointer shadow-xl  text-[10px] text-red-500 flex justify-center items-center  bg-red-300 `}>Out of stock </div>)
-}
+ 
                   <div className="w-full h-56  flex justify-center items-center shadow-xl overflow-hidden rounded-lg mb-3  border relative">
                 
                     <div className="hover:p-2 p-5 ">

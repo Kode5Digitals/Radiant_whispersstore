@@ -86,13 +86,15 @@ const closeDeleteModal = () => {
       {loading && <LoadingSpinner />}
       <div className="xl:w-4/5 w-full   mx-auto  lg:p-4 md:p-5">
         <div className=" flex  w-full sm:gap-5 flex-wrap  sm:flex-wrap justify-evenly   xl:justify-center  2xl:justify-evenly ">
-          {products.slice(0, visibleProducts).map((prod, index) => (
-            <div key={index} className=" mb-20 max-w-48 xl:w-48  h-84  ">
+          {products.slice(0, visibleProducts).map((prod) => (
+            <div key={prod._id} className=" mb-20 max-w-48 xl:w-48  h-84  ">
+  
               <div className="  w-full h-52 shadow-xl  overflow-hidden  border-2 rounded-lg mb-3 relative">
+ 
                 <img src={prod?.image} className="w-full h-full" alt="" />
-
-             
               </div>
+  
+  
               <div className="p-1 ">
                 <h3 className="text-[13px]">{Truncate(prod?.name,23)}</h3>
                 <div className="flex items-center">
