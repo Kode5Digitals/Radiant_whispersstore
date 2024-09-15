@@ -7,6 +7,11 @@ const generateUniqueReference = () => {
 };
 // console.log(PAYSTACK_SECRET_KEY)
   const createPayment=async(req, res) =>{ 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const {amount,email, firstName, lastName,address,products}=req.body
     const reference = generateUniqueReference();
     const currentDate = new Date().toLocaleDateString('en-US', {
