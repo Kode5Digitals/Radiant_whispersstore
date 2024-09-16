@@ -17,7 +17,7 @@ const ImageCarousel = ({ image ,name}) => {
         <p >{name[currentImageIndex]}</p>
             
             </div>
-        <div className="w-[250px] mx-auto ">
+        <div className="w-[200px] mx-auto ">
            
             <img
                 src={image[currentImageIndex]}

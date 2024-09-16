@@ -128,20 +128,20 @@ navigate("/cart")
 
 
   return (
-    <div className="h-screen p-3 md:p-2 lg:p-3 xl:p-3 sm:p-10 bg-[#fec5ec]">
+    <div className="h-full p-3 md:p-2 lg:p-3 xl:p-3 sm:p-10 bg-[#fec5ec]">
       <div className="ml-3  mb-3">
       <Link to={"/cart"}>
       <IoIosArrowDropleft size={30}/> </Link>
       </div>
-      <div className="flex flex-wrap w-full h-[550px]  xl:w-3/4 md:w-1/2  bg-white     m-auto justify-center xl:p-10">
-        <div className=" xl:w-1/2 h-[400px]  border text-center w-full   xl:block ">
+      <div className="flex flex-wrap w-full h-full  xl:w-3/4 md:w-1/2  bg-white     m-auto justify-center xl:p-5">
+        <div className=" xl:w-1/2 lg:h-3/4 xl:h-full mb-24  border-l border-t text-center w-full   xl:block ">
       <i className="flex items-center pl-2">Thank you for your patronage <CiFaceSmile/></i>
 
                         <ImageCarousel image={cartItemImages}  name={cartItemNames}/>
         </div>
 
         
-        <div className=" h-[450px] xl:w-1/2 flex xl:p-4 justify-center   w-full p-2   border">
+        <div className="  xl:w-1/2 flex xl:p-4 justify-center   w-full p-2   border">
           <div className=" bg-white xl:p-2  w-full p-1 text-[12px]">
 
           <div className="xl:w-full w-full ">
@@ -155,7 +155,7 @@ navigate("/cart")
                 id="firstname"           
                 required
               />
-               {errors.firstName && <p className="text-red-500">{errors.firstName}</p>}
+               {errors.firstName && <p className="text-red-500 mb-2">{errors.firstName}</p>}
               </div>
               <div className="xl:w-full w-full ">
               <label htmlFor="lastname">LastName:</label>
@@ -169,7 +169,7 @@ navigate("/cart")
                 ref={lastNameRef}
                 required
               />
-                {errors.lastName && <p className="text-red-500">{errors.lastName}</p>}
+                {errors.lastName && <p className="text-red-500 mb-2">{errors.lastName}</p>}
               </div>
             <div className="xl:w-full w-full ">
               <label htmlFor="email">Email:</label>
@@ -182,8 +182,24 @@ navigate("/cart")
                 ref={emailRef}               
                 required
               />
-                 {errors.email && <p className="text-red-500">{errors.email}</p>}
+                 {errors.email && <p className="text-red-500  mb-2">{errors.email}</p>}
               </div>
+
+              <div className="xl:w-full w-full ">
+              <label htmlFor="lastname">PhoneNumber:</label>
+              
+              <br />
+              <input
+              className=   {`w-full  rounded-sm  p-2 border ${errors.phoneNumber ? "mb-0":"mb-4"}`}
+                id="lastname"
+                type="text"
+                placeholder="PhoneNumber"
+                ref={lastNameRef}
+                required
+              />
+              </div>
+
+
               <div className="xl:w-full w-full ">
               <label htmlFor="email">Address:</label>
               <br />
@@ -195,7 +211,7 @@ navigate("/cart")
                 ref={addressRef}               
                 required
               />
-               {errors.address && <p className="text-red-500">{errors.address}</p>}
+               {errors.address && <p className="text-red-500 mb-2">{errors.address}</p>}
               </div>
 
               <div>
