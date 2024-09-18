@@ -37,9 +37,9 @@ console.error(error)
         
       }
   return (
-   <div className="flex fixed top-0 bg-white border-b-2 z-50 w-full items-center p-2 justify-between">
+   <div className=" 2xl:flex xl:flex lg:flex-row fixed sm:flex-col  top-0 bg-white border-b-2 z-50 w-full items-center p-2 justify-between">
 <Link to={"/adminHome"}>
-<div className=" w-32 overflow-hidden bg-blac">
+<div className=" w-32 overflow-hidden ">
   <img src="/RadiantwhispersstoreLogo.png" alt="" className=""/>
 </div>
 
