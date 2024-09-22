@@ -1,66 +1,94 @@
-import { selectCart } from "../stores/features/cart/cartSlice";
-import { useSelector } from "react-redux";
-import { Link, useNavigate} from "react-router-dom";
-import { IoIosArrowDropleft } from "react-icons/io";
-import httpAuth from "../utils/https";
-import { TbCurrencyNaira } from "react-icons/tb";
-import ImageCarousel from "../components/ImageCarousel";
-import { CiFaceSmile } from "react-icons/ci";
-import { ToastContainer, toast } from "react-toastify";
-import { PaystackButton } from 'react-paystack';
-import { useEffect, useRef, useState } from "react";
-import { FaSpinner } from "react-icons/fa";
+import { selectCart } from "../stores/features/cart/cartSlice"
+import { useSelector } from "react-redux"
+import { Link, useNavigate} from "react-router-dom"
+import { IoIosArrowDropleft } from "react-icons/io"
+import httpAuth from "../utils/https"
+import { TbCurrencyNaira } from "react-icons/tb"
+import ImageCarousel from "../components/ImageCarousel"
+import { CiFaceSmile } from "react-icons/ci"
+import { ToastContainer, toast } from "react-toastify"
+import { PaystackButton } from 'react-paystack'
+import { useEffect, useRef, useState } from "react"
+import { FaSpinner } from "react-icons/fa"
 
 const PaystackComponent = () => {
   const { totalPrice} = useSelector(selectCart)
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({})
+  const [region, setRegion] = useState('')
+  const [totalAmount, setTotalAmount] = useState(totalPrice)
+  const [deliveryFee, setDeliveryFee] = useState(0)
   const [PAYSTACK_PUBLIC_KEY,setPAYSTACK_PUBLIC_KEY]=useState(null)
-  const emailRef = useRef();
-  const firstNameRef = useRef();
-  const lastNameRef = useRef();
- const addressRef= useRef();
-  const amount= totalPrice
+  const emailRef = useRef()
+  const firstNameRef = useRef()
+  const lastNameRef = useRef()
+ const addressRef= useRef()
   const navigate=useNavigate()
-const [loading, setLoading] = useState(false);
-const { items } = useSelector(selectCart);
+const [loading, setLoading] = useState(false)
+const { items } = useSelector(selectCart)
 const cartItemImages = items.map((item) => item.productId?.image)
 const cartItemNames= items.map((item) => item.productId?.name)
 const cartItems= items.map((item) => item)
 
-const [reference, setReference] = useState('');
-const [initialized, setInitialized] = useState(false);
+const [reference, setReference] = useState('')
+const [initialized, setInitialized] = useState(false)
 
 
 const getKey = async() => {
   try {
-    const response = await httpAuth.get('/api/paystack/key');
+    const response = await httpAuth.get('/api/paystack/key')
     const  data  = response.data
     setPAYSTACK_PUBLIC_KEY(data.data)
   } catch (error) {
     console.log("error getting key",error)
   }
-};
+}
 
 
 
 useEffect(() => {
-  getKey();
-}, []); 
+  getKey()
+}, []) 
 const generateUniqueReference = () => {
-  return `ref_${Math.random().toString(36).substring(2, 15)}`;
+  return `ref_${Math.random().toString(36).substring(2, 15)}`
+}
+
+
+const deliveryFees = {
+  "Lagos": 1000,
+  "Abuja": 1500,
+  "Kano": 2000,
+  "Port Harcourt": 2500,
+}
+
+// const calculateTotal = () => {
+//   const fee = deliveryFees[region] || 0
+//   setDeliveryFee(fee)
+//   setTotalAmount(totalPrice + fee)
+// }
+
+
+// const handleRegionChange = (e) => {
+//   setRegion(e.target.value);
+//   calculateTotal();
+//   console.log(deliveryFee)
+// };
+
+const handleRegionChange = (e) => {
+  const selectedRegion = e.target.value;
+  setRegion(selectedRegion); 
+  const fee = deliveryFees[selectedRegion] || 0; 
+  setDeliveryFee(fee)
+  setTotalAmount(totalPrice + fee); 
+  console.log(deliveryFee)
+
 };
 
-
-
-
-
-
 const handlePayment = async () => {
-  setLoading(true);
-  const newReference = generateUniqueReference();
-  setReference(newReference);
+  setLoading(true)
+  const newReference = generateUniqueReference()
+  setReference(newReference)
   const formdata={
-    amount: amount,
+    amount: totalAmount,
     email: emailRef.current.value,
     firstName: firstNameRef.current.value,
     lastName: lastNameRef.current.value,
@@ -71,59 +99,59 @@ const handlePayment = async () => {
  try{
   const res = await httpAuth.post("/api/paystack/payment", 
   formdata
-     );
-const { data } = res;
+     )
+const { data } = res
 if (data?.data?.reference) {
-  setReference(data.data.reference);
-  setInitialized(true);
-  setErrors({});
+  setReference(data.data.reference)
+  setInitialized(true)
+  setErrors({})
 } else {
-  throw new Error("No reference returned from the server");
+  throw new Error("No reference returned from the server")
 }
  }catch(err){
   if (err.response && err.response.data && err.response.data.errors) {
     const formErrors = err.response.data.errors.reduce((acc, error) => {
-      acc[error.path] = error.msg;
-      return acc;
-    }, {});
-    setErrors(formErrors);
+      acc[error.path] = error.msg
+      return acc
+    }, {})
+    setErrors(formErrors)
   } else {
-    toast.error("An error occurred during payment. Please try again later.");
+    toast.error("An error occurred during payment. Please try again later.")
   }
  }finally{
   setLoading(false)
  }
-};
+}
 
 
 const handlePaymentSuccess = async (reference) => {
   try {
-    const response = await httpAuth.get(`/api/paystack/verifyPayment/${reference}`);
+    const response = await httpAuth.get(`/api/paystack/verifyPayment/${reference}`)
     const  data  = response?.data.data
     localStorage.setItem("history",JSON.stringify(data.data.metadata))
     if (data.data.status === 'success') {
-      emailRef.current.value = '';
-      firstNameRef.current.value = '';
-      lastNameRef.current.value = '';
-     setInitialized(false);
-   toast.success("Payment sucessfull");
+      emailRef.current.value = ''
+      firstNameRef.current.value = ''
+      lastNameRef.current.value = ''
+     setInitialized(false)
+   toast.success("Payment sucessfull")
 
     } else if (data.data.status === 'abandoned') {
-      toast.error('Payment was not completed');
+      toast.error('Payment was not completed')
     } else {
-      toast.error('Payment verification failed');
+      toast.error('Payment verification failed')
     }
   } catch (error) {
-    toast.error('Error verifying payment');
+    toast.error('Error verifying payment')
   }
-};
+}
 
 
 
   const handlePaymentClose = () => {
-    console.log("Payment window closed");
+    console.log("Payment window closed")
 navigate("/cart")
-  };
+  }
 
 
 
@@ -198,7 +226,16 @@ navigate("/cart")
                 required
               />
               </div>
-
+<div className="xl:w-full w-full mt-3 mb-3">
+<label htmlFor="region">Select Your Region</label>
+      <select value={region} onChange={handleRegionChange}>
+      <option value="">Select Region</option>
+        <option value="Lagos">Lagos</option>
+        <option value="Abuja">Abuja</option>
+        <option value="Kano">Kano</option>
+        <option value="Port Harcourt">Port Harcourt</option>
+      </select>
+</div>
 
               <div className="xl:w-full w-full ">
               <label htmlFor="email">Address:</label>
@@ -222,7 +259,7 @@ navigate("/cart")
               placeholder=""
               type="number"
             value={
-    totalPrice
+    totalAmount
             }
             disabled
               />
@@ -239,7 +276,7 @@ navigate("/cart")
     
         <PaystackButton
           email={emailRef.current.value}
-          amount={amount*100}
+          amount={totalPrice*100}
           publicKey={PAYSTACK_PUBLIC_KEY}
           text="Proceed to Payment"
           reference={reference}
@@ -267,7 +304,7 @@ navigate("/cart")
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PaystackComponent;
+export default PaystackComponent
