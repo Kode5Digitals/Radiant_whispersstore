@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify"
 import { PaystackButton } from 'react-paystack'
 import { useEffect, useRef, useState } from "react"
 import { FaSpinner } from "react-icons/fa"
+import CustomDropdown from "../components/customDropDown"
 
 const PaystackComponent = () => {
   const { totalPrice} = useSelector(selectCart)
@@ -52,12 +53,23 @@ const generateUniqueReference = () => {
   return `ref_${Math.random().toString(36).substring(2, 15)}`
 }
 
-
+const regions = [
+  { value: 'Zone1', label: 'ZONE 1- Yaba, Surulere, Shomolu, Maryland, Anthony, Oshodi, Mushin, Fadeyi, Palmgroove, Apapa, Gbagada, Ogudu, Ojota/Ketu - N3000' },
+  { value: 'Zone2', label: 'ZONE 2- Festac, Berger-Ojodu, Amuwo, Egbeda, Akowonjo, Ikotun, Ikorodu, Igando, Iyana Ipaja, Ojo, Ipaja, Meiran, Iju, Ayobo, Agege, Abule Egba - N4000' },
+  { value: 'Zone3', label: 'ZONE 3- Lagos Island, CMS, Obalande, Victoria Island, Ikoyi, Marina, Lekki Phase 1 - 4000' },
+  { value: 'Zone4', label: 'ZONE 4- Jakande, Ajah. Igbon Efon, Sangotedo, Ikate, Badore, Abraham Adesanya, Ibeju-LekkiZONE 4- Jakande, Ajah. Igbon Efon, Sangotedo, Ikate, Badore, Abraham Adesanya, Ibeju-Lekki - 4500' },
+  { value: 'Zone5', label: 'ZONE 5- (Outside Lagos)- OYO/OGUN - 9000' },
+  { value: 'Zone6', label: 'ZONE 6- (Outside Lagos)- EDO/DELTA/OSUN/KWARA/EKITI/ONDO - 9000' },
+  { value: 'Zone7', label: 'ZONE 7- (Outside Lagos)- ABUJA/PORTHARCOURT/IMO/ALL EASTERN STATES/ALL NORTHERN STATES. - 10000' },
+];
 const deliveryFees = {
-  "Lagos": 1000,
-  "Abuja": 1500,
-  "Kano": 2000,
-  "Port Harcourt": 2500,
+  "Zone1": 3000,
+  "Zone2": 4000,
+  "Zone3": 4000,
+  "Zone4": 9000,
+  "Zone5": 9000,
+  "Zone6": 9000,
+  "Zone7": 10000,  
 }
 
 // const calculateTotal = () => {
@@ -73,13 +85,15 @@ const deliveryFees = {
 //   console.log(deliveryFee)
 // };
 
-const handleRegionChange = (e) => {
-  const selectedRegion = e.target.value;
-  setRegion(selectedRegion); 
-  const fee = deliveryFees[selectedRegion] || 0; 
+const handleRegionChange = (selectedOption) => {
+  
+  setRegion(selectedOption.value)
+
+  const fee = deliveryFees[selectedOption.value] || 0; 
   setDeliveryFee(fee)
   setTotalAmount(totalPrice + fee); 
   console.log(deliveryFee)
+  console.log(region)
 
 };
 
@@ -226,16 +240,54 @@ navigate("/cart")
                 required
               />
               </div>
-<div className="xl:w-full w-full mt-3 mb-3">
-<label htmlFor="region">Select Your Region</label>
-      <select value={region} onChange={handleRegionChange}>
+
+
+              <div className="">
+      <h1 className="text-[10px] mb-2">Select a Region</h1>
+      <CustomDropdown
+        options={regions}
+        selected={region}
+        onSelect={handleRegionChange}
+      />
+    </div>
+
+
+
+
+
+
+              {/* <div className="xl:w-full w-full mt-3 mb-3">
+  <label htmlFor="region" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+    Select Your Region
+  </label>
+  <select
+    value={region}
+    onChange={handleRegionChange}
+    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    style={{
+      whiteSpace: 'normal', // Ensures the text wraps to new lines inside the <option>
+    }}
+  >
+    <option value="" className="border-b border-gray-300 mb-4">Select Region</option>
+    <option value="Lagos" className="border-b border-gray-300">
+      Yaba, Surulere, Shomolu, Maryland, Anthony, Oshodi, Mushin, Fadeyi, Palmgroove, Apapa, Gbagada, Ogudu, Ojota/Ketu - N3000
+    </option>
+    <option value="Abuja" className="border-b border-gray-300">Abuja</option>
+    <option value="Kano" className="border-b border-gray-300">Kano</option>
+    <option value="Port Harcourt" className="border-b border-gray-300">Port Harcourt</option>
+  </select>
+</div> */}
+
+{/* <div className="xl:w-full w-full mt-3 mb-3">
+<label htmlFor="region" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Your Region</label>
+      <select  value={region} onChange={handleRegionChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
       <option value="">Select Region</option>
-        <option value="Lagos">Lagos</option>
+        <option value="Lagos"> Yaba, Surulere, Shomolu, Maryland, Anthony, Oshodi, Mushin, Fadeyi, Palmgroove, Apapa, Gbagada, Ogudu, Ojota/Ketu - N3000</option>
         <option value="Abuja">Abuja</option>
         <option value="Kano">Kano</option>
         <option value="Port Harcourt">Port Harcourt</option>
       </select>
-</div>
+</div> */}
 
               <div className="xl:w-full w-full ">
               <label htmlFor="email">Address:</label>
