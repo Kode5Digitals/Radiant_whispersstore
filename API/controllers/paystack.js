@@ -13,7 +13,7 @@ const generateUniqueReference = () => {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const {amount,email, firstName, lastName,address,products}=req.body
+    const {amount,email, firstName, lastName,address,products,phoneNumber}=req.body
     const reference = generateUniqueReference();
     const currentDate = new Date().toLocaleDateString('en-US', {
       year: 'numeric',
@@ -29,6 +29,8 @@ const generateUniqueReference = () => {
               firstName,
               lastName,
               address,
+              phoneNumber,
+              region,
               products,
               date:currentDate
             },

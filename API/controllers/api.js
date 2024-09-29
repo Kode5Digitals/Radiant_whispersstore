@@ -25,14 +25,13 @@ const GetEditProduct = async (req, res) => {
         if (err) {
           return res.status(500).json({ error: "Error uploading file" });
         }
-        await productsModel.updateMany(
-          { noofitem: { $exists: false } },  
-          { $set: { noofitem: 0 } }         
-        )
+        // await productsModel.updateMany(
+        //   { noofitem: { $exists: false } },  
+        //   { $set: { noofitem: 0 } }         
+        // )
         const productId = req.params.id;
         const { name, price, description, category } = fields;
   
-        // Prepare the updated fields
         const updatedFields = {
           name: fields.name[0],
           price: fields.price[0],
@@ -41,7 +40,6 @@ const GetEditProduct = async (req, res) => {
            noofitem:fields.noofitem[0]
         };
   
-        // If there's a new image file, upload it to Cloudinary
         if (files.image && files.image[0].filepath) {
           const foldername = "Radiantwhhispersstoreimages";
           const cloudinaryUploadResult = await cloudinary.uploader.upload(
@@ -51,7 +49,6 @@ const GetEditProduct = async (req, res) => {
           updatedFields.image = cloudinaryUploadResult.secure_url;
         }
   
-        // Update the product in the database
         await productsModel.findByIdAndUpdate(productId, updatedFields);
         res.status(200).json({ message: "Product updated successfully",created:true });
       } catch (error) {
