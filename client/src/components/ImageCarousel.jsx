@@ -17,11 +17,11 @@ const ImageCarousel = ({ image ,name}) => {
         <p >{name[currentImageIndex]}</p>
             
             </div>
-        <div className="w-[200px] mx-auto ">
+        <div className="w-3/4 h-3/4 mx-auto bg-black ">
            
             <img
                 src={image[currentImageIndex]}
-                alt={`Product ${currentImageIndex}`}
+                alt= {name[currentImageIndex]}
                 className="w-full h-full bg-[#891980] object-cover transition-opacity duration-1000"
             />
         </div>

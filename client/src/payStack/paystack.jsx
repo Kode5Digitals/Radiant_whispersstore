@@ -9,27 +9,30 @@ import { CiFaceSmile } from "react-icons/ci"
 import { ToastContainer, toast } from "react-toastify"
 import { PaystackButton } from 'react-paystack'
 import { useEffect, useRef, useState } from "react"
-import { FaSpinner } from "react-icons/fa"
 import CustomDropdown from "../components/customDropDown"
+import { FaSpinner } from "react-icons/fa"
 
 const PaystackComponent = () => {
   const { totalPrice} = useSelector(selectCart)
   const [errors, setErrors] = useState({})
   const [region, setRegion] = useState('')
   const [totalAmount, setTotalAmount] = useState(totalPrice)
+  // const [continueButton, setContinueButton]=useState(true )
+  // const [paynowButton, setPaynowButton]=useState(false)
   const [deliveryFee, setDeliveryFee] = useState(0)
+  const [deliveryFeeMessage, setDeliveryFeeMessage] = useState('')
   const [PAYSTACK_PUBLIC_KEY,setPAYSTACK_PUBLIC_KEY]=useState(null)
   const emailRef = useRef()
-  const firstNameRef = useRef()
+  const firstNameRef = useRef() 
   const lastNameRef = useRef()
- const addressRef= useRef()
+  const addressRef= useRef()
+  const phonenumberRef= useRef()
   const navigate=useNavigate()
 const [loading, setLoading] = useState(false)
 const { items } = useSelector(selectCart)
 const cartItemImages = items.map((item) => item.productId?.image)
 const cartItemNames= items.map((item) => item.productId?.name)
 const cartItems= items.map((item) => item)
-
 const [reference, setReference] = useState('')
 const [initialized, setInitialized] = useState(false)
 
@@ -54,46 +57,31 @@ const generateUniqueReference = () => {
 }
 
 const regions = [
-  { value: 'Zone1', label: 'ZONE 1- Yaba, Surulere, Shomolu, Maryland, Anthony, Oshodi, Mushin, Fadeyi, Palmgroove, Apapa, Gbagada, Ogudu, Ojota/Ketu - N3000' },
-  { value: 'Zone2', label: 'ZONE 2- Festac, Berger-Ojodu, Amuwo, Egbeda, Akowonjo, Ikotun, Ikorodu, Igando, Iyana Ipaja, Ojo, Ipaja, Meiran, Iju, Ayobo, Agege, Abule Egba - N4000' },
-  { value: 'Zone3', label: 'ZONE 3- Lagos Island, CMS, Obalande, Victoria Island, Ikoyi, Marina, Lekki Phase 1 - 4000' },
-  { value: 'Zone4', label: 'ZONE 4- Jakande, Ajah. Igbon Efon, Sangotedo, Ikate, Badore, Abraham Adesanya, Ibeju-LekkiZONE 4- Jakande, Ajah. Igbon Efon, Sangotedo, Ikate, Badore, Abraham Adesanya, Ibeju-Lekki - 4500' },
-  { value: 'Zone5', label: 'ZONE 5- (Outside Lagos)- OYO/OGUN - 9000' },
-  { value: 'Zone6', label: 'ZONE 6- (Outside Lagos)- EDO/DELTA/OSUN/KWARA/EKITI/ONDO - 9000' },
-  { value: 'Zone7', label: 'ZONE 7- (Outside Lagos)- ABUJA/PORTHARCOURT/IMO/ALL EASTERN STATES/ALL NORTHERN STATES. - 10000' },
+  { value: 'West', label: ' Ekiti,  Lagos, Ogun, Ondo, Osun, Oyo' },
+  { value: 'North', label: 'Adamawa, Bauchi, Borno, Gombe, Taraba, Yobe, Kaduna, Katsina, Kano, Kebbi, Sokoto, Jigawa,Zamfara,Benue, FCT, Kogi, Kwara, Nasarawa, Niger, Plateau' },
+  { value: 'South', label: 'Akwa-Ibom, Bayelsa, Cross-River, Delta, Edo, Rivers' },
+  { value: 'East', label: 'Abia, Anambra, Ebonyi, Enugu, Imo' },
 ];
 const deliveryFees = {
-  "Zone1": 3000,
-  "Zone2": 4000,
-  "Zone3": 4000,
-  "Zone4": 9000,
-  "Zone5": 9000,
-  "Zone6": 9000,
-  "Zone7": 10000,  
+  "West": 3500,
+  "North": 3000,
+  "South": 3500,
+  "East": 3500,  
 }
 
-// const calculateTotal = () => {
-//   const fee = deliveryFees[region] || 0
-//   setDeliveryFee(fee)
-//   setTotalAmount(totalPrice + fee)
-// }
 
-
-// const handleRegionChange = (e) => {
-//   setRegion(e.target.value);
-//   calculateTotal();
-//   console.log(deliveryFee)
-// };
 
 const handleRegionChange = (selectedOption) => {
-  
   setRegion(selectedOption.value)
-
   const fee = deliveryFees[selectedOption.value] || 0; 
   setDeliveryFee(fee)
+  if (fee > 0) {
+    setDeliveryFeeMessage("Delivery fee has been added.");
+  } else {
+    setDeliveryFeeMessage("")
+  }
   setTotalAmount(totalPrice + fee); 
-  console.log(deliveryFee)
-  console.log(region)
+
 
 };
 
@@ -107,6 +95,8 @@ const handlePayment = async () => {
     firstName: firstNameRef.current.value,
     lastName: lastNameRef.current.value,
     address:addressRef.current.value,
+    phoneNumber:phonenumberRef.current.value,
+    region:region,
     reference: newReference,
     products:cartItems
   }
@@ -176,7 +166,7 @@ navigate("/cart")
       <IoIosArrowDropleft size={30}/> </Link>
       </div>
       <div className="flex flex-wrap w-full h-full  xl:w-3/4 md:w-1/2  bg-white     m-auto justify-center xl:p-5">
-        <div className=" xl:w-1/2 lg:h-3/4 xl:h-full mb-24  border-l border-t text-center w-full   xl:block ">
+        <div className=" bg-slate-600 h-full p-4 xl:w-1/2 lg:h-3/4 xl:h-full mb-24  border-l border-t text-center w-full   xl:block ">
       <i className="flex items-center pl-2">Thank you for your patronage <CiFaceSmile/></i>
 
                         <ImageCarousel image={cartItemImages}  name={cartItemNames}/>
@@ -228,66 +218,33 @@ navigate("/cart")
               </div>
 
               <div className="xl:w-full w-full ">
-              <label htmlFor="lastname">PhoneNumber:</label>
+              <label htmlFor="PhoneNumber">PhoneNumber:</label>
               
               <br />
               <input
               className=   {`w-full  rounded-sm  p-2 border ${errors.phoneNumber ? "mb-0":"mb-4"}`}
-                id="lastname"
-                type="text"
+                id="PhoneNumber"
+                type="number"
                 placeholder="PhoneNumber"
-                ref={lastNameRef}
+                ref={phonenumberRef}
                 required
               />
+                 {errors.phoneNumber && <p className="text-red-500  mb-2">{errors.phoneNumber}</p>}
+
               </div>
 
 
               <div className="">
-      <h1 className="text-[10px] mb-2">Select a Region</h1>
+      <h1 className="text-[12px] mb-2">Select a Region</h1>
       <CustomDropdown
         options={regions}
         selected={region}
         onSelect={handleRegionChange}
       />
+                 {errors.region && <p className="text-red-500  mb-2">{errors.region}</p>}
+
     </div>
 
-
-
-
-
-
-              {/* <div className="xl:w-full w-full mt-3 mb-3">
-  <label htmlFor="region" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-    Select Your Region
-  </label>
-  <select
-    value={region}
-    onChange={handleRegionChange}
-    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-    style={{
-      whiteSpace: 'normal', // Ensures the text wraps to new lines inside the <option>
-    }}
-  >
-    <option value="" className="border-b border-gray-300 mb-4">Select Region</option>
-    <option value="Lagos" className="border-b border-gray-300">
-      Yaba, Surulere, Shomolu, Maryland, Anthony, Oshodi, Mushin, Fadeyi, Palmgroove, Apapa, Gbagada, Ogudu, Ojota/Ketu - N3000
-    </option>
-    <option value="Abuja" className="border-b border-gray-300">Abuja</option>
-    <option value="Kano" className="border-b border-gray-300">Kano</option>
-    <option value="Port Harcourt" className="border-b border-gray-300">Port Harcourt</option>
-  </select>
-</div> */}
-
-{/* <div className="xl:w-full w-full mt-3 mb-3">
-<label htmlFor="region" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Your Region</label>
-      <select  value={region} onChange={handleRegionChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-      <option value="">Select Region</option>
-        <option value="Lagos"> Yaba, Surulere, Shomolu, Maryland, Anthony, Oshodi, Mushin, Fadeyi, Palmgroove, Apapa, Gbagada, Ogudu, Ojota/Ketu - N3000</option>
-        <option value="Abuja">Abuja</option>
-        <option value="Kano">Kano</option>
-        <option value="Port Harcourt">Port Harcourt</option>
-      </select>
-</div> */}
 
               <div className="xl:w-full w-full ">
               <label htmlFor="email">Address:</label>
@@ -304,26 +261,32 @@ navigate("/cart")
               </div>
 
               <div>
-                <label htmlFor="number" className="flex gap-1 items-center">Amount  (<TbCurrencyNaira /> )</label>
+                <label htmlFor="number" className="flex gap-1 items-center ">Amount  (<TbCurrencyNaira /> )    
+          
+  </label>
+  {deliveryFeeMessage && (
+    <span className="text-green-500 mt-2">{deliveryFeeMessage}</span>
+  )}
                 <input
                  className="w-full rounded-sm  p-2  mb-4 "
                 id="number"
               placeholder=""
               type="number"
+              required
             value={
     totalAmount
             }
             disabled
               />
-             
+           
             </div>
           <div className="flex xl:justify-end justify-center mt-3  xl:mt-3 ">
-   {  !initialized&&  <button onClick={handlePayment}  disabled={loading}
+   {  !initialized &&  <button onClick={handlePayment}  disabled={loading}
               className=" cursor-pointer rounded-sm  p-3 hover:border-pink-300 border-2 mb-4 hover:text-sm hover:px-6 text-[12px] bg-lime-500 "
               >
         {loading  ? <p className="animate-spin"><FaSpinner/> </p> : 'Pay Now'}
       </button>}
-
+     
  {initialized && reference&&    
     
         <PaystackButton
