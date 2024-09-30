@@ -15,14 +15,13 @@ const ImageCarousel = ({ image ,name}) => {
        <div>
          <div className="p-2 bg-[#891980] mb-10 text-white">
         <p >{name[currentImageIndex]}</p>
-            
             </div>
-        <div className="w-3/4 h-3/4 mx-auto bg-black ">
+        <div className="w-3/4 h-3/4 mx-auto bg-slate-500  flex justify-center">
            
             <img
                 src={image[currentImageIndex]}
                 alt= {name[currentImageIndex]}
-                className="w-full h-full bg-[#891980] object-cover transition-opacity duration-1000"
+                className="w-3/4 h-full  object-cover transition-opacity duration-1000"
             />
         </div>
        </div>

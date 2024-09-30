@@ -169,7 +169,7 @@ navigate("/cart")
       <IoIosArrowDropleft size={30}/> </Link>
       </div>
       <div className="flex flex-wrap w-full h-full  xl:w-3/4 md:w-1/2  bg-white     m-auto justify-center xl:p-5">
-        <div className=" bg-slate-600 h-full p-4 xl:w-1/2 lg:h-3/4 xl:h-full mb-24  border-l border-t text-center w-full   xl:block ">
+        <div className="  h-full p-4 xl:w-1/2 lg:h-3/4 xl:h-full mb-24  border-l border-t text-center w-full   xl:block ">
       <i className="flex items-center pl-2">Thank you for your patronage <CiFaceSmile/></i>
 
                         <ImageCarousel image={cartItemImages}  name={cartItemNames}/>
@@ -268,7 +268,7 @@ navigate("/cart")
           
   </label>
   {deliveryFeeMessage && (
-    <span className="text-green-500 mt-2">{deliveryFeeMessage}</span>
+    <span className="text-green-500 mt-1">{deliveryFeeMessage}</span>
   )}
                 <input
                  className="w-full rounded-sm  p-2  mb-4 "
