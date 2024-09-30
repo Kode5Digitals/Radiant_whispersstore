@@ -1,37 +1,41 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { clearWishlist, deleteWishlist, fetchWishlists} from '../stores/features/whishlist/wishlistSlice';
-import Defaultlayout from '../layout/Defaultlayout';
-import {  addItemToCart} from "../stores/features/cart/cartSlice";
-import { ToastContainer } from 'react-toastify';
-import {Capitalize, Truncate, formatAmount} from '../utils/utils';
-import HoverDescription from '../components/HoverDescription';
-import { useContext, useEffect, useState } from 'react';
-import { TbCurrencyNaira } from 'react-icons/tb';
-import Cartcontext from '../cartcontext';
-import { LiaShoppingBagSolid } from 'react-icons/lia';
-import { CiCircleRemove } from 'react-icons/ci';
-import { RiShoppingBagFill } from 'react-icons/ri';
+import { useDispatch, useSelector } from 'react-redux'
+import { clearWishlist, deleteWishlist, fetchWishlists} from '../stores/features/whishlist/wishlistSlice'
+import Defaultlayout from '../layout/Defaultlayout'
+import {  addItemToCart} from "../stores/features/cart/cartSlice"
+import { ToastContainer } from 'react-toastify'
+import {Capitalize, Truncate, formatAmount} from '../utils/utils'
+import HoverDescription from '../components/HoverDescription'
+import { useContext, useEffect, useState } from 'react'
+import { TbCurrencyNaira } from 'react-icons/tb'
+import Cartcontext from '../cartcontext'
+import { LiaShoppingBagSolid } from 'react-icons/lia'
+import { CiCircleRemove } from 'react-icons/ci'
+import { RiShoppingBagFill } from 'react-icons/ri'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 
 
 function Wishlist() {
-  const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(false);
-  const wishlist = useSelector((state)=>state?.wishlist.items); 
+  const dispatch = useDispatch()
+  const [isOpen, setIsOpen] = useState(false)
+  const [loadRemoveWishlist, setLoadRemoveWishlist] = useState({})
+  const [loadingEmptyWishlist, setLoadingEmptyWishlist] = useState(false)
+  const wishlist = useSelector((state)=>state?.wishlist.items) 
 const {user,sessionId,loadUser}=useContext(Cartcontext)
 const userId=user?._id
-const cartItems= useSelector((state)=>state?.cart.items); 
+const cartItems= useSelector((state)=>state?.cart.items) 
 
 
 useEffect(()=>{
-  loadUser(); 
+  loadUser() 
 },[])
 
 
 useEffect(() => {
   try{
         if (user?._id || sessionId) {
-          dispatch(fetchWishlists({ userId: user?._id, sessionId }));
+          dispatch(fetchWishlists({ userId: user?._id, sessionId }))
         }
       }catch(err){
     console.error(err)}
@@ -44,27 +48,50 @@ useEffect(() => {
    return wish
   }
 
-const handleRemoveFromWishlist = (itemId) => {
-    dispatch(deleteWishlist({productId:itemId,sessionId,userId}));
-  };
 
+  const handleRemoveFromWishlist = async (itemId) => {
+    setLoadRemoveWishlist(prevState => ({
+      ...prevState,
+      [itemId]: true
+    }))
+  
+    try {
+      await dispatch(deleteWishlist({ productId: itemId, sessionId, userId }))
+    } finally {
+      setLoadRemoveWishlist(prevState => ({
+        ...prevState,
+        [itemId]: false
+      }))
+    }
+  }
+  
 
   const handleAddToCart = (productId) => {
     dispatch(addItemToCart({ userId:user?._id,sessionId,productId,quantity:1 }))
     
   }
 
-  const HandleEmptyAllwishlist = () => {
+ 
+
+  const HandleEmptyAllwishlist = async () => {
+    setLoadingEmptyWishlist(true) 
+    
     const wishlistData = {
       userId: user ? user._id : null,
       sessionId: user ? null : sessionId,
-    };
-    dispatch(clearWishlist(wishlistData));
-  };
+    }
+    
+    try {
+      await dispatch(clearWishlist(wishlistData))
+    } finally {
+      setLoadingEmptyWishlist(false) 
+    }
+  }
+  
 
   const handleBack = () => {
     setIsOpen(!isOpen)
-  };
+  }
   
   return (
    <Defaultlayout  setIsOpen={setIsOpen} isOpen={isOpen} Back={handleBack}>
@@ -98,7 +125,12 @@ const handleRemoveFromWishlist = (itemId) => {
 <TbCurrencyNaira /> 
 <span  className=' text-[16px] '>{formatAmount(Number(item.productId?.price))}</span>
   </div>
-    <button id={item._id}  className=' text-[13px] hover:bg-red-600 hover:text-white ' onClick={() => handleRemoveFromWishlist(item.productId?._id)}><CiCircleRemove  size={24}/></button>
+    <button id={item._id}  disabled={loadRemoveWishlist[item.productId?._id]}  className=' text-[13px] hover:bg-red-600 hover:text-white ' onClick={() => handleRemoveFromWishlist(item.productId?._id)}>  
+      {loadRemoveWishlist[item.productId?._id] ? (
+    <FontAwesomeIcon className="animate-spin" icon={faSpinner} />
+  ) : (
+    <CiCircleRemove size={24} />
+  )} </button>
   <HoverDescription description={item.productId?.description}/>
    </div>
   </div>
@@ -107,7 +139,11 @@ const handleRemoveFromWishlist = (itemId) => {
 </div>
       
 <div className='flex justify-end mt-12 p-3'>
-<button  className='bg-[#890104] text-white text-[13px] rounded-sm p-2' onClick={HandleEmptyAllwishlist}>Empty all whishlist</button>
+<button  className='bg-[#890104] w-[100px] text-white text-[13px] rounded-sm p-2'  disabled={loadingEmptyWishlist} onClick={HandleEmptyAllwishlist}> {loadingEmptyWishlist ? (
+    <FontAwesomeIcon className="animate-spin" icon={faSpinner} />
+  ) : (
+    "Clear Wishlist"
+  )}</button>
   </div>
   </div>
 
@@ -130,7 +166,7 @@ const handleRemoveFromWishlist = (itemId) => {
             theme="light"
              />
    </Defaultlayout>
-  );
+  )
 }
 
-export default Wishlist;
+export default Wishlist

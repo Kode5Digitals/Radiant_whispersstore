@@ -1,6 +1,7 @@
 import {
   faArrowAltCircleLeft,
   faCartPlus,
+  faSpinner,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -18,9 +19,12 @@ import {
 } from "../stores/features/cart/cartSlice"
 import { TbCurrencyNaira } from "react-icons/tb"
 import { formatPrice } from "../utils/utils"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import Cartcontext from "../cartcontext"
 const Cart = () => {
+  const[loadRemoveCart,setLoadRemoveCart]=useState({})
+  const [loadDecreaseQuantity, setLoadDecreaseQuantity] = useState({});
+const [loadIncreaseQuantity, setLoadIncreaseQuantity] = useState({});
   const { items, totalQuantity, totalPrice } = useSelector(selectCart)
   const cartLength = useSelector(selectCartLength)
   const dispatch = useDispatch()
@@ -41,24 +45,84 @@ const Cart = () => {
     }
   }, [dispatch,userId, sessionId])
 
-
-
-
-
+  const handleRemoveFromCart = async (productId) => {
+    setLoadRemoveCart(prevState => ({
+      ...prevState,
+      [productId]: true
+    })); // Set loader to true for the specific productId
+  
+    try {
+      await dispatch(removeItemFromCart({
+        userId: user?._id,
+        productId: productId,
+        sessionId,
+      }));
+    } finally {
+      setLoadRemoveCart(prevState => ({
+        ...prevState,
+        [productId]: false
+      })); // Set loader to false after the action completes
+    }
+  };
+  
 
   
-  const handleRemoveFromCart = (productId) => {
-    dispatch(removeItemFromCart({ userId: user?._id,  productId,sessionId }));
-  }
+  const handleIncreaseQuantity = async (productId, additionalQuantity) => {
+    setLoadIncreaseQuantity(prevState => ({
+      ...prevState,
+      [productId]: true
+    })); // Set loader to true for the specific productId
+  
+    try {
+      await dispatch(increaseCartItemQuantity({
+        userId: user?._id,
+        productId: productId,
+        sessionId,
+        quantity: additionalQuantity,
+      }));
+    } finally {
+      setLoadIncreaseQuantity(prevState => ({
+        ...prevState,
+        [productId]: false
+      })); // Set loader to false after the action completes
+    }
+  };
+  
 
-  const handleIncreaseQuantity = (productId,additionalQuantity) => {
-    dispatch(increaseCartItemQuantity({ userId: user?._id, productId: productId,sessionId, quantity: additionalQuantity }));
-  }
+  
+  // const handleRemoveFromCart = (productId) => {
+  //   dispatch(removeItemFromCart({ userId: user?._id,  productId,sessionId }));
+  // }
 
-  const handleDecreaseQuantity = (productId,decreaseQuantity) => {
-    dispatch(decreaseCartItemQuantity({ userId: user?._id, productId: productId,sessionId, quantity: decreaseQuantity }));
+  // const handleIncreaseQuantity = (productId,additionalQuantity) => {
+  //   dispatch(increaseCartItemQuantity({ userId: user?._id, productId: productId,sessionId, quantity: additionalQuantity }));
+  // }
 
-  }
+  // const handleDecreaseQuantity = (productId,decreaseQuantity) => {
+  //   dispatch(decreaseCartItemQuantity({ userId: user?._id, productId: productId,sessionId, quantity: decreaseQuantity }));
+
+  // }
+  const handleDecreaseQuantity = async (productId, decreaseQuantity) => {
+    setLoadDecreaseQuantity(prevState => ({
+      ...prevState,
+      [productId]: true
+    })); // Set loader to true for the specific productId
+  
+    try {
+      await dispatch(decreaseCartItemQuantity({
+        userId: user?._id,
+        productId: productId,
+        sessionId,
+        quantity: decreaseQuantity,
+      }));
+    } finally {
+      setLoadDecreaseQuantity(prevState => ({
+        ...prevState,
+        [productId]: false
+      })); // Set loader to false after the action completes
+    }
+  };
+  
 
   const handleremoveAllFromCart = () => {
     dispatch(clearCart({ userId: user?._id ,sessionId}));
@@ -129,10 +193,18 @@ const Cart = () => {
                 <div className="flex justify-between mt-3">
                   <div className="flex ">
                     <button
+                      disabled={loadIncreaseQuantity[product.productId._id]}
                       className="w-9 h-9 border text-sm bg-white text-black flex justify-center items-center rounded-md"
                       onClick={() => handleIncreaseQuantity(product?.productId?._id,1)}
                     >
-                      +
+                     
+                      {loadIncreaseQuantity[product.productId._id] ? (
+    <FontAwesomeIcon className="animate-spin" icon={faSpinner} />
+  ) : (
+    <>
+       +
+    </>
+  )}
                     </button>
                     <h4 className="w-9 h-9 text-sm flex justify-center items-center rounded-md">
                       {/* {product.quantity|| 1} */}
@@ -142,18 +214,38 @@ const Cart = () => {
                     
                       className="w-9  bg-white border  h-9 text-sm flex  text-black  justify-center items-center rounded-md"
                       onClick={() => handleDecreaseQuantity(product.productId._id,1)}
-                      disabled={items.find(item => item?.productId?._id === product?.productId?._id)?.quantity <= 1}
+                      disabled={loadDecreaseQuantity[product.productId._id] || items.find(item => item?.productId?._id === product?.productId?._id)?.quantity <= 1}
                     >
-                      -
+                      
+                      {loadDecreaseQuantity[product.productId._id]  ? (
+    <FontAwesomeIcon className="animate-spin" icon={faSpinner} />
+  ) : (
+    <>
+      -
+    </>)}
                     </button>
                   </div>
                   <button
+  onClick={() => handleRemoveFromCart(product?.productId?._id)}
+  className="del-btn text-sm"
+  disabled={loadRemoveCart[product.productId._id]} // Optionally disable the button while loading
+>
+  {loadRemoveCart[product.productId._id] ? (
+    <FontAwesomeIcon className="animate-spin" icon={faSpinner} />
+  ) : (
+    <>
+      <FontAwesomeIcon color="red" icon={faTrash} />
+      Remove Item
+    </>
+  )}
+</button>
+                  {/* <button
                     onClick={() => handleRemoveFromCart(product?.productId?._id)}
                     className="del-btn  text-sm"
                   >
                     <FontAwesomeIcon color="red" icon={faTrash} />
                     Remove Item
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
