@@ -17,8 +17,6 @@ const PaystackComponent = () => {
   const [errors, setErrors] = useState({})
   const [region, setRegion] = useState('')
   const [totalAmount, setTotalAmount] = useState(totalPrice)
-  // const [continueButton, setContinueButton]=useState(true )
-  // const [paynowButton, setPaynowButton]=useState(false)
   const [deliveryFee, setDeliveryFee] = useState(0)
   const [deliveryFeeMessage, setDeliveryFeeMessage] = useState('')
   const [PAYSTACK_PUBLIC_KEY,setPAYSTACK_PUBLIC_KEY]=useState(null)
@@ -53,7 +51,10 @@ useEffect(() => {
   getKey()
 }, []) 
 const generateUniqueReference = () => {
-  return `ref_${Math.random().toString(36).substring(2, 15)}`
+  const timestamp = Date.now(); // Current time in milliseconds
+  const randomStr = Math.random().toString(36).substring(2, 8); // Random alphanumeric string
+  return `ref_${timestamp}_${randomStr}`; // Unique reference
+  // return `ref_${Math.random().toString(36).substring(2, 15)}`
 }
 
 const regions = [
@@ -75,13 +76,15 @@ const handleRegionChange = (selectedOption) => {
   setRegion(selectedOption.value)
   const fee = deliveryFees[selectedOption.value] || 0; 
   setDeliveryFee(fee)
+  console.log(deliveryFee)
   if (fee > 0) {
     setDeliveryFeeMessage("Delivery fee has been added.");
   } else {
     setDeliveryFeeMessage("")
   }
   setTotalAmount(totalPrice + fee); 
-
+  const newReference = generateUniqueReference();
+  setReference(newReference);
 
 };
 
@@ -139,7 +142,7 @@ const handlePaymentSuccess = async (reference) => {
       lastNameRef.current.value = ''
      setInitialized(false)
    toast.success("Payment sucessfull")
-
+   setReference('')
     } else if (data.data.status === 'abandoned') {
       toast.error('Payment was not completed')
     } else {
@@ -291,7 +294,7 @@ navigate("/cart")
     
         <PaystackButton
           email={emailRef.current.value}
-          amount={totalPrice*100}
+          amount={totalAmount*100}
           publicKey={PAYSTACK_PUBLIC_KEY}
           text="Proceed to Payment"
           reference={reference}
